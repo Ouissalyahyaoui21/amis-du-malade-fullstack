@@ -16,6 +16,21 @@ Développé dans le cadre du projet de fin de licence.
 ## 🏗️ Architecture générale
 ---
 
+┌─────────────────────────────────────┐
+│      Mobile App - .NET MAUI         │
+│    SQLite local (offline-first)     │
+└──────────────┬──────────────────────┘
+│ REST API + Sync
+┌──────────────▼──────────────────────┐
+│    Backend API - ASP.NET Core       │
+│           (ce projet)               │
+└──────────────┬──────────────────────┘
+│
+┌──────────────▼──────────────────────┐
+│         PostgreSQL 13               │
+│           28 tables                 │
+└─────────────────────────────────────┘
+
 ## ⚙️ Technologies utilisées
 
 | Couche | Technologie |
@@ -77,13 +92,59 @@ Développé dans le cadre du projet de fin de licence.
 
 ### 🔓 Publics (sans authentification)
 
+POST /api/auth/login              ← Connexion admin
+POST /api/auth/register           ← Création de compte
+POST /api/volunteer/register      ← Inscription bénévole
+POST /api/carerequest             ← Nouvelle demande
+
 ### 🔒 Protégés (TOKEN JWT requis)
 
 ---
 
+Bénévoles
+GET  /api/volunteer                      ← Liste bénévoles
+GET  /api/volunteer/{id}                 ← Détail bénévole
+PUT  /api/volunteer/{id}/status          ← Changer statut
+Patients
+POST /api/patient                        ← Ajouter patient
+GET  /api/patient                        ← Liste patients
+GET  /api/patient/{id}                   ← Détail patient
+Demandes
+GET  /api/carerequest                    ← Liste demandes
+GET  /api/carerequest/{id}               ← Détail demande
+PUT  /api/carerequest/{id}/status        ← Changer statut
+GET  /api/carerequest/{id}/suggestions   ← Suggestions IA ⭐
+Affectations
+POST /api/assignment                     ← Affecter bénévole
+GET  /api/assignment                     ← Liste affectations
+PUT  /api/assignment/{id}/status         ← Changer statut
+Visites
+POST /api/visit/session                  ← Créer session
+GET  /api/visit/assignment/{id}          ← Sessions par affectation
+GET  /api/visit/session/{id}             ← Détail session
+PUT  /api/visit/session/{id}             ← Mettre à jour session
+POST /api/visit/session/{id}/note        ← Ajouter note
+POST /api/visit/session/{id}/rating      ← Évaluer session
+Alertes
+POST /api/alert                          ← Créer alerte
+GET  /api/alert                          ← Toutes les alertes
+GET  /api/alert/open                     ← Alertes ouvertes
+PUT  /api/alert/{id}/resolve             ← Résoudre alerte
+Synchronisation mobile
+POST /api/sync/pull                      ← Tirer données
+POST /api/sync/push                      ← Pousser opérations offline
+Dashboard
+GET  /api/dashboard                      ← Statistiques globales
+
 ## ⭐ Algorithme de suggestion intelligente
 
 Pour chaque demande, l'algorithme calcule un score de compatibilité:
+Compétences correspondantes   = 40 points
+Zone géographique couverte    = 30 points
+Disponibilité confirmée       = 30 points
+Transport (si requis)         = 10 points bonus
+─────────────────────────────────────────
+Score maximum                 = 110 points
 
 Retourne les **5 meilleurs candidats** triés par score décroissant.
 
@@ -92,6 +153,9 @@ Retourne les **5 meilleurs candidats** triés par score décroissant.
 ## 🔐 Authentification JWT
 
 ---
+POST /api/auth/login  →  obtenir le TOKEN
+Header: Authorization: Bearer {TOKEN}
+Validité: 7 jours
 
 ## 🚀 Installation et lancement
 
@@ -137,14 +201,14 @@ dotnet run
 **5. Tester**
 
 ---
-
+URL de base: http://localhost:5113 
 ## 👩‍💻 Équipe projet
 
 | Rôle | Responsabilité |
 |------|---------------|
 | **Student A** - Backend | API REST, PostgreSQL, Auth, Sync endpoints |
 | **Student B** - Mobile | .NET MAUI, SQLite local, Offline behavior |
-| **Student C** - Dashboard | Admin Blazor, Notifications, Tests |
+| **Student A+B** - Dashboard | Admin Blazor, Notifications, Tests |
 
 ---
 
