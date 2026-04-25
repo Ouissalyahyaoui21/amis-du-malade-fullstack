@@ -218,4 +218,4 @@ URL de base: http://localhost:5113
 - **Département:** Informatique
 - **Niveau:** Licence (L3)
 - **Année:** 2025 - 2026
-- **Encadreur:** DepMI2020
+- **Encadreur:** Touil Ghassen
