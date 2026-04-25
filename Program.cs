@@ -16,14 +16,18 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Services
+// ── كل الـ Services ──────────────────────
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IVolunteerService, VolunteerService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<ICareRequestService, CareRequestService>();
 builder.Services.AddScoped<IAssignmentService, AssignmentService>();
+builder.Services.AddScoped<IVisitService, VisitService>();
+builder.Services.AddScoped<IAlertService, AlertService>();
+builder.Services.AddScoped<ISyncService, SyncService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
-// JWT
+// ── JWT ──────────────────────────────────
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

@@ -19,7 +19,7 @@ namespace AmisduMalade.Services
             var patient = new Patient
             {
                 FullName = vm.FullName,
-                BirthDate = vm.BirthDate,
+           BirthDate = DateTime.SpecifyKind(vm.BirthDate ?? DateTime.UtcNow, DateTimeKind.Utc),
                 Gender = vm.Gender,
                 Phone = vm.Phone,
                 Address = vm.Address,

@@ -44,6 +44,7 @@ namespace AmisduMalade.Data
         // System
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
+        public DbSet<SyncLog> SyncLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
