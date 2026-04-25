@@ -20,67 +20,57 @@ namespace AmisduMalade.Services
             _config = config;
         }
 
-        // تسجيل الدخول - يرجع TOKEN أو null
         public async Task<string?> LoginAsync(LoginVM vm)
         {
-            // 1. دور على المسؤول في DB
-            var admin = await _db.Admins
-                .FirstOrDefaultAsync(a => a.Email == vm.Email);
+            var user = await _db.Users
+                .FirstOrDefaultAsync(u => u.Email == vm.Email);
+            if (user == null) return null;
 
-            if (admin == null) return null;
+            bool valid = BCrypt.Net.BCrypt.Verify(vm.Password, user.PasswordHash);
+            if (!valid) return null;
 
-            // 2. تحقق من كلمة المرور المشفرة
-            bool isValid = BCrypt.Net.BCrypt.Verify(vm.Password, admin.PasswordHash);
-            if (!isValid) return null;
-
-            // 3. أنشئ الـ TOKEN
-            return GenerateToken(admin);
+            return GenerateToken(user);
         }
 
-        // إنشاء حساب إدارة جديد
-        public async Task<bool> RegisterAdminAsync(RegisterAdminVM vm)
+        public async Task<bool> RegisterAsync(RegisterUserVM vm)
         {
-            // تحقق إذا الـ email موجود مسبقاً
-            var exists = await _db.Admins.AnyAsync(a => a.Email == vm.Email);
+            var exists = await _db.Users.AnyAsync(u => u.Email == vm.Email);
             if (exists) return false;
 
-            var admin = new Admin
+            var user = new User
             {
+                FullName = vm.FullName,
                 Email = vm.Email,
-                Username = vm.Username,
-                // شفّر كلمة المرور قبل الحفظ
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword(vm.Password)
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(vm.Password),
+                Role = vm.Role,
+                BranchId = vm.BranchId
             };
 
-            _db.Admins.Add(admin);
+            _db.Users.Add(user);
             await _db.SaveChangesAsync();
             return true;
         }
 
-        // دالة داخلية لإنشاء JWT Token
-        private string GenerateToken(Admin admin)
+        private string GenerateToken(User user)
         {
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var credentials = new SigningCredentials(
-                key, SecurityAlgorithms.HmacSha256);
-
-            // المعلومات المحفوظة داخل الـ TOKEN
             var claims = new[]
             {
-                new Claim(ClaimTypes.Email, admin.Email),
-                new Claim(ClaimTypes.Name, admin.Username),
-                new Claim("AdminId", admin.Id.ToString())
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.FullName),
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim("UserId", user.Id.ToString())
             };
 
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddDays(7), // صالح 7 أيام
-                signingCredentials: credentials
-            );
+                expires: DateTime.UtcNow.AddDays(7),
+                signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

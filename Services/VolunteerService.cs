@@ -2,11 +2,9 @@ using AmisduMalade.Data;
 using AmisduMalade.Models;
 using AmisduMalade.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
 
 namespace AmisduMalade.Services
 {
-    // هنا يوجد المنطق الفعلي
     public class VolunteerService : IVolunteerService
     {
         private readonly AppDbContext _db;
@@ -16,48 +14,84 @@ namespace AmisduMalade.Services
             _db = db;
         }
 
-        // تسجيل متطوع جديد
         public async Task<Volunteer> RegisterAsync(VolunteerRegisterVM vm)
         {
             var volunteer = new Volunteer
             {
                 FullName = vm.FullName,
                 Phone = vm.Phone,
-                BirthDate = vm.BirthDate,
+                Email = vm.Email,
                 Municipality = vm.Municipality,
-                Profession = vm.Profession,
-                MaritalStatus = vm.MaritalStatus,
-                // نحول القائمة لـ JSON لحفظها في DB
-                AvailableDays = JsonSerializer.Serialize(vm.AvailableDays),
-                AvailableHours = JsonSerializer.Serialize(vm.AvailableHours),
-                Skills = JsonSerializer.Serialize(vm.Skills),
-                TrainingLevel = vm.TrainingLevel,
+                VolunteerCategory = vm.VolunteerCategory,
+                CanHomeVisit = vm.CanHomeVisit,
+                CanHospitalVisit = vm.CanHospitalVisit,
+                CanNightPresence = vm.CanNightPresence,
+                HasTransportation = vm.HasTransportation,
+                BranchId = vm.BranchId,
                 Status = "Pending"
             };
+
+            // إضافة المهارات
+            foreach (var s in vm.Skills)
+            {
+                volunteer.Skills.Add(new VolunteerSkill
+                {
+                    SkillId = s.SkillId,
+                    Level = s.Level
+                });
+            }
+
+            // إضافة التوفر
+            foreach (var a in vm.Availabilities)
+            {
+                volunteer.Availabilities.Add(new VolunteerAvailability
+                {
+                    DayOfWeek = a.DayOfWeek,
+                    StartTime = TimeSpan.Parse(a.StartTime),
+                    EndTime = TimeSpan.Parse(a.EndTime)
+                });
+            }
+
+            // إضافة مناطق التغطية
+            foreach (var area in vm.CoverageAreas)
+            {
+                volunteer.CoverageAreas.Add(new VolunteerCoverageArea
+                {
+                    Municipality = area
+                });
+            }
 
             _db.Volunteers.Add(volunteer);
             await _db.SaveChangesAsync();
             return volunteer;
         }
 
-        // جيب كل المتطوعين
         public async Task<List<Volunteer>> GetAllAsync()
         {
-            return await _db.Volunteers.ToListAsync();
+            return await _db.Volunteers
+                .Include(v => v.Skills).ThenInclude(s => s.Skill)
+                .Include(v => v.Availabilities)
+                .Include(v => v.CoverageAreas)
+                .Include(v => v.Branch)
+                .OrderByDescending(v => v.CreatedAt)
+                .ToListAsync();
         }
 
-        // جيب متطوع بالـ ID
-        public async Task<Volunteer?> GetByIdAsync(int id)
+        public async Task<Volunteer?> GetByIdAsync(Guid id)
         {
-            return await _db.Volunteers.FindAsync(id);
+            return await _db.Volunteers
+                .Include(v => v.Skills).ThenInclude(s => s.Skill)
+                .Include(v => v.Availabilities)
+                .Include(v => v.CoverageAreas)
+                .Include(v => v.Documents)
+                .Include(v => v.Interviews)
+                .FirstOrDefaultAsync(v => v.Id == id);
         }
 
-        // غيّر حالة المتطوع (قبول/رفض)
-        public async Task<bool> UpdateStatusAsync(int id, string status)
+        public async Task<bool> UpdateStatusAsync(Guid id, string status)
         {
             var volunteer = await _db.Volunteers.FindAsync(id);
             if (volunteer == null) return false;
-
             volunteer.Status = status;
             await _db.SaveChangesAsync();
             return true;

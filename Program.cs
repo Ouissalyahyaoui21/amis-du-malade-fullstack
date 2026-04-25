@@ -7,23 +7,23 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(x =>
+        x.JsonSerializerOptions.ReferenceHandler =
+            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=amisdumalade.db"));
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ── كل الـ Services ──────────────────────────────
-builder.Services.AddScoped<IVolunteerService, VolunteerService>();
-builder.Services.AddScoped<IRequestService, RequestService>();
+// Services
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IDashboardService, DashboardService>();
-builder.Services.AddScoped<IInterviewService, InterviewService>();
-builder.Services.AddScoped<ITrainingService, TrainingService>();
-builder.Services.AddScoped<ICenterService, CenterService>();
-builder.Services.AddScoped<IReportService, ReportService>();
+builder.Services.AddScoped<IVolunteerService, VolunteerService>();
+builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<ICareRequestService, CareRequestService>();
 builder.Services.AddScoped<IAssignmentService, AssignmentService>();
 
-// ── JWT ──────────────────────────────────────────
+// JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -48,15 +48,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
-}
-
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-app.Run();c
+app.Run();

@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Authorization;
 using AmisduMalade.Services;
 using AmisduMalade.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmisduMalade.Controllers
@@ -10,59 +10,40 @@ namespace AmisduMalade.Controllers
     public class VolunteerController : ControllerBase
     {
         private readonly IVolunteerService _service;
+        public VolunteerController(IVolunteerService service) { _service = service; }
 
-        public VolunteerController(IVolunteerService service)
-        {
-            _service = service;
-        }
-
-        // POST: api/volunteer/register
-        // مفتوح ← الموبايل يسجل بدون login
+        // مفتوح - الموبايل يسجل
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] VolunteerRegisterVM vm)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             var result = await _service.RegisterAsync(vm);
-            return Ok(new { 
-                message = "تم تسجيل طلبك بنجاح", 
-                id = result.Id 
-            });
+            return Ok(new { message = "تم تسجيل طلبك بنجاح", id = result.Id });
         }
 
-        // GET: api/volunteer
-        // محمي ← فقط الإدارة
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var volunteers = await _service.GetAllAsync();
-            return Ok(volunteers);
+            var list = await _service.GetAllAsync();
+            return Ok(list);
         }
 
-        // GET: api/volunteer/5
-        // محمي ← فقط الإدارة
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
-            var volunteer = await _service.GetByIdAsync(id);
-            if (volunteer == null)
-                return NotFound(new { message = "المتطوع غير موجود" });
-            return Ok(volunteer);
+            var v = await _service.GetByIdAsync(id);
+            if (v == null) return NotFound(new { message = "المتطوع غير موجود" });
+            return Ok(v);
         }
 
-        // PUT: api/volunteer/5/status
-        // محمي ← فقط الإدارة تقبل أو ترفض
         [Authorize]
         [HttpPut("{id}/status")]
-        public async Task<IActionResult> UpdateStatus(int id, [FromBody] string status)
+        public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateVolunteerStatusVM vm)
         {
-            var result = await _service.UpdateStatusAsync(id, status);
-            if (!result)
-                return NotFound(new { message = "المتطوع غير موجود" });
-            return Ok(new { message = "تم تحديث الحالة بنجاح" });
+            var result = await _service.UpdateStatusAsync(id, vm.Status);
+            if (!result) return NotFound(new { message = "المتطوع غير موجود" });
+            return Ok(new { message = "تم تحديث الحالة" });
         }
     }
 }
