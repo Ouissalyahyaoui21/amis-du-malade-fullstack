@@ -738,6 +738,125 @@
                         </BindableLayout.ItemTemplate>
                     </FlexLayout>
 
+                    <!-- مستوى التأهيل -->
+                    <Label Text="* مستوى التأهيل" TextColor="#1a3a5c"
+                           FontSize="13" FontAttributes="Bold" Margin="0,6,0,0"/>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
+                          ColumnSpacing="10" RowSpacing="10">
+
+                        <!-- مبتدئ -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding IsLevelBeginner}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="#fef9c3"/>
+                                    <Setter Property="Stroke" Value="#ca8a04"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding IsLevelBeginner}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="White"/>
+                                    <Setter Property="Stroke" Value="#e2e8f0"/>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <Label Text="🌱" FontSize="22" HorizontalOptions="Center"/>
+                                <Label Text="مبتدئ" TextColor="#1a3a5c"
+                                       FontSize="13" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Text="يحتاج تكوينًا كاملًا"
+                                       TextColor="#94a3b8" FontSize="10" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTrainingLevelCommand}"
+                                                      CommandParameter="beginner"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- قابل للتأهيل -->
+                        <Border Grid.Row="0" Grid.Column="0"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding IsLevelTrainable}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
+                                    <Setter Property="Stroke" Value="#1a3a5c"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding IsLevelTrainable}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="White"/>
+                                    <Setter Property="Stroke" Value="#e2e8f0"/>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <Label Text="📚" FontSize="22" HorizontalOptions="Center"/>
+                                <Label Text="قابل للتأهيل" TextColor="#1a3a5c"
+                                       FontSize="13" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Text="يحتاج تدريبًا قصيرًا"
+                                       TextColor="#94a3b8" FontSize="10" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTrainingLevelCommand}"
+                                                      CommandParameter="trainable"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- متمكن -->
+                        <Border Grid.Row="1" Grid.Column="1"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding IsLevelProficient}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="#dcfce7"/>
+                                    <Setter Property="Stroke" Value="#16a34a"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding IsLevelProficient}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="White"/>
+                                    <Setter Property="Stroke" Value="#e2e8f0"/>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <Label Text="⭐" FontSize="22" HorizontalOptions="Center"/>
+                                <Label Text="متمكن" TextColor="#1a3a5c"
+                                       FontSize="13" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Text="خبرة جيدة في الرعاية"
+                                       TextColor="#94a3b8" FontSize="10" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTrainingLevelCommand}"
+                                                      CommandParameter="proficient"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- محترف -->
+                        <Border Grid.Row="1" Grid.Column="0"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding IsLevelProfessional}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="#fce7f3"/>
+                                    <Setter Property="Stroke" Value="#9d174d"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding IsLevelProfessional}" Value="False">
+                                    <Setter Property="BackgroundColor" Value="White"/>
+                                    <Setter Property="Stroke" Value="#e2e8f0"/>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <Label Text="🏅" FontSize="22" HorizontalOptions="Center"/>
+                                <Label Text="محترف" TextColor="#1a3a5c"
+                                       FontSize="13" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Text="خلفية طبية أو تمريضية"
+                                       TextColor="#94a3b8" FontSize="10" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTrainingLevelCommand}"
+                                                      CommandParameter="professional"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+
                     <!-- هل تطوعت من قبل؟ -->
                     <Label Text="هل تطوعت من قبل؟" TextColor="#1a3a5c"
                            FontSize="13" FontAttributes="Bold" Margin="0,6,0,0"/>

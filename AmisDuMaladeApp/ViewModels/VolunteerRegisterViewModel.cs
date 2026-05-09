@@ -53,6 +53,13 @@ public partial class VolunteerRegisterViewModel : BaseViewModel
         new() { Key = "elder_care",    Label = "رعاية المسنين",     Icon = "👴" },
     };
 
+    // ── Step 3 — Training level ──────────────────────────────────────────────
+    [ObservableProperty] private string trainingLevel = "";
+    public bool IsLevelBeginner     => TrainingLevel == "beginner";
+    public bool IsLevelTrainable    => TrainingLevel == "trainable";
+    public bool IsLevelProficient   => TrainingLevel == "proficient";
+    public bool IsLevelProfessional => TrainingLevel == "professional";
+
     // ── Step 3 — Previous volunteer ──────────────────────────────────────────
     [ObservableProperty] private bool? hasVolunteeredBefore;
     public bool IsYesPrev => HasVolunteeredBefore == true;
@@ -191,6 +198,17 @@ public partial class VolunteerRegisterViewModel : BaseViewModel
     // ── Skills ───────────────────────────────────────────────────────────────
     [RelayCommand]
     private void ToggleSkill(SelectableItem item) => item.IsSelected = !item.IsSelected;
+
+    // ── Training level ───────────────────────────────────────────────────────
+    [RelayCommand]
+    private void SetTrainingLevel(string level)
+    {
+        TrainingLevel = level;
+        OnPropertyChanged(nameof(IsLevelBeginner));
+        OnPropertyChanged(nameof(IsLevelTrainable));
+        OnPropertyChanged(nameof(IsLevelProficient));
+        OnPropertyChanged(nameof(IsLevelProfessional));
+    }
 
     // ── Previous volunteer ───────────────────────────────────────────────────
     [RelayCommand]
