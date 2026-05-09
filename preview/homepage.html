@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>معاينة – الصفحة الرئيسية</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#f2ede6;
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    max-width: 420px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* ══ HEADER ══ */
+  .header {
+    background: #1a3a5c;
+    padding: 52px 20px 0 20px;
+  }
+
+  /* Language switcher */
+  .lang-row {
+    display: flex;
+    justify-content: flex-start;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .lang-btn {
+    border: none; border-radius: 14px;
+    height: 28px; width: 36px;
+    font-size: 13px; font-weight: bold;
+    cursor: pointer; color: white;
+  }
+  .lang-btn.active  { background: #c8a53a; }
+  .lang-btn.outline { background: transparent; border: 1px solid rgba(255,255,255,0.25); font-size: 11px; }
+
+  /* Logo */
+  .logo-wrap {
+    display: flex; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .logo-circle {
+    width: 110px; height: 110px;
+    background: white;
+    border-radius: 50%;
+    border: 3px solid #c8a53a;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .logo-circle img { width: 96px; height: 96px; object-fit: contain; }
+  .logo-placeholder {
+    width: 96px; height: 96px;
+    background: linear-gradient(135deg, #1a3a5c, #c8a53a);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; color: white; font-weight: bold;
+  }
+
+  /* Title */
+  .header-title {
+    color: white;
+    font-size: 22px; font-weight: bold;
+    text-align: center;
+    line-height: 1.35;
+    margin: 0 10px 4px;
+  }
+  .header-subtitle {
+    color: #c8a53a;
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  /* Wave */
+  .wave {
+    background: #1a3a5c;
+    height: 36px;
+    position: relative;
+  }
+  .wave::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 100%;
+    background: #f2ede6;
+    border-radius: 28px 28px 0 0;
+  }
+
+  /* ══ CONTENT ══ */
+  .content {
+    background: #f2ede6;
+    padding: 0 18px 0;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+
+  /* Action cards */
+  .card {
+    border-radius: 18px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .12s;
+  }
+  .card:active { transform: scale(0.98); }
+  .card-inner {
+    display: grid;
+    grid-template-columns: 68px 1fr 28px;
+    padding: 14px 16px;
+    align-items: center;
+  }
+  .card-icon-box {
+    width: 52px; height: 52px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; color: white;
+    position: relative;
+  }
+  .badge {
+    position: absolute;
+    top: -6px; right: -4px;
+    background: #c8a53a;
+    border-radius: 8px;
+    padding: 2px 5px;
+    font-size: 9px; font-weight: bold; color: white;
+  }
+  .card-texts { padding: 0 14px; }
+  .card-title { color: white; font-size: 17px; font-weight: bold; margin-bottom: 3px; }
+  .card-sub   { color: rgba(255,255,255,0.65); font-size: 12px; }
+  .card-sub.green { color: #a0d4c0; }
+  .card-arrow { color: #c8a53a; font-size: 26px; font-weight: bold; text-align: center; }
+
+  .card-care       { background: #1e4a7a; }
+  .card-volunteer  { background: #1a3a5c; }
+  .card-contribute { background: #0a5c46; }
+
+  /* Secondary cards */
+  .secondary-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .sec-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    padding: 18px 16px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 8px;
+    cursor: pointer;
+    transition: transform .12s;
+  }
+  .sec-card:active { transform: scale(0.97); }
+  .sec-icon {
+    width: 44px; height: 44px;
+    background: #f0f4f8;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .sec-label {
+    color: #1a3a5c;
+    font-size: 13px; font-weight: bold;
+    text-align: center;
+  }
+
+  /* Contact */
+  .contact-section { margin-top: 8px; display: flex; flex-direction: column; gap: 10px; }
+  .contact-label {
+    color: #888; font-size: 12px; text-align: center;
+  }
+  .contact-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .contact-btn {
+    border-radius: 14px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    padding: 13px 14px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px; align-items: center;
+    cursor: pointer;
+    transition: transform .12s;
+  }
+  .contact-btn:active { transform: scale(0.97); }
+  .contact-btn .icon  { font-size: 18px; }
+  .contact-btn .label { color: white; font-size: 14px; font-weight: bold; text-align: center; }
+  .btn-wa { background: #25d366; }
+  .btn-fb { background: #1877f2; }
+  .fb-f   { color: white; font-size: 18px; font-weight: bold; }
+
+  /* Offline */
+  .offline {
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px; margin: 6px 0 4px;
+  }
+  .offline span { color: #999; font-size: 12px; }
+
+  /* Admin */
+  .admin-link {
+    color: #bbb; font-size: 11px;
+    text-align: center;
+    text-decoration: underline;
+    margin-bottom: 28px;
+    cursor: pointer;
+  }
+
+  .lang-btn.selected { background: #c8a53a; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="lang-row">
+    <button class="lang-btn selected" onclick="setLang('ar',this)">ع</button>
+    <button class="lang-btn outline" onclick="setLang('fr',this)">Fr</button>
+    <button class="lang-btn outline" onclick="setLang('en',this)">En</button>
+  </div>
+  <div class="logo-wrap">
+    <div class="logo-circle">
+      <div class="logo-placeholder">أم</div>
+    </div>
+  </div>
+  <div class="header-title" id="title">مشروع رعاية ونظافة المريض</div>
+  <div class="header-subtitle" id="subtitle">جمعية أصدقاء المريض – سكيكدة</div>
+</div>
+
+<div class="wave"></div>
+
+<div class="content">
+  <div class="card card-care">
+    <div class="card-inner">
+      <div class="card-icon-box">🏥</div>
+      <div class="card-texts">
+        <div class="card-title" id="care-btn">طلب مرافق</div>
+        <div class="card-sub" id="care-sub">رعاية · نظافة · مساعدة</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>
+
+  <div class="card card-volunteer">
+    <div class="card-inner">
+      <div class="card-icon-box">🤝</div>
+      <div class="card-texts">
+        <div class="card-title" id="vol-btn">تسجيل كمتطوع</div>
+        <div class="card-sub" id="vol-sub">انضم إلى فريق التطوع</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>
+
+  <div class="card card-contribute">
+    <div class="card-inner">
+      <div class="card-icon-box">
+        ♥
+        <span class="badge" id="badge">جديد</span>
+      </div>
+      <div class="card-texts">
+        <div class="card-title" id="contrib-btn">المساهمة في الجمعية</div>
+        <div class="card-sub green" id="contrib-sub">تبرع · هدية عينية · دعم مالي</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>
+
+  <div class="secondary-row">
+    <div class="sec-card">
+      <div class="sec-icon">👤</div>
+      <div class="sec-label" id="account">حسابي</div>
+    </div>
+    <div class="sec-card">
+      <div class="sec-icon">ℹ️</div>
+      <div class="sec-label" id="about">حول الجمعية</div>
+    </div>
+  </div>
+
+  <div class="contact-section">
+    <div class="contact-label" id="contact-us">تواصل معنا</div>
+    <div class="contact-row">
+      <div class="contact-btn btn-wa">
+        <span class="icon">💬</span>
+        <span class="label" id="wa">واتساب</span>
+      </div>
+      <div class="contact-btn btn-fb">
+        <span class="fb-f">f</span>
+        <span class="label" id="fb">فيسبوك</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="offline">
+    <span>📶</span>
+    <span id="offline">التطبيق يعمل بدون إنترنت</span>
+  </div>
+
+  <div class="admin-link" id="admin">دخول الإدارة</div>
+</div>
+
+<script>
+const strings = {
+  ar: { title:"مشروع رعاية ونظافة المريض", subtitle:"جمعية أصدقاء المريض – سكيكدة", care:"طلب مرافق", careSub:"رعاية · نظافة · مساعدة", vol:"تسجيل كمتطوع", volSub:"انضم إلى فريق التطوع", contrib:"المساهمة في الجمعية", contribSub:"تبرع · هدية عينية · دعم مالي", badge:"جديد", account:"حسابي", about:"حول الجمعية", contact:"تواصل معنا", wa:"واتساب", fb:"فيسبوك", offline:"التطبيق يعمل بدون إنترنت", admin:"دخول الإدارة" },
+  fr: { title:"Projet soins et hygiène du patient", subtitle:"Association Amis du Malade – Skikda", care:"Demander un accompagnant", careSub:"Soins · Hygiène · Assistance", vol:"Devenir bénévole", volSub:"Rejoignez l'équipe bénévole", contrib:"Contribuer à l'association", contribSub:"Don · Cadeau en nature · Soutien financier", badge:"Nouveau", account:"Mon compte", about:"L'association", contact:"Contactez-nous", wa:"WhatsApp", fb:"Facebook", offline:"L'application fonctionne hors ligne", admin:"Connexion Admin" },
+  en: { title:"Patient Care & Hygiene Project", subtitle:"Association Amis du Malade – Skikda", care:"Request a Companion", careSub:"Care · Hygiene · Assistance", vol:"Register as Volunteer", volSub:"Join the volunteer team", contrib:"Contribute to the Association", contribSub:"Donate · Gift in kind · Financial support", badge:"New", account:"My Account", about:"About Us", contact:"Contact Us", wa:"WhatsApp", fb:"Facebook", offline:"App works offline", admin:"Admin Login" }
+};
+function setLang(lang, btn) {
+  const s = strings[lang];
+  document.documentElement.dir = lang==='ar' ? 'rtl' : 'ltr';
+  ['title','subtitle','care-btn','care-sub','vol-btn','vol-sub','contrib-btn','contrib-sub','badge','account','about','contact-us','wa','fb','offline','admin'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.textContent = s[id.replace('-btn','').replace('-sub','Sub').replace('contact-us','contact').replace('contrib','contrib').replace('care-sub','careSub').replace('vol-sub','volSub').replace('care-btn','care').replace('vol-btn','vol').replace('contrib-btn','contrib')];
+  });
+  document.getElementById('title').textContent = s.title;
+  document.getElementById('subtitle').textContent = s.subtitle;
+  document.getElementById('care-btn').textContent = s.care;
+  document.getElementById('care-sub').textContent = s.careSub;
+  document.getElementById('vol-btn').textContent = s.vol;
+  document.getElementById('vol-sub').textContent = s.volSub;
+  document.getElementById('contrib-btn').textContent = s.contrib;
+  document.getElementById('contrib-sub').textContent = s.contribSub;
+  document.getElementById('badge').textContent = s.badge;
+  document.getElementById('account').textContent = s.account;
+  document.getElementById('about').textContent = s.about;
+  document.getElementById('contact-us').textContent = s.contact;
+  document.getElementById('wa').textContent = s.wa;
+  document.getElementById('fb').textContent = s.fb;
+  document.getElementById('offline').textContent = s.offline;
+  document.getElementById('admin').textContent = s.admin;
+  document.querySelectorAll('.lang-btn').forEach(b => { b.classList.remove('selected'); b.classList.add('outline'); });
+  btn.classList.remove('outline'); btn.classList.add('selected');
+}
+</script>
+</body>
+</html>
