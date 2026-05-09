@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AmisDuMaladeApp.ViewModels"
+             x:Class="AmisDuMaladeApp.Views.VolunteerRegisterPage"
+             x:DataType="vm:VolunteerRegisterViewModel"
+             FlowDirection="{Binding FlowDirection}"
+             BackgroundColor="#f4f6f9"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- ═══ HEADER ════════════════════════════════════════════════════ -->
+        <Grid Grid.Row="0" BackgroundColor="#1a3a5c" Padding="20,50,20,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <ImageButton Grid.Column="0"
+                         Source="arrow_back.png"
+                         Command="{Binding PrevStepCommand}"
+                         IsVisible="{Binding CanGoPrev}"
+                         BackgroundColor="Transparent"
+                         HeightRequest="24" WidthRequest="24"/>
+            <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="4">
+                <Label Text="{Binding TitleLabel}"
+                       TextColor="White" FontSize="16" FontAttributes="Bold"
+                       HorizontalOptions="Center"/>
+                <Label Text="{Binding StepIndicator}"
+                       TextColor="#c8a53a" FontSize="12"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- ═══ STEP PROGRESS BAR ════════════════════════════════════════ -->
+        <!-- (4 dots) -->
+        <HorizontalStackLayout Grid.Row="0" HorizontalOptions="Center"
+                                VerticalOptions="End" Spacing="8"
+                                Margin="0,0,0,8">
+            <!-- Each circle changes color based on CurrentStep -->
+        </HorizontalStackLayout>
+
+        <!-- ═══ FORM CONTENT ════════════════════════════════════════════ -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="16">
+
+                <!-- ── STEP 1: Personal Info ─────────────────────────── -->
+                <VerticalStackLayout IsVisible="{Binding IsStep1}" Spacing="12">
+                    <Border BackgroundColor="White" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 16" Padding="20">
+                        <VerticalStackLayout Spacing="16">
+
+                            <Label Text="{Binding Step1Label}"
+                                   TextColor="#1a3a5c" FontSize="15"
+                                   FontAttributes="Bold"/>
+                            <BoxView HeightRequest="2" BackgroundColor="#c8a53a"
+                                     HorizontalOptions="Start" WidthRequest="32"/>
+
+                            <!-- Full Name -->
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding FullNameLabel}"
+                                       TextColor="#1a3a5c" FontSize="13"/>
+                                <Border BackgroundColor="#f4f6f9"
+                                        StrokeShape="RoundRectangle 10"
+                                        StrokeThickness="1" Stroke="#dde3ea">
+                                    <Entry Text="{Binding FullName}"
+                                           Placeholder="{Binding FullNameLabel}"
+                                           BackgroundColor="Transparent"
+                                           Margin="8,0"/>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Phone -->
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding PhoneLabel}"
+                                       TextColor="#1a3a5c" FontSize="13"/>
+                                <Border BackgroundColor="#f4f6f9"
+                                        StrokeShape="RoundRectangle 10"
+                                        StrokeThickness="1" Stroke="#dde3ea">
+                                    <Entry Text="{Binding Phone}"
+                                           Placeholder="{Binding PhoneLabel}"
+                                           Keyboard="Telephone"
+                                           BackgroundColor="Transparent"
+                                           Margin="8,0"/>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Email -->
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding EmailLabel}"
+                                       TextColor="#1a3a5c" FontSize="13"/>
+                                <Border BackgroundColor="#f4f6f9"
+                                        StrokeShape="RoundRectangle 10"
+                                        StrokeThickness="1" Stroke="#dde3ea">
+                                    <Entry Text="{Binding Email}"
+                                           Placeholder="{Binding EmailLabel}"
+                                           Keyboard="Email"
+                                           BackgroundColor="Transparent"
+                                           Margin="8,0"/>
+                                </Border>
+                            </VerticalStackLayout>
+
+                            <!-- Municipality -->
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding MunicipalityLabel}"
+                                       TextColor="#1a3a5c" FontSize="13"/>
+                                <Border BackgroundColor="#f4f6f9"
+                                        StrokeShape="RoundRectangle 10"
+                                        StrokeThickness="1" Stroke="#dde3ea">
+                                    <Entry Text="{Binding Municipality}"
+                                           Placeholder="{Binding MunicipalityLabel}"
+                                           BackgroundColor="Transparent"
+                                           Margin="8,0"/>
+                                </Border>
+                            </VerticalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ── STEP 2: Availability ──────────────────────────── -->
+                <VerticalStackLayout IsVisible="{Binding IsStep2}" Spacing="12">
+                    <Border BackgroundColor="White" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 16" Padding="20">
+                        <VerticalStackLayout Spacing="14">
+                            <Label Text="{Binding Step2Label}"
+                                   TextColor="#1a3a5c" FontSize="15"
+                                   FontAttributes="Bold"/>
+                            <BoxView HeightRequest="2" BackgroundColor="#c8a53a"
+                                     HorizontalOptions="Start" WidthRequest="32"/>
+
+                            <Grid ColumnDefinitions="*,Auto" Padding="4,0">
+                                <Label Grid.Column="0" Text="{Binding CanHomeVisitLabel}"
+                                       TextColor="#333" FontSize="14"
+                                       VerticalOptions="Center"/>
+                                <Switch Grid.Column="1"
+                                        IsToggled="{Binding CanHomeVisit}"
+                                        OnColor="#1a3a5c"/>
+                            </Grid>
+                            <BoxView HeightRequest="1" BackgroundColor="#eee"/>
+
+                            <Grid ColumnDefinitions="*,Auto" Padding="4,0">
+                                <Label Grid.Column="0" Text="{Binding CanHospitalVisitLabel}"
+                                       TextColor="#333" FontSize="14"
+                                       VerticalOptions="Center"/>
+                                <Switch Grid.Column="1"
+                                        IsToggled="{Binding CanHospitalVisit}"
+                                        OnColor="#1a3a5c"/>
+                            </Grid>
+                            <BoxView HeightRequest="1" BackgroundColor="#eee"/>
+
+                            <Grid ColumnDefinitions="*,Auto" Padding="4,0">
+                                <Label Grid.Column="0" Text="{Binding CanNightPresenceLabel}"
+                                       TextColor="#333" FontSize="14"
+                                       VerticalOptions="Center"/>
+                                <Switch Grid.Column="1"
+                                        IsToggled="{Binding CanNightPresence}"
+                                        OnColor="#1a3a5c"/>
+                            </Grid>
+                            <BoxView HeightRequest="1" BackgroundColor="#eee"/>
+
+                            <Grid ColumnDefinitions="*,Auto" Padding="4,0">
+                                <Label Grid.Column="0" Text="{Binding HasTransportLabel}"
+                                       TextColor="#333" FontSize="14"
+                                       VerticalOptions="Center"/>
+                                <Switch Grid.Column="1"
+                                        IsToggled="{Binding HasTransportation}"
+                                        OnColor="#1a3a5c"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ── STEP 3: Skills (placeholder) ─────────────────── -->
+                <VerticalStackLayout IsVisible="{Binding IsStep3}" Spacing="12">
+                    <Border BackgroundColor="White" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 16" Padding="20">
+                        <VerticalStackLayout Spacing="14">
+                            <Label Text="{Binding Step3Label}"
+                                   TextColor="#1a3a5c" FontSize="15"
+                                   FontAttributes="Bold"/>
+                            <BoxView HeightRequest="2" BackgroundColor="#c8a53a"
+                                     HorizontalOptions="Start" WidthRequest="32"/>
+
+                            <!-- Skills will be loaded dynamically from API -->
+                            <Label Text="⚙ سيتم تحميل المهارات من الخادم"
+                                   TextColor="#888" FontSize="13"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ── STEP 4: Charter ───────────────────────────────── -->
+                <VerticalStackLayout IsVisible="{Binding IsStep4}" Spacing="12">
+                    <Border BackgroundColor="White" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 16" Padding="20">
+                        <VerticalStackLayout Spacing="14">
+                            <Label Text="{Binding Step4Label}"
+                                   TextColor="#1a3a5c" FontSize="15"
+                                   FontAttributes="Bold"/>
+                            <BoxView HeightRequest="2" BackgroundColor="#c8a53a"
+                                     HorizontalOptions="Start" WidthRequest="32"/>
+
+                            <!-- Charter text -->
+                            <Border BackgroundColor="#f0f4f8"
+                                    StrokeShape="RoundRectangle 10"
+                                    StrokeThickness="0" Padding="16">
+                                <Label Text="ميثاق المتطوع: أتعهد بالالتزام بقيم الجمعية، واحترام المرضى وذويهم، والحفاظ على سرية المعلومات، والتطوع بنية خالصة لخدمة المجتمع."
+                                       TextColor="#444" FontSize="13"
+                                       LineHeight="1.7"/>
+                            </Border>
+
+                            <Grid ColumnDefinitions="Auto,*">
+                                <CheckBox Grid.Column="0"
+                                          IsChecked="{Binding CharterAccepted}"
+                                          Color="#1a3a5c"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding CharterLabel}"
+                                       TextColor="#1a3a5c" FontSize="14"
+                                       VerticalOptions="Center"
+                                       Margin="8,0"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ═══ BOTTOM NAVIGATION ════════════════════════════════════════ -->
+        <Grid Grid.Row="2" Padding="20,12,20,28"
+              BackgroundColor="White"
+              ColumnDefinitions="*,*">
+
+            <Button Grid.Column="0"
+                    Text="{Binding PrevLabel}"
+                    Command="{Binding PrevStepCommand}"
+                    IsVisible="{Binding CanGoPrev}"
+                    BackgroundColor="Transparent"
+                    BorderColor="#1a3a5c" BorderWidth="1.5"
+                    TextColor="#1a3a5c"
+                    CornerRadius="12"
+                    HeightRequest="48"
+                    Margin="0,0,8,0"/>
+
+            <Button Grid.Column="1"
+                    Text="{Binding NextLabel}"
+                    Command="{Binding NextStepCommand}"
+                    IsVisible="{Binding CanGoNext}"
+                    BackgroundColor="#1a3a5c"
+                    TextColor="White"
+                    CornerRadius="12"
+                    HeightRequest="48"
+                    Margin="8,0,0,0"/>
+
+            <Button Grid.Column="0" Grid.ColumnSpan="2"
+                    Text="{Binding SubmitLabel}"
+                    Command="{Binding SubmitCommand}"
+                    IsVisible="{Binding CanSubmit}"
+                    BackgroundColor="#c8a53a"
+                    TextColor="#1a3a5c"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="48"/>
+        </Grid>
+
+    </Grid>
+</ContentPage>
