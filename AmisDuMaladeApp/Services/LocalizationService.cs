@@ -14,31 +14,37 @@ public class LocalizationService
     {
         ["ar"] = new()
         {
-            // App
             ["app_title"]           = "أصدقاء المريض – سكيكدة",
-            // Home
             ["home_welcome"]        = "مرحباً بكم",
             ["home_subtitle"]       = "جمعية أصدقاء المريض – سكيكدة",
-            ["home_volunteer_btn"]  = "تسجيل كمتطوع",
-            ["home_care_btn"]       = "طلب مرافق",
+            ["home_volunteer_btn"]  = "التسجيل كمتطوع",
+            ["home_care_btn"]       = "طلب مرافق للمريض",
             ["home_contribute_btn"] = "المساهمة في الجمعية",
             ["home_about"]          = "من نحن؟",
             ["home_about_text"]     = "جمعية أصدقاء المريض بسكيكدة تهدف إلى مرافقة المرضى وتقديم الدعم لهم ولذويهم.",
+            ["home_project_title"]  = "مشروع رعاية ونظافة المريض",
+            ["care_subtitle"]       = "رعاية · نظافة · مساعدة",
+            ["volunteer_subtitle"]  = "انضم إلى فريق التطوع",
+            ["contribute_subtitle"] = "تبرع · هدية عينية · دعم مالي",
+            ["new_badge"]           = "جديد",
+            ["my_account"]          = "حسابي",
+            ["about_association"]   = "حول الجمعية",
+            ["contact_us"]          = "تواصل معنا",
+            ["whatsapp"]            = "واتساب",
+            ["facebook"]            = "فيسبوك",
+            ["offline_support"]     = "التطبيق يعمل بدون إنترنت",
             ["admin_login"]         = "دخول الإدارة",
-            // Volunteer
             ["volunteer_title"]     = "تسجيل متطوع جديد",
             ["volunteer_step1"]     = "المعلومات الشخصية",
             ["volunteer_step2"]     = "أوقات التوفر",
             ["volunteer_step3"]     = "المهارات",
             ["volunteer_step4"]     = "الوثائق والميثاق",
             ["charter_accept"]      = "أقبل ميثاق الجمعية",
-            // Care Request
             ["care_request_title"]  = "طلب مرافق",
             ["care_step1"]          = "بيانات الطالب",
             ["care_step2"]          = "بيانات المريض",
             ["care_step3"]          = "تفاصيل الطلب",
             ["care_step4"]          = "نوع الخدمة",
-            // Fields
             ["full_name"]           = "الاسم الكامل",
             ["phone"]               = "رقم الهاتف",
             ["email"]               = "البريد الإلكتروني",
@@ -59,12 +65,10 @@ public class LocalizationService
             ["has_transportation"]  = "لديه وسيلة نقل",
             ["needs_transport"]     = "يحتاج دعم النقل",
             ["volunteer_category"]  = "فئة التطوع",
-            // Login
             ["login_title"]         = "تسجيل دخول الإدارة",
             ["login_email"]         = "البريد الإلكتروني",
             ["login_password"]      = "كلمة المرور",
             ["login_btn"]           = "دخول",
-            // Dashboard
             ["dashboard_title"]     = "لوحة التحكم",
             ["dashboard_volunteers"]= "المتطوعون",
             ["dashboard_requests"]  = "الطلبات",
@@ -75,7 +79,6 @@ public class LocalizationService
             ["dashboard_pending"]   = "معلّق",
             ["recent_activity"]     = "آخر الأنشطة",
             ["logout"]              = "تسجيل الخروج",
-            // Common
             ["next"]                = "التالي",
             ["previous"]            = "السابق",
             ["submit"]              = "إرسال",
@@ -96,11 +99,22 @@ public class LocalizationService
             ["app_title"]           = "Amis du Malade – Skikda",
             ["home_welcome"]        = "Bienvenue",
             ["home_subtitle"]       = "Association Amis du Malade – Skikda",
-            ["home_volunteer_btn"]  = "Devenir bénévole",
+            ["home_volunteer_btn"]  = "S'inscrire comme bénévole",
             ["home_care_btn"]       = "Demander un accompagnant",
             ["home_contribute_btn"] = "Contribuer à l'association",
             ["home_about"]          = "Qui sommes-nous ?",
             ["home_about_text"]     = "L'association Amis du Malade de Skikda accompagne les malades et soutient leurs familles.",
+            ["home_project_title"]  = "Projet soins et hygiène du patient",
+            ["care_subtitle"]       = "Soins · Hygiène · Assistance",
+            ["volunteer_subtitle"]  = "Rejoignez l'équipe bénévole",
+            ["contribute_subtitle"] = "Don · Cadeau en nature · Soutien financier",
+            ["new_badge"]           = "Nouveau",
+            ["my_account"]          = "Mon compte",
+            ["about_association"]   = "L'association",
+            ["contact_us"]          = "Contactez-nous",
+            ["whatsapp"]            = "WhatsApp",
+            ["facebook"]            = "Facebook",
+            ["offline_support"]     = "L'application fonctionne hors ligne",
             ["admin_login"]         = "Connexion Admin",
             ["volunteer_title"]     = "Inscription bénévole",
             ["volunteer_step1"]     = "Informations personnelles",
@@ -172,6 +186,17 @@ public class LocalizationService
             ["home_contribute_btn"] = "Contribute to the Association",
             ["home_about"]          = "About Us",
             ["home_about_text"]     = "The Friends of the Patient Association in Skikda accompanies patients and supports their families.",
+            ["home_project_title"]  = "Patient Care & Hygiene Project",
+            ["care_subtitle"]       = "Care · Hygiene · Assistance",
+            ["volunteer_subtitle"]  = "Join the volunteer team",
+            ["contribute_subtitle"] = "Donate · Gift in kind · Financial support",
+            ["new_badge"]           = "New",
+            ["my_account"]          = "My Account",
+            ["about_association"]   = "About Us",
+            ["contact_us"]          = "Contact Us",
+            ["whatsapp"]            = "WhatsApp",
+            ["facebook"]            = "Facebook",
+            ["offline_support"]     = "App works offline",
             ["admin_login"]         = "Admin Login",
             ["volunteer_title"]     = "New Volunteer Registration",
             ["volunteer_step1"]     = "Personal Information",
@@ -244,7 +269,6 @@ public class LocalizationService
     {
         if (Strings.TryGetValue(CurrentLanguage, out var dict) && dict.TryGetValue(key, out var val))
             return val;
-        // Fallback to Arabic
         if (Strings["ar"].TryGetValue(key, out var arVal))
             return arVal;
         return key;

@@ -5,213 +5,228 @@
              x:Class="AmisDuMaladeApp.Views.HomePage"
              x:DataType="vm:HomeViewModel"
              FlowDirection="{Binding FlowDirection}"
-             BackgroundColor="#f4f6f9"
+             BackgroundColor="#f2ede6"
              Shell.NavBarIsVisible="False">
 
     <ScrollView>
         <VerticalStackLayout Spacing="0">
 
-            <!-- ═══ HEADER ════════════════════════════════════════════════ -->
-            <Grid BackgroundColor="#1a3a5c" Padding="20,50,20,24">
+            <!-- HEADER -->
+            <Grid BackgroundColor="#1a3a5c" Padding="20,52,20,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="32"/>
                 </Grid.RowDefinitions>
 
-                <!-- Language switcher top-right (RTL: top-left) -->
-                <HorizontalStackLayout Grid.Row="0" HorizontalOptions="End" Spacing="6">
-                    <Button Text="ع"
-                            Command="{Binding SetLanguageCommand}"
-                            CommandParameter="ar"
-                            BackgroundColor="#c8a53a"
-                            TextColor="White"
+                <!-- Language switcher -->
+                <HorizontalStackLayout Grid.Row="0" HorizontalOptions="End" Spacing="6" Margin="0,0,0,12">
+                    <Button Text="ع" Command="{Binding SetLanguageCommand}" CommandParameter="ar"
+                            BackgroundColor="#c8a53a" TextColor="White"
                             FontSize="13" FontAttributes="Bold"
-                            CornerRadius="14"
-                            HeightRequest="28" WidthRequest="34"
-                            Padding="0"/>
-                    <Button Text="Fr"
-                            Command="{Binding SetLanguageCommand}"
-                            CommandParameter="fr"
-                            BackgroundColor="Transparent"
-                            BorderColor="#c8a53a" BorderWidth="1"
-                            TextColor="White"
-                            FontSize="11"
-                            CornerRadius="14"
-                            HeightRequest="28" WidthRequest="34"
-                            Padding="0"/>
-                    <Button Text="En"
-                            Command="{Binding SetLanguageCommand}"
-                            CommandParameter="en"
-                            BackgroundColor="Transparent"
-                            BorderColor="#c8a53a" BorderWidth="1"
-                            TextColor="White"
-                            FontSize="11"
-                            CornerRadius="14"
-                            HeightRequest="28" WidthRequest="34"
-                            Padding="0"/>
+                            CornerRadius="14" HeightRequest="28" WidthRequest="36" Padding="0"/>
+                    <Button Text="Fr" Command="{Binding SetLanguageCommand}" CommandParameter="fr"
+                            BackgroundColor="Transparent" BorderColor="#ffffff40" BorderWidth="1"
+                            TextColor="White" FontSize="11"
+                            CornerRadius="14" HeightRequest="28" WidthRequest="36" Padding="0"/>
+                    <Button Text="En" Command="{Binding SetLanguageCommand}" CommandParameter="en"
+                            BackgroundColor="Transparent" BorderColor="#ffffff40" BorderWidth="1"
+                            TextColor="White" FontSize="11"
+                            CornerRadius="14" HeightRequest="28" WidthRequest="36" Padding="0"/>
                 </HorizontalStackLayout>
 
-                <!-- Logo + Title -->
-                <VerticalStackLayout Grid.Row="1" HorizontalOptions="Center"
-                                     Spacing="12" Margin="0,16,0,0">
-                    <Border BackgroundColor="White"
-                            StrokeShape="Ellipse"
-                            StrokeThickness="3"
-                            Stroke="#c8a53a"
-                            HeightRequest="110" WidthRequest="110"
-                            HorizontalOptions="Center">
-                        <Image Source="logo.png"
-                               HeightRequest="90" WidthRequest="90"
-                               Aspect="AspectFit"
-                               HorizontalOptions="Center"
-                               VerticalOptions="Center"/>
-                    </Border>
-                    <Label Text="{Binding SubtitleText}"
-                           TextColor="#c8a53a"
-                           FontSize="17" FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="{Binding WelcomeText}"
-                           TextColor="White"
-                           FontSize="13"
-                           HorizontalOptions="Center"/>
-                </VerticalStackLayout>
-            </Grid>
-
-            <!-- ═══ MAIN ACTION BUTTONS ═══════════════════════════════════ -->
-            <VerticalStackLayout Padding="20,24,20,8" Spacing="14">
-
-                <!-- Volunteer button -->
-                <Border BackgroundColor="#1a3a5c"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 16"
-                        Shadow="{Shadow Brush=Black, Offset='0,3', Radius=8, Opacity=0.15}">
-                    <Grid Padding="18,16" ColumnDefinitions="48,*,24">
-                        <Border Grid.Column="0"
-                                BackgroundColor="#c8a53a"
-                                StrokeShape="RoundRectangle 10"
-                                StrokeThickness="0"
-                                HeightRequest="42" WidthRequest="42">
-                            <Label Text="🤝" FontSize="22"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
-                        </Border>
-                        <VerticalStackLayout Grid.Column="1" Spacing="2" Margin="14,0">
-                            <Label Text="{Binding VolunteerBtnText}"
-                                   TextColor="White"
-                                   FontSize="15" FontAttributes="Bold"/>
-                        </VerticalStackLayout>
-                        <Label Grid.Column="2" Text="›"
-                               TextColor="#c8a53a" FontSize="24"
-                               VerticalOptions="Center"/>
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding GoToVolunteerRegisterCommand}"/>
-                        </Grid.GestureRecognizers>
-                    </Grid>
+                <!-- Logo -->
+                <Border Grid.Row="1" BackgroundColor="White" StrokeShape="Ellipse"
+                        StrokeThickness="3" Stroke="#c8a53a"
+                        HeightRequest="110" WidthRequest="110"
+                        HorizontalOptions="Center" Margin="0,0,0,16"
+                        Shadow="{Shadow Brush=Black, Offset='0,4', Radius=12, Opacity=0.3}">
+                    <Image Source="logo.png" HeightRequest="96" WidthRequest="96"
+                           Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
                 </Border>
 
-                <!-- Care request button -->
-                <Border BackgroundColor="#0a5c46"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 16"
-                        Shadow="{Shadow Brush=Black, Offset='0,3', Radius=8, Opacity=0.15}">
-                    <Grid Padding="18,16" ColumnDefinitions="48,*,24">
-                        <Border Grid.Column="0"
-                                BackgroundColor="#c8a53a"
-                                StrokeShape="RoundRectangle 10"
-                                StrokeThickness="0"
-                                HeightRequest="42" WidthRequest="42">
-                            <Label Text="🏥" FontSize="22"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
+                <!-- Title -->
+                <Label Grid.Row="2" Text="{Binding ProjectTitleText}"
+                       TextColor="White" FontSize="22" FontAttributes="Bold"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                       LineHeight="1.3" Margin="10,0"/>
+
+                <!-- Subtitle -->
+                <Label Grid.Row="2" Text="{Binding SubtitleText}"
+                       TextColor="#c8a53a" FontSize="13"
+                       HorizontalOptions="Center" Margin="0,42,0,0"/>
+
+                <BoxView Grid.Row="3" Color="Transparent"/>
+            </Grid>
+
+            <!-- Wave transition -->
+            <Grid BackgroundColor="#1a3a5c" HeightRequest="36">
+                <Border BackgroundColor="#f2ede6" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 28,28,0,0"
+                        VerticalOptions="Fill" HorizontalOptions="Fill"/>
+            </Grid>
+
+            <!-- MAIN CONTENT -->
+            <VerticalStackLayout BackgroundColor="#f2ede6" Padding="18,0,18,0" Spacing="12">
+
+                <!-- طلب مرافق للمريض -->
+                <Border StrokeThickness="0" StrokeShape="RoundRectangle 18"
+                        BackgroundColor="#1e4a7a"
+                        Shadow="{Shadow Brush=Black, Offset='0,4', Radius=10, Opacity=0.18}">
+                    <Grid ColumnDefinitions="68,*,28" Padding="14,16">
+                        <Border Grid.Column="0" BackgroundColor="#ffffff18"
+                                StrokeShape="RoundRectangle 14" StrokeThickness="0"
+                                HeightRequest="52" WidthRequest="52">
+                            <Label Text="👥" FontSize="26" TextColor="White"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
-                        <VerticalStackLayout Grid.Column="1" Spacing="2" Margin="14,0">
-                            <Label Text="{Binding CareBtnText}"
-                                   TextColor="White"
-                                   FontSize="15" FontAttributes="Bold"/>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="3" Margin="14,0">
+                            <Label Text="{Binding CareBtnText}" TextColor="White" FontSize="17" FontAttributes="Bold"/>
+                            <Label Text="{Binding CareSubtitleText}" TextColor="#b0c8e8" FontSize="12"/>
                         </VerticalStackLayout>
-                        <Label Grid.Column="2" Text="›"
-                               TextColor="#c8a53a" FontSize="24"
-                               VerticalOptions="Center"/>
+                        <Label Grid.Column="2" Text="›" TextColor="#c8a53a" FontSize="26" FontAttributes="Bold" VerticalOptions="Center"/>
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding GoToCareRequestCommand}"/>
                         </Grid.GestureRecognizers>
                     </Grid>
                 </Border>
 
-                <!-- Contribute button -->
-                <Border BackgroundColor="#c8a53a"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 16"
-                        Shadow="{Shadow Brush=Black, Offset='0,3', Radius=8, Opacity=0.15}">
-                    <Grid Padding="18,16" ColumnDefinitions="48,*,24">
-                        <Border Grid.Column="0"
-                                BackgroundColor="#1a3a5c"
-                                StrokeShape="RoundRectangle 10"
-                                StrokeThickness="0"
-                                HeightRequest="42" WidthRequest="42">
-                            <Label Text="❤️" FontSize="22"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
+                <!-- التسجيل كمتطوع -->
+                <Border StrokeThickness="0" StrokeShape="RoundRectangle 18"
+                        BackgroundColor="#1a3a5c"
+                        Shadow="{Shadow Brush=Black, Offset='0,4', Radius=10, Opacity=0.18}">
+                    <Grid ColumnDefinitions="68,*,28" Padding="14,16">
+                        <Border Grid.Column="0" BackgroundColor="#ffffff18"
+                                StrokeShape="RoundRectangle 14" StrokeThickness="0"
+                                HeightRequest="52" WidthRequest="52">
+                            <Label Text="🙋" FontSize="26" TextColor="White"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
-                        <VerticalStackLayout Grid.Column="1" Spacing="2" Margin="14,0">
-                            <Label Text="{Binding ContributeBtnText}"
-                                   TextColor="#1a3a5c"
-                                   FontSize="15" FontAttributes="Bold"/>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="3" Margin="14,0">
+                            <Label Text="{Binding VolunteerBtnText}" TextColor="White" FontSize="17" FontAttributes="Bold"/>
+                            <Label Text="{Binding VolunteerSubText}" TextColor="#b0c8e8" FontSize="12"/>
                         </VerticalStackLayout>
-                        <Label Grid.Column="2" Text="›"
-                               TextColor="#1a3a5c" FontSize="24"
-                               VerticalOptions="Center"/>
+                        <Label Grid.Column="2" Text="›" TextColor="#c8a53a" FontSize="26" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToVolunteerRegisterCommand}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Border>
+
+                <!-- المساهمة في الجمعية + جديد badge -->
+                <Border StrokeThickness="0" StrokeShape="RoundRectangle 18"
+                        BackgroundColor="#0a5c46"
+                        Shadow="{Shadow Brush=Black, Offset='0,4', Radius=10, Opacity=0.18}">
+                    <Grid ColumnDefinitions="68,*,28" Padding="14,16">
+                        <Grid Grid.Column="0">
+                            <Border BackgroundColor="#ffffff18" StrokeShape="RoundRectangle 14"
+                                    StrokeThickness="0" HeightRequest="52" WidthRequest="52">
+                                <Label Text="♥" FontSize="26" TextColor="White"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Border BackgroundColor="#c8a53a" StrokeShape="RoundRectangle 8"
+                                    StrokeThickness="0" HorizontalOptions="Start" VerticalOptions="Start"
+                                    Padding="5,2" Margin="-4,-6,0,0">
+                                <Label Text="{Binding NewBadgeText}" TextColor="White" FontSize="9" FontAttributes="Bold"/>
+                            </Border>
+                        </Grid>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="3" Margin="14,0">
+                            <Label Text="{Binding ContributeBtnText}" TextColor="White" FontSize="17" FontAttributes="Bold"/>
+                            <Label Text="{Binding ContributeSubText}" TextColor="#a0d4c0" FontSize="12"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="›" TextColor="#c8a53a" FontSize="26" FontAttributes="Bold" VerticalOptions="Center"/>
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding GoToContributeCommand}"/>
                         </Grid.GestureRecognizers>
                     </Grid>
                 </Border>
 
-            </VerticalStackLayout>
+                <!-- Secondary cards: حسابي + حول الجمعية -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,4,0,0">
+                    <Border Grid.Column="0" BackgroundColor="White" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 16"
+                            Shadow="{Shadow Brush=Black, Offset='0,2', Radius=6, Opacity=0.08}">
+                        <VerticalStackLayout Padding="16,18" HorizontalOptions="Center" Spacing="8">
+                            <Border BackgroundColor="#f0f4f8" StrokeShape="Ellipse" StrokeThickness="0"
+                                    HeightRequest="44" WidthRequest="44" HorizontalOptions="Center">
+                                <Label Text="👤" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="{Binding MyAccountText}" TextColor="#1a3a5c"
+                                   FontSize="13" FontAttributes="Bold" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToMyAccountCommand}"/>
+                        </Border.GestureRecognizers>
+                    </Border>
 
-            <!-- ═══ ABOUT SECTION ════════════════════════════════════════ -->
-            <Border Margin="20,8,20,8"
-                    BackgroundColor="White"
-                    StrokeThickness="0"
-                    StrokeShape="RoundRectangle 16"
-                    Shadow="{Shadow Brush=Black, Offset='0,2', Radius=6, Opacity=0.08}">
-                <VerticalStackLayout Padding="20">
-                    <Label Text="{Binding AboutText}"
-                           TextColor="#1a3a5c"
-                           FontSize="15" FontAttributes="Bold"/>
-                    <BoxView HeightRequest="2" BackgroundColor="#c8a53a"
-                             HorizontalOptions="Start" WidthRequest="36"
-                             Margin="0,6,0,10"/>
-                    <Label Text="{Binding AboutBodyText}"
-                           TextColor="#555555"
-                           FontSize="13"
-                           LineHeight="1.7"/>
+                    <Border Grid.Column="1" BackgroundColor="White" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 16"
+                            Shadow="{Shadow Brush=Black, Offset='0,2', Radius=6, Opacity=0.08}">
+                        <VerticalStackLayout Padding="16,18" HorizontalOptions="Center" Spacing="8">
+                            <Border BackgroundColor="#f0f4f8" StrokeShape="Ellipse" StrokeThickness="0"
+                                    HeightRequest="44" WidthRequest="44" HorizontalOptions="Center">
+                                <Label Text="ℹ️" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="{Binding AboutText}" TextColor="#1a3a5c"
+                                   FontSize="13" FontAttributes="Bold" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToAboutCommand}"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+
+                <!-- Contact section -->
+                <VerticalStackLayout Spacing="10" Margin="0,8,0,0">
+                    <Label Text="{Binding ContactUsText}" TextColor="#888" FontSize="12" HorizontalOptions="Center"/>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Border Grid.Column="0" BackgroundColor="#25d366" StrokeThickness="0"
+                                StrokeShape="RoundRectangle 14"
+                                Shadow="{Shadow Brush=Black, Offset='0,3', Radius=8, Opacity=0.15}">
+                            <Grid ColumnDefinitions="Auto,*" Padding="14,13">
+                                <Label Grid.Column="0" Text="💬" FontSize="18" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding WhatsAppText}" TextColor="White"
+                                       FontSize="14" FontAttributes="Bold"
+                                       VerticalOptions="Center" HorizontalOptions="Center"/>
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenWhatsAppCommand}"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                        <Border Grid.Column="1" BackgroundColor="#1877f2" StrokeThickness="0"
+                                StrokeShape="RoundRectangle 14"
+                                Shadow="{Shadow Brush=Black, Offset='0,3', Radius=8, Opacity=0.15}">
+                            <Grid ColumnDefinitions="Auto,*" Padding="14,13">
+                                <Label Grid.Column="0" Text="f" TextColor="White"
+                                       FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding FacebookText}" TextColor="White"
+                                       FontSize="14" FontAttributes="Bold"
+                                       VerticalOptions="Center" HorizontalOptions="Center"/>
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenFacebookCommand}"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
                 </VerticalStackLayout>
-            </Border>
 
-            <!-- ═══ ADMIN LOGIN LINK ══════════════════════════════════════ -->
-            <Label Text="{Binding AdminLoginText}"
-                   TextColor="#1a3a5c"
-                   FontSize="13"
-                   TextDecorations="Underline"
-                   HorizontalOptions="Center"
-                   Margin="0,8,0,32">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoToAdminLoginCommand}"/>
-                </Label.GestureRecognizers>
-            </Label>
+                <!-- Offline indicator -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,6,0,4">
+                    <Label Text="📶" FontSize="13" VerticalOptions="Center"/>
+                    <Label Text="{Binding OfflineText}" TextColor="#999" FontSize="12" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
 
+                <!-- Admin login (discreet) -->
+                <Label Text="{Binding AdminLoginText}" TextColor="#bbb" FontSize="11"
+                       TextDecorations="Underline" HorizontalOptions="Center" Margin="0,0,0,28">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToAdminLoginCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
-
-    <!-- Loading overlay -->
-    <ContentPage.Triggers>
-        <DataTrigger TargetType="ContentPage"
-                     Binding="{Binding IsBusy}"
-                     Value="True">
-            <Setter Property="IsEnabled" Value="False"/>
-        </DataTrigger>
-    </ContentPage.Triggers>
 
 </ContentPage>
