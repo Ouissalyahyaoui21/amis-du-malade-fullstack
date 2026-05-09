@@ -23,10 +23,12 @@ public static class MauiProgram
         builder.Services.AddSingleton<ApiService>();
 
         // ── ViewModels ────────────────────────────────────────────────────────
+        builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<VolunteerRegisterViewModel>();
         builder.Services.AddTransient<CareRequestViewModel>();
 
         // ── Pages ─────────────────────────────────────────────────────────────
+        builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<VolunteerRegisterPage>();
         builder.Services.AddTransient<CareRequestPage>();
 
