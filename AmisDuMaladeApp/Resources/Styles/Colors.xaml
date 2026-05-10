@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ── Brand Colors ─────────────────────────────────────────────────── -->
+    <Color x:Key="NavyBlue">#1a3a5c</Color>
+    <Color x:Key="Gold">#c8a53a</Color>
+    <Color x:Key="Green">#0a5c46</Color>
+
+    <!-- ── Background ───────────────────────────────────────────────────── -->
+    <Color x:Key="PageBackground">#f4f6f9</Color>
+    <Color x:Key="CardBackground">#ffffff</Color>
+    <Color x:Key="InputBackground">#f4f6f9</Color>
+    <Color x:Key="BorderColor">#dde3ea</Color>
+
+    <!-- ── Text ─────────────────────────────────────────────────────────── -->
+    <Color x:Key="PrimaryText">#1a3a5c</Color>
+    <Color x:Key="SecondaryText">#555555</Color>
+    <Color x:Key="MutedText">#999999</Color>
+    <Color x:Key="WhiteText">#ffffff</Color>
+    <Color x:Key="GoldText">#c8a53a</Color>
+
+    <!-- ── Status Colors ────────────────────────────────────────────────── -->
+    <Color x:Key="ErrorRed">#e53935</Color>
+    <Color x:Key="SuccessGreen">#2e7d32</Color>
+    <Color x:Key="WarningOrange">#f57c00</Color>
+
+    <!-- ── Semantic (light/dark system) ─────────────────────────────────── -->
+    <Color x:Key="Primary">#1a3a5c</Color>
+    <Color x:Key="PrimaryDark">#0f2238</Color>
+    <Color x:Key="PrimaryDarkText">#ffffff</Color>
+    <Color x:Key="Secondary">#c8a53a</Color>
+    <Color x:Key="SecondaryDark">#a07c1e</Color>
+    <Color x:Key="SecondaryDarkText">#ffffff</Color>
+    <Color x:Key="Tertiary">#0a5c46</Color>
+    <Color x:Key="White">#ffffff</Color>
+    <Color x:Key="Black">#000000</Color>
+    <Color x:Key="Magenta">#D600AA</Color>
+    <Color x:Key="MidnightBlue">#190649</Color>
+    <Color x:Key="OffBlack">#1f1f1f</Color>
+    <Color x:Key="OffWhite">#f5f5f5</Color>
+    <Color x:Key="Gray100">#e1e1e1</Color>
+    <Color x:Key="Gray200">#c8c8c8</Color>
+    <Color x:Key="Gray300">#acacac</Color>
+    <Color x:Key="Gray400">#919191</Color>
+    <Color x:Key="Gray500">#6e6e6e</Color>
+    <Color x:Key="Gray600">#404040</Color>
+    <Color x:Key="Gray900">#212121</Color>
+    <Color x:Key="Gray950">#141414</Color>
+
+</ResourceDictionary>
