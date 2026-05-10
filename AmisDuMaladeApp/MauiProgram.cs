@@ -18,18 +18,18 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf",  "OpenSansSemibold");
             });
 
-        // ── Services ─────────────────────────────────────────────────────────
+        // ── Services ──────────────────────────────────────────────────
         builder.Services.AddSingleton<LocalizationService>();
         builder.Services.AddSingleton<ApiService>();
 
-        // ── ViewModels ────────────────────────────────────────────────────────
+        // ── ViewModels ────────────────────────────────────────────
         builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<VolunteerRegisterViewModel>();
         builder.Services.AddTransient<CareRequestViewModel>();
         builder.Services.AddTransient<ContributeViewModel>();
         builder.Services.AddTransient<AdminLoginViewModel>();
 
-        // ── Pages ─────────────────────────────────────────────────────────────
+        // ── Pages ─────────────────────────────────────────────────
         builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<VolunteerRegisterPage>();
         builder.Services.AddTransient<CareRequestPage>();

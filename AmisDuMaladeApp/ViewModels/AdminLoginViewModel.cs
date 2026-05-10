@@ -6,13 +6,13 @@ namespace AmisDuMaladeApp.ViewModels;
 
 public partial class AdminLoginViewModel : BaseViewModel
 {
-    // ── Tab ──────────────────────────────────────────────────────────────────
+    // ── Tab ────────────────────────────────────────────
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsUsernameTab))]
     private bool isEmailTab = true;
     public bool IsUsernameTab => !IsEmailTab;
 
-    // ── Fields ───────────────────────────────────────────────────────────────
+    // ── Fields ───────────────────────────────────────
     [ObservableProperty] private string email    = "";
     [ObservableProperty] private string username = "";
     [ObservableProperty] private string password = "";
@@ -27,43 +27,43 @@ public partial class AdminLoginViewModel : BaseViewModel
 
     [ObservableProperty] private bool rememberMe = true;
 
-    // ── Error / lock state ───────────────────────────────────────────────────
+    // ── Error / lock state ───────────────────────────────────
     [ObservableProperty] private bool   hasLoginError;
     [ObservableProperty] private string loginErrorText      = "";
     [ObservableProperty] private bool   showAttemptsWarning;
     [ObservableProperty] private string attemptsWarningText = "";
     [ObservableProperty] private bool   isLocked;
 
-    // ── Dialog ───────────────────────────────────────────────────────────────
+    // ── Dialog ────────────────────────────────────────
     [ObservableProperty] private bool showForgotDialog;
 
     private int _failedAttempts;
 
     public AdminLoginViewModel(LocalizationService loc) : base(loc) { }
 
-    // ── Tab commands ─────────────────────────────────────────────────────────
+    // ── Tab commands ────────────────────────────────────
     [RelayCommand]
     private void SetEmailTab()    { IsEmailTab = true;  ClearLoginErrors(); }
 
     [RelayCommand]
     private void SetUsernameTab() { IsEmailTab = false; ClearLoginErrors(); }
 
-    // ── Password toggle ──────────────────────────────────────────────────────
+    // ── Password toggle ─────────────────────────────────
     [RelayCommand]
     private void TogglePassword() => IsPasswordVisible = !IsPasswordVisible;
 
-    // ── Remember me ──────────────────────────────────────────────────────────
+    // ── Remember me ────────────────────────────────────
     [RelayCommand]
     private void ToggleRememberMe() => RememberMe = !RememberMe;
 
-    // ── Forgot password dialog ────────────────────────────────────────────────
+    // ── Forgot password dialog ────────────────────────────
     [RelayCommand]
     private void ShowForgotPassword() => ShowForgotDialog = true;
 
     [RelayCommand]
     private void CloseForgotDialog() => ShowForgotDialog = false;
 
-    // ── Login ────────────────────────────────────────────────────────────────
+    // ── Login ────────────────────────────────────────
     [RelayCommand]
     private async Task LoginAsync()
     {
