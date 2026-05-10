@@ -26,11 +26,13 @@ public static class MauiProgram
         builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<VolunteerRegisterViewModel>();
         builder.Services.AddTransient<CareRequestViewModel>();
+        builder.Services.AddTransient<ContributeViewModel>();
 
         // ── Pages ─────────────────────────────────────────────────────────────
         builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<VolunteerRegisterPage>();
         builder.Services.AddTransient<CareRequestPage>();
+        builder.Services.AddTransient<ContributePage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

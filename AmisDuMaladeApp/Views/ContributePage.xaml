@@ -1,0 +1,1086 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AmisDuMaladeApp.Views.ContributePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AmisDuMaladeApp.ViewModels"
+    x:DataType="vm:ContributeViewModel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#f0ebe3"
+    FlowDirection="RightToLeft">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- ══ HEADER ══ -->
+        <VerticalStackLayout Grid.Row="0" BackgroundColor="#1a3a5c"
+                             Padding="16,44,16,20" Spacing="8">
+            <Grid ColumnDefinitions="36,*,36">
+                <!-- شعار + عنوان -->
+                <HorizontalStackLayout Grid.Column="1" Spacing="10"
+                                       HorizontalOptions="Center" VerticalOptions="Center">
+                    <Border WidthRequest="52" HeightRequest="52"
+                            BackgroundColor="White" StrokeThickness="2"
+                            Stroke="#c8a53a">
+                        <Border.StrokeShape><Ellipse/></Border.StrokeShape>
+                        <Image Source="logo.png" WidthRequest="44" HeightRequest="44"
+                               Aspect="AspectFit"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                        <Label Text="المساهمة في الجمعية"
+                               TextColor="White" FontSize="18" FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"/>
+                        <Label Text="Association Amis du Malade – Skikda"
+                               TextColor="#c8a53a" FontSize="12"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+                <!-- زر الرجوع -->
+                <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                        BackgroundColor="#26ffffff" StrokeThickness="0" CornerRadius="10"
+                        HorizontalOptions="Start">
+                    <Label Text="‹" TextColor="White" FontSize="22"
+                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoHomeCommand}"/>
+                    </Border.GestureRecognizers>
+                </Border>
+            </Grid>
+
+            <!-- حبة ساهم معنا -->
+            <Border BackgroundColor="#1affffff" StrokeThickness="1"
+                    Stroke="#80c8a53a" CornerRadius="20"
+                    HorizontalOptions="Center" Padding="18,6">
+                <Label Text="ساهم معنا 💛" TextColor="White"
+                       FontSize="14" FontAttributes="Bold"/>
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- ══ CONTENT ══ -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="0">
+
+                <!-- موجة الانتقال -->
+                <Grid HeightRequest="32" BackgroundColor="#1a3a5c">
+                    <BoxView BackgroundColor="#f0ebe3"
+                             CornerRadius="24,24,0,0"
+                             VerticalOptions="End" HeightRequest="32"/>
+                </Grid>
+
+                <VerticalStackLayout Padding="14,16,14,16" Spacing="14">
+
+                    <!-- مؤشر الخطوات -->
+                    <VerticalStackLayout Spacing="4" Margin="4,0">
+                        <Grid ColumnDefinitions="38,*,38,*,38" VerticalOptions="Center">
+                            <!-- خطوة 1 ✓ -->
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                    BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="19">
+                                <Label Text="✓" TextColor="White" FontSize="15" FontAttributes="Bold"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <BoxView Grid.Column="1" HeightRequest="3" BackgroundColor="#1a3a5c"
+                                     VerticalOptions="Center" CornerRadius="2"/>
+                            <!-- خطوة 2 -->
+                            <Border Grid.Column="2" WidthRequest="38" HeightRequest="38"
+                                    BackgroundColor="{Binding Sc2Bg}" StrokeThickness="0" CornerRadius="19">
+                                <Label Text="{Binding Sc2Text}" TextColor="White"
+                                       FontSize="15" FontAttributes="Bold"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <BoxView Grid.Column="3" HeightRequest="3"
+                                     BackgroundColor="{Binding Line23}"
+                                     VerticalOptions="Center" CornerRadius="2"/>
+                            <!-- خطوة 3 -->
+                            <Border Grid.Column="4" WidthRequest="38" HeightRequest="38"
+                                    BackgroundColor="{Binding Sc3Bg}" StrokeThickness="0" CornerRadius="19">
+                                <Label Text="{Binding Sc3Text}" TextColor="White"
+                                       FontSize="15" FontAttributes="Bold"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+                        <Grid ColumnDefinitions="38,*,38,*,38">
+                            <Label Grid.Column="0" Text="النوع" FontSize="11"
+                                   TextColor="#1a3a5c" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Grid.Column="2" Text="التفاصيل" FontSize="11"
+                                   TextColor="#c8a53a" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"
+                                   IsVisible="{Binding IsStep2}"/>
+                            <Label Grid.Column="2" Text="التفاصيل" FontSize="11"
+                                   TextColor="#1a3a5c" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"
+                                   IsVisible="{Binding IsStep3}"/>
+                            <Label Grid.Column="4" Text="الإرسال" FontSize="11"
+                                   TextColor="#9ca3af" HorizontalTextAlignment="Center"
+                                   IsVisible="{Binding IsStep2}"/>
+                            <Label Grid.Column="4" Text="الإرسال" FontSize="11"
+                                   TextColor="#c8a53a" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"
+                                   IsVisible="{Binding IsStep3}"/>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <!-- ══════════ STEP 2 ══════════ -->
+                    <VerticalStackLayout Spacing="14" IsVisible="{Binding IsStep2}">
+
+                        <!-- 1. نوع المساهمة -->
+                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                            <VerticalStackLayout Padding="16" Spacing="14">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="نوع المساهمة"
+                                           FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"
+                                           VerticalOptions="Center"/>
+                                    <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                        <Label Text="1" TextColor="White" FontSize="13" FontAttributes="Bold"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
+                                      ColumnSpacing="10" RowSpacing="10">
+                                    <BindableLayout.ItemsSource>
+                                        <x:Null/>
+                                    </BindableLayout.ItemsSource>
+                                    <!-- هدية عينية -->
+                                    <Border Grid.Row="0" Grid.Column="0"
+                                            StrokeThickness="1.5" CornerRadius="14" Padding="10,14">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </Style>
+                                        </Border.Style>
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ContribTypes[0].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="#1a3a5c"/>
+                                                <Setter Property="BackgroundColor" Value="#dbeafe"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                            <Border WidthRequest="44" HeightRequest="44"
+                                                    StrokeThickness="0" CornerRadius="12"
+                                                    HorizontalOptions="Center">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border"
+                                                                 Binding="{Binding ContribTypes[0].IsSelected}"
+                                                                 Value="True">
+                                                        <Setter Property="BackgroundColor" Value="#1a3a5c"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border"
+                                                                 Binding="{Binding ContribTypes[0].IsSelected}"
+                                                                 Value="False">
+                                                        <Setter Property="BackgroundColor" Value="#f3f4f6"/>
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Label Text="🎁" FontSize="20"
+                                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </Border>
+                                            <Label Text="هدية عينية" FontSize="13" FontAttributes="Bold"
+                                                   TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                                            <Label Text="أجهزة · ملابس" FontSize="11"
+                                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                                        </VerticalStackLayout>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectTypeCommand}"
+                                                                  CommandParameter="{Binding ContribTypes[0]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                    <!-- مساهمة مالية -->
+                                    <Border Grid.Row="0" Grid.Column="1"
+                                            StrokeThickness="1.5" CornerRadius="14" Padding="10,14">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ContribTypes[1].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="#1a3a5c"/>
+                                                <Setter Property="BackgroundColor" Value="#dbeafe"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ContribTypes[1].IsSelected}"
+                                                         Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                            <Border WidthRequest="44" HeightRequest="44"
+                                                    StrokeThickness="0" CornerRadius="12"
+                                                    HorizontalOptions="Center">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border"
+                                                                 Binding="{Binding ContribTypes[1].IsSelected}"
+                                                                 Value="True">
+                                                        <Setter Property="BackgroundColor" Value="#1a3a5c"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border"
+                                                                 Binding="{Binding ContribTypes[1].IsSelected}"
+                                                                 Value="False">
+                                                        <Setter Property="BackgroundColor" Value="#f3f4f6"/>
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Label Text="💳" FontSize="20"
+                                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </Border>
+                                            <Label Text="مساهمة مالية" FontSize="13" FontAttributes="Bold"
+                                                   TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                                            <Label Text="تحويل · بريد" FontSize="11"
+                                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                                        </VerticalStackLayout>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectTypeCommand}"
+                                                                  CommandParameter="{Binding ContribTypes[1]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                    <!-- زيارة المكتب -->
+                                    <Border Grid.Row="1" Grid.Column="0"
+                                            StrokeThickness="1.5" CornerRadius="14" Padding="10,14">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ContribTypes[2].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="#1a3a5c"/>
+                                                <Setter Property="BackgroundColor" Value="#dbeafe"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ContribTypes[2].IsSelected}"
+                                                         Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                            <Border WidthRequest="44" HeightRequest="44"
+                                                    StrokeThickness="0" CornerRadius="12"
+                                                    HorizontalOptions="Center">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border"
+                                                                 Binding="{Binding ContribTypes[2].IsSelected}"
+                                                                 Value="True">
+                                                        <Setter Property="BackgroundColor" Value="#1a3a5c"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border"
+                                                                 Binding="{Binding ContribTypes[2].IsSelected}"
+                                                                 Value="False">
+                                                        <Setter Property="BackgroundColor" Value="#f3f4f6"/>
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Label Text="🏛️" FontSize="20"
+                                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </Border>
+                                            <Label Text="زيارة المكتب" FontSize="13" FontAttributes="Bold"
+                                                   TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                                            <Label Text="تسليم مباشر" FontSize="11"
+                                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                                        </VerticalStackLayout>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectTypeCommand}"
+                                                                  CommandParameter="{Binding ContribTypes[2]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                    <!-- لمريض محدد -->
+                                    <Border Grid.Row="1" Grid.Column="1"
+                                            StrokeThickness="1.5" CornerRadius="14" Padding="10,14">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ContribTypes[3].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="#1a3a5c"/>
+                                                <Setter Property="BackgroundColor" Value="#dbeafe"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ContribTypes[3].IsSelected}"
+                                                         Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                            <Border WidthRequest="44" HeightRequest="44"
+                                                    StrokeThickness="0" CornerRadius="12"
+                                                    HorizontalOptions="Center">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border"
+                                                                 Binding="{Binding ContribTypes[3].IsSelected}"
+                                                                 Value="True">
+                                                        <Setter Property="BackgroundColor" Value="#1a3a5c"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border"
+                                                                 Binding="{Binding ContribTypes[3].IsSelected}"
+                                                                 Value="False">
+                                                        <Setter Property="BackgroundColor" Value="#f3f4f6"/>
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Label Text="🤲" FontSize="20"
+                                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </Border>
+                                            <Label Text="لمريض محدد" FontSize="13" FontAttributes="Bold"
+                                                   TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                                            <Label Text="هدية شخصية" FontSize="11"
+                                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                                        </VerticalStackLayout>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectTypeCommand}"
+                                                                  CommandParameter="{Binding ContribTypes[3]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- 2. فئة النشاط -->
+                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                            <VerticalStackLayout Padding="16" Spacing="14">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="فئة النشاط"
+                                           FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                    <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                        <Label Text="2" TextColor="White" FontSize="13" FontAttributes="Bold"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
+                                      ColumnSpacing="8" RowSpacing="8">
+                                    <Border Grid.Row="0" Grid.Column="0"
+                                            StrokeThickness="1.5" CornerRadius="22" Padding="12,9">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ActivityCategories[0].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="#1a3a5c"/>
+                                                <Setter Property="BackgroundColor" Value="#f0f4ff"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ActivityCategories[0].IsSelected}"
+                                                         Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="التجهيزات الطبية" FontSize="13" FontAttributes="Bold"
+                                               TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ToggleCategoryCommand}"
+                                                                  CommandParameter="{Binding ActivityCategories[0]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                    <Border Grid.Row="0" Grid.Column="1"
+                                            StrokeThickness="1.5" CornerRadius="22" Padding="12,9">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ActivityCategories[1].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="#1a3a5c"/>
+                                                <Setter Property="BackgroundColor" Value="#f0f4ff"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ActivityCategories[1].IsSelected}"
+                                                         Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="رعاية المرضى" FontSize="13" FontAttributes="Bold"
+                                               TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ToggleCategoryCommand}"
+                                                                  CommandParameter="{Binding ActivityCategories[1]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="0"
+                                            StrokeThickness="1.5" CornerRadius="22" Padding="12,9">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ActivityCategories[2].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="#1a3a5c"/>
+                                                <Setter Property="BackgroundColor" Value="#f0f4ff"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ActivityCategories[2].IsSelected}"
+                                                         Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="عام للجمعية" FontSize="13" FontAttributes="Bold"
+                                               TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ToggleCategoryCommand}"
+                                                                  CommandParameter="{Binding ActivityCategories[2]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="1"
+                                            StrokeThickness="1.5" CornerRadius="22" Padding="12,9">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ActivityCategories[3].IsSelected}"
+                                                         Value="True">
+                                                <Setter Property="Stroke" Value="#1a3a5c"/>
+                                                <Setter Property="BackgroundColor" Value="#f0f4ff"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border"
+                                                         Binding="{Binding ActivityCategories[3].IsSelected}"
+                                                         Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="تدريب المتطوعين" FontSize="13" FontAttributes="Bold"
+                                               TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ToggleCategoryCommand}"
+                                                                  CommandParameter="{Binding ActivityCategories[3]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- 3. المبلغ أو الشيء المُقدَّم -->
+                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                            <VerticalStackLayout Padding="16" Spacing="14">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="المبلغ أو الشيء المُقدَّم"
+                                           FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                    <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                        <Label Text="3" TextColor="White" FontSize="13" FontAttributes="Bold"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+                                <!-- شرائح المبالغ -->
+                                <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto"
+                                      ColumnSpacing="8" RowSpacing="8">
+                                    <Border Grid.Row="0" Grid.Column="2"
+                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[0].IsSelected}" Value="True">
+                                                <Setter Property="Stroke" Value="#c8a53a"/>
+                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[0].IsSelected}" Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="500 دج" FontSize="13" FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[0].IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="#c8a53a"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[0].IsSelected}" Value="False">
+                                                    <Setter Property="TextColor" Value="#374151"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectPresetCommand}" CommandParameter="{Binding AmountPresets[0]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                    <Border Grid.Row="0" Grid.Column="1"
+                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[1].IsSelected}" Value="True">
+                                                <Setter Property="Stroke" Value="#c8a53a"/>
+                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[1].IsSelected}" Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="1000 دج" FontSize="13" FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[1].IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="#c8a53a"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[1].IsSelected}" Value="False">
+                                                    <Setter Property="TextColor" Value="#374151"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectPresetCommand}" CommandParameter="{Binding AmountPresets[1]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                    <Border Grid.Row="0" Grid.Column="0"
+                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[2].IsSelected}" Value="True">
+                                                <Setter Property="Stroke" Value="#c8a53a"/>
+                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[2].IsSelected}" Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="2000 دج" FontSize="13" FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[2].IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="#c8a53a"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[2].IsSelected}" Value="False">
+                                                    <Setter Property="TextColor" Value="#374151"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectPresetCommand}" CommandParameter="{Binding AmountPresets[2]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="2"
+                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[3].IsSelected}" Value="True">
+                                                <Setter Property="Stroke" Value="#c8a53a"/>
+                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[3].IsSelected}" Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="5000 دج" FontSize="13" FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[3].IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="#c8a53a"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[3].IsSelected}" Value="False">
+                                                    <Setter Property="TextColor" Value="#374151"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectPresetCommand}" CommandParameter="{Binding AmountPresets[3]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="1"
+                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[4].IsSelected}" Value="True">
+                                                <Setter Property="Stroke" Value="#c8a53a"/>
+                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[4].IsSelected}" Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="10000 دج" FontSize="13" FontAttributes="Bold"
+                                               HorizontalTextAlignment="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[4].IsSelected}" Value="True">
+                                                    <Setter Property="TextColor" Value="#c8a53a"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[4].IsSelected}" Value="False">
+                                                    <Setter Property="TextColor" Value="#374151"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectPresetCommand}" CommandParameter="{Binding AmountPresets[4]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                    <Border Grid.Row="1" Grid.Column="0"
+                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[5].IsSelected}" Value="True">
+                                                <Setter Property="Stroke" Value="#c8a53a"/>
+                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[5].IsSelected}" Value="False">
+                                                <Setter Property="Stroke" Value="#e5e7eb"/>
+                                                <Setter Property="BackgroundColor" Value="White"/>
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Label Text="آخر..." FontSize="13" FontAttributes="Bold"
+                                               TextColor="#374151" HorizontalTextAlignment="Center"/>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectPresetCommand}" CommandParameter="{Binding AmountPresets[5]}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                </Grid>
+                                <!-- حقل المبلغ -->
+                                <Border StrokeThickness="1.5" Stroke="#e5e7eb"
+                                        CornerRadius="12" Padding="14,10"
+                                        BackgroundColor="White">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Entry Grid.Column="0"
+                                               Text="{Binding AmountOrDescription}"
+                                               Placeholder="أو أدخل مبلغاً / وصف الشيء"
+                                               PlaceholderColor="#9ca3af"
+                                               TextColor="#1a3a5c" FontSize="14"
+                                               HorizontalTextAlignment="End"
+                                               BackgroundColor="Transparent"
+                                               ClearButtonVisibility="Never"/>
+                                        <Label Grid.Column="1" Text="دج"
+                                               TextColor="#6b7280" FontSize="13" FontAttributes="Bold"
+                                               VerticalOptions="Center" Margin="8,0,0,0"/>
+                                    </Grid>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- 4. طريقة المساهمة -->
+                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                            <VerticalStackLayout Padding="16" Spacing="10">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="طريقة المساهمة"
+                                           FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                    <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                        <Label Text="4" TextColor="White" FontSize="13" FontAttributes="Bold"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+
+                                <!-- CCP -->
+                                <Border StrokeThickness="1.5" CornerRadius="14" Padding="14">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[0].IsSelected}" Value="True">
+                                            <Setter Property="Stroke" Value="#1a3a5c"/>
+                                            <Setter Property="BackgroundColor" Value="#f0f4ff"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[0].IsSelected}" Value="False">
+                                            <Setter Property="Stroke" Value="#e5e7eb"/>
+                                            <Setter Property="BackgroundColor" Value="White"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <VerticalStackLayout Spacing="10">
+                                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                                <Label Text="تحويل بريدي (Virement CCP)"
+                                                       FontSize="14" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                                <Label Text="مباشرة من تطبيق البريد أو الحساب الجاري"
+                                                       FontSize="12" TextColor="#6b7280"/>
+                                            </VerticalStackLayout>
+                                            <Border Grid.Column="1" WidthRequest="34" HeightRequest="34"
+                                                    BackgroundColor="#f3f4f6" StrokeThickness="0" CornerRadius="8">
+                                                <Label Text="💳" FontSize="16"
+                                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </Border>
+                                            <Border Grid.Column="2" WidthRequest="20" HeightRequest="20"
+                                                    StrokeThickness="2" CornerRadius="10"
+                                                    VerticalOptions="Center">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[0].IsSelected}" Value="True">
+                                                        <Setter Property="Stroke" Value="#1a3a5c"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[0].IsSelected}" Value="False">
+                                                        <Setter Property="Stroke" Value="#d1d5db"/>
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <BoxView WidthRequest="10" HeightRequest="10"
+                                                         CornerRadius="5" BackgroundColor="#1a3a5c"
+                                                         HorizontalOptions="Center" VerticalOptions="Center"
+                                                         IsVisible="{Binding PaymentMethods[0].IsSelected}"/>
+                                            </Border>
+                                        </Grid>
+                                        <!-- معلومات CCP -->
+                                        <Border BackgroundColor="#f0f4ff" StrokeThickness="0" CornerRadius="10"
+                                                Padding="12,10"
+                                                IsVisible="{Binding PaymentMethods[0].IsSelected}">
+                                            <VerticalStackLayout Spacing="4">
+                                                <Label FontSize="12" TextColor="#374151">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="رقم الحساب الجاري: "/>
+                                                            <Span Text="0023456789 / مفتاح 78"
+                                                                  FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <Label FontSize="12" TextColor="#374151">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="المستفيد: "/>
+                                                            <Span Text="جمعية أصدقاء المريض – سكيكدة"
+                                                                  FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                            </VerticalStackLayout>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectPaymentCommand}"
+                                                              CommandParameter="{Binding PaymentMethods[0]}"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <!-- مكتب البريد -->
+                                <Border StrokeThickness="1.5" CornerRadius="14" Padding="14">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[1].IsSelected}" Value="True">
+                                            <Setter Property="Stroke" Value="#1a3a5c"/>
+                                            <Setter Property="BackgroundColor" Value="#f0f4ff"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[1].IsSelected}" Value="False">
+                                            <Setter Property="Stroke" Value="#e5e7eb"/>
+                                            <Setter Property="BackgroundColor" Value="White"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                            <Label Text="دفع في مكتب البريد (Versement)"
+                                                   FontSize="14" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                            <Label Text="تسديد مباشر على نفس رقم الحساب في أي مكتب بريد"
+                                                   FontSize="12" TextColor="#6b7280"/>
+                                        </VerticalStackLayout>
+                                        <Border Grid.Column="1" WidthRequest="34" HeightRequest="34"
+                                                BackgroundColor="#f3f4f6" StrokeThickness="0" CornerRadius="8">
+                                            <Label Text="🏠" FontSize="16"
+                                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                                        </Border>
+                                        <Border Grid.Column="2" WidthRequest="20" HeightRequest="20"
+                                                StrokeThickness="2" CornerRadius="10" VerticalOptions="Center">
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[1].IsSelected}" Value="True">
+                                                    <Setter Property="Stroke" Value="#1a3a5c"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[1].IsSelected}" Value="False">
+                                                    <Setter Property="Stroke" Value="#d1d5db"/>
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                            <BoxView WidthRequest="10" HeightRequest="10"
+                                                     CornerRadius="5" BackgroundColor="#1a3a5c"
+                                                     HorizontalOptions="Center" VerticalOptions="Center"
+                                                     IsVisible="{Binding PaymentMethods[1].IsSelected}"/>
+                                        </Border>
+                                    </Grid>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectPaymentCommand}"
+                                                              CommandParameter="{Binding PaymentMethods[1]}"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+
+                                <!-- مكتب الجمعية -->
+                                <Border StrokeThickness="1.5" CornerRadius="14" Padding="14">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[2].IsSelected}" Value="True">
+                                            <Setter Property="Stroke" Value="#1a3a5c"/>
+                                            <Setter Property="BackgroundColor" Value="#f0f4ff"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[2].IsSelected}" Value="False">
+                                            <Setter Property="Stroke" Value="#e5e7eb"/>
+                                            <Setter Property="BackgroundColor" Value="White"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <VerticalStackLayout Spacing="10">
+                                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                                <Label Text="زيارة مكتب الجمعية مباشرة"
+                                                       FontSize="14" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                                <Label Text="حي الأمل، سكيكدة"
+                                                       FontSize="12" TextColor="#6b7280"/>
+                                            </VerticalStackLayout>
+                                            <Border Grid.Column="1" WidthRequest="34" HeightRequest="34"
+                                                    BackgroundColor="#f3f4f6" StrokeThickness="0" CornerRadius="8">
+                                                <Label Text="📍" FontSize="16"
+                                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </Border>
+                                            <Border Grid.Column="2" WidthRequest="20" HeightRequest="20"
+                                                    StrokeThickness="2" CornerRadius="10" VerticalOptions="Center">
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[2].IsSelected}" Value="True">
+                                                        <Setter Property="Stroke" Value="#1a3a5c"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[2].IsSelected}" Value="False">
+                                                        <Setter Property="Stroke" Value="#d1d5db"/>
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <BoxView WidthRequest="10" HeightRequest="10"
+                                                         CornerRadius="5" BackgroundColor="#1a3a5c"
+                                                         HorizontalOptions="Center" VerticalOptions="Center"
+                                                         IsVisible="{Binding PaymentMethods[2].IsSelected}"/>
+                                            </Border>
+                                        </Grid>
+                                        <!-- معلومات المكتب -->
+                                        <Border BackgroundColor="#f0f4ff" StrokeThickness="0" CornerRadius="10"
+                                                Padding="14,12"
+                                                IsVisible="{Binding PaymentMethods[2].IsSelected}">
+                                            <VerticalStackLayout Spacing="8">
+                                                <HorizontalStackLayout Spacing="8">
+                                                    <Label Text="●" TextColor="#c8a53a" FontSize="14" VerticalOptions="Start"/>
+                                                    <VerticalStackLayout Spacing="2">
+                                                        <Label Text="العنوان" FontSize="12" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                                        <Label Text="حي الأمل، شارع الإخاء، سكيكدة" FontSize="12" TextColor="#374151"/>
+                                                    </VerticalStackLayout>
+                                                </HorizontalStackLayout>
+                                                <HorizontalStackLayout Spacing="8">
+                                                    <Label Text="●" TextColor="#c8a53a" FontSize="14" VerticalOptions="Start"/>
+                                                    <VerticalStackLayout Spacing="2">
+                                                        <Label Text="أيام الاستقبال" FontSize="12" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                                        <Label Text="السبت إلى الأربعاء — عدا الخميس والجمعة" FontSize="12" TextColor="#374151"/>
+                                                    </VerticalStackLayout>
+                                                </HorizontalStackLayout>
+                                                <HorizontalStackLayout Spacing="8">
+                                                    <Label Text="●" TextColor="#c8a53a" FontSize="14" VerticalOptions="Start"/>
+                                                    <VerticalStackLayout Spacing="2">
+                                                        <Label Text="ساعات العمل" FontSize="12" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                                        <Label Text="09:00 – 12:00 ثم 14:00 – 17:00" FontSize="12" TextColor="#374151"/>
+                                                    </VerticalStackLayout>
+                                                </HorizontalStackLayout>
+                                                <HorizontalStackLayout Spacing="8">
+                                                    <Label Text="●" TextColor="#c8a53a" FontSize="14" VerticalOptions="Start"/>
+                                                    <VerticalStackLayout Spacing="2">
+                                                        <Label Text="للتواصل" FontSize="12" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                                        <Label Text="0551 000 000" FontSize="12" TextColor="#374151"/>
+                                                    </VerticalStackLayout>
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+                                        </Border>
+                                    </VerticalStackLayout>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectPaymentCommand}"
+                                                              CommandParameter="{Binding PaymentMethods[2]}"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- 5. رفع وصل الاستلام -->
+                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                            <VerticalStackLayout Padding="16" Spacing="14">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="رفع وصل الاستلام"
+                                           FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                    <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                        <Label Text="5" TextColor="White" FontSize="13" FontAttributes="Bold"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+                                <Border StrokeThickness="2" CornerRadius="14" Padding="28,28">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding HasReceipt}" Value="True">
+                                            <Setter Property="Stroke" Value="#16a34a"/>
+                                            <Setter Property="BackgroundColor" Value="#f0fdf4"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding HasReceipt}" Value="False">
+                                            <Setter Property="Stroke" Value="#d1d5db"/>
+                                            <Setter Property="BackgroundColor" Value="White"/>
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                        <Label Text="⬆️" FontSize="28" HorizontalOptions="Center"
+                                               IsVisible="{Binding HasReceipt, Converter={x:StaticResource InvertBool}}"/>
+                                        <Label Text="✅" FontSize="28" HorizontalOptions="Center"
+                                               IsVisible="{Binding HasReceipt}"/>
+                                        <Label FontSize="14" FontAttributes="Bold"
+                                               TextColor="#374151" HorizontalTextAlignment="Center">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding HasReceipt}" Value="False">
+                                                    <Setter Property="Text" Value="اضغط لرفع صورة الوصل"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding HasReceipt}" Value="True">
+                                                    <Setter Property="Text" Value="{Binding ReceiptFileName}"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                        <Label Text="JPG أو PDF – حجم أقصاه 5 ميغابايت"
+                                               FontSize="11" TextColor="#9ca3af"
+                                               HorizontalTextAlignment="Center"
+                                               IsVisible="{Binding HasReceipt, Converter={x:StaticResource InvertBool}}"/>
+                                    </VerticalStackLayout>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding PickReceiptCommand}"/>
+                                    </Border.GestureRecognizers>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </VerticalStackLayout><!-- /step2 -->
+
+                    <!-- ══════════ STEP 3 ══════════ -->
+                    <VerticalStackLayout Spacing="14" IsVisible="{Binding IsStep3}">
+
+                        <!-- 1. بيانات المتبرع -->
+                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                            <VerticalStackLayout Padding="16" Spacing="14">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="بيانات المتبرع"
+                                           FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                    <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                        <Label Text="1" TextColor="White" FontSize="13" FontAttributes="Bold"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+                                <VerticalStackLayout Spacing="6">
+                                    <Label Text="الاسم الكامل *" FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                    <Border StrokeThickness="1.5" Stroke="#e5e7eb" CornerRadius="12"
+                                            Padding="14,0" BackgroundColor="White">
+                                        <Entry Text="{Binding DonorName}"
+                                               Placeholder="أدخل اسمك الكامل"
+                                               PlaceholderColor="#9ca3af"
+                                               TextColor="#1a3a5c" FontSize="14"
+                                               HorizontalTextAlignment="End"
+                                               BackgroundColor="Transparent"/>
+                                    </Border>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Spacing="6">
+                                    <Label Text="رقم الهاتف *" FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                    <Border StrokeThickness="1.5" Stroke="#e5e7eb" CornerRadius="12"
+                                            Padding="14,0" BackgroundColor="White">
+                                        <Entry Text="{Binding DonorPhone}"
+                                               Placeholder="05XX XX XX XX"
+                                               PlaceholderColor="#9ca3af"
+                                               Keyboard="Telephone"
+                                               TextColor="#1a3a5c" FontSize="14"
+                                               HorizontalTextAlignment="End"
+                                               BackgroundColor="Transparent"/>
+                                    </Border>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- 2. ملخص المساهمة -->
+                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                            <VerticalStackLayout Padding="16" Spacing="0">
+                                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+                                    <Label Grid.Column="0" Text="ملخص المساهمة"
+                                           FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                    <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                        <Label Text="2" TextColor="White" FontSize="13" FontAttributes="Bold"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+                                <BoxView HeightRequest="1" Color="#f3f4f6" Margin="0,0,0,6"/>
+                                <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                                    <Label Grid.Column="1" Text="نوع المساهمة" TextColor="#6b7280" FontSize="13"/>
+                                    <Label Grid.Column="0" Text="{Binding SummaryType}"
+                                           FontAttributes="Bold" TextColor="#1a3a5c" FontSize="13"
+                                           HorizontalTextAlignment="Start"/>
+                                </Grid>
+                                <BoxView HeightRequest="1" Color="#f3f4f6"/>
+                                <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                                    <Label Grid.Column="1" Text="فئة النشاط" TextColor="#6b7280" FontSize="13"/>
+                                    <Label Grid.Column="0" Text="{Binding SummaryCategory}"
+                                           FontAttributes="Bold" TextColor="#1a3a5c" FontSize="13"
+                                           HorizontalTextAlignment="Start"/>
+                                </Grid>
+                                <BoxView HeightRequest="1" Color="#f3f4f6"/>
+                                <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                                    <Label Grid.Column="1" Text="المبلغ / الشيء" TextColor="#6b7280" FontSize="13"/>
+                                    <Label Grid.Column="0" Text="{Binding SummaryAmount}"
+                                           FontAttributes="Bold" TextColor="#1a3a5c" FontSize="13"
+                                           HorizontalTextAlignment="Start"/>
+                                </Grid>
+                                <BoxView HeightRequest="1" Color="#f3f4f6"/>
+                                <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                                    <Label Grid.Column="1" Text="طريقة المساهمة" TextColor="#6b7280" FontSize="13"/>
+                                    <Label Grid.Column="0" Text="{Binding SummaryMethod}"
+                                           FontAttributes="Bold" TextColor="#1a3a5c" FontSize="13"
+                                           HorizontalTextAlignment="Start"/>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- 3. ملاحظة -->
+                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                            <VerticalStackLayout Padding="16" Spacing="14">
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Grid.Column="0" Text="ملاحظة إضافية (اختياري)"
+                                           FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                    <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                        <Label Text="3" TextColor="White" FontSize="13" FontAttributes="Bold"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+                                <Border StrokeThickness="1.5" Stroke="#e5e7eb" CornerRadius="12"
+                                        Padding="14,8" BackgroundColor="White">
+                                    <Editor Text="{Binding Notes}"
+                                            Placeholder="أي معلومة إضافية تودّ إضافتها..."
+                                            PlaceholderColor="#9ca3af"
+                                            TextColor="#1a3a5c" FontSize="14"
+                                            AutoSize="TextChanges"
+                                            MinimumHeightRequest="80"
+                                            BackgroundColor="Transparent"/>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- شاشة النجاح -->
+                        <VerticalStackLayout Spacing="16" HorizontalOptions="Center"
+                                             IsVisible="{Binding IsSuccess}">
+                            <Label Text="✅" FontSize="72" HorizontalOptions="Center"/>
+                            <Label Text="شكراً على مساهمتك!" FontSize="22" FontAttributes="Bold"
+                                   TextColor="#16a34a" HorizontalTextAlignment="Center"/>
+                            <Label Text="تلقّينا طلب مساهمتك. سيتواصل معك فريق الجمعية للتأكيد عبر الواتساب أو اتصال عادي."
+                                   FontSize="14" TextColor="#6b7280"
+                                   HorizontalTextAlignment="Center" LineBreakMode="WordWrap"
+                                   MaximumWidthRequest="280"/>
+                            <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="14"
+                                    Padding="20,14" HorizontalOptions="Fill">
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                                    <Label Text="🔢" FontSize="20" VerticalOptions="Center"/>
+                                    <Label Text="#2026-7412" FontSize="20" FontAttributes="Bold"
+                                           TextColor="#1a3a5c" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                            </Border>
+                            <Label Text="رقم مرجعي لمتابعة مساهمتك"
+                                   FontSize="12" TextColor="#6b7280"
+                                   HorizontalTextAlignment="Center"/>
+                            <Button Text="← العودة للرئيسية"
+                                    Command="{Binding GoHomeCommand}"
+                                    BackgroundColor="White"
+                                    TextColor="#1a3a5c"
+                                    BorderColor="#1a3a5c" BorderWidth="2"
+                                    CornerRadius="14" Padding="24,14"
+                                    FontSize="14" FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout><!-- /step3 -->
+
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ══ NAV BAR ══ -->
+        <Border Grid.Row="2" BackgroundColor="White" StrokeThickness="0"
+                Padding="14,12">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" IsVisible="{Binding ShowStep2Nav}">
+                <Button Grid.Column="1" Text="→ السابق"
+                        Command="{Binding PrevStepCommand}"
+                        BackgroundColor="White" TextColor="#1a3a5c"
+                        BorderColor="#1a3a5c" BorderWidth="2"
+                        CornerRadius="14" HeightRequest="52"
+                        FontSize="15" FontAttributes="Bold"/>
+                <Button Grid.Column="0" Text="التالي ←"
+                        Command="{Binding NextStepCommand}"
+                        BackgroundColor="#1a3a5c" TextColor="White"
+                        CornerRadius="14" HeightRequest="52"
+                        FontSize="15" FontAttributes="Bold"/>
+            </Grid>
+        </Border>
+        <Border Grid.Row="2" BackgroundColor="White" StrokeThickness="0"
+                Padding="14,12" IsVisible="{Binding ShowStep3Nav}">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Grid.Column="1" Text="→ السابق"
+                        Command="{Binding PrevStepCommand}"
+                        BackgroundColor="White" TextColor="#1a3a5c"
+                        BorderColor="#1a3a5c" BorderWidth="2"
+                        CornerRadius="14" HeightRequest="52"
+                        FontSize="15" FontAttributes="Bold"/>
+                <Button Grid.Column="0" Text="إرسال المساهمة ✓"
+                        Command="{Binding SubmitAsyncCommand}"
+                        BackgroundColor="#c8a53a" TextColor="White"
+                        CornerRadius="14" HeightRequest="52"
+                        FontSize="15" FontAttributes="Bold"/>
+            </Grid>
+        </Border>
+
+    </Grid>
+
+</ContentPage>

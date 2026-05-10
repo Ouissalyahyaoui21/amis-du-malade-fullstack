@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using AmisDuMaladeApp.Constants;
 using AmisDuMaladeApp.Models;
 using AmisDuMaladeApp.Services;
 
@@ -11,92 +10,191 @@ public partial class ContributeViewModel : BaseViewModel
 {
     private readonly ApiService _api;
 
-    // ── نوع المساهمة ────────────────────────────────────────────────────────
-    [ObservableProperty] private string contributionType = "money";
+    // ── Wizard state ─────────────────────────────────────────────────────────
+    [ObservableProperty] private int  currentStep = 2;
+    [ObservableProperty] private bool isSuccess;
 
-    public bool IsMoney   => ContributionType == "money";
-    public bool IsInKind  => ContributionType == "inkind";
-    public bool IsSupport => ContributionType == "support";
+    public bool IsStep2      => CurrentStep == 2 && !IsSuccess;
+    public bool IsStep3      => CurrentStep == 3 && !IsSuccess;
+    public bool ShowStep2Nav => CurrentStep == 2 && !IsSuccess;
+    public bool ShowStep3Nav => CurrentStep == 3 && !IsSuccess;
 
-    // ── بيانات المتبرع ──────────────────────────────────────────────────────
-    [ObservableProperty] private string donorName  = "";
-    [ObservableProperty] private string donorPhone = "";
+    // ── Step indicator ───────────────────────────────────────────────────────
+    public string Sc2Text  => CurrentStep > 2 || IsSuccess ? "✓" : "2";
+    public string Sc3Text  => IsSuccess ? "✓" : "3";
+    public Color  Sc1Bg    => Color.FromArgb("#1a3a5c");
+    public Color  Sc2Bg    => IsSuccess || CurrentStep > 2 ? Color.FromArgb("#1a3a5c") :
+                              CurrentStep == 2             ? Color.FromArgb("#c8a53a") :
+                                                             Color.FromArgb("#d1d5db");
+    public Color  Sc3Bg    => IsSuccess ? Color.FromArgb("#1a3a5c") :
+                              CurrentStep == 3 ? Color.FromArgb("#c8a53a") :
+                                                 Color.FromArgb("#d1d5db");
+    public Color  Line12   => Color.FromArgb("#1a3a5c");
+    public Color  Line23   => CurrentStep > 2 || IsSuccess ? Color.FromArgb("#1a3a5c") : Color.FromArgb("#d1d5db");
+    public Color  Sc2TextColor => CurrentStep == 2 && !IsSuccess ? Colors.White : Colors.White;
+    public Color  Sc3TextColor => Colors.White;
 
-    // ── تبرع مالي ───────────────────────────────────────────────────────────
-    [ObservableProperty] private string amount = "";
+    // ── Section 1 — نوع المساهمة ─────────────────────────────────────────────
+    public ObservableCollection<SelectableItem> ContribTypes { get; } = new()
+    {
+        new() { Key = "inkind",   Label = "هدية عينية",    Icon = "🎁" },
+        new() { Key = "money",    Label = "مساهمة مالية",   Icon = "💳" },
+        new() { Key = "office",   Label = "زيارة المكتب",   Icon = "🏛️" },
+        new() { Key = "patient",  Label = "لمريض محدد",     Icon = "🤲" },
+    };
 
+    public string SelectedTypeLabel =>
+        ContribTypes.FirstOrDefault(t => t.IsSelected)?.Label ?? "—";
+    public string SelectedTypeKey =>
+        ContribTypes.FirstOrDefault(t => t.IsSelected)?.Key ?? "";
+
+    // ── Section 2 — فئة النشاط ──────────────────────────────────────────────
+    public ObservableCollection<SelectableItem> ActivityCategories { get; } = new()
+    {
+        new() { Key = "equipment", Label = "التجهيزات الطبية" },
+        new() { Key = "care",      Label = "رعاية المرضى",    IsSelected = true },
+        new() { Key = "general",   Label = "عام للجمعية" },
+        new() { Key = "training",  Label = "تدريب المتطوعين" },
+    };
+
+    public string SelectedCategoryLabel =>
+        string.Join("، ", ActivityCategories.Where(c => c.IsSelected).Select(c => c.Label));
+
+    // ── Section 3 — المبلغ ───────────────────────────────────────────────────
     public ObservableCollection<SelectableItem> AmountPresets { get; } = new()
     {
         new() { Key = "500",   Label = "500 دج" },
-        new() { Key = "1000",  Label = "1,000 دج" },
-        new() { Key = "2000",  Label = "2,000 دج" },
-        new() { Key = "5000",  Label = "5,000 دج" },
-        new() { Key = "10000", Label = "10,000 دج" },
-        new() { Key = "other", Label = "مبلغ آخر" },
+        new() { Key = "1000",  Label = "1000 دج", IsSelected = true },
+        new() { Key = "2000",  Label = "2000 دج" },
+        new() { Key = "5000",  Label = "5000 دج" },
+        new() { Key = "10000", Label = "10000 دج" },
+        new() { Key = "other", Label = "آخر..." },
     };
 
-    // ── هدية عينية ──────────────────────────────────────────────────────────
-    public ObservableCollection<SelectableItem> InKindItems { get; } = new()
+    [ObservableProperty] private string amountOrDescription = "1000";
+
+    // ── Section 4 — طريقة المساهمة ──────────────────────────────────────────
+    public ObservableCollection<SelectableItem> PaymentMethods { get; } = new()
     {
-        new() { Key = "medicines",  Label = "أدوية",            Icon = "💊" },
-        new() { Key = "food",       Label = "مواد غذائية",       Icon = "🥫" },
-        new() { Key = "hygiene",    Label = "مستلزمات النظافة",  Icon = "🧴" },
-        new() { Key = "clothes",    Label = "ملابس",             Icon = "👕" },
-        new() { Key = "equipment",  Label = "معدات طبية",        Icon = "🩺" },
-        new() { Key = "other",      Label = "أخرى",              Icon = "📦" },
+        new() { Key = "ccp",   Label = "تحويل بريدي (Virement CCP)",    IsSelected = true },
+        new() { Key = "post",  Label = "دفع في مكتب البريد (Versement)" },
+        new() { Key = "assoc", Label = "زيارة مكتب الجمعية مباشرة" },
     };
 
-    [ObservableProperty] private string inKindDescription = "";
+    public string SelectedMethodLabel =>
+        PaymentMethods.FirstOrDefault(m => m.IsSelected)?.Label ?? "—";
+    public bool IsCcpSelected   => PaymentMethods.FirstOrDefault(m => m.IsSelected)?.Key == "ccp";
+    public bool IsAssocSelected => PaymentMethods.FirstOrDefault(m => m.IsSelected)?.Key == "assoc";
 
-    // ── دعم متواصل ──────────────────────────────────────────────────────────
-    public ObservableCollection<SelectableItem> SupportTypes { get; } = new()
-    {
-        new() { Key = "monthly",    Label = "تبرع شهري منتظم",   Icon = "🔄" },
-        new() { Key = "sponsorship",Label = "كفالة مريض",        Icon = "🤲" },
-        new() { Key = "project",    Label = "دعم مشروع",         Icon = "🏗️" },
-        new() { Key = "company",    Label = "شراكة مؤسسية",      Icon = "🏢" },
-    };
+    // ── Section 5 — رفع الوصل ───────────────────────────────────────────────
+    [ObservableProperty] private string receiptFileName = "";
+    public bool HasReceipt => !string.IsNullOrEmpty(ReceiptFileName);
 
-    [ObservableProperty] private string supportNotes = "";
+    // ── Step 3 — بيانات المتبرع ──────────────────────────────────────────────
+    [ObservableProperty] private string donorName  = "";
+    [ObservableProperty] private string donorPhone = "";
+    [ObservableProperty] private string notes      = "";
 
-    // ── نتيجة الإرسال ───────────────────────────────────────────────────────
-    [ObservableProperty] private bool isSuccess;
+    // ── Summary ──────────────────────────────────────────────────────────────
+    public string SummaryType     => SelectedTypeLabel;
+    public string SummaryCategory => SelectedCategoryLabel;
+    public string SummaryAmount   => string.IsNullOrWhiteSpace(AmountOrDescription)
+                                     ? "—" : AmountOrDescription + " دج";
+    public string SummaryMethod   => SelectedMethodLabel;
 
     public ContributeViewModel(ApiService api, LocalizationService loc) : base(loc)
     {
         _api = api;
+        // اختيار "مساهمة مالية" افتراضياً
+        ContribTypes[1].IsSelected = true;
     }
 
     // ── اختيار النوع ────────────────────────────────────────────────────────
     [RelayCommand]
-    private void SetType(string type)
+    private void SelectType(SelectableItem item)
     {
-        ContributionType = type;
-        OnPropertyChanged(nameof(IsMoney));
-        OnPropertyChanged(nameof(IsInKind));
-        OnPropertyChanged(nameof(IsSupport));
+        foreach (var t in ContribTypes) t.IsSelected = false;
+        item.IsSelected = true;
+        OnPropertyChanged(nameof(SelectedTypeLabel));
+        OnPropertyChanged(nameof(SelectedTypeKey));
+        OnPropertyChanged(nameof(SummaryType));
     }
 
-    // ── مبالغ مسبقة ─────────────────────────────────────────────────────────
+    // ── تبديل فئة النشاط ────────────────────────────────────────────────────
+    [RelayCommand]
+    private void ToggleCategory(SelectableItem item)
+    {
+        item.IsSelected = !item.IsSelected;
+        OnPropertyChanged(nameof(SelectedCategoryLabel));
+        OnPropertyChanged(nameof(SummaryCategory));
+    }
+
+    // ── اختيار مبلغ مسبق ────────────────────────────────────────────────────
     [RelayCommand]
     private void SelectPreset(SelectableItem item)
     {
-        foreach (var i in AmountPresets) i.IsSelected = false;
+        foreach (var a in AmountPresets) a.IsSelected = false;
         item.IsSelected = true;
-        if (item.Key != "other") Amount = item.Key;
-        else Amount = "";
+        if (item.Key != "other") AmountOrDescription = item.Key;
+        else AmountOrDescription = "";
+        OnPropertyChanged(nameof(SummaryAmount));
     }
 
-    // ── تبديل عناصر الهدية ──────────────────────────────────────────────────
+    // ── اختيار طريقة الدفع ──────────────────────────────────────────────────
     [RelayCommand]
-    private void ToggleInKind(SelectableItem item) => item.IsSelected = !item.IsSelected;
-
-    // ── تبديل نوع الدعم ─────────────────────────────────────────────────────
-    [RelayCommand]
-    private void SelectSupport(SelectableItem item)
+    private void SelectPayment(SelectableItem item)
     {
-        foreach (var i in SupportTypes) i.IsSelected = false;
+        foreach (var m in PaymentMethods) m.IsSelected = false;
         item.IsSelected = true;
+        OnPropertyChanged(nameof(SelectedMethodLabel));
+        OnPropertyChanged(nameof(IsCcpSelected));
+        OnPropertyChanged(nameof(IsAssocSelected));
+        OnPropertyChanged(nameof(SummaryMethod));
+    }
+
+    // ── رفع الوصل ────────────────────────────────────────────────────────────
+    [RelayCommand]
+    private async Task PickReceipt()
+    {
+        try
+        {
+            var result = await FilePicker.PickAsync(new PickOptions
+            {
+                FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    { DevicePlatform.Android, new[] { "image/*", "application/pdf" } },
+                    { DevicePlatform.iOS,     new[] { "public.image", "com.adobe.pdf" } },
+                }),
+                PickerTitle = "رفع وصل الاستلام"
+            });
+            if (result != null)
+            {
+                ReceiptFileName = result.FileName;
+                OnPropertyChanged(nameof(HasReceipt));
+            }
+        }
+        catch { /* cancelled */ }
+    }
+
+    // ── التنقل ───────────────────────────────────────────────────────────────
+    [RelayCommand]
+    private void NextStep()
+    {
+        if (CurrentStep == 2)
+        {
+            CurrentStep = 3;
+            NotifyStep();
+        }
+    }
+
+    [RelayCommand]
+    private void PrevStep()
+    {
+        if (CurrentStep == 3)
+        {
+            CurrentStep = 2;
+            NotifyStep();
+        }
     }
 
     // ── إرسال ────────────────────────────────────────────────────────────────
@@ -108,16 +206,14 @@ public partial class ContributeViewModel : BaseViewModel
             await ShowErrorAsync(Loc.Get("required_field"));
             return;
         }
-
         IsBusy = true;
         try
         {
-            // بناء رسالة الواتساب بدلًا من API مباشرة (مناسب للجمعيات الصغيرة)
-            var msg = BuildWhatsAppMessage();
-            var url = $"https://wa.me/{AppConstants.WhatsAppNumber}?text={Uri.EscapeDataString(msg)}";
-            await Launcher.OpenAsync(url);
+            await Task.Delay(800);
             IsSuccess = true;
+            NotifyStep();
             OnPropertyChanged(nameof(IsSuccess));
+            OnPropertyChanged(nameof(ShowStep3Nav));
         }
         finally { IsBusy = false; }
     }
@@ -126,40 +222,13 @@ public partial class ContributeViewModel : BaseViewModel
     private async Task GoHome() =>
         await Shell.Current.GoToAsync("//HomePage");
 
-    // ── مساعد بناء رسالة الواتساب ────────────────────────────────────────────
-    private string BuildWhatsAppMessage()
+    // ── مساعد ────────────────────────────────────────────────────────────────
+    private void NotifyStep()
     {
-        var sb = new System.Text.StringBuilder();
-        sb.AppendLine("📋 طلب مساهمة جديد — جمعية أصدقاء المريض");
-        sb.AppendLine($"👤 الاسم: {DonorName}");
-        sb.AppendLine($"📞 الهاتف: {DonorPhone}");
-
-        switch (ContributionType)
-        {
-            case "money":
-                var preset = AmountPresets.FirstOrDefault(a => a.IsSelected);
-                var displayAmount = preset?.Key == "other" || preset == null ? Amount : preset.Label;
-                sb.AppendLine($"💰 نوع المساهمة: تبرع مالي");
-                sb.AppendLine($"💵 المبلغ: {displayAmount}");
-                break;
-
-            case "inkind":
-                var items = InKindItems.Where(i => i.IsSelected).Select(i => i.Label);
-                sb.AppendLine($"🎁 نوع المساهمة: هدية عينية");
-                sb.AppendLine($"📦 العناصر: {string.Join("، ", items)}");
-                if (!string.IsNullOrWhiteSpace(InKindDescription))
-                    sb.AppendLine($"📝 تفاصيل: {InKindDescription}");
-                break;
-
-            case "support":
-                var support = SupportTypes.FirstOrDefault(s => s.IsSelected);
-                sb.AppendLine($"🤝 نوع المساهمة: دعم متواصل");
-                if (support != null) sb.AppendLine($"🔖 الفئة: {support.Label}");
-                if (!string.IsNullOrWhiteSpace(SupportNotes))
-                    sb.AppendLine($"📝 ملاحظات: {SupportNotes}");
-                break;
-        }
-
-        return sb.ToString();
+        OnPropertyChanged(nameof(IsStep2));   OnPropertyChanged(nameof(IsStep3));
+        OnPropertyChanged(nameof(ShowStep2Nav)); OnPropertyChanged(nameof(ShowStep3Nav));
+        OnPropertyChanged(nameof(Sc2Text));   OnPropertyChanged(nameof(Sc3Text));
+        OnPropertyChanged(nameof(Sc2Bg));     OnPropertyChanged(nameof(Sc3Bg));
+        OnPropertyChanged(nameof(Line23));
     }
 }
