@@ -301,6 +301,48 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
 .csm-val{font-size:22px;font-weight:800;color:#fff}
 .csm-lbl{font-size:10px;color:rgba(255,255,255,.7);margin-top:2px}
 .csm-sep{width:1px;background:rgba(255,255,255,.15);align-self:stretch}
+/* WhatsApp Modal */
+.wa-modal-head{background:#25d366;padding:18px 20px;border-radius:20px 20px 0 0;display:flex;align-items:center;gap:10px}
+.wa-modal-head h3{color:#fff;font-size:15px;font-weight:700;flex:1}
+.wa-modal-close{color:rgba(255,255,255,.8);font-size:20px;cursor:pointer}
+.wa-recip-box{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 13px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.wa-recip-av{width:38px;height:38px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px;flex-shrink:0}
+.wa-recip-name{font-size:13px;font-weight:700;color:var(--text)}
+.wa-recip-phone{font-size:11px;color:var(--muted);margin-top:1px}
+.wa-bulk-list{font-size:11px;color:var(--muted);margin-top:2px}
+.tpl-section h5{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.tpl-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.wtpl{font-size:11px;padding:5px 11px;border-radius:20px;border:1px solid var(--border);background:#fff;cursor:pointer;font-weight:500;color:var(--muted);transition:all .15s}
+.wtpl:hover{border-color:#25d366;color:#15803d}
+.wtpl.active{background:#25d366;color:#fff;border-color:#25d366}
+.wa-textarea{width:100%;min-height:90px;border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:12px;font-family:inherit;resize:vertical;line-height:1.6;direction:rtl;outline:none}
+.wa-textarea:focus{border-color:#25d366}
+.wa-char-count{font-size:10px;color:var(--muted);text-align:left;margin-top:3px;margin-bottom:10px}
+.wa-send-btn{width:100%;padding:12px;background:#25d366;color:#fff;border-radius:12px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px}
+.wa-send-btn:hover{background:#1da851}
+.wa-bulk-nav{display:none;font-size:12px;color:var(--muted);text-align:center;margin-top:8px}
+/* Bulk selection */
+.card-cb{position:absolute;top:10px;left:10px;width:17px;height:17px;cursor:pointer;accent-color:var(--primary);z-index:10}
+.selectable{position:relative}
+.selectable.sel-on{outline:2px solid var(--primary);border-radius:var(--radius)}
+.bulk-bar{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--primary2);color:#fff;border-radius:16px;padding:11px 18px;display:none;align-items:center;gap:14px;box-shadow:0 6px 24px rgba(0,0,0,.35);z-index:500;min-width:300px}
+.bulk-bar.show{display:flex}
+.bulk-count-txt{font-size:13px;font-weight:700;flex:1}
+.bulk-wa{background:#25d366;color:#fff;padding:8px 15px;border-radius:10px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px;flex-shrink:0}
+.bulk-clear{color:rgba(255,255,255,.5);font-size:18px;cursor:pointer;flex-shrink:0}
+/* Message History */
+.mh-header{display:flex;align-items:center;justify-content:space-between;margin:20px 0 10px}
+.mh-header h3{font-size:13px;font-weight:700;color:var(--primary)}
+.mh-all{font-size:11px;color:var(--gold);cursor:pointer}
+.mh-card{background:#fff;border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.mh-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f8fafc}
+.mh-item:last-child{border:none}
+.mh-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:#25d366}
+.mh-body{flex:1;min-width:0}
+.mh-to{font-size:12px;font-weight:600}
+.mh-tpl{font-size:10px;color:#25d366;font-weight:600;margin-top:1px}
+.mh-excerpt{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.mh-time{font-size:10px;color:#94a3b8;white-space:nowrap;flex-shrink:0}
 /* RESPONSIVE */
 @media(max-width:900px){
     :root{--sw:58px}
@@ -454,6 +496,57 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
     </div>
 </div>
 
+<!-- WHATSAPP MODAL -->
+<div class="modal-bg" id="wa-modal">
+<div class="modal" style="max-width:440px">
+    <div class="wa-modal-head">
+        <span style="font-size:22px">💬</span>
+        <h3>إرسال رسالة واتساب</h3>
+        <span class="wa-modal-close" onclick="closeWaModal()">✕</span>
+    </div>
+    <div class="modal-body">
+        <!-- المستلم -->
+        <div class="wa-recip-box">
+            <div class="wa-recip-av" id="wa-av">م</div>
+            <div>
+                <div class="wa-recip-name" id="wa-name-lbl">محمد أمين</div>
+                <div class="wa-recip-phone" id="wa-phone-lbl">0551 234 567</div>
+                <div class="wa-bulk-list" id="wa-bulk-lbl" style="display:none"></div>
+            </div>
+        </div>
+        <!-- القوالب -->
+        <div class="tpl-section">
+            <h5>القوالب الجاهزة</h5>
+            <div class="tpl-list">
+                <button class="wtpl" data-tpl="interview" onclick="setTpl('interview')">🗣 دعوة مقابلة</button>
+                <button class="wtpl" data-tpl="training"  onclick="setTpl('training')">🎓 تذكير تدريب</button>
+                <button class="wtpl" data-tpl="assign"    onclick="setTpl('assign')">🤝 تعيين مريض</button>
+                <button class="wtpl" data-tpl="confirm"   onclick="setTpl('confirm')">✅ تأكيد مساهمة</button>
+                <button class="wtpl" data-tpl="thanks"    onclick="setTpl('thanks')">🌟 شكر وتقدير</button>
+                <button class="wtpl active" data-tpl="custom" onclick="setTpl('custom')">✏️ مخصصة</button>
+            </div>
+        </div>
+        <!-- الرسالة -->
+        <div class="tpl-section">
+            <h5>نص الرسالة</h5>
+            <textarea class="wa-textarea" id="wa-msg-txt" placeholder="اكتب رسالتك هنا..." oninput="updateCharCount()"></textarea>
+            <div class="wa-char-count"><span id="wa-char">0</span> / 500 حرف</div>
+        </div>
+        <button class="wa-send-btn" onclick="sendWa()">💬 فتح واتساب وإرسال</button>
+        <div class="wa-bulk-nav" id="wa-bulk-nav">
+            سيتم إرسال الرسالة لـ <strong id="wa-bulk-total">0</strong> شخص تباعاً
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- BULK ACTION BAR -->
+<div class="bulk-bar" id="bulk-bar">
+    <span class="bulk-count-txt" id="bulk-count-txt">تم اختيار 0</span>
+    <button class="bulk-wa" onclick="openBulkWa()">💬 إرسال جماعي</button>
+    <span class="bulk-clear" onclick="clearSelection()" title="إلغاء التحديد">✕</span>
+</div>
+
 <!-- SHELL -->
 <div class="shell">
 
@@ -559,12 +652,12 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
         <button class="fb" onclick="flt(this)">مرفوض (12)</button>
     </div>
     <div class="vol-grid">
-        <div class="vc"><div class="vc-top"><div class="vc-av" style="background:#1a3a5c">م</div><div class="stag st-a">نشط</div></div><div class="vc-name">محمد أمين</div><div class="vc-city">📍 سكيكدة الوسط</div><div class="sr"><span class="stars">★★★★★</span><span class="sn">4.5</span></div><div class="sk-wrap"><span class="sk sk-b">منزلي</span><span class="sk sk-g">مستشفى</span><span class="sk sk-o">نقل</span></div><div class="vc-info"><div>📱 0551 234 567 | 28 سنة</div><div>🕐 الاثنين-السبت: 08-16</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('م','محمد أمين','سكيكدة الوسط · 28 سنة','0551 234 567','28 سنة','سكيكدة الوسط','مرافقة مستشفى','#1a3a5c')">عرض</button><button class="vab va-r">رفض</button><button class="vab va-a">قبول</button></div></div>
-        <div class="vc"><div class="vc-top"><div class="vc-av" style="background:#f59e0b">س</div><div class="stag st-p">معلق</div></div><div class="vc-name">سارة مسعود</div><div class="vc-city">📍 القالة</div><div class="sr"><span class="stars">★★★★</span><span class="sn">3.8</span></div><div class="sk-wrap"><span class="sk sk-p">ليلي</span><span class="sk sk-b">منزلي</span></div><div class="vc-info"><div>📱 0561 890 456 | 35 سنة</div><div>🕐 الأحد-الخميس: 12-06</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('س','سارة مسعود','القالة · 35 سنة','0561 890 456','35 سنة','القالة','مرافقة منزلية','#f59e0b')">عرض</button><button class="vab va-r">رفض</button><button class="vab va-a">قبول</button></div></div>
-        <div class="vc"><div class="vc-top"><div class="vc-av" style="background:#22c55e">ن</div><div class="stag st-a">نشط</div></div><div class="vc-name">نور بن علي</div><div class="vc-city">📍 عين التاية</div><div class="sr"><span class="stars">★★★★★</span><span class="sn">5.0</span></div><div class="sk-wrap"><span class="sk sk-g">مستشفى</span><span class="sk sk-o">نقل</span></div><div class="vc-info"><div>📱 0789 456 070 | 42 سنة</div><div>🕐 يومي: 14-08</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('ن','نور بن علي','عين التاية · 42 سنة','0789 456 070','42 سنة','عين التاية','مستشفى + نقل','#22c55e')">عرض</button><button class="vab va-r">رفض</button><button class="vab va-a">قبول</button></div></div>
-        <div class="vc"><div class="vc-top"><div class="vc-av" style="background:#8b5cf6">ك</div><div class="stag st-p">معلق</div></div><div class="vc-name">كريم سليم</div><div class="vc-city">📍 سكيكدة</div><div class="sr"><span class="stars">★★★</span><span class="sn">3.2</span></div><div class="sk-wrap"><span class="sk sk-b">منزلي</span></div><div class="vc-info"><div>📱 0123 789 061 | 29 سنة</div><div>🕐 الخميس-السبت</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('ك','كريم سليم','سكيكدة · 29 سنة','0123 789 061','29 سنة','سكيكدة','منزلي','#8b5cf6')">عرض</button><button class="vab va-r">رفض</button><button class="vab va-a">قبول</button></div></div>
-        <div class="vc"><div class="vc-top"><div class="vc-av" style="background:#3b82f6">ي</div><div class="stag st-a">نشط</div></div><div class="vc-name">يوسف بلقاسم</div><div class="vc-city">📍 فيلفيلة</div><div class="sr"><span class="stars">★★★★</span><span class="sn">4.7</span></div><div class="sk-wrap"><span class="sk sk-g">مستشفى</span><span class="sk sk-b">منزلي</span><span class="sk sk-o">نقل</span></div><div class="vc-info"><div>📱 0678 345 0550 | 38 سنة</div><div>🕐 يومي: 20-08</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('ي','يوسف بلقاسم','فيلفيلة · 38 سنة','0678 345 0550','38 سنة','فيلفيلة','مستشفى + منزلي','#3b82f6')">عرض</button><button class="vab va-r">رفض</button><button class="vab va-a">قبول</button></div></div>
-        <div class="vc"><div class="vc-top"><div class="vc-av" style="background:#ef4444">ف</div><div class="stag st-r">مرفوض</div></div><div class="vc-name">فريدة عمر</div><div class="vc-city">📍 الحروش</div><div class="sr"><span class="stars">★★</span><span class="sn">2.5</span></div><div class="sk-wrap"><span class="sk sk-p">ليلي</span></div><div class="vc-info"><div>📱 0901 678 066 | 23 سنة</div><div>🕐 الأحد فقط</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('ف','فريدة عمر','الحروش · 23 سنة','0901 678 066','23 سنة','الحروش','ليلي','#ef4444')">عرض</button><button class="vab va-a">إعادة تفعيل</button></div></div>
+        <div class="vc selectable" data-phone="213551234567" data-name="محمد أمين"><input type="checkbox" class="card-cb" onchange="toggleSel(this)"><div class="vc-top"><div class="vc-av" style="background:#1a3a5c">م</div><div class="stag st-a">نشط</div></div><div class="vc-name">محمد أمين</div><div class="vc-city">📍 سكيكدة الوسط</div><div class="sr"><span class="stars">★★★★★</span><span class="sn">4.5</span></div><div class="sk-wrap"><span class="sk sk-b">منزلي</span><span class="sk sk-g">مستشفى</span><span class="sk sk-o">نقل</span></div><div class="vc-info"><div>📱 0551 234 567 | 28 سنة</div><div>🕐 الاثنين-السبت: 08-16</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('م','محمد أمين','سكيكدة الوسط · 28 سنة','0551 234 567','28 سنة','سكيكدة الوسط','مرافقة مستشفى','#1a3a5c')">عرض</button><button class="vab" style="background:#dcfce7;color:#15803d" onclick="openWaModal('213551234567','محمد أمين','assign')">💬</button><button class="vab va-a">قبول</button></div></div>
+        <div class="vc selectable" data-phone="213561890456" data-name="سارة مسعود"><input type="checkbox" class="card-cb" onchange="toggleSel(this)"><div class="vc-top"><div class="vc-av" style="background:#f59e0b">س</div><div class="stag st-p">معلق</div></div><div class="vc-name">سارة مسعود</div><div class="vc-city">📍 القالة</div><div class="sr"><span class="stars">★★★★</span><span class="sn">3.8</span></div><div class="sk-wrap"><span class="sk sk-p">ليلي</span><span class="sk sk-b">منزلي</span></div><div class="vc-info"><div>📱 0561 890 456 | 35 سنة</div><div>🕐 الأحد-الخميس: 12-06</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('س','سارة مسعود','القالة · 35 سنة','0561 890 456','35 سنة','القالة','مرافقة منزلية','#f59e0b')">عرض</button><button class="vab" style="background:#dcfce7;color:#15803d" onclick="openWaModal('213561890456','سارة مسعود','interview')">💬</button><button class="vab va-a">قبول</button></div></div>
+        <div class="vc selectable" data-phone="213789456070" data-name="نور بن علي"><input type="checkbox" class="card-cb" onchange="toggleSel(this)"><div class="vc-top"><div class="vc-av" style="background:#22c55e">ن</div><div class="stag st-a">نشط</div></div><div class="vc-name">نور بن علي</div><div class="vc-city">📍 عين التاية</div><div class="sr"><span class="stars">★★★★★</span><span class="sn">5.0</span></div><div class="sk-wrap"><span class="sk sk-g">مستشفى</span><span class="sk sk-o">نقل</span></div><div class="vc-info"><div>📱 0789 456 070 | 42 سنة</div><div>🕐 يومي: 14-08</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('ن','نور بن علي','عين التاية · 42 سنة','0789 456 070','42 سنة','عين التاية','مستشفى + نقل','#22c55e')">عرض</button><button class="vab" style="background:#dcfce7;color:#15803d" onclick="openWaModal('213789456070','نور بن علي','thanks')">💬</button><button class="vab va-r">رفض</button></div></div>
+        <div class="vc selectable" data-phone="213123789061" data-name="كريم سليم"><input type="checkbox" class="card-cb" onchange="toggleSel(this)"><div class="vc-top"><div class="vc-av" style="background:#8b5cf6">ك</div><div class="stag st-p">معلق</div></div><div class="vc-name">كريم سليم</div><div class="vc-city">📍 سكيكدة</div><div class="sr"><span class="stars">★★★</span><span class="sn">3.2</span></div><div class="sk-wrap"><span class="sk sk-b">منزلي</span></div><div class="vc-info"><div>📱 0123 789 061 | 29 سنة</div><div>🕐 الخميس-السبت</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('ك','كريم سليم','سكيكدة · 29 سنة','0123 789 061','29 سنة','سكيكدة','منزلي','#8b5cf6')">عرض</button><button class="vab" style="background:#dcfce7;color:#15803d" onclick="openWaModal('213123789061','كريم سليم','interview')">💬</button><button class="vab va-a">قبول</button></div></div>
+        <div class="vc selectable" data-phone="213678345055" data-name="يوسف بلقاسم"><input type="checkbox" class="card-cb" onchange="toggleSel(this)"><div class="vc-top"><div class="vc-av" style="background:#3b82f6">ي</div><div class="stag st-a">نشط</div></div><div class="vc-name">يوسف بلقاسم</div><div class="vc-city">📍 فيلفيلة</div><div class="sr"><span class="stars">★★★★</span><span class="sn">4.7</span></div><div class="sk-wrap"><span class="sk sk-g">مستشفى</span><span class="sk sk-b">منزلي</span><span class="sk sk-o">نقل</span></div><div class="vc-info"><div>📱 0678 345 0550 | 38 سنة</div><div>🕐 يومي: 20-08</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('ي','يوسف بلقاسم','فيلفيلة · 38 سنة','0678 345 0550','38 سنة','فيلفيلة','مستشفى + منزلي','#3b82f6')">عرض</button><button class="vab" style="background:#dcfce7;color:#15803d" onclick="openWaModal('213678345055','يوسف بلقاسم','assign')">💬</button><button class="vab va-r">رفض</button></div></div>
+        <div class="vc selectable" data-phone="213901678066" data-name="فريدة عمر"><input type="checkbox" class="card-cb" onchange="toggleSel(this)"><div class="vc-top"><div class="vc-av" style="background:#ef4444">ف</div><div class="stag st-r">مرفوض</div></div><div class="vc-name">فريدة عمر</div><div class="vc-city">📍 الحروش</div><div class="sr"><span class="stars">★★</span><span class="sn">2.5</span></div><div class="sk-wrap"><span class="sk sk-p">ليلي</span></div><div class="vc-info"><div>📱 0901 678 066 | 23 سنة</div><div>🕐 الأحد فقط</div></div><div class="vc-act"><button class="vab va-v" onclick="openModal('ف','فريدة عمر','الحروش · 23 سنة','0901 678 066','23 سنة','الحروش','ليلي','#ef4444')">عرض</button><button class="vab" style="background:#dcfce7;color:#15803d" onclick="openWaModal('213901678066','فريدة عمر','custom')">💬</button><button class="vab va-a">إعادة تفعيل</button></div></div>
     </div>
     <div class="pag"><div class="pg">‹</div><div class="pg active">1</div><div class="pg">2</div><div class="pg">3</div><div class="pg">...</div><div class="pg">8</div><div class="pg">›</div></div>
 </div>
@@ -735,7 +828,7 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
                 <div class="cc-date">🗓 10/05/2025</div>
             </div>
             <div class="cc-acts">
-                <button class="wa-btn" onclick="window.open('https://wa.me/213551111222?text=السلام عليكم، شكراً على مساهمتكم الكريمة. نود تأكيد استلامنا للمبلغ. جمعية أصدقاء المريض سكيكدة.')">💬 واتساب</button>
+                <button class="wa-btn" onclick="openWaModal('213551111222','محمد بن عيسى','confirm')">💬 واتساب</button>
                 <button class="cc-btn cc-confirm">✓ تأكيد الاستلام</button>
             </div>
         </div>
@@ -750,7 +843,7 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
                 <div class="cc-date">🗓 08/05/2025</div>
             </div>
             <div class="cc-acts">
-                <button class="wa-btn" onclick="window.open('https://wa.me/213561333444?text=السلام عليكم، شكراً جزيلاً على تبرعكم. تم استلام الملابس وستوزَّع قريباً.')">💬 واتساب</button>
+                <button class="wa-btn" onclick="openWaModal('213561333444','فاطمة زيد','thanks')">💬 واتساب</button>
                 <button class="cc-btn cc-distrib">📤 وزِّع</button>
             </div>
         </div>
@@ -765,7 +858,7 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
                 <div class="cc-date">🗓 05/05/2025</div>
             </div>
             <div class="cc-acts">
-                <button class="wa-btn" onclick="window.open('https://wa.me/213789555666?text=السلام عليكم، نشكركم على كرم تبرعكم. تم توزيع المبلغ على المستفيدين. جزاكم الله خيراً.')">💬 واتساب</button>
+                <button class="wa-btn" onclick="openWaModal('213789555666','أحمد قاسم','thanks')">💬 واتساب</button>
             </div>
         </div>
         <!-- مؤكد - وقت -->
@@ -779,7 +872,7 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
                 <div class="cc-date">🗓 03/05/2025</div>
             </div>
             <div class="cc-acts">
-                <button class="wa-btn" onclick="window.open('https://wa.me/213901777888?text=السلام عليكم، شكراً على تبرعك بوقتك. سنتواصل معك لتنسيق أوقات الزيارات.')">💬 واتساب</button>
+                <button class="wa-btn" onclick="openWaModal('213901777888','نور الهدى بلقاسم','assign')">💬 واتساب</button>
                 <button class="cc-btn cc-activate">🤝 تفعيل كمتطوع</button>
             </div>
         </div>
@@ -794,12 +887,13 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
                 <div class="cc-date">🗓 01/05/2025</div>
             </div>
             <div class="cc-acts">
-                <button class="wa-btn" onclick="window.open('https://wa.me/213678999000?text=السلام عليكم، شكراً على مساهمتكم. نود تأكيد استلام المبلغ.')">💬 واتساب</button>
+                <button class="wa-btn" onclick="openWaModal('213678999000','كريم عمر','confirm')">💬 واتساب</button>
                 <button class="cc-btn cc-confirm">✓ تأكيد الاستلام</button>
             </div>
         </div>
         <!-- معلق - عيني -->
-        <div class="contrib-card cc-goods">
+        <div class="contrib-card cc-goods selectable" data-phone="213551121314" data-name="زينب مرابط">
+            <input type="checkbox" class="card-cb" onchange="toggleSel(this)">
             <div class="cc-body">
                 <div class="cc-name">زينب مرابط</div>
                 <div class="cc-phone">📱 0551 121 314</div>
@@ -809,12 +903,65 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
                 <div class="cc-date">🗓 28/04/2025</div>
             </div>
             <div class="cc-acts">
-                <button class="wa-btn" onclick="window.open('https://wa.me/213551121314?text=السلام عليكم، شكراً على تبرعكم. هل يمكنكم الاتصال بنا لتحديد موعد استلام الأدوية؟')">💬 واتساب</button>
+                <button class="wa-btn" onclick="openWaModal('213551121314','زينب مرابط','confirm')">💬 واتساب</button>
                 <button class="cc-btn cc-confirm">✓ تأكيد الاستلام</button>
             </div>
         </div>
     </div>
     <div class="pag"><div class="pg">‹</div><div class="pg active">1</div><div class="pg">2</div><div class="pg">3</div><div class="pg">›</div></div>
+
+    <!-- سجل الرسائل المرسلة -->
+    <div class="mh-header">
+        <h3>📨 سجل الرسائل المرسلة عبر واتساب</h3>
+        <span class="mh-all">الكل</span>
+    </div>
+    <div class="mh-card">
+        <div class="mh-item">
+            <div class="mh-dot"></div>
+            <div class="mh-body">
+                <div class="mh-to">محمد بن عيسى · <span style="color:#64748b;font-weight:400">0551 111 222</span></div>
+                <div class="mh-tpl">✅ تأكيد مساهمة</div>
+                <div class="mh-excerpt">السلام عليكم محمد، تم استلام مساهمتكم الكريمة بتاريخ اليوم...</div>
+            </div>
+            <div class="mh-time">اليوم 10:32</div>
+        </div>
+        <div class="mh-item">
+            <div class="mh-dot"></div>
+            <div class="mh-body">
+                <div class="mh-to">نور الهدى بلقاسم · <span style="color:#64748b;font-weight:400">0901 777 888</span></div>
+                <div class="mh-tpl">🤝 تعيين مريض</div>
+                <div class="mh-excerpt">السلام عليكم نور الهدى، تم تعيينكم للتكفل بمريض جديد...</div>
+            </div>
+            <div class="mh-time">أمس 14:15</div>
+        </div>
+        <div class="mh-item">
+            <div class="mh-dot" style="background:#94a3b8"></div>
+            <div class="mh-body">
+                <div class="mh-to">فاطمة زيد · <span style="color:#64748b;font-weight:400">0561 333 444</span></div>
+                <div class="mh-tpl">🌟 شكر وتقدير</div>
+                <div class="mh-excerpt">السلام عليكم فاطمة، نتقدم بأسمى عبارات الشكر على تبرعكم...</div>
+            </div>
+            <div class="mh-time">08/05 09:00</div>
+        </div>
+        <div class="mh-item">
+            <div class="mh-dot" style="background:#94a3b8"></div>
+            <div class="mh-body">
+                <div class="mh-to">محمد أمين · <span style="color:#64748b;font-weight:400">0551 234 567</span></div>
+                <div class="mh-tpl">🤝 تعيين مريض</div>
+                <div class="mh-excerpt">السلام عليكم محمد أمين، تم تعيينكم للتكفل بمريض في مستشفى...</div>
+            </div>
+            <div class="mh-time">05/05 11:30</div>
+        </div>
+        <div class="mh-item">
+            <div class="mh-dot" style="background:#94a3b8"></div>
+            <div class="mh-body">
+                <div class="mh-to">كريم سليم · <span style="color:#64748b;font-weight:400">0123 789 061</span></div>
+                <div class="mh-tpl">🗣 دعوة مقابلة</div>
+                <div class="mh-excerpt">السلام عليكم كريم، نود دعوتكم لحضور مقابلة في إطار التحاقكم...</div>
+            </div>
+            <div class="mh-time">03/05 16:45</div>
+        </div>
+    </div>
 </div>
 
 </div><!-- /main -->
@@ -840,17 +987,14 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
 <script>
 const TITLES={dashboard:'لوحة التحكم',volunteers:'المتطوعون',interviews:'المقابلات',training:'التدريبات',evaluations:'تقييمات المتطوعين',newrequests:'الطلبات الجديدة',requests:'كل الطلبات',patients:'المرضى',alerts:'التنبيهات',reports:'التقارير',contributions:'المساهمات'};
 
-function go(id, sbEl, bnavEl){
+// ── Navigation ──────────────────────────────────────────────────────────────
+function go(id,sbEl,bnavEl){
     document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.classList.add('hidden')});
     const pg=document.getElementById('p-'+id);
     if(pg){pg.classList.remove('hidden');pg.classList.add('active')}
     document.querySelectorAll('.s-item').forEach(i=>i.classList.remove('active'));
     if(sbEl) sbEl.classList.add('active');
-    else{
-        document.querySelectorAll('.s-item').forEach(i=>{
-            if(i.getAttribute('onclick')&&i.getAttribute('onclick').includes("'"+id+"'")) i.classList.add('active');
-        });
-    }
+    else document.querySelectorAll('.s-item').forEach(i=>{if(i.getAttribute('onclick')&&i.getAttribute('onclick').includes("'"+id+"'"))i.classList.add('active')});
     document.querySelectorAll('.bnav-item').forEach(i=>i.classList.remove('active'));
     if(bnavEl) bnavEl.classList.add('active');
     document.getElementById('ptitle').textContent=TITLES[id]||'';
@@ -861,6 +1005,8 @@ function toggleSb(){document.getElementById('sb').classList.toggle('open');docum
 function closeAll(){document.getElementById('sb').classList.remove('open');document.getElementById('ov').classList.remove('show')}
 function openDrawer(id){document.getElementById(id).classList.add('open');document.getElementById('ov').classList.add('show')}
 function closeDrawer(id){document.getElementById(id).classList.remove('open');document.getElementById('ov').classList.remove('show')}
+
+// ── Volunteer Detail Modal ───────────────────────────────────────────────────
 function openModal(av,name,sub,phone,age,city,cat,color){
     document.getElementById('m-av').textContent=av;
     document.getElementById('m-av').style.background=color;
@@ -874,6 +1020,102 @@ function openModal(av,name,sub,phone,age,city,cat,color){
 }
 function closeModal(){document.getElementById('vol-modal').classList.remove('open')}
 document.getElementById('vol-modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+
+// ── WhatsApp Modal ───────────────────────────────────────────────────────────
+const WA_TPL={
+    interview:'السلام عليكم {name}،\nنود دعوتكم لحضور مقابلة في إطار التحاقكم بجمعية أصدقاء المريض سكيكدة.\nسيتم التواصل معكم لتحديد الموعد المناسب.\nشكراً جزيلاً.',
+    training:'السلام عليكم {name}،\nتذكير بموعد التدريب القادم المقرر قريباً.\nيرجى التأكيد على حضوركم في أقرب وقت.\nجمعية أصدقاء المريض سكيكدة.',
+    assign:'السلام عليكم {name}،\nيسعدنا إعلامكم بأنه تم تعيينكم للتكفل بمريض جديد.\nسيتم إرسال تفاصيل المريض والموعد قريباً.\nجمعية أصدقاء المريض سكيكدة.',
+    confirm:'السلام عليكم {name}،\nتم استلام مساهمتكم الكريمة بتاريخ اليوم.\nنشكركم جزيل الشكر على دعمكم لجمعية أصدقاء المريض سكيكدة.\nجزاكم الله خيراً.',
+    thanks:'السلام عليكم {name}،\nنتقدم إليكم بأسمى عبارات الشكر والتقدير على تعاونكم ومساهمتكم القيمة.\nبارك الله فيكم وجزاكم خيراً.\nجمعية أصدقاء المريض سكيكدة.',
+    custom:''
+};
+let waPhone='', waQueue=[], waQueueIdx=0;
+
+function openWaModal(phone,name,tpl='custom'){
+    waQueue=[{phone,name}]; waQueueIdx=0;
+    _fillWaModal(phone,name,tpl);
+    document.getElementById('wa-bulk-nav').style.display='none';
+    document.getElementById('wa-bulk-lbl').style.display='none';
+    document.getElementById('wa-modal').classList.add('open');
+}
+function openBulkWa(){
+    const sel=document.querySelectorAll('.selectable.sel-on');
+    if(!sel.length) return;
+    waQueue=[...sel].map(c=>({phone:c.dataset.phone,name:c.dataset.name}));
+    waQueueIdx=0;
+    const {phone,name}=waQueue[0];
+    _fillWaModal(phone,name,'custom');
+    if(waQueue.length>1){
+        document.getElementById('wa-bulk-nav').style.display='block';
+        document.getElementById('wa-bulk-total').textContent=waQueue.length;
+        document.getElementById('wa-bulk-lbl').style.display='block';
+        document.getElementById('wa-bulk-lbl').textContent=waQueue.map(q=>q.name).join(' · ');
+    } else {
+        document.getElementById('wa-bulk-nav').style.display='none';
+        document.getElementById('wa-bulk-lbl').style.display='none';
+    }
+    document.getElementById('wa-modal').classList.add('open');
+}
+function _fillWaModal(phone,name,tpl){
+    waPhone=phone;
+    document.getElementById('wa-av').textContent=name.charAt(0);
+    document.getElementById('wa-name-lbl').textContent=name;
+    document.getElementById('wa-phone-lbl').textContent='+'+phone;
+    setTpl(tpl,name);
+}
+function setTpl(tpl,nameOverride){
+    const name=nameOverride||document.getElementById('wa-name-lbl').textContent;
+    const txt=(WA_TPL[tpl]||'').replace(/\{name\}/g,name);
+    document.getElementById('wa-msg-txt').value=txt;
+    document.querySelectorAll('.wtpl').forEach(b=>b.classList.remove('active'));
+    const btn=document.querySelector('[data-tpl="'+tpl+'"]');
+    if(btn) btn.classList.add('active');
+    updateCharCount();
+}
+function updateCharCount(){
+    const len=document.getElementById('wa-msg-txt').value.length;
+    document.getElementById('wa-char').textContent=len;
+}
+function sendWa(){
+    const msg=document.getElementById('wa-msg-txt').value.trim();
+    if(!msg) return;
+    const url='https://wa.me/'+waPhone+'?text='+encodeURIComponent(msg);
+    window.open(url,'_blank');
+    waQueueIdx++;
+    if(waQueueIdx<waQueue.length){
+        const {phone,name}=waQueue[waQueueIdx];
+        _fillWaModal(phone,name,'custom');
+        document.getElementById('wa-bulk-total').textContent=(waQueue.length-waQueueIdx);
+    } else {
+        closeWaModal();
+    }
+}
+function closeWaModal(){document.getElementById('wa-modal').classList.remove('open');waQueue=[];waQueueIdx=0;}
+document.getElementById('wa-modal').addEventListener('click',function(e){if(e.target===this)closeWaModal()});
+
+// ── Bulk Selection ───────────────────────────────────────────────────────────
+function toggleSel(cb){
+    const card=cb.closest('.selectable');
+    card.classList.toggle('sel-on',cb.checked);
+    updateBulkBar();
+}
+function updateBulkBar(){
+    const n=document.querySelectorAll('.selectable.sel-on').length;
+    const bar=document.getElementById('bulk-bar');
+    if(n>0){
+        bar.classList.add('show');
+        document.getElementById('bulk-count-txt').textContent='تم اختيار '+n+(n===1?' شخص':' أشخاص');
+    } else {
+        bar.classList.remove('show');
+    }
+}
+function clearSelection(){
+    document.querySelectorAll('.selectable').forEach(c=>{c.classList.remove('sel-on');const cb=c.querySelector('.card-cb');if(cb)cb.checked=false;});
+    document.getElementById('bulk-bar').classList.remove('show');
+}
+
+// ── Overlay & close-all ──────────────────────────────────────────────────────
 document.getElementById('ov').addEventListener('click',function(){
     closeAll();
     document.querySelectorAll('.drawer').forEach(d=>d.classList.remove('open'));
