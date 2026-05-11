@@ -58,6 +58,10 @@ public partial class HomeViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private async Task OpenAbout() =>
+        await Shell.Current.GoToAsync(nameof(Views.AboutPage));
+
+    [RelayCommand]
     private async Task OpenAdmin() =>
         await Shell.Current.GoToAsync(nameof(Views.AdminLoginPage));
 

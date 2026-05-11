@@ -30,6 +30,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ContributeViewModel>();
         builder.Services.AddTransient<AdminLoginViewModel>();
         builder.Services.AddTransient<AdminDashboardViewModel>();
+        builder.Services.AddTransient<AboutViewModel>();
 
         // ── Pages ──────────────────────────────────────────────────────────────
         builder.Services.AddTransient<HomePage>();
@@ -38,6 +39,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ContributePage>();
         builder.Services.AddTransient<AdminLoginPage>();
         builder.Services.AddTransient<AdminDashboardPage>();
+        builder.Services.AddTransient<AboutPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

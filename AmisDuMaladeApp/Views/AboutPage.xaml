@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AmisDuMaladeApp.Views.AboutPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AmisDuMaladeApp.ViewModels"
+    x:DataType="vm:AboutViewModel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#f2ede6">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!-- ══ HEADER ══ -->
+            <VerticalStackLayout BackgroundColor="#1a3a5c" Spacing="0">
+
+                <!-- شريط التنقل -->
+                <Grid Padding="20,52,20,12" ColumnDefinitions="Auto,*">
+                    <Label Grid.Column="0"
+                           Text="رجوع"
+                           TextColor="#c8a53a" FontSize="15" FontAttributes="Bold"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Column="1"
+                           Text="{Binding PageTitle}"
+                           TextColor="White" FontSize="17" FontAttributes="Bold"
+                           HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                </Grid>
+
+                <!-- شعار الجمعية -->
+                <Border WidthRequest="104" HeightRequest="104"
+                        BackgroundColor="White"
+                        StrokeThickness="3" Stroke="#c8a53a"
+                        HorizontalOptions="Center"
+                        Margin="0,8,0,16">
+                    <Border.StrokeShape><Ellipse/></Border.StrokeShape>
+                    <Image Source="logo.png"
+                           WidthRequest="94" HeightRequest="94"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+
+                <!-- اسم الجمعية -->
+                <Label Text="جمعية أصدقاء المريض سكيكدة"
+                       TextColor="#c8a53a" FontSize="19" FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" Margin="16,0,16,4"/>
+
+                <Label Text="Association Amis du Malade Skikda"
+                       TextColor="#b0ccdf" FontSize="13"
+                       HorizontalTextAlignment="Center" Margin="0,0,0,14"/>
+
+                <!-- الشعار الكتابي -->
+                <Grid ColumnDefinitions="3,*" Margin="24,0,24,14" BackgroundColor="#10ffffff">
+                    <BoxView Grid.Column="0" BackgroundColor="#c8a53a" CornerRadius="2"/>
+                    <VerticalStackLayout Grid.Column="1" Padding="12,10" Spacing="2">
+                        <Label Text="&quot;من أجل بعث الأمل... وتخفيف الألم..."
+                               TextColor="#ccddf0" FontSize="12" FontAttributes="Italic"
+                               HorizontalTextAlignment="End"/>
+                        <Label Text="اليوم هو وغداً... ربما أنا أو أنت&quot;"
+                               TextColor="#ccddf0" FontSize="12" FontAttributes="Italic"
+                               HorizontalTextAlignment="End"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- شارة التأسيس -->
+                <Border BackgroundColor="#18c8a53a" StrokeThickness="1" Stroke="#50c8a53a"
+                        CornerRadius="20" Padding="16,5"
+                        HorizontalOptions="Center" Margin="0,0,0,20">
+                    <Label Text="تأسست 1 أكتوبر 2002  ·  القرار 2002/54"
+                           TextColor="#c8a53a" FontSize="11"
+                           HorizontalTextAlignment="Center"/>
+                </Border>
+
+                <!-- شريط الإحصاءات -->
+                <Grid ColumnDefinitions="*,1,*,1,*" BackgroundColor="#0d2440">
+                    <VerticalStackLayout Grid.Column="0" Padding="4,14" HorizontalOptions="Center" Spacing="3">
+                        <Label Text="+10,000" TextColor="#c8a53a" FontSize="20" FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"/>
+                        <Label Text="مريض استفاد" TextColor="#80b0cc" FontSize="11"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                    <BoxView Grid.Column="1" BackgroundColor="#25ffffff"/>
+                    <VerticalStackLayout Grid.Column="2" Padding="4,14" HorizontalOptions="Center" Spacing="3">
+                        <Label Text="+4,000" TextColor="#c8a53a" FontSize="20" FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"/>
+                        <Label Text="ملف صيدلاني" TextColor="#80b0cc" FontSize="11"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                    <BoxView Grid.Column="3" BackgroundColor="#25ffffff"/>
+                    <VerticalStackLayout Grid.Column="4" Padding="4,14" HorizontalOptions="Center" Spacing="3">
+                        <Label Text="30" TextColor="#c8a53a" FontSize="20" FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"/>
+                        <Label Text="طفل أصم بزرعة" TextColor="#80b0cc" FontSize="11"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+            </VerticalStackLayout>
+
+            <!-- موجة الانتقال -->
+            <Grid HeightRequest="28" BackgroundColor="#0d2440">
+                <BoxView BackgroundColor="#f2ede6" CornerRadius="24,24,0,0"
+                         VerticalOptions="End" HeightRequest="28"/>
+            </Grid>
+
+            <!-- ══ المهمة ══ -->
+            <VerticalStackLayout Padding="18,4,18,0" Spacing="0">
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,20,0,12">
+                    <Label Grid.Column="0" Text="🎯  مهمتنا"
+                           TextColor="#1a3a5c" FontSize="17" FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+                    <BoxView Grid.Column="1" BackgroundColor="#c8a53a"
+                             HeightRequest="3" WidthRequest="60" VerticalOptions="Center" CornerRadius="2"/>
+                </Grid>
+
+                <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16"
+                        Padding="18,16" Margin="0,0,0,12">
+                    <Label Text="جمعية أصدقاء المريض منظمة إنسانية غير حكومية، تأسست بسكيكدة عام 2002، تسعى إلى تقديم الدعم الطبي والإنساني للمرضى المحتاجين وذويهم، وتعزيز التضامن الاجتماعي في مواجهة المرض."
+                           TextColor="#333" FontSize="14" LineBreakMode="WordWrap"
+                           LineHeight="1.7" HorizontalTextAlignment="Right"/>
+                </Border>
+
+                <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16" Padding="16,8">
+                    <VerticalStackLayout Spacing="0">
+
+                        <Grid ColumnDefinitions="*,48" Padding="0,12" ColumnSpacing="12">
+                            <Label Grid.Column="0" Text="توزيع الأدوية يومياً على المرضى غير القادرين على اقتناءها"
+                                   TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
+                                   VerticalOptions="Center" HorizontalTextAlignment="Right"/>
+                            <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
+                                    StrokeThickness="0" CornerRadius="12" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="💊" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+                        <BoxView BackgroundColor="#e8eef4" HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="*,48" Padding="0,12" ColumnSpacing="12">
+                            <Label Grid.Column="0" Text="متابعة المرضى في منازلهم وتقديم الدعم الميداني لذويهم"
+                                   TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
+                                   VerticalOptions="Center" HorizontalTextAlignment="Right"/>
+                            <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
+                                    StrokeThickness="0" CornerRadius="12" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="🏠" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+                        <BoxView BackgroundColor="#e8eef4" HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="*,48" Padding="0,12" ColumnSpacing="12">
+                            <Label Grid.Column="0" Text="توفير المعدات الطبية والأجهزة الضرورية للمرضى المحتاجين"
+                                   TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
+                                   VerticalOptions="Center" HorizontalTextAlignment="Right"/>
+                            <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
+                                    StrokeThickness="0" CornerRadius="12" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="🏥" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+                        <BoxView BackgroundColor="#e8eef4" HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="*,48" Padding="0,12" ColumnSpacing="12">
+                            <Label Grid.Column="0" Text="تنسيق رحلات العلاج للمرضى خارج الولاية"
+                                   TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
+                                   VerticalOptions="Center" HorizontalTextAlignment="Right"/>
+                            <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
+                                    StrokeThickness="0" CornerRadius="12" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="✈️" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+                        <BoxView BackgroundColor="#e8eef4" HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="*,48" Padding="0,12" ColumnSpacing="12">
+                            <Label Grid.Column="0" Text="شراكة دولية مع فرنسا لاستقبال المعدات الطبية منذ 2004"
+                                   TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
+                                   VerticalOptions="Center" HorizontalTextAlignment="Right"/>
+                            <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
+                                    StrokeThickness="0" CornerRadius="12" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Text="🌍" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- ══ الإنجازات ══ -->
+            <VerticalStackLayout Padding="18,0,18,0" Spacing="0">
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,24,0,12">
+                    <Label Grid.Column="0" Text="🏆  إنجازاتنا"
+                           TextColor="#1a3a5c" FontSize="17" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <BoxView Grid.Column="1" BackgroundColor="#c8a53a"
+                             HeightRequest="3" WidthRequest="60" VerticalOptions="Center" CornerRadius="2"/>
+                </Grid>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto" RowSpacing="12">
+
+                    <Border Grid.Row="0" Grid.Column="0" BackgroundColor="White" StrokeThickness="0" CornerRadius="14">
+                        <VerticalStackLayout Spacing="0">
+                            <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
+                            <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
+                                <Label Text="❤️" FontSize="28" HorizontalTextAlignment="Center"/>
+                                <Label Text="+10,000" TextColor="#1a3a5c" FontSize="19"
+                                       FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                <Label Text="مريض استفاد من خدماتنا" TextColor="#888" FontSize="11"
+                                       HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="0" Grid.Column="1" BackgroundColor="White" StrokeThickness="0" CornerRadius="14">
+                        <VerticalStackLayout Spacing="0">
+                            <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
+                            <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
+                                <Label Text="📋" FontSize="28" HorizontalTextAlignment="Center"/>
+                                <Label Text="+4,000" TextColor="#1a3a5c" FontSize="19"
+                                       FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                <Label Text="ملف صيدلاني مُعالَج" TextColor="#888" FontSize="11"
+                                       HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="0" BackgroundColor="White" StrokeThickness="0" CornerRadius="14">
+                        <VerticalStackLayout Spacing="0">
+                            <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
+                            <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
+                                <Label Text="👂" FontSize="28" HorizontalTextAlignment="Center"/>
+                                <Label Text="30" TextColor="#1a3a5c" FontSize="19"
+                                       FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                <Label Text="طفل أصم بزرعة قوقعة" TextColor="#888" FontSize="11"
+                                       HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="1" BackgroundColor="White" StrokeThickness="0" CornerRadius="14">
+                        <VerticalStackLayout Spacing="0">
+                            <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
+                            <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
+                                <Label Text="🚢" FontSize="28" HorizontalTextAlignment="Center"/>
+                                <Label Text="+6" TextColor="#1a3a5c" FontSize="19"
+                                       FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                <Label Text="حاويات معدات طبية من فرنسا" TextColor="#888" FontSize="11"
+                                       HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- ══ القيم ══ -->
+            <VerticalStackLayout Padding="18,0,18,0" Spacing="0">
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,24,0,12">
+                    <Label Grid.Column="0" Text="💎  قيمنا"
+                           TextColor="#1a3a5c" FontSize="17" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <BoxView Grid.Column="1" BackgroundColor="#c8a53a"
+                             HeightRequest="3" WidthRequest="60" VerticalOptions="Center" CornerRadius="2"/>
+                </Grid>
+
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" RowDefinitions="Auto,Auto" RowSpacing="10">
+
+                    <Border Grid.Row="0" Grid.Column="0" BackgroundColor="White" StrokeThickness="0"
+                            CornerRadius="14" Padding="10,14">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Label Text="🤝" FontSize="24" HorizontalTextAlignment="Center"/>
+                            <Label Text="التضامن" TextColor="#1a3a5c" FontSize="12"
+                                   FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="0" Grid.Column="1" BackgroundColor="White" StrokeThickness="0"
+                            CornerRadius="14" Padding="10,14">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Label Text="💙" FontSize="24" HorizontalTextAlignment="Center"/>
+                            <Label Text="الرحمة" TextColor="#1a3a5c" FontSize="12"
+                                   FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="0" Grid.Column="2" BackgroundColor="White" StrokeThickness="0"
+                            CornerRadius="14" Padding="10,14">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Label Text="⚖️" FontSize="24" HorizontalTextAlignment="Center"/>
+                            <Label Text="العدالة" TextColor="#1a3a5c" FontSize="12"
+                                   FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="0" BackgroundColor="White" StrokeThickness="0"
+                            CornerRadius="14" Padding="10,14">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Label Text="🌟" FontSize="24" HorizontalTextAlignment="Center"/>
+                            <Label Text="التميز" TextColor="#1a3a5c" FontSize="12"
+                                   FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="1" BackgroundColor="White" StrokeThickness="0"
+                            CornerRadius="14" Padding="10,14">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Label Text="🔬" FontSize="24" HorizontalTextAlignment="Center"/>
+                            <Label Text="الاحترافية" TextColor="#1a3a5c" FontSize="12"
+                                   FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Row="1" Grid.Column="2" BackgroundColor="White" StrokeThickness="0"
+                            CornerRadius="14" Padding="10,14">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
+                            <Label Text="🌿" FontSize="24" HorizontalTextAlignment="Center"/>
+                            <Label Text="الشفافية" TextColor="#1a3a5c" FontSize="12"
+                                   FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- ══ المسيرة ══ -->
+            <VerticalStackLayout Padding="18,0,18,0" Spacing="0">
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,24,0,12">
+                    <Label Grid.Column="0" Text="📅  مسيرتنا"
+                           TextColor="#1a3a5c" FontSize="17" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <BoxView Grid.Column="1" BackgroundColor="#c8a53a"
+                             HeightRequest="3" WidthRequest="60" VerticalOptions="Center" CornerRadius="2"/>
+                </Grid>
+
+                <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16" Padding="16,8">
+                    <VerticalStackLayout Spacing="0">
+
+                        <Grid ColumnDefinitions="*,10" Padding="0,12,0,12" ColumnSpacing="10">
+                            <VerticalStackLayout Grid.Column="0" Spacing="3">
+                                <Label Text="أكتوبر 2002" TextColor="#c8a53a" FontSize="13"
+                                       FontAttributes="Bold" HorizontalTextAlignment="Right"/>
+                                <Label Text="تأسيس الجمعية بسكيكدة بموجب القرار رقم 2002/54"
+                                       TextColor="#333" FontSize="13" LineBreakMode="WordWrap"
+                                       HorizontalTextAlignment="Right"/>
+                            </VerticalStackLayout>
+                            <Ellipse Grid.Column="1" Fill="#c8a53a" WidthRequest="10" HeightRequest="10"
+                                     VerticalOptions="Start" Margin="0,5,0,0"/>
+                        </Grid>
+                        <BoxView BackgroundColor="#e8eef4" HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="*,10" Padding="0,12,0,12" ColumnSpacing="10">
+                            <VerticalStackLayout Grid.Column="0" Spacing="3">
+                                <Label Text="2004" TextColor="#c8a53a" FontSize="13"
+                                       FontAttributes="Bold" HorizontalTextAlignment="Right"/>
+                                <Label Text="انطلاق الشراكة الدولية مع فرنسا واستقبال أولى حاويات المعدات الطبية"
+                                       TextColor="#333" FontSize="13" LineBreakMode="WordWrap"
+                                       HorizontalTextAlignment="Right"/>
+                            </VerticalStackLayout>
+                            <Ellipse Grid.Column="1" Fill="#c8a53a" WidthRequest="10" HeightRequest="10"
+                                     VerticalOptions="Start" Margin="0,5,0,0"/>
+                        </Grid>
+                        <BoxView BackgroundColor="#e8eef4" HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="*,10" Padding="0,12,0,12" ColumnSpacing="10">
+                            <VerticalStackLayout Grid.Column="0" Spacing="3">
+                                <Label Text="2010 – 2020" TextColor="#c8a53a" FontSize="13"
+                                       FontAttributes="Bold" HorizontalTextAlignment="Right"/>
+                                <Label Text="توسيع المتابعة المنزلية ومعالجة آلاف الملفات الصيدلانية وتركيب الزرعات القوقعية"
+                                       TextColor="#333" FontSize="13" LineBreakMode="WordWrap"
+                                       HorizontalTextAlignment="Right"/>
+                            </VerticalStackLayout>
+                            <Ellipse Grid.Column="1" Fill="#c8a53a" WidthRequest="10" HeightRequest="10"
+                                     VerticalOptions="Start" Margin="0,5,0,0"/>
+                        </Grid>
+                        <BoxView BackgroundColor="#e8eef4" HeightRequest="1"/>
+
+                        <Grid ColumnDefinitions="*,10" Padding="0,12,0,4" ColumnSpacing="10">
+                            <VerticalStackLayout Grid.Column="0" Spacing="3">
+                                <Label Text="اليوم" TextColor="#1a3a5c" FontSize="13"
+                                       FontAttributes="Bold" HorizontalTextAlignment="Right"/>
+                                <Label Text="أكثر من 10,000 مريض استفاد من خدماتنا ونواصل رسالتنا في جميع بلديات الولاية"
+                                       TextColor="#333" FontSize="13" LineBreakMode="WordWrap"
+                                       HorizontalTextAlignment="Right"/>
+                            </VerticalStackLayout>
+                            <Ellipse Grid.Column="1" Fill="#1a3a5c" WidthRequest="10" HeightRequest="10"
+                                     VerticalOptions="Start" Margin="0,5,0,0"/>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ══ القيادة ══ -->
+            <VerticalStackLayout Padding="18,0,18,0" Spacing="0">
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,24,0,12">
+                    <Label Grid.Column="0" Text="👤  القيادة"
+                           TextColor="#1a3a5c" FontSize="17" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <BoxView Grid.Column="1" BackgroundColor="#c8a53a"
+                             HeightRequest="3" WidthRequest="60" VerticalOptions="Center" CornerRadius="2"/>
+                </Grid>
+
+                <Border BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="16" Padding="20">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                        <Border Grid.Column="0" WidthRequest="68" HeightRequest="68"
+                                BackgroundColor="#c8a53a" StrokeThickness="0" CornerRadius="34"
+                                HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label Text="👤" FontSize="30"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                            <Label Text="صالح توقاري"
+                                   TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                            <Label Text="رئيس الجمعية"
+                                   TextColor="#c8a53a" FontSize="13"/>
+                            <Label Text="نشطة في جميع بلديات ولاية سكيكدة"
+                                   TextColor="#80b0cc" FontSize="11"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ══ التواصل ══ -->
+            <VerticalStackLayout BackgroundColor="#1a3a5c" Margin="0,28,0,0" Padding="18,24,18,28" Spacing="0">
+
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,16">
+                    <Label Grid.Column="0" Text="📬  تواصل معنا"
+                           TextColor="#c8a53a" FontSize="17" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <BoxView Grid.Column="1" BackgroundColor="#40c8a53a"
+                             HeightRequest="3" WidthRequest="60" VerticalOptions="Center" CornerRadius="2"/>
+                </Grid>
+
+                <!-- زر الموقع -->
+                <Border BackgroundColor="#0fffffff" StrokeThickness="1" Stroke="#15ffffff"
+                        CornerRadius="14" Margin="0,0,0,12">
+                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                        <Label Grid.Column="0" Text="🌐" FontSize="22" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="الموقع الرسمي" TextColor="White" FontSize="14"/>
+                            <Label Text="www.amisdumalade.org" TextColor="#c8a53a" FontSize="12"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="‹" TextColor="#40ffffff"
+                               FontSize="22" VerticalOptions="Center"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenWebsiteCommand}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Border>
+
+                <!-- زر فيسبوك -->
+                <Border BackgroundColor="#0fffffff" StrokeThickness="1" Stroke="#15ffffff"
+                        CornerRadius="14" Margin="0,0,0,12">
+                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                        <Label Grid.Column="0" Text="📘" FontSize="22" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="صفحة الفيسبوك" TextColor="White" FontSize="14"/>
+                            <Label Text="Association Amis du Malade Skikda" TextColor="#c8a53a" FontSize="12"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="‹" TextColor="#40ffffff"
+                               FontSize="22" VerticalOptions="Center"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenFacebookCommand}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Border>
+
+                <!-- الموقع الجغرافي -->
+                <Border BackgroundColor="#0fffffff" StrokeThickness="1" Stroke="#15ffffff"
+                        CornerRadius="14">
+                    <Grid ColumnDefinitions="Auto,*" Padding="16,14" ColumnSpacing="14">
+                        <Label Grid.Column="0" Text="📍" FontSize="22" VerticalOptions="Center"/>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="الموقع الجغرافي" TextColor="White" FontSize="14"/>
+                            <Label Text="ولاية سكيكدة، الجزائر — جميع البلديات" TextColor="#c8a53a" FontSize="12"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- ══ التذييل ══ -->
+            <VerticalStackLayout BackgroundColor="#0c1f38" Padding="20,20,20,36" Spacing="4">
+                <Label Text="جمعية أصدقاء المريض سكيكدة"
+                       TextColor="#c8a53a" FontSize="15" FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="Association Amis du Malade Skikda"
+                       TextColor="#80a0be" FontSize="12"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="تأسست 2002  ·  ولاية سكيكدة، الجزائر"
+                       TextColor="#80a0be" FontSize="12"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="جميع الحقوق محفوظة © 2024"
+                       TextColor="#3a5270" FontSize="11"
+                       HorizontalTextAlignment="Center" Margin="0,6,0,0"/>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

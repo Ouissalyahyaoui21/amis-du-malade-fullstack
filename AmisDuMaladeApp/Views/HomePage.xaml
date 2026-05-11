@@ -198,6 +198,9 @@
                             <Label Text="{Binding AboutLabel}"
                                    TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold"
                                    HorizontalTextAlignment="Center"/>
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenAboutCommand}"/>
+                            </VerticalStackLayout.GestureRecognizers>
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
