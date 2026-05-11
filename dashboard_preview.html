@@ -3,667 +3,909 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة التحكم - معاينة</title>
+<title>لوحة التحكم – أصدقاء المريض سكيكدة</title>
 <style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
 :root {
-    --primary: #1a3a5c;
-    --gold: #c8a53a;
-    --bg: #f0f4f8;
-    --white: #fff;
-    --green: #22c55e;
-    --orange: #f59e0b;
-    --red: #ef4444;
-    --purple: #8b5cf6;
-    --blue: #3b82f6;
-    --shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: var(--bg);
-    color: #1e293b;
-    direction: rtl;
-    max-width: 480px;
-    margin: 0 auto;
+    --primary:   #1a3a5c;
+    --primary2:  #0d2440;
+    --gold:      #c8a53a;
+    --bg:        #f0f4f8;
+    --white:     #ffffff;
+    --green:     #22c55e;
+    --amber:     #f59e0b;
+    --red:       #ef4444;
+    --purple:    #8b5cf6;
+    --blue:      #3b82f6;
+    --text:      #1e293b;
+    --muted:     #64748b;
+    --border:    #e2e8f0;
+    --shadow:    0 2px 12px rgba(0,0,0,0.07);
+    --radius:    16px;
+    --sidebar-w: 220px;
+    --topbar-h:  64px;
 }
 
-/* ── Header ── */
-.header {
-    background: var(--primary);
-    padding: 44px 16px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.header-logo {
-    width: 48px; height: 48px;
-    background: white;
-    border-radius: 50%;
-    border: 2px solid var(--gold);
-    overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-}
-.header-title { color: white; font-size: 16px; font-weight: 700; flex: 1; margin: 0 10px; }
-.header-sub { color: #90afc8; font-size: 11px; margin-top: 2px; }
-.header-icons { display: flex; gap: 10px; align-items: center; }
-.icon-btn {
-    width: 36px; height: 36px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; position: relative; cursor: pointer;
-}
-.badge {
-    position: absolute; top: -4px; right: -4px;
-    background: var(--red); color: white;
-    font-size: 9px; font-weight: 700;
-    width: 16px; height: 16px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-}
-.logout-btn {
-    background: rgba(200,165,58,0.2);
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    padding: 6px 12px; border-radius: 8px;
-    font-size: 11px; cursor: pointer;
-}
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Arial,sans-serif; background:var(--bg); color:var(--text); direction:rtl; min-height:100vh; }
+button { cursor:pointer; border:none; font-family:inherit; }
+.hidden { display:none !important; }
 
-/* ── Alert Banner ── */
-.alert-banner {
-    background: linear-gradient(135deg, #7c3aed, #5b21b6);
-    margin: 12px;
-    border-radius: 14px;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.alert-banner .icon { font-size: 24px; }
-.alert-banner .text { flex: 1; }
-.alert-banner .text h4 { color: white; font-size: 14px; }
-.alert-banner .text p { color: rgba(255,255,255,0.7); font-size: 11px; margin-top: 2px; }
-.alert-count {
-    background: #ef4444;
-    color: white; font-weight: 800; font-size: 18px;
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-}
+/* ═══════════════════════════════════════
+   LAYOUT SHELL
+═══════════════════════════════════════ */
+.shell { display:flex; min-height:100vh; }
 
-/* ── Stats Grid ── */
-.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 12px 12px; }
-
-.stat-card {
-    background: white;
-    border-radius: 16px;
-    padding: 16px;
-    box-shadow: var(--shadow);
-    border-right: 4px solid transparent;
-}
-.stat-card.red   { border-color: var(--red); }
-.stat-card.amber { border-color: var(--orange); }
-.stat-card.green { border-color: var(--green); }
-.stat-card.blue  { border-color: var(--blue); }
-
-.stat-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-.stat-icon {
-    width: 42px; height: 42px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-}
-.stat-icon.red   { background: #fee2e2; }
-.stat-icon.amber { background: #fef3c7; }
-.stat-icon.green { background: #dcfce7; }
-.stat-icon.blue  { background: #dbeafe; }
-
-.stat-trend {
-    font-size: 10px; font-weight: 600;
-    padding: 2px 7px; border-radius: 20px;
-}
-.trend-up   { background: #dcfce7; color: #16a34a; }
-.trend-warn { background: #fef3c7; color: #d97706; }
-.trend-down { background: #fee2e2; color: #dc2626; }
-
-.stat-num { font-size: 26px; font-weight: 800; color: #1e293b; }
-.stat-label { font-size: 12px; color: #64748b; margin-top: 2px; }
-.stat-sub { font-size: 11px; margin-top: 6px; padding: 4px 8px; border-radius: 8px; }
-.stat-sub.green { background: #dcfce7; color: #16a34a; }
-.stat-sub.amber { background: #fef3c7; color: #d97706; }
-.stat-sub.red   { background: #fee2e2; color: #dc2626; }
-
-/* ── Section title ── */
-.section-title {
-    padding: 16px 16px 10px;
-    display: flex; align-items: center; gap: 8px;
-}
-.section-title h3 { font-size: 15px; font-weight: 700; color: var(--primary); flex: 1; }
-.section-title .see-all { font-size: 12px; color: var(--gold); cursor: pointer; }
-
-/* ── Chart Card ── */
-.chart-card {
-    background: white;
-    border-radius: 16px;
-    margin: 0 12px 12px;
-    padding: 16px;
-    box-shadow: var(--shadow);
-}
-.chart-title { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 14px; }
-
-/* Donut substitute */
-.donut-wrap { display: flex; gap: 16px; align-items: center; }
-
-.donut-visual {
-    width: 100px; height: 100px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    position: relative;
-    display: flex; align-items: center; justify-content: center;
-}
-.donut-visual::after {
-    content: '';
-    position: absolute;
-    width: 58px; height: 58px;
-    background: white;
-    border-radius: 50%;
-}
-.donut-center {
-    position: relative; z-index: 1;
-    text-align: center;
-}
-.donut-center .num { font-size: 16px; font-weight: 800; color: var(--primary); }
-.donut-center .lbl { font-size: 9px; color: #64748b; }
-
-.donut-legend { flex: 1; }
-.legend-item {
-    display: flex; align-items: center; gap: 8px;
-    padding: 5px 0;
-}
-.legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-.legend-name { font-size: 12px; color: #374151; flex: 1; }
-.legend-val { font-size: 13px; font-weight: 700; color: var(--primary); }
-.legend-pct { font-size: 11px; color: #94a3b8; margin-right: 4px; }
-
-/* Bar chart substitute */
-.bar-chart { display: flex; flex-direction: column; gap: 9px; }
-.bar-row { display: flex; align-items: center; gap: 10px; }
-.bar-label { font-size: 11px; color: #64748b; width: 52px; text-align: left; flex-shrink: 0; }
-.bar-track {
-    flex: 1; height: 10px;
-    background: #f1f5f9; border-radius: 5px; overflow: hidden;
-}
-.bar-fill {
-    height: 100%; border-radius: 5px;
-    background: linear-gradient(90deg, var(--primary) 0%, #2a5a8c 100%);
-    transition: width 0.3s;
-}
-.bar-fill.danger { background: linear-gradient(90deg, #ef4444, #f97316); }
-.bar-num { font-size: 12px; font-weight: 700; color: var(--primary); width: 24px; text-align: left; flex-shrink: 0; }
-
-/* ── Activity Feed ── */
-.activity-list { display: flex; flex-direction: column; gap: 0; }
-.activity-item {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 11px 0;
-    border-bottom: 1px solid #f1f5f9;
-}
-.activity-item:last-child { border-bottom: none; }
-.act-icon {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
-}
-.act-icon.green  { background: #dcfce7; }
-.act-icon.blue   { background: #dbeafe; }
-.act-icon.orange { background: #fef3c7; }
-.act-icon.purple { background: #ede9fe; }
-
-.act-content { flex: 1; }
-.act-title { font-size: 13px; font-weight: 600; color: #1e293b; }
-.act-desc  { font-size: 11px; color: #64748b; margin-top: 2px; line-height: 1.5; }
-.act-time  { font-size: 10px; color: #94a3b8; margin-top: 4px; }
-
-/* ── Volunteer Cards ── */
-.vol-scroll { overflow-x: auto; padding: 0 12px 12px; }
-.vol-cards { display: flex; gap: 12px; width: max-content; }
-
-.vol-card {
-    background: white;
-    border-radius: 16px;
-    width: 200px;
-    padding: 14px;
-    box-shadow: var(--shadow);
-    flex-shrink: 0;
-}
-.vol-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-.vol-avatar {
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; font-weight: 800;
-    color: white;
-}
-.vol-status-badge {
-    font-size: 10px; font-weight: 700;
-    padding: 3px 10px; border-radius: 20px;
-}
-.badge-active   { background: #dcfce7; color: #16a34a; }
-.badge-pending  { background: #fef3c7; color: #d97706; }
-.badge-rejected { background: #fee2e2; color: #dc2626; }
-
-.vol-name { font-size: 14px; font-weight: 700; color: #1e293b; }
-.vol-city { font-size: 11px; color: #64748b; margin-top: 2px; }
-
-.vol-rating { display: flex; align-items: center; gap: 4px; margin: 8px 0; }
-.stars { color: #f59e0b; font-size: 12px; }
-.rating-num { font-size: 12px; font-weight: 700; color: #374151; }
-
-.vol-skills { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
-.skill-tag {
-    font-size: 10px; padding: 2px 8px;
-    border-radius: 20px; font-weight: 500;
-}
-.tag-blue   { background: #dbeafe; color: #1d4ed8; }
-.tag-green  { background: #dcfce7; color: #15803d; }
-.tag-purple { background: #ede9fe; color: #7c3aed; }
-.tag-orange { background: #fef3c7; color: #b45309; }
-
-.vol-info { font-size: 11px; color: #64748b; border-top: 1px solid #f1f5f9; padding-top: 8px; }
-.vol-info div { margin-bottom: 3px; }
-
-.vol-actions { display: flex; gap: 6px; margin-top: 10px; }
-.vol-btn {
-    flex: 1; padding: 8px 4px;
-    border-radius: 10px; border: none;
-    font-size: 12px; font-weight: 700; cursor: pointer;
-}
-.btn-approve { background: #22c55e; color: white; }
-.btn-reject  { background: #ef4444; color: white; }
-.btn-view    { background: #f1f5f9; color: #374151; }
-
-/* ── Alerts ── */
-.alert-card {
-    background: white;
-    border-radius: 16px;
-    margin: 0 12px 12px;
-    padding: 16px;
-    box-shadow: var(--shadow);
-}
-.alert-item {
-    display: flex; align-items: flex-start; gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid #f1f5f9;
-}
-.alert-item:last-child { border-bottom: none; }
-.alert-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    margin-top: 4px; flex-shrink: 0;
-}
-.dot-red    { background: #ef4444; }
-.dot-orange { background: #f59e0b; }
-.dot-blue   { background: #3b82f6; }
-.alert-text { flex: 1; font-size: 12px; color: #374151; line-height: 1.5; }
-.alert-resolve-btn {
-    background: transparent; border: 1px solid #e2e8f0;
-    color: #64748b; font-size: 11px; padding: 4px 10px;
-    border-radius: 8px; cursor: pointer; flex-shrink: 0;
-}
-
-/* ── Bottom Nav ── */
-.bottom-nav {
-    position: sticky; bottom: 0;
+/* ─── Sidebar (Desktop / Tablet) ─── */
+.sidebar {
+    width: var(--sidebar-w);
     background: var(--primary);
     display: flex;
-    padding: 10px 0 20px;
+    flex-direction: column;
+    position: fixed;
+    top: 0; right: 0;
+    height: 100vh;
+    z-index: 100;
+    transition: transform .3s;
+}
+
+.sidebar-logo {
+    display: flex; align-items: center; gap:10px;
+    padding: 18px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.sidebar-logo img {
+    width:44px; height:44px; border-radius:50%;
+    border:2px solid var(--gold); object-fit:cover;
+}
+.sidebar-logo .s-title { font-size:12px; font-weight:700; color:white; line-height:1.4; }
+.sidebar-logo .s-sub   { font-size:10px; color:#90afc8; margin-top:2px; }
+
+.sidebar-nav { flex:1; padding:12px 0; overflow-y:auto; }
+.nav-group-label {
+    font-size:9px; font-weight:700; color:rgba(255,255,255,.35);
+    text-transform:uppercase; letter-spacing:.8px;
+    padding:10px 16px 4px;
 }
 .nav-item {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; gap: 4px; cursor: pointer;
-    padding: 6px 0;
+    display:flex; align-items:center; gap:10px;
+    padding:11px 16px; cursor:pointer;
+    border-radius:0; transition:background .15s;
+    position:relative;
 }
-.nav-item .ni { font-size: 20px; }
-.nav-item .nl { font-size: 9px; color: rgba(255,255,255,0.5); }
-.nav-item.active .nl { color: var(--gold); }
-.nav-item.active .ni-wrap {
-    background: rgba(200,165,58,0.2);
-    border-radius: 12px;
-    padding: 4px 12px;
+.nav-item:hover  { background:rgba(255,255,255,.06); }
+.nav-item.active { background:rgba(200,165,58,.15); }
+.nav-item.active::before {
+    content:''; position:absolute;
+    right:0; top:0; bottom:0; width:3px;
+    background:var(--gold); border-radius:3px 0 0 3px;
+}
+.nav-item .ni { font-size:18px; width:22px; text-align:center; }
+.nav-item .nl { font-size:13px; color:rgba(255,255,255,.75); flex:1; }
+.nav-item.active .nl { color:white; font-weight:600; }
+.nav-badge {
+    background:var(--red); color:white;
+    font-size:10px; font-weight:700;
+    padding:1px 7px; border-radius:20px;
+}
+
+.sidebar-footer {
+    padding:14px 16px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+.logout-btn {
+    width:100%; padding:10px;
+    background:rgba(239,68,68,.15);
+    border:1px solid rgba(239,68,68,.3);
+    color:#fca5a5; border-radius:10px;
+    font-size:13px; font-weight:600;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.logout-btn:hover { background:rgba(239,68,68,.25); }
+
+/* ─── Main content ─── */
+.main {
+    flex:1;
+    margin-right: var(--sidebar-w);
+    display:flex; flex-direction:column;
+    min-height:100vh;
+}
+
+/* ─── Top bar ─── */
+.topbar {
+    background:white;
+    height: var(--topbar-h);
+    display:flex; align-items:center; gap:12px;
+    padding:0 20px;
+    border-bottom:1px solid var(--border);
+    position:sticky; top:0; z-index:50;
+    box-shadow: 0 1px 8px rgba(0,0,0,.06);
+}
+.topbar-title { font-size:17px; font-weight:700; color:var(--primary); flex:1; }
+.topbar-search {
+    display:flex; align-items:center; gap:8px;
+    background:var(--bg); border:1px solid var(--border);
+    border-radius:10px; padding:7px 12px;
+    font-size:13px; color:var(--muted);
+}
+.topbar-btn {
+    width:38px; height:38px;
+    background:var(--bg); border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:17px; position:relative;
+    border:1px solid var(--border);
+}
+.topbar-btn .badge {
+    position:absolute; top:-4px; right:-4px;
+    background:var(--red); color:white;
+    font-size:9px; font-weight:700;
+    width:16px; height:16px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+}
+.menu-btn {
+    display:none; width:38px; height:38px;
+    background:transparent; border-radius:8px;
+    align-items:center; justify-content:center;
+    font-size:20px; border:none;
+}
+
+/* ─── Page body ─── */
+.page-body { flex:1; padding:20px; display:none; }
+.page-body.active { display:block; }
+
+/* ─── Mobile bottom nav ─── */
+.bottom-nav {
+    display:none;
+    position:fixed; bottom:0; left:0; right:0;
+    background:var(--primary); z-index:100;
+    padding:8px 0 18px;
+}
+.bottom-nav .bnav-items { display:flex; }
+.bnav-item {
+    flex:1; display:flex; flex-direction:column;
+    align-items:center; gap:3px; cursor:pointer;
+    padding:6px 2px;
+}
+.bnav-item .bi { font-size:19px; }
+.bnav-item .bl { font-size:9px; color:rgba(255,255,255,.5); }
+.bnav-item.active .bi-wrap {
+    background:rgba(200,165,58,.2);
+    border-radius:12px; padding:4px 10px;
+}
+.bnav-item.active .bl { color:var(--gold); }
+.bnav-badge {
+    background:var(--red); color:white;
+    font-size:9px; font-weight:700; padding:1px 5px;
+    border-radius:10px; position:absolute;
+    margin-top:-6px; margin-right:-12px;
+}
+
+/* ─── Overlay for mobile sidebar ─── */
+.overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:99; }
+
+/* ═══════════════════════════════════════
+   COMPONENTS
+═══════════════════════════════════════ */
+
+/* Alert Banner */
+.alert-banner {
+    background:linear-gradient(135deg,#7c3aed,#5b21b6);
+    border-radius:var(--radius); padding:14px 16px;
+    display:flex; align-items:center; gap:14px; margin-bottom:16px;
+}
+.alert-banner .ab-icon { font-size:26px; }
+.alert-banner .ab-text { flex:1; }
+.alert-banner .ab-text h4 { color:white; font-size:14px; }
+.alert-banner .ab-text p  { color:rgba(255,255,255,.7); font-size:12px; margin-top:2px; }
+.alert-count {
+    background:var(--red); color:white;
+    font-size:20px; font-weight:800;
+    width:40px; height:40px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+}
+
+/* Stats grid */
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
+.stat-card {
+    background:white; border-radius:var(--radius);
+    padding:16px; box-shadow:var(--shadow);
+    border-right:4px solid transparent;
+}
+.stat-card.c-red    { border-color:var(--red); }
+.stat-card.c-amber  { border-color:var(--amber); }
+.stat-card.c-green  { border-color:var(--green); }
+.stat-card.c-blue   { border-color:var(--blue); }
+.stat-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+.stat-icon {
+    width:44px; height:44px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center; font-size:22px;
+}
+.stat-icon.c-red    { background:#fee2e2; }
+.stat-icon.c-amber  { background:#fef3c7; }
+.stat-icon.c-green  { background:#dcfce7; }
+.stat-icon.c-blue   { background:#dbeafe; }
+.stat-trend {
+    font-size:10px; font-weight:700; padding:3px 8px; border-radius:20px;
+}
+.t-up   { background:#dcfce7; color:#15803d; }
+.t-warn { background:#fef3c7; color:#b45309; }
+.t-down { background:#fee2e2; color:#dc2626; }
+.stat-num { font-size:28px; font-weight:800; color:var(--text); line-height:1; }
+.stat-label { font-size:12px; color:var(--muted); margin-top:4px; }
+.stat-sub {
+    font-size:11px; margin-top:8px; padding:4px 8px; border-radius:8px; display:inline-block;
+}
+.ss-green  { background:#dcfce7; color:#15803d; }
+.ss-amber  { background:#fef3c7; color:#b45309; }
+.ss-red    { background:#fee2e2; color:#dc2626; }
+
+/* Charts row */
+.charts-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+.chart-card { background:white; border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); }
+.chart-card h4 { font-size:13px; font-weight:700; color:var(--primary); margin-bottom:14px; }
+
+/* Donut */
+.donut-wrap { display:flex; align-items:center; gap:16px; }
+.donut-svg { flex-shrink:0; }
+.donut-legend { flex:1; display:flex; flex-direction:column; gap:8px; }
+.leg-row { display:flex; align-items:center; gap:8px; }
+.leg-dot { width:11px; height:11px; border-radius:50%; flex-shrink:0; }
+.leg-name { font-size:12px; color:var(--text); flex:1; }
+.leg-val  { font-size:13px; font-weight:700; color:var(--primary); }
+.leg-pct  { font-size:11px; color:var(--muted); }
+
+/* Bar chart */
+.bar-list { display:flex; flex-direction:column; gap:10px; }
+.bar-row { display:flex; align-items:center; gap:10px; }
+.bar-lbl { font-size:11px; color:var(--muted); width:54px; flex-shrink:0; text-align:left; }
+.bar-track { flex:1; height:10px; background:#f1f5f9; border-radius:5px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:5px; }
+.bf-normal { background:linear-gradient(90deg,var(--primary),#2a5a8c); }
+.bf-danger { background:linear-gradient(90deg,var(--red),#f97316); }
+.bar-val { font-size:12px; font-weight:700; color:var(--primary); width:22px; text-align:left; flex-shrink:0; }
+
+/* Activity + Alerts row */
+.bottom-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+
+/* Feed list */
+.feed-list { display:flex; flex-direction:column; gap:0; }
+.feed-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid #f1f5f9; }
+.feed-item:last-child { border:none; }
+.feed-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
+.fi-green  { background:#dcfce7; }
+.fi-orange { background:#fef3c7; }
+.fi-blue   { background:#dbeafe; }
+.fi-purple { background:#ede9fe; }
+.feed-body { flex:1; }
+.feed-title { font-size:12px; font-weight:600; color:var(--text); }
+.feed-desc  { font-size:11px; color:var(--muted); margin-top:2px; line-height:1.5; }
+.feed-time  { font-size:10px; color:#94a3b8; margin-top:3px; }
+
+/* Alerts list */
+.alert-list { display:flex; flex-direction:column; gap:0; }
+.alert-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid #f1f5f9; }
+.alert-item:last-child { border:none; }
+.alert-dot { width:10px; height:10px; border-radius:50%; margin-top:3px; flex-shrink:0; }
+.ad-red    { background:var(--red); }
+.ad-orange { background:var(--amber); }
+.ad-blue   { background:var(--blue); }
+.alert-text { flex:1; font-size:12px; color:var(--text); line-height:1.5; }
+.resolve-btn { background:transparent; border:1px solid var(--border); color:var(--muted); font-size:11px; padding:4px 10px; border-radius:8px; flex-shrink:0; }
+.resolve-btn:hover { background:var(--bg); }
+
+/* Section header */
+.sec-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.sec-header h3 { font-size:14px; font-weight:700; color:var(--primary); }
+.sec-header .see-all { font-size:12px; color:var(--gold); cursor:pointer; }
+
+/* ─── Volunteer cards (tab) ─── */
+.filter-bar {
+    display:flex; gap:8px; margin-bottom:16px; overflow-x:auto; padding-bottom:4px;
+}
+.filter-btn {
+    padding:7px 16px; border-radius:20px; font-size:12px; font-weight:600;
+    border:1px solid var(--border); background:white; color:var(--muted);
+    flex-shrink:0; transition:all .15s;
+}
+.filter-btn.active { background:var(--primary); color:white; border-color:var(--primary); }
+
+.vol-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+.vol-card {
+    background:white; border-radius:var(--radius);
+    padding:16px; box-shadow:var(--shadow);
+}
+.vc-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
+.vc-avatar {
+    width:46px; height:46px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; font-weight:800; color:white;
+}
+.status-tag { font-size:10px; font-weight:700; padding:3px 10px; border-radius:20px; }
+.s-active   { background:#dcfce7; color:#15803d; }
+.s-pending  { background:#fef3c7; color:#b45309; }
+.s-rejected { background:#fee2e2; color:#dc2626; }
+.vc-name { font-size:14px; font-weight:700; }
+.vc-city { font-size:11px; color:var(--muted); margin-top:2px; }
+.stars-row { display:flex; align-items:center; gap:5px; margin:8px 0; }
+.stars { color:var(--amber); font-size:13px; letter-spacing:1px; }
+.stars-num { font-size:12px; font-weight:700; }
+.skills { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:10px; }
+.skill { font-size:10px; padding:2px 8px; border-radius:20px; }
+.sk-blue   { background:#dbeafe; color:#1d4ed8; }
+.sk-green  { background:#dcfce7; color:#15803d; }
+.sk-purple { background:#ede9fe; color:#7c3aed; }
+.sk-orange { background:#fef3c7; color:#b45309; }
+.vc-info { font-size:11px; color:var(--muted); border-top:1px solid #f1f5f9; padding-top:10px; margin-bottom:10px; }
+.vc-info div { margin-bottom:3px; }
+.vc-actions { display:flex; gap:6px; }
+.va-btn { flex:1; padding:8px 4px; border-radius:10px; font-size:12px; font-weight:700; }
+.va-view    { background:#f1f5f9; color:var(--text); }
+.va-reject  { background:#fee2e2; color:var(--red); }
+.va-approve { background:#dcfce7; color:#15803d; }
+
+/* Pagination */
+.pagination { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:20px; }
+.pg-btn {
+    width:34px; height:34px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:600; background:white;
+    border:1px solid var(--border); color:var(--muted);
+}
+.pg-btn.active { background:var(--primary); color:white; border-color:var(--primary); }
+
+/* ─── Requests tab ─── */
+.request-list { display:flex; flex-direction:column; gap:10px; }
+.request-card {
+    background:white; border-radius:var(--radius);
+    padding:16px; box-shadow:var(--shadow);
+    display:flex; align-items:center; gap:14px;
+}
+.req-priority { width:5px; align-self:stretch; border-radius:3px; flex-shrink:0; }
+.rp-high   { background:var(--red); }
+.rp-medium { background:var(--amber); }
+.rp-low    { background:var(--green); }
+.req-body  { flex:1; min-width:0; }
+.req-ref   { font-size:10px; color:var(--muted); margin-bottom:4px; }
+.req-names { font-size:13px; font-weight:700; }
+.req-meta  { font-size:11px; color:var(--muted); margin-top:4px; }
+.req-date  { font-size:11px; color:var(--muted); text-align:left; flex-shrink:0; }
+.req-status { font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; flex-shrink:0; }
+
+/* ─── Patients tab ─── */
+.patient-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
+.patient-card {
+    background:white; border-radius:var(--radius);
+    padding:14px; box-shadow:var(--shadow);
+}
+.pc-top { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.pc-avatar {
+    width:44px; height:44px; border-radius:50%;
+    background:linear-gradient(135deg,var(--primary),#2a5a8c);
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px; font-weight:800; color:white; flex-shrink:0;
+}
+.pc-name { font-size:13px; font-weight:700; }
+.pc-age  { font-size:11px; color:var(--muted); }
+.pc-info { font-size:11px; color:var(--muted); }
+.pc-info div { padding:3px 0; border-bottom:1px solid #f8fafc; }
+.pc-info div:last-child { border:none; }
+
+/* ─── Alerts tab ─── */
+.alerts-full { display:flex; flex-direction:column; gap:10px; }
+.alert-full-card {
+    background:white; border-radius:var(--radius);
+    padding:16px; box-shadow:var(--shadow);
+    display:flex; align-items:flex-start; gap:12px;
+    border-right:4px solid transparent;
+}
+.afc-red    { border-color:var(--red); }
+.afc-orange { border-color:var(--amber); }
+.afc-blue   { border-color:var(--blue); }
+.afc-icon { font-size:24px; }
+.afc-body { flex:1; }
+.afc-title { font-size:13px; font-weight:700; }
+.afc-desc  { font-size:12px; color:var(--muted); margin-top:4px; line-height:1.5; }
+.afc-time  { font-size:11px; color:#94a3b8; margin-top:6px; }
+.afc-resolve {
+    padding:8px 16px; border-radius:10px;
+    background:var(--primary); color:white;
+    font-size:12px; font-weight:700; flex-shrink:0;
+}
+
+/* ─── Reports tab ─── */
+.reports-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
+
+/* ═══════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════ */
+
+/* Tablet: ≤ 900px */
+@media (max-width:900px) {
+    :root { --sidebar-w: 60px; }
+    .sidebar-logo .s-title,
+    .sidebar-logo .s-sub,
+    .nav-item .nl,
+    .nav-group-label,
+    .logout-btn span,
+    .nav-badge { display:none; }
+    .sidebar-logo { justify-content:center; padding:16px 8px; }
+    .nav-item { justify-content:center; padding:14px 0; }
+    .nav-item::before { display:none; }
+    .nav-item.active { background:rgba(200,165,58,.15); }
+    .logout-btn { padding:10px; }
+    .stats-grid { grid-template-columns:repeat(2,1fr); }
+    .charts-row { grid-template-columns:1fr; }
+    .bottom-row { grid-template-columns:1fr; }
+}
+
+/* Mobile: ≤ 640px */
+@media (max-width:640px) {
+    .sidebar  { display:none; transform:translateX(100%); }
+    .sidebar.open { display:flex; transform:translateX(0); width:260px; }
+    .sidebar.open .s-title, .sidebar.open .s-sub,
+    .sidebar.open .nl, .sidebar.open .nav-group-label,
+    .sidebar.open .nav-badge { display:block; }
+    .sidebar.open .sidebar-logo { justify-content:flex-start; }
+    .sidebar.open .nav-item { justify-content:flex-start; padding:11px 16px; }
+    .sidebar.open .logout-btn span { display:inline; }
+    .sidebar.open .nav-item::before { display:block; }
+    .overlay.show { display:block; }
+    .main { margin-right:0; padding-bottom:80px; }
+    .menu-btn { display:flex; }
+    .bottom-nav { display:block; }
+    .topbar-search { display:none; }
+    .stats-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
+    .charts-row { grid-template-columns:1fr; }
+    .bottom-row { grid-template-columns:1fr; }
+    .page-body { padding:12px; }
+    .vol-grid { grid-template-columns:1fr; }
+    .patient-grid { grid-template-columns:1fr 1fr; }
+    .stat-num { font-size:22px; }
+}
+
+/* Large desktop: ≥ 1200px */
+@media (min-width:1200px) {
+    .stats-grid { grid-template-columns:repeat(4,1fr); }
 }
 </style>
 </head>
 <body>
 
-<!-- Header -->
-<div class="header">
-    <div class="header-logo">
-        <img src="https://raw.githubusercontent.com/ouissalyahyaoui21/amis-du-malade-backend/claude/maui-frontend-build-9lwYm/AmisDuMaladeApp/Resources/Images/logo.png"
-             style="width:44px;height:44px;border-radius:50%;object-fit:cover;" alt="logo"/>
-    </div>
-    <div class="header-title">
-        <div>لوحة التحكم</div>
-        <div class="header-sub">جمعية أصدقاء المريض سكيكدة</div>
-    </div>
-    <div class="header-icons">
-        <div class="icon-btn">🔔<div class="badge">8</div></div>
-        <div class="icon-btn">⚙️</div>
-        <div class="logout-btn">خروج</div>
-    </div>
-</div>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-<!-- Urgent Alert Banner -->
-<div class="alert-banner">
-    <div class="icon">⚡</div>
-    <div class="text">
-        <h4>تنبيهات عاجلة</h4>
-        <p>لديك 8 تنبيهات تحتاج مراجعة فورية</p>
-    </div>
-    <div class="alert-count">8</div>
-</div>
+<div class="shell">
 
-<!-- Stats Cards -->
-<div class="stats">
-    <div class="stat-card red">
-        <div class="stat-header">
-            <div class="stat-icon red">🏥</div>
-            <div class="stat-trend trend-up">↑ 12%</div>
+<!-- ════ SIDEBAR ════ -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img src="https://raw.githubusercontent.com/ouissalyahyaoui21/amis-du-malade-backend/claude/maui-frontend-build-9lwYm/AmisDuMaladeApp/Resources/Images/logo.png" alt="logo"/>
+        <div>
+            <div class="s-title">أصدقاء المريض</div>
+            <div class="s-sub">سكيكدة</div>
         </div>
-        <div class="stat-num">89</div>
-        <div class="stat-label">إجمالي المتطوعين</div>
-        <div class="stat-sub green">+7 هذا الشهر</div>
     </div>
 
-    <div class="stat-card amber">
-        <div class="stat-header">
-            <div class="stat-icon amber">⏳</div>
-            <div class="stat-trend trend-warn">معلق</div>
+    <nav class="sidebar-nav">
+        <div class="nav-group-label">الرئيسية</div>
+        <div class="nav-item active" onclick="showTab('dashboard',this)">
+            <span class="ni">🏠</span><span class="nl">لوحة التحكم</span>
         </div>
-        <div class="stat-num">12</div>
-        <div class="stat-label">طلبات رعاية معلقة</div>
-        <div class="stat-sub amber">تنتظر المراجعة</div>
+        <div class="nav-group-label">الإدارة</div>
+        <div class="nav-item" onclick="showTab('volunteers',this)">
+            <span class="ni">🤝</span><span class="nl">المتطوعون</span>
+            <span class="nav-badge">20</span>
+        </div>
+        <div class="nav-item" onclick="showTab('requests',this)">
+            <span class="ni">📋</span><span class="nl">طلبات الرعاية</span>
+            <span class="nav-badge">12</span>
+        </div>
+        <div class="nav-item" onclick="showTab('patients',this)">
+            <span class="ni">👥</span><span class="nl">المرضى</span>
+        </div>
+        <div class="nav-group-label">المتابعة</div>
+        <div class="nav-item" onclick="showTab('alerts',this)">
+            <span class="ni">🚨</span><span class="nl">التنبيهات</span>
+            <span class="nav-badge">8</span>
+        </div>
+        <div class="nav-item" onclick="showTab('reports',this)">
+            <span class="ni">📊</span><span class="nl">التقارير</span>
+        </div>
+    </nav>
+
+    <div class="sidebar-footer">
+        <button class="logout-btn">🚪 <span>تسجيل الخروج</span></button>
     </div>
+</aside>
 
-    <div class="stat-card green">
-        <div class="stat-header">
-            <div class="stat-icon green">✅</div>
-            <div class="stat-trend trend-up">66%</div>
-        </div>
-        <div class="stat-num">31</div>
-        <div class="stat-label">متطوعون نشطون</div>
-        <div class="stat-sub green">نسبة النشاط 66%</div>
-    </div>
+<!-- ════ MAIN ════ -->
+<div class="main">
 
-    <div class="stat-card blue">
-        <div class="stat-header">
-            <div class="stat-icon blue">👥</div>
-            <div class="stat-trend trend-up">↑ 5%</div>
-        </div>
-        <div class="stat-num">47</div>
-        <div class="stat-label">إجمالي المرضى</div>
-        <div class="stat-sub amber">3 مرضى جدد!</div>
-    </div>
-</div>
+    <!-- Top bar -->
+    <header class="topbar">
+        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+        <div class="topbar-title" id="page-title">لوحة التحكم</div>
+        <div class="topbar-search">🔍 &nbsp;بحث...</div>
+        <div class="topbar-btn">🔔<div class="badge">8</div></div>
+        <div class="topbar-btn">⚙️</div>
+    </header>
 
-<!-- Volunteer Distribution Chart -->
-<div class="section-title">
-    <h3>📊 توزيع المتطوعين</h3>
-</div>
-<div class="chart-card">
-    <div class="donut-wrap">
-        <!-- Donut visual using conic-gradient -->
-        <div class="donut-visual"
-             style="background: conic-gradient(#22c55e 0% 64%, #f59e0b 64% 87%, #8b5cf6 87% 100%);">
-            <div class="donut-center">
-                <div class="num">89</div>
-                <div class="lbl">الكل</div>
-            </div>
-        </div>
-        <div class="donut-legend">
-            <div class="legend-item">
-                <div class="legend-dot" style="background:#22c55e"></div>
-                <div class="legend-name">نشط</div>
-                <div class="legend-pct">64%</div>
-                <div class="legend-val">57</div>
-            </div>
-            <div class="legend-item">
-                <div class="legend-dot" style="background:#f59e0b"></div>
-                <div class="legend-name">معلق</div>
-                <div class="legend-pct">23%</div>
-                <div class="legend-val">20</div>
-            </div>
-            <div class="legend-item">
-                <div class="legend-dot" style="background:#8b5cf6"></div>
-                <div class="legend-name">مرفوض</div>
-                <div class="legend-pct">13%</div>
-                <div class="legend-val">12</div>
-            </div>
-        </div>
-    </div>
-</div>
+    <!-- ════════ TAB: DASHBOARD ════════ -->
+    <div class="page-body active" id="tab-dashboard">
 
-<!-- Weekly Activity Bar Chart -->
-<div class="section-title">
-    <h3>📈 نشاط الأسبوع الحالي</h3>
-</div>
-<div class="chart-card">
-    <div class="bar-chart">
-        <div class="bar-row">
-            <div class="bar-label">السبت</div>
-            <div class="bar-track"><div class="bar-fill danger" style="width:100%"></div></div>
-            <div class="bar-num">10</div>
+        <div class="alert-banner">
+            <div class="ab-icon">⚡</div>
+            <div class="ab-text">
+                <h4>تنبيهات عاجلة</h4>
+                <p>لديك 8 تنبيهات تحتاج مراجعة فورية</p>
+            </div>
+            <div class="alert-count">8</div>
         </div>
-        <div class="bar-row">
-            <div class="bar-label">الجمعة</div>
-            <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
-            <div class="bar-num">9</div>
-        </div>
-        <div class="bar-row">
-            <div class="bar-label">الخميس</div>
-            <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
-            <div class="bar-num">7</div>
-        </div>
-        <div class="bar-row">
-            <div class="bar-label">الأربعاء</div>
-            <div class="bar-track"><div class="bar-fill" style="width:60%"></div></div>
-            <div class="bar-num">6</div>
-        </div>
-        <div class="bar-row">
-            <div class="bar-label">الثلاثاء</div>
-            <div class="bar-track"><div class="bar-fill" style="width:40%"></div></div>
-            <div class="bar-num">4</div>
-        </div>
-        <div class="bar-row">
-            <div class="bar-label">الاثنين</div>
-            <div class="bar-track"><div class="bar-fill" style="width:30%"></div></div>
-            <div class="bar-num">3</div>
-        </div>
-    </div>
-</div>
 
-<!-- Recent Activity -->
-<div class="section-title">
-    <h3>⚡ آخر الأنشطة</h3>
-    <div class="see-all">عرض الكل</div>
-</div>
-<div class="chart-card">
-    <div class="activity-list">
-        <div class="activity-item">
-            <div class="act-icon green">✅</div>
-            <div class="act-content">
-                <div class="act-title">تعيين متطوع</div>
-                <div class="act-desc">تم تعيين محمد أمين لمتابعة المريض أحمد – المستشفى</div>
-                <div class="act-time">منذ 15 دقيقة</div>
+        <div class="stats-grid">
+            <div class="stat-card c-red">
+                <div class="stat-header">
+                    <div class="stat-icon c-red">🏥</div>
+                    <div class="stat-trend t-up">↑ 12%</div>
+                </div>
+                <div class="stat-num">89</div>
+                <div class="stat-label">إجمالي المتطوعين</div>
+                <div class="stat-sub ss-green">+7 هذا الشهر</div>
             </div>
-        </div>
-        <div class="activity-item">
-            <div class="act-icon orange">📋</div>
-            <div class="act-content">
-                <div class="act-title">طلب رعاية جديد #7</div>
-                <div class="act-desc">المريض: فاطمة بن علي – سكيكدة الوسط</div>
-                <div class="act-time">منذ 32 دقيقة</div>
+            <div class="stat-card c-amber">
+                <div class="stat-header">
+                    <div class="stat-icon c-amber">⏳</div>
+                    <div class="stat-trend t-warn">معلق</div>
+                </div>
+                <div class="stat-num">12</div>
+                <div class="stat-label">طلبات رعاية معلقة</div>
+                <div class="stat-sub ss-amber">تنتظر المراجعة</div>
             </div>
-        </div>
-        <div class="activity-item">
-            <div class="act-icon blue">👤</div>
-            <div class="act-content">
-                <div class="act-title">متطوع جديد</div>
-                <div class="act-desc">تسجيل سارة مسعود – فئة مرافقة منزلية</div>
-                <div class="act-time">منذ ساعة</div>
+            <div class="stat-card c-green">
+                <div class="stat-header">
+                    <div class="stat-icon c-green">✅</div>
+                    <div class="stat-trend t-up">66%</div>
+                </div>
+                <div class="stat-num">31</div>
+                <div class="stat-label">متطوعون نشطون</div>
+                <div class="stat-sub ss-green">نسبة النشاط 66%</div>
             </div>
-        </div>
-        <div class="activity-item">
-            <div class="act-icon purple">📞</div>
-            <div class="act-content">
-                <div class="act-title">زيارة منزلية مكتملة</div>
-                <div class="act-desc">المتطوعة نور – المريض خالد – القالة</div>
-                <div class="act-time">منذ 3 ساعات</div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Volunteer Cards -->
-<div class="section-title">
-    <h3>🤝 المتطوعون المعلقون</h3>
-    <div class="see-all">عرض الكل (20)</div>
-</div>
-<div class="vol-scroll">
-    <div class="vol-cards">
-
-        <div class="vol-card">
-            <div class="vol-card-top">
-                <div class="vol-avatar" style="background:#1a3a5c">م</div>
-                <div class="vol-status-badge badge-active">نشط</div>
-            </div>
-            <div class="vol-name">محمد أمين</div>
-            <div class="vol-city">📍 سكيكدة الوسط</div>
-            <div class="vol-rating">
-                <span class="stars">★★★★★</span>
-                <span class="rating-num">4.5</span>
-            </div>
-            <div class="vol-skills">
-                <span class="skill-tag tag-blue">زيارة منزلية</span>
-                <span class="skill-tag tag-green">مستشفى</span>
-                <span class="skill-tag tag-orange">نقل</span>
-            </div>
-            <div class="vol-info">
-                <div>📱 0551 234 567 | 28 سنة</div>
-            </div>
-            <div class="vol-actions">
-                <button class="vol-btn btn-view">عرض</button>
-                <button class="vol-btn btn-reject">رفض</button>
-                <button class="vol-btn btn-approve">قبول</button>
+            <div class="stat-card c-blue">
+                <div class="stat-header">
+                    <div class="stat-icon c-blue">👥</div>
+                    <div class="stat-trend t-up">↑ 5%</div>
+                </div>
+                <div class="stat-num">47</div>
+                <div class="stat-label">إجمالي المرضى</div>
+                <div class="stat-sub ss-amber">3 مرضى جدد!</div>
             </div>
         </div>
 
-        <div class="vol-card">
-            <div class="vol-card-top">
-                <div class="vol-avatar" style="background:#f59e0b">س</div>
-                <div class="vol-status-badge badge-pending">معلق</div>
+        <div class="charts-row">
+            <div class="chart-card">
+                <h4>📊 توزيع حالات المتطوعين</h4>
+                <div class="donut-wrap">
+                    <svg class="donut-svg" width="110" height="110" viewBox="0 0 110 110">
+                        <circle cx="55" cy="55" r="40" fill="none" stroke="#f1f5f9" stroke-width="18"/>
+                        <!-- active 64% -->
+                        <circle cx="55" cy="55" r="40" fill="none" stroke="#22c55e" stroke-width="18"
+                            stroke-dasharray="160.8 90.7" stroke-dashoffset="0" transform="rotate(-90 55 55)"/>
+                        <!-- pending 23% -->
+                        <circle cx="55" cy="55" r="40" fill="none" stroke="#f59e0b" stroke-width="18"
+                            stroke-dasharray="57.7 193.8" stroke-dashoffset="-160.8" transform="rotate(-90 55 55)"/>
+                        <!-- rejected 13% -->
+                        <circle cx="55" cy="55" r="40" fill="none" stroke="#8b5cf6" stroke-width="18"
+                            stroke-dasharray="32.7 218.8" stroke-dashoffset="-218.5" transform="rotate(-90 55 55)"/>
+                        <text x="55" y="50" text-anchor="middle" font-size="14" font-weight="800" fill="#1e293b">89</text>
+                        <text x="55" y="64" text-anchor="middle" font-size="9" fill="#64748b">متطوع</text>
+                    </svg>
+                    <div class="donut-legend">
+                        <div class="leg-row"><div class="leg-dot" style="background:#22c55e"></div><div class="leg-name">نشط</div><div class="leg-pct">64%</div><div class="leg-val">57</div></div>
+                        <div class="leg-row"><div class="leg-dot" style="background:#f59e0b"></div><div class="leg-name">معلق</div><div class="leg-pct">23%</div><div class="leg-val">20</div></div>
+                        <div class="leg-row"><div class="leg-dot" style="background:#8b5cf6"></div><div class="leg-name">مرفوض</div><div class="leg-pct">13%</div><div class="leg-val">12</div></div>
+                    </div>
+                </div>
             </div>
-            <div class="vol-name">سارة مسعود</div>
-            <div class="vol-city">📍 القالة</div>
-            <div class="vol-rating">
-                <span class="stars">★★★★</span>
-                <span class="rating-num">3.8</span>
-            </div>
-            <div class="vol-skills">
-                <span class="skill-tag tag-purple">ليلي</span>
-                <span class="skill-tag tag-blue">منزلي</span>
-            </div>
-            <div class="vol-info">
-                <div>📱 0561 890 456 | 35 سنة</div>
-            </div>
-            <div class="vol-actions">
-                <button class="vol-btn btn-view">عرض</button>
-                <button class="vol-btn btn-reject">رفض</button>
-                <button class="vol-btn btn-approve">قبول</button>
-            </div>
-        </div>
-
-        <div class="vol-card">
-            <div class="vol-card-top">
-                <div class="vol-avatar" style="background:#22c55e">ن</div>
-                <div class="vol-status-badge badge-active">نشط</div>
-            </div>
-            <div class="vol-name">نور بن علي</div>
-            <div class="vol-city">📍 عين التاية</div>
-            <div class="vol-rating">
-                <span class="stars">★★★★★</span>
-                <span class="rating-num">5.0</span>
-            </div>
-            <div class="vol-skills">
-                <span class="skill-tag tag-green">مستشفى</span>
-                <span class="skill-tag tag-orange">نقل</span>
-            </div>
-            <div class="vol-info">
-                <div>📱 0789 456 070 | 42 سنة</div>
-            </div>
-            <div class="vol-actions">
-                <button class="vol-btn btn-view">عرض</button>
-                <button class="vol-btn btn-reject">رفض</button>
-                <button class="vol-btn btn-approve">قبول</button>
+            <div class="chart-card">
+                <h4>📈 نشاط الأسبوع الحالي</h4>
+                <div class="bar-list">
+                    <div class="bar-row"><div class="bar-lbl">السبت</div><div class="bar-track"><div class="bar-fill bf-danger" style="width:100%"></div></div><div class="bar-val">10</div></div>
+                    <div class="bar-row"><div class="bar-lbl">الجمعة</div><div class="bar-track"><div class="bar-fill bf-normal" style="width:90%"></div></div><div class="bar-val">9</div></div>
+                    <div class="bar-row"><div class="bar-lbl">الخميس</div><div class="bar-track"><div class="bar-fill bf-normal" style="width:70%"></div></div><div class="bar-val">7</div></div>
+                    <div class="bar-row"><div class="bar-lbl">الأربعاء</div><div class="bar-track"><div class="bar-fill bf-normal" style="width:60%"></div></div><div class="bar-val">6</div></div>
+                    <div class="bar-row"><div class="bar-lbl">الثلاثاء</div><div class="bar-track"><div class="bar-fill bf-normal" style="width:40%"></div></div><div class="bar-val">4</div></div>
+                    <div class="bar-row"><div class="bar-lbl">الاثنين</div><div class="bar-track"><div class="bar-fill bf-normal" style="width:30%"></div></div><div class="bar-val">3</div></div>
+                </div>
             </div>
         </div>
 
-    </div>
-</div>
+        <div class="bottom-row">
+            <div class="chart-card">
+                <div class="sec-header"><h3>⚡ آخر الأنشطة</h3><div class="see-all">عرض الكل</div></div>
+                <div class="feed-list">
+                    <div class="feed-item"><div class="feed-icon fi-green">✅</div><div class="feed-body"><div class="feed-title">تعيين متطوع</div><div class="feed-desc">محمد أمين – مريض أحمد – مستشفى</div><div class="feed-time">منذ 15 دقيقة</div></div></div>
+                    <div class="feed-item"><div class="feed-icon fi-orange">📋</div><div class="feed-body"><div class="feed-title">طلب رعاية جديد #7</div><div class="feed-desc">المريضة: فاطمة بن علي – سكيكدة</div><div class="feed-time">منذ 32 دقيقة</div></div></div>
+                    <div class="feed-item"><div class="feed-icon fi-blue">👤</div><div class="feed-body"><div class="feed-title">متطوع جديد مسجل</div><div class="feed-desc">سارة مسعود – مرافقة منزلية</div><div class="feed-time">منذ ساعة</div></div></div>
+                    <div class="feed-item"><div class="feed-icon fi-purple">📞</div><div class="feed-body"><div class="feed-title">زيارة مكتملة</div><div class="feed-desc">نور – المريض خالد – القالة</div><div class="feed-time">منذ 3 ساعات</div></div></div>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="sec-header"><h3>🚨 التنبيهات المفتوحة</h3><div class="see-all" onclick="showTab('alerts',null)">عرض الكل</div></div>
+                <div class="alert-list">
+                    <div class="alert-item"><div class="alert-dot ad-red"></div><div class="alert-text">المريض أحمد لم يتلقَّ متابعة منذ 3 أيام</div><button class="resolve-btn">حلّ</button></div>
+                    <div class="alert-item"><div class="alert-dot ad-orange"></div><div class="alert-text">طلب #12 معلق 5 أيام بدون تعيين</div><button class="resolve-btn">حلّ</button></div>
+                    <div class="alert-item"><div class="alert-dot ad-blue"></div><div class="alert-text">متطوع جديد ينتظر المراجعة منذ يومين</div><button class="resolve-btn">حلّ</button></div>
+                    <div class="alert-item"><div class="alert-dot ad-orange"></div><div class="alert-text">انتهاء صلاحية وثيقة متطوع</div><button class="resolve-btn">حلّ</button></div>
+                </div>
+            </div>
+        </div>
 
-<!-- Alerts -->
-<div class="section-title">
-    <h3>🚨 التنبيهات المفتوحة</h3>
-    <div class="see-all">حلّ الكل</div>
-</div>
-<div class="alert-card">
-    <div class="alert-item">
-        <div class="alert-dot dot-red"></div>
-        <div class="alert-text">المريض أحمد لم يتلقَّ متابعة منذ 3 أيام — العنوان: سكيكدة الوسط</div>
-        <button class="alert-resolve-btn">حلّ</button>
-    </div>
-    <div class="alert-item">
-        <div class="alert-dot dot-orange"></div>
-        <div class="alert-text">طلب رعاية #12 معلق منذ 5 أيام بدون تعيين متطوع</div>
-        <button class="alert-resolve-btn">حلّ</button>
-    </div>
-    <div class="alert-item">
-        <div class="alert-dot dot-blue"></div>
-        <div class="alert-text">متطوع جديد "كريم سليم" ينتظر المراجعة منذ يومين</div>
-        <button class="alert-resolve-btn">حلّ</button>
-    </div>
-</div>
+    </div><!-- /tab-dashboard -->
 
-<div style="height:80px"></div>
+    <!-- ════════ TAB: VOLUNTEERS ════════ -->
+    <div class="page-body hidden" id="tab-volunteers">
 
-<!-- Bottom Nav -->
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterVol(this,'all')">الكل (89)</button>
+            <button class="filter-btn" onclick="filterVol(this,'active')">نشط (57)</button>
+            <button class="filter-btn" onclick="filterVol(this,'pending')">معلق (20)</button>
+            <button class="filter-btn" onclick="filterVol(this,'rejected')">مرفوض (12)</button>
+        </div>
+
+        <div class="vol-grid">
+            <div class="vol-card">
+                <div class="vc-top"><div class="vc-avatar" style="background:#1a3a5c">م</div><div class="status-tag s-active">نشط</div></div>
+                <div class="vc-name">محمد أمين</div><div class="vc-city">📍 سكيكدة الوسط</div>
+                <div class="stars-row"><span class="stars">★★★★★</span><span class="stars-num">4.5</span></div>
+                <div class="skills"><span class="skill sk-blue">منزلي</span><span class="skill sk-green">مستشفى</span><span class="skill sk-orange">نقل</span></div>
+                <div class="vc-info"><div>📱 0551 234 567</div><div>👤 28 سنة | الاثنين-السبت</div></div>
+                <div class="vc-actions"><button class="va-btn va-view">عرض</button><button class="va-btn va-reject">رفض</button><button class="va-btn va-approve">قبول</button></div>
+            </div>
+            <div class="vol-card">
+                <div class="vc-top"><div class="vc-avatar" style="background:#f59e0b">س</div><div class="status-tag s-pending">معلق</div></div>
+                <div class="vc-name">سارة مسعود</div><div class="vc-city">📍 القالة</div>
+                <div class="stars-row"><span class="stars">★★★★</span><span class="stars-num">3.8</span></div>
+                <div class="skills"><span class="skill sk-purple">ليلي</span><span class="skill sk-blue">منزلي</span></div>
+                <div class="vc-info"><div>📱 0561 890 456</div><div>👤 35 سنة | الأحد-الخميس</div></div>
+                <div class="vc-actions"><button class="va-btn va-view">عرض</button><button class="va-btn va-reject">رفض</button><button class="va-btn va-approve">قبول</button></div>
+            </div>
+            <div class="vol-card">
+                <div class="vc-top"><div class="vc-avatar" style="background:#22c55e">ن</div><div class="status-tag s-active">نشط</div></div>
+                <div class="vc-name">نور بن علي</div><div class="vc-city">📍 عين التاية</div>
+                <div class="stars-row"><span class="stars">★★★★★</span><span class="stars-num">5.0</span></div>
+                <div class="skills"><span class="skill sk-green">مستشفى</span><span class="skill sk-orange">نقل</span></div>
+                <div class="vc-info"><div>📱 0789 456 070</div><div>👤 42 سنة | يومي</div></div>
+                <div class="vc-actions"><button class="va-btn va-view">عرض</button><button class="va-btn va-reject">رفض</button><button class="va-btn va-approve">قبول</button></div>
+            </div>
+            <div class="vol-card">
+                <div class="vc-top"><div class="vc-avatar" style="background:#8b5cf6">ك</div><div class="status-tag s-pending">معلق</div></div>
+                <div class="vc-name">كريم سليم</div><div class="vc-city">📍 سكيكدة</div>
+                <div class="stars-row"><span class="stars">★★★</span><span class="stars-num">3.2</span></div>
+                <div class="skills"><span class="skill sk-blue">منزلي</span></div>
+                <div class="vc-info"><div>📱 0123 789 061</div><div>👤 29 سنة | الخميس-السبت</div></div>
+                <div class="vc-actions"><button class="va-btn va-view">عرض</button><button class="va-btn va-reject">رفض</button><button class="va-btn va-approve">قبول</button></div>
+            </div>
+            <div class="vol-card">
+                <div class="vc-top"><div class="vc-avatar" style="background:#ef4444">ف</div><div class="status-tag s-rejected">مرفوض</div></div>
+                <div class="vc-name">فريدة عمر</div><div class="vc-city">📍 الحروش</div>
+                <div class="stars-row"><span class="stars">★★</span><span class="stars-num">2.5</span></div>
+                <div class="skills"><span class="skill sk-purple">ليلي</span></div>
+                <div class="vc-info"><div>📱 0901 678 0664</div><div>👤 23 سنة | الأحد فقط</div></div>
+                <div class="vc-actions"><button class="va-btn va-view">عرض</button><button class="va-btn va-approve">إعادة تفعيل</button></div>
+            </div>
+            <div class="vol-card">
+                <div class="vc-top"><div class="vc-avatar" style="background:#3b82f6">ي</div><div class="status-tag s-active">نشط</div></div>
+                <div class="vc-name">يوسف بلقاسم</div><div class="vc-city">📍 فيلفيلة</div>
+                <div class="stars-row"><span class="stars">★★★★</span><span class="stars-num">4.7</span></div>
+                <div class="skills"><span class="skill sk-green">مستشفى</span><span class="skill sk-blue">منزلي</span><span class="skill sk-orange">نقل</span></div>
+                <div class="vc-info"><div>📱 0678 345 0550</div><div>👤 38 سنة | كل يوم</div></div>
+                <div class="vc-actions"><button class="va-btn va-view">عرض</button><button class="va-btn va-reject">رفض</button><button class="va-btn va-approve">قبول</button></div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <div class="pg-btn">‹</div>
+            <div class="pg-btn active">1</div>
+            <div class="pg-btn">2</div>
+            <div class="pg-btn">3</div>
+            <div class="pg-btn">...</div>
+            <div class="pg-btn">8</div>
+            <div class="pg-btn">›</div>
+        </div>
+
+    </div><!-- /tab-volunteers -->
+
+    <!-- ════════ TAB: REQUESTS ════════ -->
+    <div class="page-body hidden" id="tab-requests">
+
+        <div class="filter-bar">
+            <button class="filter-btn active">الكل (47)</button>
+            <button class="filter-btn">معلق (12)</button>
+            <button class="filter-btn">قيد التنفيذ (28)</button>
+            <button class="filter-btn">مكتمل (7)</button>
+        </div>
+
+        <div class="request-list">
+            <div class="request-card"><div class="req-priority rp-high"></div><div class="req-body"><div class="req-ref">طلب #12 — أولوية عالية</div><div class="req-names">فاطمة بن علي  ←  المريض: علي بن علي</div><div class="req-meta">📍 سكيكدة الوسط  ·  🏥 مرافقة مستشفى  ·  🗓 منذ 5 أيام</div></div><div><div class="stat-sub ss-amber" style="display:block;text-align:center;margin-bottom:6px;">معلق</div><div class="req-date">12/05/2025</div></div></div>
+            <div class="request-card"><div class="req-priority rp-medium"></div><div class="req-body"><div class="req-ref">طلب #11 — أولوية متوسطة</div><div class="req-names">خديجة سعيد  ←  المريض: محمد سعيد</div><div class="req-meta">📍 القالة  ·  🏠 متابعة منزلية  ·  🗓 منذ 3 أيام</div></div><div><div class="stat-sub ss-green" style="display:block;text-align:center;margin-bottom:6px;">نشط</div><div class="req-date">10/05/2025</div></div></div>
+            <div class="request-card"><div class="req-priority rp-low"></div><div class="req-body"><div class="req-ref">طلب #10 — أولوية عادية</div><div class="req-names">حسن مختار  ←  المريض: أمينة مختار</div><div class="req-meta">📍 عين التاية  ·  🌙 حضور ليلي  ·  🗓 منذ أسبوع</div></div><div><div class="stat-sub ss-green" style="display:block;text-align:center;margin-bottom:6px;">نشط</div><div class="req-date">05/05/2025</div></div></div>
+            <div class="request-card"><div class="req-priority rp-high"></div><div class="req-body"><div class="req-ref">طلب #9 — أولوية عالية</div><div class="req-names">نادية بوعلام  ←  المريض: كريم بوعلام</div><div class="req-meta">📍 سكيكدة  ·  🚗 نقل + مستشفى  ·  🗓 منذ 10 أيام</div></div><div><div class="stat-sub ss-amber" style="display:block;text-align:center;margin-bottom:6px;">معلق</div><div class="req-date">02/05/2025</div></div></div>
+            <div class="request-card"><div class="req-priority rp-low"></div><div class="req-body"><div class="req-ref">طلب #8 — أولوية عادية</div><div class="req-names">سليمان زيد  ←  المريض: زينب زيد</div><div class="req-meta">📍 الحروش  ·  🏠 متابعة منزلية  ·  🗓 منذ 12 يوم</div></div><div><div class="stat-sub" style="background:#f1f5f9;color:#374151;display:block;text-align:center;margin-bottom:6px;">مكتمل</div><div class="req-date">30/04/2025</div></div></div>
+        </div>
+
+    </div><!-- /tab-requests -->
+
+    <!-- ════════ TAB: PATIENTS ════════ -->
+    <div class="page-body hidden" id="tab-patients">
+        <div class="patient-grid">
+            <div class="patient-card"><div class="pc-top"><div class="pc-avatar">أ</div><div><div class="pc-name">أحمد بن موسى</div><div class="pc-age">65 سنة</div></div></div><div class="pc-info"><div>📍 سكيكدة الوسط</div><div>📱 0551 100 200</div><div>🏥 قصور كلوي</div><div>🤝 متطوع مُعيَّن</div></div></div>
+            <div class="patient-card"><div class="pc-top"><div class="pc-avatar">ف</div><div><div class="pc-name">فاطمة بن علي</div><div class="pc-age">72 سنة</div></div></div><div class="pc-info"><div>📍 القالة</div><div>📱 0561 300 400</div><div>🏥 سكري متقدم</div><div>⏳ بدون متطوع</div></div></div>
+            <div class="patient-card"><div class="pc-top"><div class="pc-avatar">م</div><div><div class="pc-name">محمد سعيد</div><div class="pc-age">58 سنة</div></div></div><div class="pc-info"><div>📍 عين التاية</div><div>📱 0789 500 600</div><div>🏥 أمراض قلبية</div><div>🤝 متطوع مُعيَّن</div></div></div>
+            <div class="patient-card"><div class="pc-top"><div class="pc-avatar">ز</div><div><div class="pc-name">زينب مرابط</div><div class="pc-age">80 سنة</div></div></div><div class="pc-info"><div>📍 الحروش</div><div>📱 0901 700 800</div><div>🏥 شلل جزئي</div><div>🤝 متطوع مُعيَّن</div></div></div>
+            <div class="patient-card"><div class="pc-top"><div class="pc-avatar">ع</div><div><div class="pc-name">علي بوشاقور</div><div class="pc-age">45 سنة</div></div></div><div class="pc-info"><div>📍 سكيكدة</div><div>📱 0561 900 010</div><div>🏥 سرطان</div><div>⏳ بدون متطوع</div></div></div>
+            <div class="patient-card"><div class="pc-top"><div class="pc-avatar">ر</div><div><div class="pc-name">رشيدة قاسم</div><div class="pc-age">68 سنة</div></div></div><div class="pc-info"><div>📍 فيلفيلة</div><div>📱 0678 110 220</div><div>🏥 كسر عمود فقري</div><div>🤝 متطوع مُعيَّن</div></div></div>
+        </div>
+    </div><!-- /tab-patients -->
+
+    <!-- ════════ TAB: ALERTS ════════ -->
+    <div class="page-body hidden" id="tab-alerts">
+        <div class="alerts-full">
+            <div class="alert-full-card afc-red"><div class="afc-icon">🔴</div><div class="afc-body"><div class="afc-title">متابعة متأخرة — المريض أحمد بن موسى</div><div class="afc-desc">لم يتلقَّ المريض أي متابعة منذ 3 أيام. الموقع: سكيكدة الوسط. المتطوع الأخير: محمد أمين.</div><div class="afc-time">⏱ منذ 3 أيام — عالي الأولوية</div></div><button class="afc-resolve">حلّ</button></div>
+            <div class="alert-full-card afc-red"><div class="afc-icon">🔴</div><div class="afc-body"><div class="afc-title">طلب معلق بدون تعيين — طلب #12</div><div class="afc-desc">الطلب معلق منذ 5 أيام ولم يُعيَّن له متطوع. فاطمة بن علي تنتظر.</div><div class="afc-time">⏱ منذ 5 أيام — عالي الأولوية</div></div><button class="afc-resolve">حلّ</button></div>
+            <div class="alert-full-card afc-orange"><div class="afc-icon">🟡</div><div class="afc-body"><div class="afc-title">متطوع ينتظر المراجعة — كريم سليم</div><div class="afc-desc">تسجيل جديد بانتظار الموافقة منذ يومين. الفئة: مرافقة منزلية.</div><div class="afc-time">⏱ منذ يومين — متوسط</div></div><button class="afc-resolve">حلّ</button></div>
+            <div class="alert-full-card afc-orange"><div class="afc-icon">🟡</div><div class="afc-body"><div class="afc-title">انتهاء صلاحية وثيقة — سارة مسعود</div><div class="afc-desc">وثيقة الهوية الوطنية ستنتهي صلاحيتها خلال 15 يوماً.</div><div class="afc-time">⏱ خلال 15 يوم — متوسط</div></div><button class="afc-resolve">حلّ</button></div>
+            <div class="alert-full-card afc-blue"><div class="afc-icon">🔵</div><div class="afc-body"><div class="afc-title">مريض جديد بدون متطوع — علي بوشاقور</div><div class="afc-desc">أُضيف المريض منذ أسبوع ولم يُعيَّن له متطوع بعد.</div><div class="afc-time">⏱ منذ أسبوع — منخفض</div></div><button class="afc-resolve">حلّ</button></div>
+            <div class="alert-full-card afc-blue"><div class="afc-icon">🔵</div><div class="afc-body"><div class="afc-title">إشعار نظام — تحديث البيانات</div><div class="afc-desc">يُنصح بمراجعة بيانات المتطوعين الموسمية لهذا الربع.</div><div class="afc-time">⏱ منذ 3 أيام — منخفض</div></div><button class="afc-resolve">حلّ</button></div>
+        </div>
+    </div><!-- /tab-alerts -->
+
+    <!-- ════════ TAB: REPORTS ════════ -->
+    <div class="page-body hidden" id="tab-reports">
+        <div class="reports-grid">
+            <div class="chart-card">
+                <h4>📊 المتطوعون — هذا الشهر مقابل الشهر الماضي</h4>
+                <div class="bar-list" style="margin-top:8px">
+                    <div class="bar-row"><div class="bar-lbl">هذا الشهر</div><div class="bar-track"><div class="bar-fill bf-normal" style="width:89%"></div></div><div class="bar-val">89</div></div>
+                    <div class="bar-row"><div class="bar-lbl">الشهر الماضي</div><div class="bar-track"><div class="bar-fill" style="width:72%;background:#94a3b8"></div></div><div class="bar-val">72</div></div>
+                </div>
+                <div style="margin-top:12px;font-size:12px;color:#15803d;background:#dcfce7;padding:6px 10px;border-radius:8px;">↑ نمو 24% مقارنة بالشهر الماضي</div>
+            </div>
+            <div class="chart-card">
+                <h4>📋 طلبات الرعاية — توزيع الأولويات</h4>
+                <div class="bar-list" style="margin-top:8px">
+                    <div class="bar-row"><div class="bar-lbl">عالية</div><div class="bar-track"><div class="bar-fill" style="width:40%;background:var(--red)"></div></div><div class="bar-val">5</div></div>
+                    <div class="bar-row"><div class="bar-lbl">متوسطة</div><div class="bar-track"><div class="bar-fill" style="width:64%;background:var(--amber)"></div></div><div class="bar-val">8</div></div>
+                    <div class="bar-row"><div class="bar-lbl">عادية</div><div class="bar-track"><div class="bar-fill bf-normal" style="width:80%"></div></div><div class="bar-val">10</div></div>
+                    <div class="bar-row"><div class="bar-lbl">مكتملة</div><div class="bar-track"><div class="bar-fill" style="width:56%;background:var(--green)"></div></div><div class="bar-val">7</div></div>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h4>🗺 توزيع المتطوعين حسب البلدية</h4>
+                <div class="bar-list" style="margin-top:8px">
+                    <div class="bar-row"><div class="bar-lbl">سكيكدة</div><div class="bar-track"><div class="bar-fill bf-normal" style="width:100%"></div></div><div class="bar-val">34</div></div>
+                    <div class="bar-row"><div class="bar-lbl">القالة</div><div class="bar-track"><div class="bar-fill bf-normal" style="width:50%"></div></div><div class="bar-val">17</div></div>
+                    <div class="bar-row"><div class="bar-lbl">عين التاية</div><div class="bar-track"><div class="bar-fill bf-normal" style="width:35%"></div></div><div class="bar-val">12</div></div>
+                    <div class="bar-row"><div class="bar-lbl">الحروش</div><div class="bar-track"><div class="bar-fill bf-normal" style="width:29%"></div></div><div class="bar-val">10</div></div>
+                    <div class="bar-row"><div class="bar-lbl">أخرى</div><div class="bar-track"><div class="bar-fill" style="width:18%;background:#94a3b8"></div></div><div class="bar-val">16</div></div>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h4>⭐ معدل رضا المرضى</h4>
+                <div style="text-align:center;padding:20px 0">
+                    <div style="font-size:52px;font-weight:800;color:var(--primary)">4.3</div>
+                    <div style="color:#f59e0b;font-size:28px;letter-spacing:4px">★★★★☆</div>
+                    <div style="font-size:12px;color:var(--muted);margin-top:8px">بناءً على 47 تقييم</div>
+                </div>
+                <div class="bar-list">
+                    <div class="bar-row"><div class="bar-lbl">5 نجوم</div><div class="bar-track"><div class="bar-fill" style="width:60%;background:#f59e0b"></div></div><div class="bar-val">28</div></div>
+                    <div class="bar-row"><div class="bar-lbl">4 نجوم</div><div class="bar-track"><div class="bar-fill" style="width:28%;background:#f59e0b"></div></div><div class="bar-val">13</div></div>
+                    <div class="bar-row"><div class="bar-lbl">3 نجوم</div><div class="bar-track"><div class="bar-fill" style="width:13%;background:#94a3b8"></div></div><div class="bar-val">6</div></div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /tab-reports -->
+
+</div><!-- /main -->
+</div><!-- /shell -->
+
+<!-- Mobile bottom nav -->
 <div class="bottom-nav">
-    <div class="nav-item active">
-        <div class="ni-wrap"><span class="ni">🏠</span></div>
-        <span class="nl" style="color:var(--gold)">الرئيسية</span>
-    </div>
-    <div class="nav-item">
-        <span class="ni">🤝</span>
-        <span class="nl">المتطوعون</span>
-    </div>
-    <div class="nav-item">
-        <span class="ni">📋</span>
-        <span class="nl">الطلبات</span>
-    </div>
-    <div class="nav-item">
-        <span class="ni">👥</span>
-        <span class="nl">المرضى</span>
-    </div>
-    <div class="nav-item">
-        <span class="ni">⚡</span>
-        <span class="nl">التنبيهات</span>
-    </div>
-    <div class="nav-item">
-        <span class="ni">📊</span>
-        <span class="nl">التقارير</span>
+    <div class="bnav-items">
+        <div class="bnav-item active" onclick="showTab('dashboard',null,'🏠','لوحة التحكم',this)">
+            <div class="bi-wrap"><span class="bi">🏠</span></div>
+            <span class="bl">الرئيسية</span>
+        </div>
+        <div class="bnav-item" onclick="showTab('volunteers',null,'🤝','المتطوعون',this)">
+            <span class="bi">🤝</span><span class="bl">متطوعون</span>
+        </div>
+        <div class="bnav-item" onclick="showTab('requests',null,'📋','الطلبات',this)">
+            <span class="bi">📋</span><span class="bl">الطلبات</span>
+        </div>
+        <div class="bnav-item" onclick="showTab('patients',null,'👥','المرضى',this)">
+            <span class="bi">👥</span><span class="bl">المرضى</span>
+        </div>
+        <div class="bnav-item" onclick="showTab('alerts',null,'🚨','التنبيهات',this)">
+            <span class="bi">🚨</span><span class="bl">تنبيهات</span>
+        </div>
+        <div class="bnav-item" onclick="showTab('reports',null,'📊','التقارير',this)">
+            <span class="bi">📊</span><span class="bl">تقارير</span>
+        </div>
     </div>
 </div>
 
+<script>
+const TITLES = {
+    dashboard:'لوحة التحكم', volunteers:'المتطوعون',
+    requests:'طلبات الرعاية', patients:'المرضى',
+    alerts:'التنبيهات', reports:'التقارير'
+};
+
+function showTab(name, sidebarItem) {
+    // Hide all pages
+    document.querySelectorAll('.page-body').forEach(p => {
+        p.classList.remove('active');
+        p.classList.add('hidden');
+    });
+    // Show target
+    const target = document.getElementById('tab-'+name);
+    if(target){ target.classList.remove('hidden'); target.classList.add('active'); }
+
+    // Update sidebar active
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    if(sidebarItem) sidebarItem.classList.add('active');
+
+    // Update bottom nav
+    document.querySelectorAll('.bnav-item').forEach(b => {
+        b.classList.remove('active');
+        b.querySelector('.bi-wrap')?.replaceWith(
+            Object.assign(document.createElement('span'),{className:'bi',textContent:b.querySelector('.bi')?.textContent||''})
+        );
+    });
+
+    // Update topbar title
+    document.getElementById('page-title').textContent = TITLES[name] || '';
+
+    // Close mobile sidebar
+    closeSidebar();
+
+    // Sync bottom nav active state
+    document.querySelectorAll('.bnav-item').forEach(item => {
+        const lbl = item.querySelector('.bl');
+        if(lbl && TITLES[name] && (
+            lbl.textContent.includes(TITLES[name].substring(0,4)) ||
+            (name==='dashboard' && lbl.textContent.includes('الرئيسية'))
+        )) {
+            item.classList.add('active');
+            const bi = item.querySelector('.bi');
+            if(bi && !item.querySelector('.bi-wrap')) {
+                const wrap = document.createElement('div');
+                wrap.className='bi-wrap';
+                wrap.appendChild(bi.cloneNode(true));
+                bi.parentNode.replaceChild(wrap, bi);
+            }
+        }
+    });
+}
+
+function toggleSidebar() {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    sb.classList.toggle('open');
+    ov.classList.toggle('show');
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+}
+function filterVol(btn, filter) {
+    document.querySelectorAll('.filter-bar .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+</script>
 </body>
 </html>
