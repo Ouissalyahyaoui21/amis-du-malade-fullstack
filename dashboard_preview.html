@@ -278,6 +278,29 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
 .pag{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:18px}
 .pg{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;background:#fff;border:1px solid var(--border);color:var(--muted);cursor:pointer}
 .pg.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+/* Contributions */
+.contrib-card{background:#fff;border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start;border-right:4px solid transparent}
+.cc-money{border-color:#22c55e}.cc-goods{border-color:#3b82f6}.cc-time{border-color:#8b5cf6}
+.ct-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;display:inline-block;margin-top:4px}
+.ct-m{background:#dcfce7;color:#15803d}.ct-g{background:#dbeafe;color:#1d4ed8}.ct-t{background:#ede9fe;color:#7c3aed}
+.cs-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px}
+.cs-pend{background:#fef3c7;color:#b45309}.cs-conf{background:#dcfce7;color:#15803d}.cs-dist{background:#f1f5f9;color:#374151}
+.contrib-list{display:flex;flex-direction:column;gap:9px}
+.cc-body{flex:1;min-width:0}
+.cc-name{font-size:13px;font-weight:700}
+.cc-phone{font-size:11px;color:var(--muted);margin-top:2px}
+.cc-amount{font-size:15px;font-weight:800;color:var(--primary);margin-top:5px}
+.cc-msg{font-size:11px;color:var(--muted);margin-top:3px;font-style:italic;line-height:1.4}
+.cc-date{font-size:10px;color:#94a3b8;margin-top:5px}
+.cc-acts{display:flex;flex-direction:column;gap:5px;flex-shrink:0;align-items:flex-end}
+.wa-btn{background:#25d366;color:#fff;font-size:11px;font-weight:700;padding:6px 10px;border-radius:9px;display:flex;align-items:center;gap:4px}
+.cc-btn{font-size:11px;font-weight:700;padding:6px 10px;border-radius:9px}
+.cc-confirm{background:var(--primary);color:#fff}.cc-distrib{background:#f1f5f9;color:var(--muted)}.cc-activate{background:#ede9fe;color:#7c3aed}
+.contrib-summary{background:linear-gradient(135deg,#0a5c46,#0d7a5f);border-radius:var(--radius);padding:16px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap}
+.csm-item{flex:1;min-width:100px;text-align:center}
+.csm-val{font-size:22px;font-weight:800;color:#fff}
+.csm-lbl{font-size:10px;color:rgba(255,255,255,.7);margin-top:2px}
+.csm-sep{width:1px;background:rgba(255,255,255,.15);align-self:stretch}
 /* RESPONSIVE */
 @media(max-width:900px){
     :root{--sw:58px}
@@ -452,6 +475,8 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
         <div class="s-item" onclick="go('newrequests',this)"><span class="si">🆕</span><span class="sl">الطلبات الجديدة</span><span class="s-badge">12</span></div>
         <div class="s-item" onclick="go('requests',this)"><span class="si">📋</span><span class="sl">كل الطلبات</span></div>
         <div class="s-item" onclick="go('patients',this)"><span class="si">👥</span><span class="sl">المرضى</span></div>
+        <div class="s-grp">المالية</div>
+        <div class="s-item" onclick="go('contributions',this)"><span class="si">💰</span><span class="sl">المساهمات</span><span class="s-badge">6</span></div>
         <div class="s-grp">المتابعة</div>
         <div class="s-item" onclick="go('alerts',this)"><span class="si">🚨</span><span class="sl">التنبيهات</span><span class="s-badge">8</span></div>
         <div class="s-item" onclick="go('reports',this)"><span class="si">📊</span><span class="sl">التقارير</span></div>
@@ -479,6 +504,7 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
         <div class="stat-card sc-a"><div class="sh"><div class="sicon si-a">⏳</div><div class="strend t-w">معلق</div></div><div class="snum">12</div><div class="slbl">طلبات رعاية معلقة</div><div class="ssub ss-a">تنتظر المراجعة</div></div>
         <div class="stat-card sc-g"><div class="sh"><div class="sicon si-g">✅</div><div class="strend t-u">66%</div></div><div class="snum">31</div><div class="slbl">متطوعون نشطون</div><div class="ssub ss-g">نسبة النشاط 66%</div></div>
         <div class="stat-card sc-b"><div class="sh"><div class="sicon si-b">👥</div><div class="strend t-u">↑ 5%</div></div><div class="snum">47</div><div class="slbl">إجمالي المرضى</div><div class="ssub ss-a">3 مرضى جدد!</div></div>
+        <div class="stat-card" style="border-color:#0a5c46"><div class="sh"><div class="sicon" style="background:#d1fae5">💰</div><div class="strend t-u">↑ 35%</div></div><div class="snum">28</div><div class="slbl">المساهمات</div><div class="ssub ss-a" onclick="go('contributions',null)" style="cursor:pointer">6 تنتظر التأكيد ›</div></div>
     </div>
     <div class="charts-row">
         <div class="chart-card">
@@ -642,6 +668,155 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
     </div>
 </div>
 
+<!-- ══ CONTRIBUTIONS ══ -->
+<div class="page hidden" id="p-contributions">
+    <!-- ملخص مالي ملوّن -->
+    <div class="contrib-summary">
+        <div class="csm-item"><div class="csm-val">28</div><div class="csm-lbl">إجمالي المساهمات</div></div>
+        <div class="csm-sep"></div>
+        <div class="csm-item"><div class="csm-val">137,500 DA</div><div class="csm-lbl">إجمالي المبالغ النقدية</div></div>
+        <div class="csm-sep"></div>
+        <div class="csm-item"><div class="csm-val">8</div><div class="csm-lbl">هذا الشهر</div></div>
+        <div class="csm-sep"></div>
+        <div class="csm-item"><div class="csm-val">6</div><div class="csm-lbl">في انتظار التأكيد</div></div>
+    </div>
+    <!-- مخططات -->
+    <div class="charts-row" style="margin-bottom:16px">
+        <div class="chart-card">
+            <h4>📊 توزيع أنواع المساهمات</h4>
+            <div class="donut-wrap">
+                <svg width="110" height="110" viewBox="0 0 110 110">
+                    <circle cx="55" cy="55" r="40" fill="none" stroke="#f1f5f9" stroke-width="18"/>
+                    <circle cx="55" cy="55" r="40" fill="none" stroke="#22c55e" stroke-width="18" stroke-dasharray="138.5 113" stroke-dashoffset="0" transform="rotate(-90 55 55)"/>
+                    <circle cx="55" cy="55" r="40" fill="none" stroke="#3b82f6" stroke-width="18" stroke-dasharray="75.4 176.1" stroke-dashoffset="-138.5" transform="rotate(-90 55 55)"/>
+                    <circle cx="55" cy="55" r="40" fill="none" stroke="#8b5cf6" stroke-width="18" stroke-dasharray="37.7 213.8" stroke-dashoffset="-213.9" transform="rotate(-90 55 55)"/>
+                    <text x="55" y="50" text-anchor="middle" font-size="14" font-weight="800" fill="#1e293b">28</text>
+                    <text x="55" y="64" text-anchor="middle" font-size="9" fill="#64748b">مساهمة</text>
+                </svg>
+                <div class="donut-leg">
+                    <div class="leg-r"><div class="leg-d" style="background:#22c55e"></div><div class="leg-n">نقدي</div><div class="leg-p">55%</div><div class="leg-v">15</div></div>
+                    <div class="leg-r"><div class="leg-d" style="background:#3b82f6"></div><div class="leg-n">عيني</div><div class="leg-p">30%</div><div class="leg-v">9</div></div>
+                    <div class="leg-r"><div class="leg-d" style="background:#8b5cf6"></div><div class="leg-n">وقت</div><div class="leg-p">15%</div><div class="leg-v">4</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="chart-card">
+            <h4>📈 المساهمات النقدية — آخر 6 أشهر (DA)</h4>
+            <div class="bar-list">
+                <div class="bar-row"><div class="bar-lbl">ماي</div><div class="bar-track"><div class="bar-fill bf" style="width:100%"></div></div><div class="bar-val" style="width:60px;font-size:10px">35,000</div></div>
+                <div class="bar-row"><div class="bar-lbl">أفريل</div><div class="bar-track"><div class="bar-fill bf" style="width:74%"></div></div><div class="bar-val" style="width:60px;font-size:10px">26,000</div></div>
+                <div class="bar-row"><div class="bar-lbl">مارس</div><div class="bar-track"><div class="bar-fill bf" style="width:57%"></div></div><div class="bar-val" style="width:60px;font-size:10px">20,000</div></div>
+                <div class="bar-row"><div class="bar-lbl">فيفري</div><div class="bar-track"><div class="bar-fill" style="width:43%;background:#94a3b8"></div></div><div class="bar-val" style="width:60px;font-size:10px">15,000</div></div>
+                <div class="bar-row"><div class="bar-lbl">جانفي</div><div class="bar-track"><div class="bar-fill" style="width:34%;background:#94a3b8"></div></div><div class="bar-val" style="width:60px;font-size:10px">12,000</div></div>
+                <div class="bar-row"><div class="bar-lbl">ديس</div><div class="bar-track"><div class="bar-fill" style="width:26%;background:#94a3b8"></div></div><div class="bar-val" style="width:60px;font-size:10px">9,500</div></div>
+            </div>
+        </div>
+    </div>
+    <!-- فلتر -->
+    <div class="filter-bar">
+        <button class="fb active" onclick="flt(this)">الكل (28)</button>
+        <button class="fb" onclick="flt(this)">معلق (6)</button>
+        <button class="fb" onclick="flt(this)">مؤكد (16)</button>
+        <button class="fb" onclick="flt(this)">موزَّع (6)</button>
+        <button class="fb" onclick="flt(this)">💵 نقدي (15)</button>
+        <button class="fb" onclick="flt(this)">📦 عيني (9)</button>
+        <button class="fb" onclick="flt(this)">⏰ وقت (4)</button>
+    </div>
+    <!-- قائمة المساهمات -->
+    <div class="contrib-list">
+        <!-- معلق - نقدي -->
+        <div class="contrib-card cc-money">
+            <div class="cc-body">
+                <div class="cc-name">محمد بن عيسى</div>
+                <div class="cc-phone">📱 0551 111 222</div>
+                <div><span class="ct-badge ct-m">💵 نقدي</span> &nbsp;<span class="cs-badge cs-pend">⏳ معلق</span></div>
+                <div class="cc-amount">5,000 DA</div>
+                <div class="cc-msg">"أتمنى أن تصل لمن هو في أمس الحاجة"</div>
+                <div class="cc-date">🗓 10/05/2025</div>
+            </div>
+            <div class="cc-acts">
+                <button class="wa-btn" onclick="window.open('https://wa.me/213551111222?text=السلام عليكم، شكراً على مساهمتكم الكريمة. نود تأكيد استلامنا للمبلغ. جمعية أصدقاء المريض سكيكدة.')">💬 واتساب</button>
+                <button class="cc-btn cc-confirm">✓ تأكيد الاستلام</button>
+            </div>
+        </div>
+        <!-- مؤكد - عيني -->
+        <div class="contrib-card cc-goods">
+            <div class="cc-body">
+                <div class="cc-name">فاطمة زيد</div>
+                <div class="cc-phone">📱 0561 333 444</div>
+                <div><span class="ct-badge ct-g">📦 عيني</span> &nbsp;<span class="cs-badge cs-conf">✅ مؤكد</span></div>
+                <div class="cc-amount">ملابس شتوية (3 صناديق)</div>
+                <div class="cc-msg">"للأطفال والمرضى المحتاجين في المستشفى"</div>
+                <div class="cc-date">🗓 08/05/2025</div>
+            </div>
+            <div class="cc-acts">
+                <button class="wa-btn" onclick="window.open('https://wa.me/213561333444?text=السلام عليكم، شكراً جزيلاً على تبرعكم. تم استلام الملابس وستوزَّع قريباً.')">💬 واتساب</button>
+                <button class="cc-btn cc-distrib">📤 وزِّع</button>
+            </div>
+        </div>
+        <!-- موزّع - نقدي -->
+        <div class="contrib-card cc-money">
+            <div class="cc-body">
+                <div class="cc-name">أحمد قاسم</div>
+                <div class="cc-phone">📱 0789 555 666</div>
+                <div><span class="ct-badge ct-m">💵 نقدي</span> &nbsp;<span class="cs-badge cs-dist">📤 موزَّع</span></div>
+                <div class="cc-amount">10,000 DA</div>
+                <div class="cc-msg">"للمساعدة في تغطية تكاليف التنقل"</div>
+                <div class="cc-date">🗓 05/05/2025</div>
+            </div>
+            <div class="cc-acts">
+                <button class="wa-btn" onclick="window.open('https://wa.me/213789555666?text=السلام عليكم، نشكركم على كرم تبرعكم. تم توزيع المبلغ على المستفيدين. جزاكم الله خيراً.')">💬 واتساب</button>
+            </div>
+        </div>
+        <!-- مؤكد - وقت -->
+        <div class="contrib-card" style="border-right:4px solid #8b5cf6">
+            <div class="cc-body">
+                <div class="cc-name">نور الهدى بلقاسم</div>
+                <div class="cc-phone">📱 0901 777 888</div>
+                <div><span class="ct-badge ct-t">⏰ وقت</span> &nbsp;<span class="cs-badge cs-conf">✅ مؤكد</span></div>
+                <div class="cc-amount">3 ساعات/أسبوع — تمريض</div>
+                <div class="cc-msg">"ممرضة متقاعدة، مستعدة للمساعدة في الرعاية المنزلية"</div>
+                <div class="cc-date">🗓 03/05/2025</div>
+            </div>
+            <div class="cc-acts">
+                <button class="wa-btn" onclick="window.open('https://wa.me/213901777888?text=السلام عليكم، شكراً على تبرعك بوقتك. سنتواصل معك لتنسيق أوقات الزيارات.')">💬 واتساب</button>
+                <button class="cc-btn cc-activate">🤝 تفعيل كمتطوع</button>
+            </div>
+        </div>
+        <!-- معلق - نقدي -->
+        <div class="contrib-card cc-money">
+            <div class="cc-body">
+                <div class="cc-name">كريم عمر</div>
+                <div class="cc-phone">📱 0678 999 000</div>
+                <div><span class="ct-badge ct-m">💵 نقدي</span> &nbsp;<span class="cs-badge cs-pend">⏳ معلق</span></div>
+                <div class="cc-amount">2,000 DA</div>
+                <div class="cc-msg">"مساهمة بسيطة من قلب"</div>
+                <div class="cc-date">🗓 01/05/2025</div>
+            </div>
+            <div class="cc-acts">
+                <button class="wa-btn" onclick="window.open('https://wa.me/213678999000?text=السلام عليكم، شكراً على مساهمتكم. نود تأكيد استلام المبلغ.')">💬 واتساب</button>
+                <button class="cc-btn cc-confirm">✓ تأكيد الاستلام</button>
+            </div>
+        </div>
+        <!-- معلق - عيني -->
+        <div class="contrib-card cc-goods">
+            <div class="cc-body">
+                <div class="cc-name">زينب مرابط</div>
+                <div class="cc-phone">📱 0551 121 314</div>
+                <div><span class="ct-badge ct-g">📦 عيني</span> &nbsp;<span class="cs-badge cs-pend">⏳ معلق</span></div>
+                <div class="cc-amount">أدوية ومستلزمات طبية</div>
+                <div class="cc-msg">"أدوية لم تعد محتاجة، أتمنى أن تنفع غيري"</div>
+                <div class="cc-date">🗓 28/04/2025</div>
+            </div>
+            <div class="cc-acts">
+                <button class="wa-btn" onclick="window.open('https://wa.me/213551121314?text=السلام عليكم، شكراً على تبرعكم. هل يمكنكم الاتصال بنا لتحديد موعد استلام الأدوية؟')">💬 واتساب</button>
+                <button class="cc-btn cc-confirm">✓ تأكيد الاستلام</button>
+            </div>
+        </div>
+    </div>
+    <div class="pag"><div class="pg">‹</div><div class="pg active">1</div><div class="pg">2</div><div class="pg">3</div><div class="pg">›</div></div>
+</div>
+
 </div><!-- /main -->
 </div><!-- /shell -->
 
@@ -658,11 +833,12 @@ button{cursor:pointer;border:none;font-family:inherit;background:none}
     <div class="bnav-item" onclick="go('patients',null,this)"><span class="bi">👥</span><span class="bl">المرضى</span></div>
     <div class="bnav-item" onclick="go('alerts',null,this)"><span class="bi">🚨</span><span class="bl">تنبيهات</span></div>
     <div class="bnav-item" onclick="go('reports',null,this)"><span class="bi">📊</span><span class="bl">تقارير</span></div>
+    <div class="bnav-item" onclick="go('contributions',null,this)"><span class="bi">💰</span><span class="bl">مساهمات</span></div>
 </div>
 </div>
 
 <script>
-const TITLES={dashboard:'لوحة التحكم',volunteers:'المتطوعون',interviews:'المقابلات',training:'التدريبات',evaluations:'تقييمات المتطوعين',newrequests:'الطلبات الجديدة',requests:'كل الطلبات',patients:'المرضى',alerts:'التنبيهات',reports:'التقارير'};
+const TITLES={dashboard:'لوحة التحكم',volunteers:'المتطوعون',interviews:'المقابلات',training:'التدريبات',evaluations:'تقييمات المتطوعين',newrequests:'الطلبات الجديدة',requests:'كل الطلبات',patients:'المرضى',alerts:'التنبيهات',reports:'التقارير',contributions:'المساهمات'};
 
 function go(id, sbEl, bnavEl){
     document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.classList.add('hidden')});
