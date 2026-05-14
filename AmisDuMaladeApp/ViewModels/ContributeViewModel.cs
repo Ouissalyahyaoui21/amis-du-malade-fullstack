@@ -209,11 +209,39 @@ public partial class ContributeViewModel : BaseViewModel
         IsBusy = true;
         try
         {
-            await Task.Delay(800);
-            IsSuccess = true;
-            NotifyStep();
-            OnPropertyChanged(nameof(IsSuccess));
-            OnPropertyChanged(nameof(ShowStep3Nav));
+            var typeMap = SelectedTypeKey switch
+            {
+                "inkind" => "Goods",
+                "time"   => "Time",
+                _        => "Money"
+            };
+
+            decimal? amount = null;
+            if (typeMap == "Money" && decimal.TryParse(AmountOrDescription, out var parsed))
+                amount = parsed;
+
+            var payload = new AmisDuMaladeApp.Models.ContributionPayload
+            {
+                ContributorName = DonorName.Trim(),
+                Phone           = DonorPhone.Trim(),
+                Type            = typeMap,
+                Amount          = amount,
+                Description     = typeMap != "Money" ? AmountOrDescription : null,
+                Message         = string.IsNullOrWhiteSpace(Notes) ? null : Notes.Trim()
+            };
+
+            var (success, _) = await _api.SubmitContributionAsync(payload);
+            if (success)
+            {
+                IsSuccess = true;
+                NotifyStep();
+                OnPropertyChanged(nameof(IsSuccess));
+                OnPropertyChanged(nameof(ShowStep3Nav));
+            }
+            else
+            {
+                await ShowErrorAsync("حدث خطأ أثناء الإرسال. تحقق من اتصالك.");
+            }
         }
         finally { IsBusy = false; }
     }

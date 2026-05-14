@@ -26,6 +26,7 @@ builder.Services.AddScoped<IVisitService, VisitService>();
 builder.Services.AddScoped<IAlertService, AlertService>();
 builder.Services.AddScoped<ISyncService, SyncService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IContributionService, ContributionService>();
 
 // ── JWT ──────────────────────────────────
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -51,6 +52,13 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// ── تأكد من إنشاء جداول قاعدة البيانات تلقائياً ──────────────────────────
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AmisduMalade.Data.AppDbContext>();
+    db.Database.EnsureCreated();
+}
 
 app.UseCors("AllowAll");
 app.UseAuthentication();

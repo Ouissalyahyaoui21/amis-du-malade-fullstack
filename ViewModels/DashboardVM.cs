@@ -25,6 +25,10 @@ namespace AmisduMalade.ViewModels
         // توزيع حسب البلدية
         public Dictionary<string, int> VolunteersByMunicipality { get; set; } = new();
 
+        // المساهمات
+        public int TotalContributions   { get; set; }
+        public int PendingContributions { get; set; }
+
         // آخر الأنشطة
         public List<ActivityVM> RecentActivities { get; set; } = new();
     }

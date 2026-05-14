@@ -41,6 +41,9 @@ namespace AmisduMalade.Data
         public DbSet<VisitRating> VisitRatings { get; set; }
         public DbSet<Alert> Alerts { get; set; }
 
+        // Contributions
+        public DbSet<Contribution> Contributions { get; set; }
+
         // System
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }

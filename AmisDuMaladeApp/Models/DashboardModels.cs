@@ -16,6 +16,8 @@ public class DashboardData
     public Dictionary<string, int> VolunteersByStatus { get; set; } = new();
     public Dictionary<string, int> RequestsByPriority { get; set; } = new();
     public Dictionary<string, int> VolunteersByMunicipality { get; set; } = new();
+    public int TotalContributions   { get; set; }
+    public int PendingContributions { get; set; }
     public List<ActivityItem> RecentActivities { get; set; } = new();
 }
 

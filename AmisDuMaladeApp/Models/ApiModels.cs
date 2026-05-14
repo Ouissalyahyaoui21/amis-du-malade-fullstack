@@ -53,6 +53,18 @@ public class SuggestionsResponse
     public List<VolunteerSuggestion> Suggestions { get; set; } = new();
 }
 
+// ── Contribution (public submit) ─────────────────────────────────────────────
+
+public class ContributionPayload
+{
+    public string  ContributorName { get; set; } = "";
+    public string  Phone           { get; set; } = "";
+    public string  Type            { get; set; } = "Money"; // Money | Goods | Time
+    public decimal? Amount         { get; set; }
+    public string? Description     { get; set; }
+    public string? Message         { get; set; }
+}
+
 // ── Care Request ─────────────────────────────────────────────────────────────
 
 public class CareRequestPayload

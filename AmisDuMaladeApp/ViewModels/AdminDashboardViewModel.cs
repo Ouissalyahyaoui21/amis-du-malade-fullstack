@@ -110,8 +110,10 @@ public partial class AdminDashboardViewModel : BaseViewModel
                 StatPendingRequests    = dash.PendingRequests;
                 StatAssignments        = dash.ActiveAssignments;
                 StatAlerts             = dash.OpenAlerts;
-                StatNewVolunteersMonth = dash.NewVolunteersThisMonth;
-                StatNewRequestsMonth   = dash.NewRequestsThisMonth;
+                StatNewVolunteersMonth   = dash.NewVolunteersThisMonth;
+                StatNewRequestsMonth     = dash.NewRequestsThisMonth;
+                StatContributions        = dash.TotalContributions;
+                StatPendingContributions = dash.PendingContributions;
 
                 RecentActivities.Clear();
                 foreach (var a in dash.RecentActivities) RecentActivities.Add(a);

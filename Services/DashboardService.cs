@@ -30,6 +30,9 @@ namespace AmisduMalade.Services
                 .CountAsync(a => a.Status == "Active" || a.Status == "Assigned");
             var openAlerts = await _db.Alerts
                 .CountAsync(a => a.Status == "Open" || a.Status == "InProgress");
+            var totalContributions   = await _db.Contributions.CountAsync();
+            var pendingContributions = await _db.Contributions
+                .CountAsync(c => c.Status == "Pending");
 
             // المقارنة الشهرية
             var newVolunteersThisMonth = await _db.Volunteers
@@ -110,6 +113,8 @@ namespace AmisduMalade.Services
                     .ToDictionary(x => x.Priority ?? "Normal", x => x.Count),
                 VolunteersByMunicipality = byMunicipality
                     .ToDictionary(x => x.Municipality, x => x.Count),
+                TotalContributions   = totalContributions,
+                PendingContributions = pendingContributions,
                 RecentActivities = activities
                     .OrderByDescending(a => a.TimeAgo).Take(5).ToList()
             };

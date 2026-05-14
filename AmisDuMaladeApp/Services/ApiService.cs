@@ -124,6 +124,18 @@ public class ApiService
 
     // ── Contribution ─────────────────────────────────────────────────────────
 
+    public async Task<(bool Success, string? Error)> SubmitContributionAsync(ContributionPayload payload)
+    {
+        try
+        {
+            var response = await _http.PostAsJsonAsync(ApiEndpoints.Contributions, payload);
+            return response.IsSuccessStatusCode
+                ? (true, null)
+                : (false, await response.Content.ReadAsStringAsync());
+        }
+        catch (Exception ex) { return (false, ex.Message); }
+    }
+
     public async Task<List<ContributionItem>> GetContributionsAsync()
     {
         SetAuthHeader();
