@@ -122,6 +122,26 @@ public class ApiService
         catch { return new(); }
     }
 
+    // ── Contribution ─────────────────────────────────────────────────────────
+
+    public async Task<List<ContributionItem>> GetContributionsAsync()
+    {
+        SetAuthHeader();
+        try { return await _http.GetFromJsonAsync<List<ContributionItem>>(ApiEndpoints.Contributions) ?? new(); }
+        catch { return new(); }
+    }
+
+    public async Task<bool> UpdateContributionStatusAsync(Guid id, string status)
+    {
+        SetAuthHeader();
+        try
+        {
+            var response = await _http.PutAsJsonAsync(ApiEndpoints.ContributionStatus(id), new { Status = status });
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
     // ── Dashboard ─────────────────────────────────────────────────────────────
 
     public async Task<DashboardData?> GetDashboardAsync()

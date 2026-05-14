@@ -7,247 +7,1084 @@
              x:DataType="vm:AdminDashboardViewModel"
              Shell.NavBarIsVisible="False"
              FlowDirection="RightToLeft"
-             BackgroundColor="#f2ede6">
+             BackgroundColor="#f0f4f8">
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,Auto,*">
 
         <!-- ══ TOP BAR ══ -->
-        <Grid Grid.Row="0" BackgroundColor="#1a3a5c" Padding="16,48,16,14"
-              ColumnDefinitions="Auto,*,Auto">
+        <Grid Grid.Row="0" BackgroundColor="#1a3a5c" Padding="18,52,18,14"
+              ColumnDefinitions="Auto,*,Auto,Auto">
 
-            <Border Grid.Column="0" BackgroundColor="#0f2236" StrokeThickness="0"
-                    Padding="10,6">
-                <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
-                <HorizontalStackLayout Spacing="6">
-                    <Label Text="🛡️" FontSize="16"/>
-                    <Label Text="لوحة التحكم" FontSize="14" TextColor="White" FontAttributes="Bold"/>
+            <!-- الشعار + الاسم -->
+            <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                <Border WidthRequest="36" HeightRequest="36" StrokeThickness="2" Stroke="#c8a53a">
+                    <Border.StrokeShape><Ellipse/></Border.StrokeShape>
+                    <Image Source="logo.png" Aspect="AspectFit"/>
+                </Border>
+                <VerticalStackLayout Spacing="1" VerticalOptions="Center">
+                    <Label Text="أصدقاء المريض" FontSize="13" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text="لوحة الإدارة" FontSize="10" TextColor="#c8a53a"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <!-- بادج التنبيهات -->
+            <Border Grid.Column="2" BackgroundColor="#dc2626" StrokeThickness="0"
+                    Padding="10,6" Margin="0,0,8,0" VerticalOptions="Center">
+                <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="alerts"/>
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout Spacing="4">
+                    <Label Text="🚨" FontSize="13"/>
+                    <Label Text="{Binding StatAlerts}" FontSize="13" FontAttributes="Bold" TextColor="White"/>
                 </HorizontalStackLayout>
             </Border>
 
-            <Label Grid.Column="1" Text="جمعية أصدقاء المريض"
-                   FontSize="13" TextColor="#c8a53a" FontAttributes="Bold"
-                   HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-
-            <Border Grid.Column="2" BackgroundColor="#dc2626" StrokeThickness="0"
-                    Padding="10,6">
-                <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+            <!-- خروج -->
+            <Border Grid.Column="3" BackgroundColor="#0f2236" StrokeThickness="0"
+                    Padding="10,6" VerticalOptions="Center">
+                <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding LogoutCommand}"/>
                 </Border.GestureRecognizers>
                 <HorizontalStackLayout Spacing="4">
-                    <Label Text="🚪" FontSize="14"/>
-                    <Label Text="خروج" FontSize="13" TextColor="White" FontAttributes="Bold"/>
+                    <Label Text="🚪" FontSize="13"/>
+                    <Label Text="خروج" FontSize="12" TextColor="#fca5a5" FontAttributes="Bold"/>
                 </HorizontalStackLayout>
             </Border>
         </Grid>
 
-        <!-- ══ CONTENT ══ -->
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="16" Padding="16,16,16,8">
+        <!-- ══ TAB STRIP ══ -->
+        <ScrollView Grid.Row="1" Orientation="Horizontal" BackgroundColor="#1a3a5c"
+                    HorizontalScrollBarVisibility="Never">
+            <HorizontalStackLayout Padding="12,0,12,0" Spacing="6">
 
-                <!-- Loading -->
+                <!-- Helper macro: each tab is a Border + Label pair -->
+                <!-- Overview -->
+                <Border Padding="12,9" StrokeThickness="0" Margin="0,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="overview"/>
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsOverviewTab}" Value="True">
+                            <Setter Property="BackgroundColor" Value="#c8a53a"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsOverviewTab}" Value="False">
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label Text="🏠 الرئيسية" FontSize="12" FontAttributes="Bold">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsOverviewTab}" Value="True">
+                                <Setter Property="TextColor" Value="White"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsOverviewTab}" Value="False">
+                                <Setter Property="TextColor" Value="#90afc8"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <!-- Volunteers -->
+                <Border Padding="12,9" StrokeThickness="0" Margin="0,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="volunteers"/>
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsVolunteersTab}" Value="True">
+                            <Setter Property="BackgroundColor" Value="#c8a53a"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsVolunteersTab}" Value="False">
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label Text="🤝 المتطوعون" FontSize="12" FontAttributes="Bold">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsVolunteersTab}" Value="True">
+                                <Setter Property="TextColor" Value="White"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsVolunteersTab}" Value="False">
+                                <Setter Property="TextColor" Value="#90afc8"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <!-- Interviews -->
+                <Border Padding="12,9" StrokeThickness="0" Margin="0,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="interviews"/>
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsInterviewsTab}" Value="True">
+                            <Setter Property="BackgroundColor" Value="#c8a53a"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsInterviewsTab}" Value="False">
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label Text="🗣 المقابلات" FontSize="12" FontAttributes="Bold">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsInterviewsTab}" Value="True">
+                                <Setter Property="TextColor" Value="White"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsInterviewsTab}" Value="False">
+                                <Setter Property="TextColor" Value="#90afc8"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <!-- Training -->
+                <Border Padding="12,9" StrokeThickness="0" Margin="0,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="training"/>
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsTrainingTab}" Value="True">
+                            <Setter Property="BackgroundColor" Value="#c8a53a"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsTrainingTab}" Value="False">
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label Text="🎓 التدريبات" FontSize="12" FontAttributes="Bold">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsTrainingTab}" Value="True">
+                                <Setter Property="TextColor" Value="White"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsTrainingTab}" Value="False">
+                                <Setter Property="TextColor" Value="#90afc8"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <!-- Evaluations -->
+                <Border Padding="12,9" StrokeThickness="0" Margin="0,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="evaluations"/>
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsEvaluationsTab}" Value="True">
+                            <Setter Property="BackgroundColor" Value="#c8a53a"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsEvaluationsTab}" Value="False">
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label Text="⭐ التقييمات" FontSize="12" FontAttributes="Bold">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsEvaluationsTab}" Value="True">
+                                <Setter Property="TextColor" Value="White"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsEvaluationsTab}" Value="False">
+                                <Setter Property="TextColor" Value="#90afc8"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <!-- New Requests -->
+                <Border Padding="12,9" StrokeThickness="0" Margin="0,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="newrequests"/>
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsNewRequestsTab}" Value="True">
+                            <Setter Property="BackgroundColor" Value="#c8a53a"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsNewRequestsTab}" Value="False">
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <HorizontalStackLayout Spacing="5">
+                        <Label Text="🆕 جديدة" FontSize="12" FontAttributes="Bold">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsNewRequestsTab}" Value="True">
+                                    <Setter Property="TextColor" Value="White"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding IsNewRequestsTab}" Value="False">
+                                    <Setter Property="TextColor" Value="#90afc8"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Border BackgroundColor="#dc2626" StrokeThickness="0" Padding="4,1" VerticalOptions="Center">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                            <Label Text="{Binding StatPendingRequests}" FontSize="9"
+                                   TextColor="White" FontAttributes="Bold"/>
+                        </Border>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- All Requests -->
+                <Border Padding="12,9" StrokeThickness="0" Margin="0,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="requests"/>
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsRequestsTab}" Value="True">
+                            <Setter Property="BackgroundColor" Value="#c8a53a"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsRequestsTab}" Value="False">
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label Text="📋 الطلبات" FontSize="12" FontAttributes="Bold">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsRequestsTab}" Value="True">
+                                <Setter Property="TextColor" Value="White"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsRequestsTab}" Value="False">
+                                <Setter Property="TextColor" Value="#90afc8"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <!-- Patients -->
+                <Border Padding="12,9" StrokeThickness="0" Margin="0,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="patients"/>
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsPatientsTab}" Value="True">
+                            <Setter Property="BackgroundColor" Value="#c8a53a"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsPatientsTab}" Value="False">
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label Text="👥 المرضى" FontSize="12" FontAttributes="Bold">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsPatientsTab}" Value="True">
+                                <Setter Property="TextColor" Value="White"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsPatientsTab}" Value="False">
+                                <Setter Property="TextColor" Value="#90afc8"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <!-- Alerts -->
+                <Border Padding="12,9" StrokeThickness="0" Margin="0,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="alerts"/>
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsAlertsTab}" Value="True">
+                            <Setter Property="BackgroundColor" Value="#dc2626"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsAlertsTab}" Value="False">
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label Text="🚨 التنبيهات" FontSize="12" FontAttributes="Bold">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsAlertsTab}" Value="True">
+                                <Setter Property="TextColor" Value="White"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsAlertsTab}" Value="False">
+                                <Setter Property="TextColor" Value="#90afc8"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <!-- Reports -->
+                <Border Padding="12,9" StrokeThickness="0" Margin="0,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="reports"/>
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsReportsTab}" Value="True">
+                            <Setter Property="BackgroundColor" Value="#c8a53a"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsReportsTab}" Value="False">
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label Text="📊 التقارير" FontSize="12" FontAttributes="Bold">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsReportsTab}" Value="True">
+                                <Setter Property="TextColor" Value="White"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsReportsTab}" Value="False">
+                                <Setter Property="TextColor" Value="#90afc8"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+                <!-- Contributions -->
+                <Border Padding="12,9" StrokeThickness="0" Margin="0,6">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="contributions"/>
+                    </Border.GestureRecognizers>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsContributionsTab}" Value="True">
+                            <Setter Property="BackgroundColor" Value="#0a5c46"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding IsContributionsTab}" Value="False">
+                            <Setter Property="BackgroundColor" Value="Transparent"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                    <Label Text="💰 المساهمات" FontSize="12" FontAttributes="Bold">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsContributionsTab}" Value="True">
+                                <Setter Property="TextColor" Value="White"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsContributionsTab}" Value="False">
+                                <Setter Property="TextColor" Value="#90afc8"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Border>
+
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <!-- ══ CONTENT AREA ══ -->
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Spacing="0" Padding="0,0,0,24">
+
+                <!-- Loading indicator -->
                 <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
-                                   Color="#1a3a5c" HeightRequest="48"/>
+                                   Color="#1a3a5c" HeightRequest="48" Margin="0,20"/>
 
-                <!-- ── بطاقات الإحصاء ── -->
-                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto"
-                      ColumnSpacing="12" RowSpacing="12">
+                <!-- ═══════════════════════════════════════════════════════════
+                     TAB 1 — OVERVIEW
+                ════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsOverviewTab}" Spacing="12" Padding="16,16,16,0">
 
-                    <Border Grid.Row="0" Grid.Column="0" BackgroundColor="#1a3a5c"
-                            StrokeThickness="0" Padding="16,14">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="🤝" FontSize="24"/>
-                            <Label Text="{Binding StatVolunteers}" FontSize="28" FontAttributes="Bold" TextColor="White"/>
-                            <Label Text="المتطوعون" FontSize="12" TextColor="#a6c8e8"/>
-                            <Label Text="{Binding StatActiveVolunteers, StringFormat='نشط: {0}'}"
-                                   FontSize="11" TextColor="#86efac"/>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <Border Grid.Row="0" Grid.Column="1" BackgroundColor="#0a5c46"
-                            StrokeThickness="0" Padding="16,14">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="📋" FontSize="24"/>
-                            <Label Text="{Binding StatRequests}" FontSize="28" FontAttributes="Bold" TextColor="White"/>
-                            <Label Text="طلبات المرافقة" FontSize="12" TextColor="#a0d4c0"/>
-                            <Label Text="{Binding StatPendingRequests, StringFormat='معلّق: {0}'}"
-                                   FontSize="11" TextColor="#fcd34d"/>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <Border Grid.Row="1" Grid.Column="0" BackgroundColor="#7c3aed"
-                            StrokeThickness="0" Padding="16,14">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="🏥" FontSize="24"/>
-                            <Label Text="{Binding StatPatients}" FontSize="28" FontAttributes="Bold" TextColor="White"/>
-                            <Label Text="المرضى" FontSize="12" TextColor="#ddd6fe"/>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <Border Grid.Row="1" Grid.Column="1" BackgroundColor="#b45309"
-                            StrokeThickness="0" Padding="16,14">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="📌" FontSize="24"/>
-                            <Label Text="{Binding StatAssignments}" FontSize="28" FontAttributes="Bold" TextColor="White"/>
-                            <Label Text="التكليفات النشطة" FontSize="12" TextColor="#fde68a"/>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <Border Grid.Row="2" Grid.Column="0" BackgroundColor="#dc2626"
-                            StrokeThickness="0" Padding="16,14">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="🚨" FontSize="24"/>
-                            <Label Text="{Binding StatAlerts}" FontSize="28" FontAttributes="Bold" TextColor="White"/>
-                            <Label Text="تنبيهات مفتوحة" FontSize="12" TextColor="#fecaca"/>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <Border Grid.Row="2" Grid.Column="1" BackgroundColor="#c8a53a"
-                            StrokeThickness="0" Padding="16,14">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="⏳" FontSize="24"/>
-                            <Label Text="{Binding StatPendingVolunteers}" FontSize="28" FontAttributes="Bold" TextColor="White"/>
-                            <Label Text="طلبات متطوعين" FontSize="12" TextColor="#fef9c3"/>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <!-- هذا الشهر -->
-                    <Border Grid.Row="3" Grid.ColumnSpan="2" BackgroundColor="White"
-                            StrokeThickness="0" Padding="16,14">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
-                        <HorizontalStackLayout Spacing="24" HorizontalOptions="Center">
-                            <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
-                                <Label Text="{Binding StatNewVolunteersMonth}" FontSize="24" FontAttributes="Bold"
-                                       TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
-                                <Label Text="متطوع جديد هذا الشهر" FontSize="11"
-                                       TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                    <!-- تنبيه عاجل -->
+                    <Border BackgroundColor="#7c3aed" StrokeThickness="0" Padding="14,12"
+                            IsVisible="{Binding StatAlerts, Converter={StaticResource IntToBoolConverter}}">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="alerts"/>
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <Label Grid.Column="0" Text="⚡" FontSize="22" VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" Spacing="1" Margin="10,0">
+                                <Label Text="تنبيهات عاجلة تحتاج مراجعة" FontSize="13"
+                                       FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="اضغط لعرض التفاصيل" FontSize="11" TextColor="#ddd6fe"/>
                             </VerticalStackLayout>
-                            <BoxView WidthRequest="1" BackgroundColor="#e5e7eb"/>
-                            <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
-                                <Label Text="{Binding StatNewRequestsMonth}" FontSize="24" FontAttributes="Bold"
-                                       TextColor="#0a5c46" HorizontalTextAlignment="Center"/>
-                                <Label Text="طلب جديد هذا الشهر" FontSize="11"
-                                       TextColor="#6b7280" HorizontalTextAlignment="Center"/>
-                            </VerticalStackLayout>
-                        </HorizontalStackLayout>
+                            <Border Grid.Column="2" BackgroundColor="#dc2626" StrokeThickness="0"
+                                    Padding="8,4">
+                                <Border.StrokeShape><Ellipse/></Border.StrokeShape>
+                                <Label Text="{Binding StatAlerts}" FontSize="16" FontAttributes="Bold"
+                                       TextColor="White" HorizontalTextAlignment="Center"/>
+                            </Border>
+                        </Grid>
                     </Border>
-                </Grid>
 
-                <!-- ── Section Tabs ── -->
-                <Border BackgroundColor="#e5e7eb" StrokeThickness="0" Padding="4">
-                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
-                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="0">
+                    <!-- شبكة الإحصاء 2×3 -->
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto"
+                          ColumnSpacing="10" RowSpacing="10">
 
-                        <Border Grid.Column="0" StrokeThickness="0" Padding="0,10">
-                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="alerts"/>
-                            </Border.GestureRecognizers>
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding IsAlertsTab}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dc2626"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding IsAlertsTab}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="Transparent"/>
-                                </DataTrigger>
-                            </Border.Triggers>
-                            <Label Text="🚨 تنبيهات" FontSize="12" FontAttributes="Bold"
-                                   HorizontalTextAlignment="Center">
-                                <Label.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsAlertsTab}" Value="True">
-                                        <Setter Property="TextColor" Value="White"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsAlertsTab}" Value="False">
-                                        <Setter Property="TextColor" Value="#6b7280"/>
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
-                        </Border>
-
-                        <Border Grid.Column="1" StrokeThickness="0" Padding="0,10">
-                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="activities"/>
-                            </Border.GestureRecognizers>
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding IsActivitiesTab}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding IsActivitiesTab}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="Transparent"/>
-                                </DataTrigger>
-                            </Border.Triggers>
-                            <Label Text="📊 الأنشطة" FontSize="12" FontAttributes="Bold"
-                                   HorizontalTextAlignment="Center">
-                                <Label.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsActivitiesTab}" Value="True">
-                                        <Setter Property="TextColor" Value="White"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsActivitiesTab}" Value="False">
-                                        <Setter Property="TextColor" Value="#6b7280"/>
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
-                        </Border>
-
-                        <Border Grid.Column="2" StrokeThickness="0" Padding="0,10">
-                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                        <Border Grid.Row="0" Grid.Column="0" BackgroundColor="#1a3a5c"
+                                StrokeThickness="0" Padding="14,12">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="volunteers"/>
                             </Border.GestureRecognizers>
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding IsVolunteersTab}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#0a5c46"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding IsVolunteersTab}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="Transparent"/>
-                                </DataTrigger>
-                            </Border.Triggers>
-                            <Label Text="🤝 متطوعون" FontSize="12" FontAttributes="Bold"
-                                   HorizontalTextAlignment="Center">
-                                <Label.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsVolunteersTab}" Value="True">
-                                        <Setter Property="TextColor" Value="White"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsVolunteersTab}" Value="False">
-                                        <Setter Property="TextColor" Value="#6b7280"/>
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="🤝" FontSize="22"/>
+                                <Label Text="{Binding StatVolunteers}" FontSize="26"
+                                       FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="المتطوعون" FontSize="11" TextColor="#a6c8e8"/>
+                                <Label Text="{Binding StatActiveVolunteers, StringFormat='✓ نشط: {0}'}"
+                                       FontSize="10" TextColor="#86efac"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Row="0" Grid.Column="1" BackgroundColor="#0a5c46"
+                                StrokeThickness="0" Padding="14,12">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="newrequests"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="📋" FontSize="22"/>
+                                <Label Text="{Binding StatRequests}" FontSize="26"
+                                       FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="طلبات المرافقة" FontSize="11" TextColor="#a0d4c0"/>
+                                <Label Text="{Binding StatPendingRequests, StringFormat='⏳ معلّق: {0}'}"
+                                       FontSize="10" TextColor="#fcd34d"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="0" BackgroundColor="#7c3aed"
+                                StrokeThickness="0" Padding="14,12">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="patients"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="🏥" FontSize="22"/>
+                                <Label Text="{Binding StatPatients}" FontSize="26"
+                                       FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="المرضى" FontSize="11" TextColor="#ddd6fe"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="1" BackgroundColor="#b45309"
+                                StrokeThickness="0" Padding="14,12">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="📌" FontSize="22"/>
+                                <Label Text="{Binding StatAssignments}" FontSize="26"
+                                       FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="تكليفات نشطة" FontSize="11" TextColor="#fde68a"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Row="2" Grid.Column="0" BackgroundColor="#dc2626"
+                                StrokeThickness="0" Padding="14,12">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="alerts"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="🚨" FontSize="22"/>
+                                <Label Text="{Binding StatAlerts}" FontSize="26"
+                                       FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="تنبيهات مفتوحة" FontSize="11" TextColor="#fecaca"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Row="2" Grid.Column="1" BackgroundColor="#1a5c3a"
+                                StrokeThickness="0" Padding="14,12">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="contributions"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="3">
+                                <Label Text="💰" FontSize="22"/>
+                                <Label Text="{Binding StatContributions}" FontSize="26"
+                                       FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="المساهمات" FontSize="11" TextColor="#a0d4c0"/>
+                                <Label Text="{Binding StatPendingContributions, StringFormat='⏳ معلّق: {0}'}"
+                                       FontSize="10" TextColor="#fcd34d"/>
+                            </VerticalStackLayout>
                         </Border>
                     </Grid>
-                </Border>
 
-                <!-- ── قائمة التنبيهات ── -->
-                <VerticalStackLayout IsVisible="{Binding IsAlertsTab}" Spacing="10">
-                    <Label Text="التنبيهات المفتوحة" FontSize="16" FontAttributes="Bold"
-                           TextColor="#1a3a5c"/>
+                    <!-- هذا الشهر -->
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16,14">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <Grid ColumnDefinitions="*,Auto,*">
+                            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="3">
+                                <Label Text="{Binding StatNewVolunteersMonth}" FontSize="24"
+                                       FontAttributes="Bold" TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                                <Label Text="متطوع جديد هذا الشهر" FontSize="10"
+                                       TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                            <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="#e5e7eb"/>
+                            <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="3">
+                                <Label Text="{Binding StatNewRequestsMonth}" FontSize="24"
+                                       FontAttributes="Bold" TextColor="#0a5c46" HorizontalTextAlignment="Center"/>
+                                <Label Text="طلب جديد هذا الشهر" FontSize="10"
+                                       TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- آخر الأنشطة -->
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="14,12">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="⚡ آخر الأنشطة" FontSize="14" FontAttributes="Bold"
+                                   TextColor="#1a3a5c"/>
+                            <CollectionView ItemsSource="{Binding RecentActivities}">
+                                <CollectionView.EmptyView>
+                                    <Label Text="لا توجد أنشطة حديثة" FontSize="13"
+                                           TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,12"/>
+                                </CollectionView.EmptyView>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="m:ActivityItem">
+                                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,7"
+                                              ColumnSpacing="10">
+                                            <BoxView Grid.Column="0" WidthRequest="8" HeightRequest="8"
+                                                     BackgroundColor="#1a3a5c" CornerRadius="4"
+                                                     VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding Description}"
+                                                   FontSize="12" TextColor="#374151"
+                                                   LineBreakMode="WordWrap"/>
+                                            <Label Grid.Column="2" Text="{Binding TimeAgo}"
+                                                   FontSize="10" TextColor="#9ca3af"
+                                                   VerticalOptions="Center"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- تنبيهات مختصرة -->
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="14,12">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <VerticalStackLayout Spacing="8">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Label Grid.Column="0" Text="🚨 تنبيهات مفتوحة"
+                                       FontSize="14" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                <Label Grid.Column="1" Text="عرض الكل ›" FontSize="12" TextColor="#c8a53a">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SetTabCommand}" CommandParameter="alerts"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                            </Grid>
+                            <CollectionView ItemsSource="{Binding OpenAlertsList}">
+                                <CollectionView.EmptyView>
+                                    <Label Text="✅ لا توجد تنبيهات" FontSize="12"
+                                           TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,8"/>
+                                </CollectionView.EmptyView>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="m:AlertResponse">
+                                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="0,6"
+                                              ColumnSpacing="10">
+                                            <BoxView Grid.Column="0" WidthRequest="8" HeightRequest="8"
+                                                     BackgroundColor="#dc2626" CornerRadius="4"
+                                                     VerticalOptions="Start" Margin="0,4,0,0"/>
+                                            <Label Grid.Column="1" Text="{Binding Title}"
+                                                   FontSize="12" TextColor="#374151"
+                                                   LineBreakMode="WordWrap"/>
+                                            <Border Grid.Column="2" BackgroundColor="#16a34a"
+                                                    StrokeThickness="0" Padding="8,4" VerticalOptions="Center">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ResolveAlertCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Border.GestureRecognizers>
+                                                <Label Text="حلّ" FontSize="10" TextColor="White" FontAttributes="Bold"/>
+                                            </Border>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     TAB 2 — VOLUNTEERS
+                ════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsVolunteersTab}" Spacing="12" Padding="16,16,16,0">
+
+                    <!-- فلتر -->
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout Spacing="8">
+                            <Border Padding="12,7" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterVolunteersCommand}" CommandParameter="All"/>
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="All">
+                                        <Setter Property="BackgroundColor" Value="#1a3a5c"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Active">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Pending">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Rejected">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="الكل" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="All">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Active">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Pending">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Rejected">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                            <Border Padding="12,7" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterVolunteersCommand}" CommandParameter="Active"/>
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Active">
+                                        <Setter Property="BackgroundColor" Value="#16a34a"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="All">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Pending">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Rejected">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="✓ نشط" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Active">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="All">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Pending">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Rejected">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                            <Border Padding="12,7" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterVolunteersCommand}" CommandParameter="Pending"/>
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Pending">
+                                        <Setter Property="BackgroundColor" Value="#b45309"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="All">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Active">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Rejected">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="⏳ معلق" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Pending">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="All">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Active">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Rejected">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+
+                    <!-- قائمة المتطوعين -->
+                    <CollectionView ItemsSource="{Binding FilteredVolunteers}">
+                        <CollectionView.EmptyView>
+                            <Label Text="لا يوجد متطوعون في هذه الفئة" FontSize="13"
+                                   TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:VolunteerResponse">
+                                <Border BackgroundColor="White" StrokeThickness="0"
+                                        Padding="14,12" Margin="0,0,0,10">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                                    <VerticalStackLayout Spacing="8">
+                                        <!-- الاسم + الحالة -->
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <Label Grid.Column="0" Text="{Binding FullName}"
+                                                   FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                            <Border Grid.Column="1" StrokeThickness="0" Padding="8,3">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                                <Border.Triggers>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Active">
+                                                        <Setter Property="BackgroundColor" Value="#dcfce7"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Pending">
+                                                        <Setter Property="BackgroundColor" Value="#fef3c7"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Rejected">
+                                                        <Setter Property="BackgroundColor" Value="#fee2e2"/>
+                                                    </DataTrigger>
+                                                </Border.Triggers>
+                                                <Label Text="{Binding Status}" FontSize="11" FontAttributes="Bold">
+                                                    <Label.Triggers>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Active">
+                                                            <Setter Property="TextColor" Value="#15803d"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Pending">
+                                                            <Setter Property="TextColor" Value="#b45309"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Rejected">
+                                                            <Setter Property="TextColor" Value="#dc2626"/>
+                                                        </DataTrigger>
+                                                    </Label.Triggers>
+                                                </Label>
+                                            </Border>
+                                        </Grid>
+                                        <!-- البيانات -->
+                                        <Label FontSize="12" TextColor="#6b7280">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="📍 "/><Span Text="{Binding Municipality}"/>
+                                                    <Span Text="   📱 "/><Span Text="{Binding Phone}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label FontSize="11" TextColor="#6b7280">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding VolunteerCategory}"/>
+                                                    <Span Text="   📅 تسجيل: "/><Span Text="{Binding CreatedAt, StringFormat='{0:dd/MM/yyyy}'}"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <!-- مهارات نصية -->
+                                        <HorizontalStackLayout Spacing="6">
+                                            <Border BackgroundColor="#e0f2fe" StrokeThickness="0" Padding="6,3"
+                                                    IsVisible="{Binding CanHospitalVisit}">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                <Label Text="🏥 مستشفى" FontSize="10" TextColor="#0369a1"/>
+                                            </Border>
+                                            <Border BackgroundColor="#dcfce7" StrokeThickness="0" Padding="6,3"
+                                                    IsVisible="{Binding CanHomeVisit}">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                <Label Text="🏠 منزلي" FontSize="10" TextColor="#15803d"/>
+                                            </Border>
+                                            <Border BackgroundColor="#fef3c7" StrokeThickness="0" Padding="6,3"
+                                                    IsVisible="{Binding HasTransportation}">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                <Label Text="🚗 نقل" FontSize="10" TextColor="#92400e"/>
+                                            </Border>
+                                            <Border BackgroundColor="#ede9fe" StrokeThickness="0" Padding="6,3"
+                                                    IsVisible="{Binding CanNightPresence}">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                <Label Text="🌙 ليلي" FontSize="10" TextColor="#6d28d9"/>
+                                            </Border>
+                                        </HorizontalStackLayout>
+                                        <!-- الأزرار -->
+                                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                                            <!-- واتساب -->
+                                            <Border Grid.Column="0" BackgroundColor="#25d366"
+                                                    StrokeThickness="0" Padding="0,9">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ContactWhatsAppCommand}"
+                                                        CommandParameter="{Binding Phone}"/>
+                                                </Border.GestureRecognizers>
+                                                <Label Text="💬 واتساب" FontSize="11" FontAttributes="Bold"
+                                                       TextColor="White" HorizontalTextAlignment="Center"/>
+                                            </Border>
+                                            <!-- قبول -->
+                                            <Border Grid.Column="1" BackgroundColor="#16a34a"
+                                                    StrokeThickness="0" Padding="0,9">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ApproveVolunteerCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Border.GestureRecognizers>
+                                                <Label Text="✓ قبول" FontSize="11" FontAttributes="Bold"
+                                                       TextColor="White" HorizontalTextAlignment="Center"/>
+                                            </Border>
+                                            <!-- رفض -->
+                                            <Border Grid.Column="2" BackgroundColor="#fee2e2"
+                                                    StrokeThickness="0" Padding="0,9">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RejectVolunteerCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Border.GestureRecognizers>
+                                                <Label Text="✗ رفض" FontSize="11" FontAttributes="Bold"
+                                                       TextColor="#dc2626" HorizontalTextAlignment="Center"/>
+                                            </Border>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     TAB 3 — INTERVIEWS (placeholder content)
+                ════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsInterviewsTab}" Spacing="12" Padding="16,16,16,0">
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Label Text="🗣" FontSize="40" HorizontalTextAlignment="Center"/>
+                            <Label Text="إدارة المقابلات" FontSize="16" FontAttributes="Bold"
+                                   TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                            <Label Text="جدولة وتتبع مقابلات المتطوعين الجدد" FontSize="13"
+                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border BackgroundColor="#fef3c7" StrokeThickness="0" Padding="14,12">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                        <Label Text="📅 لا توجد مقابلات مجدولة — يمكن جدولة مقابلة من ملف المتطوع المعلق"
+                               FontSize="12" TextColor="#92400e" HorizontalTextAlignment="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     TAB 4 — TRAINING (placeholder content)
+                ════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsTrainingTab}" Spacing="12" Padding="16,16,16,0">
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Label Text="🎓" FontSize="40" HorizontalTextAlignment="Center"/>
+                            <Label Text="التدريبات" FontSize="16" FontAttributes="Bold"
+                                   TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                            <Label Text="إدارة دورات تدريب المتطوعين وتتبع الحضور" FontSize="13"
+                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border BackgroundColor="#dcfce7" StrokeThickness="0" Padding="14,12">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                        <Label Text="🎓 لا توجد دورات تدريبية نشطة حالياً"
+                               FontSize="12" TextColor="#15803d" HorizontalTextAlignment="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     TAB 5 — EVALUATIONS (placeholder)
+                ════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsEvaluationsTab}" Spacing="12" Padding="16,16,16,0">
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                            <Label Text="⭐" FontSize="40" HorizontalTextAlignment="Center"/>
+                            <Label Text="تقييمات المتطوعين" FontSize="16" FontAttributes="Bold"
+                                   TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
+                            <Label Text="استعراض تقييمات أداء المتطوعين من المرضى" FontSize="13"
+                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     TAB 6 — NEW REQUESTS
+                ════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsNewRequestsTab}" Spacing="10" Padding="16,16,16,0">
+                    <Label Text="{Binding StatPendingRequests, StringFormat='⏳ {0} طلبات تنتظر التعيين'}"
+                           FontSize="13" FontAttributes="Bold" TextColor="#b45309"/>
+                    <CollectionView ItemsSource="{Binding NewRequests}">
+                        <CollectionView.EmptyView>
+                            <Label Text="✅ لا توجد طلبات معلقة" FontSize="13"
+                                   TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:CareRequestListItem">
+                                <Border BackgroundColor="White" StrokeThickness="0"
+                                        Padding="14,12" Margin="0,0,0,10">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                                    <Grid ColumnDefinitions="6,*" ColumnSpacing="12">
+                                        <BoxView Grid.Column="0" BackgroundColor="#dc2626"
+                                                 CornerRadius="3" VerticalOptions="Fill"/>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                            <Label FontSize="11" TextColor="#9ca3af">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="طالب: " FontAttributes="Bold"/>
+                                                        <Span Text="{Binding RequesterName}"/>
+                                                        <Span Text=" ← "/>
+                                                        <Span Text="مريض: " FontAttributes="Bold"/>
+                                                        <Span Text="{Binding PatientName}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label FontSize="11" TextColor="#6b7280">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="📅 "/>
+                                                        <Span Text="{Binding CreatedAt, StringFormat='{0:dd/MM/yyyy}'}"/>
+                                                        <Span Text="   "/>
+                                                        <Span Text="{Binding Priority, StringFormat='أولوية: {0}'}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Border BackgroundColor="#1a3a5c" StrokeThickness="0"
+                                                    Padding="10,6" HorizontalOptions="End">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                                <Label Text="🤝 تعيين متطوع" FontSize="12"
+                                                       TextColor="White" FontAttributes="Bold"/>
+                                            </Border>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     TAB 7 — ALL REQUESTS
+                ════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsRequestsTab}" Spacing="10" Padding="16,16,16,0">
+                    <Label Text="{Binding StatRequests, StringFormat='📋 إجمالي الطلبات: {0}'}"
+                           FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                    <CollectionView ItemsSource="{Binding AllRequests}">
+                        <CollectionView.EmptyView>
+                            <Label Text="لا توجد طلبات" FontSize="13"
+                                   TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:CareRequestListItem">
+                                <Border BackgroundColor="White" StrokeThickness="0"
+                                        Padding="14,12" Margin="0,0,0,8">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                            <Label FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding RequesterName}"/>
+                                                        <Span Text=" ← "/>
+                                                        <Span Text="{Binding PatientName}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label Text="{Binding CreatedAt, StringFormat='📅 {0:dd/MM/yyyy}'}"
+                                                   FontSize="11" TextColor="#9ca3af"/>
+                                        </VerticalStackLayout>
+                                        <Border Grid.Column="1" StrokeThickness="0" Padding="8,4"
+                                                VerticalOptions="Center">
+                                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                            <Border.Triggers>
+                                                <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Pending">
+                                                    <Setter Property="BackgroundColor" Value="#fef3c7"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Active">
+                                                    <Setter Property="BackgroundColor" Value="#dcfce7"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Completed">
+                                                    <Setter Property="BackgroundColor" Value="#f1f5f9"/>
+                                                </DataTrigger>
+                                            </Border.Triggers>
+                                            <Label Text="{Binding Status}" FontSize="11" FontAttributes="Bold">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Pending">
+                                                        <Setter Property="TextColor" Value="#b45309"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Active">
+                                                        <Setter Property="TextColor" Value="#15803d"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Completed">
+                                                        <Setter Property="TextColor" Value="#64748b"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     TAB 8 — PATIENTS
+                ════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsPatientsTab}" Spacing="10" Padding="16,16,16,0">
+                    <Label Text="{Binding StatPatients, StringFormat='👥 إجمالي المرضى: {0}'}"
+                           FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                    <CollectionView ItemsSource="{Binding PatientsList}">
+                        <CollectionView.EmptyView>
+                            <Label Text="لا يوجد مرضى مسجلون" FontSize="13"
+                                   TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:PatientResponse">
+                                <Border BackgroundColor="White" StrokeThickness="0"
+                                        Padding="14,12" Margin="0,0,0,8">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                                        <Border Grid.Column="0" WidthRequest="44" HeightRequest="44"
+                                                BackgroundColor="#1a3a5c" StrokeThickness="0">
+                                            <Border.StrokeShape><Ellipse/></Border.StrokeShape>
+                                            <Label Text="{Binding FullName, Converter={StaticResource FirstCharConverter}}"
+                                                   FontSize="18" FontAttributes="Bold" TextColor="White"
+                                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                                        </Border>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                            <Label Text="{Binding FullName}" FontSize="14"
+                                                   FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                            <Label FontSize="11" TextColor="#6b7280">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="📍 "/><Span Text="{Binding Municipality}"/>
+                                                        <Span Text="   👤 "/><Span Text="{Binding Age, StringFormat='{0} سنة'}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Label Text="{Binding Phone, StringFormat='📱 {0}'}"
+                                                   FontSize="11" TextColor="#6b7280"/>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- ═══════════════════════════════════════════════════════════
+                     TAB 9 — ALERTS
+                ════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsAlertsTab}" Spacing="10" Padding="16,16,16,0">
+                    <Label Text="{Binding StatAlerts, StringFormat='🚨 {0} تنبيه مفتوح'}"
+                           FontSize="13" FontAttributes="Bold" TextColor="#dc2626"/>
                     <CollectionView ItemsSource="{Binding OpenAlertsList}">
                         <CollectionView.EmptyView>
-                            <Label Text="✅ لا توجد تنبيهات مفتوحة" FontSize="14"
-                                   TextColor="#6b7280" HorizontalTextAlignment="Center" Margin="0,20"/>
+                            <Border BackgroundColor="#dcfce7" StrokeThickness="0" Padding="16">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                                <Label Text="✅ لا توجد تنبيهات مفتوحة — كل شيء على ما يرام"
+                                       FontSize="13" TextColor="#15803d" HorizontalTextAlignment="Center"/>
+                            </Border>
                         </CollectionView.EmptyView>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="m:AlertResponse">
                                 <Border BackgroundColor="White" StrokeThickness="0"
                                         Padding="14,12" Margin="0,0,0,8">
-                                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
-                                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="10">
-                                        <Label Grid.Row="0" Grid.Column="0"
-                                               Text="{Binding Title}" FontSize="14" FontAttributes="Bold"
-                                               TextColor="#dc2626"/>
-                                        <Label Grid.Row="1" Grid.Column="0"
-                                               Text="{Binding Description}" FontSize="12" TextColor="#6b7280"
-                                               LineBreakMode="WordWrap"/>
-                                        <Border Grid.RowSpan="2" Grid.Column="1"
-                                                BackgroundColor="#16a34a" StrokeThickness="0"
-                                                Padding="10,6" VerticalOptions="Center">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                                    <Grid ColumnDefinitions="6,*,Auto" ColumnSpacing="12">
+                                        <BoxView Grid.Column="0" BackgroundColor="#dc2626"
+                                                 CornerRadius="3" VerticalOptions="Fill"/>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                            <Label Text="{Binding Title}" FontSize="14"
+                                                   FontAttributes="Bold" TextColor="#dc2626"/>
+                                            <Label Text="{Binding Description}" FontSize="12"
+                                                   TextColor="#6b7280" LineBreakMode="WordWrap"/>
+                                            <Label Text="{Binding CreatedAt, StringFormat='📅 {0:dd/MM/yyyy HH:mm}'}"
+                                                   FontSize="10" TextColor="#9ca3af"/>
+                                        </VerticalStackLayout>
+                                        <Border Grid.Column="2" BackgroundColor="#16a34a"
+                                                StrokeThickness="0" Padding="10,7" VerticalOptions="Center">
                                             <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
                                             <Border.GestureRecognizers>
                                                 <TapGestureRecognizer
@@ -263,87 +1100,216 @@
                     </CollectionView>
                 </VerticalStackLayout>
 
-                <!-- ── آخر الأنشطة ── -->
-                <VerticalStackLayout IsVisible="{Binding IsActivitiesTab}" Spacing="10">
-                    <Label Text="آخر الأنشطة" FontSize="16" FontAttributes="Bold"
-                           TextColor="#1a3a5c"/>
-                    <CollectionView ItemsSource="{Binding RecentActivities}">
-                        <CollectionView.EmptyView>
-                            <Label Text="لا توجد أنشطة حديثة" FontSize="14"
-                                   TextColor="#6b7280" HorizontalTextAlignment="Center" Margin="0,20"/>
-                        </CollectionView.EmptyView>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="m:ActivityItem">
-                                <Border BackgroundColor="White" StrokeThickness="0"
-                                        Padding="14,12" Margin="0,0,0,8">
-                                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
-                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
-                                        <Border Grid.Column="0" WidthRequest="40" HeightRequest="40"
-                                                BackgroundColor="#f0f4f8" StrokeThickness="0">
-                                            <Border.StrokeShape><Ellipse/></Border.StrokeShape>
-                                            <Label Text="📝" FontSize="18"
-                                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                                        </Border>
-                                        <Label Grid.Column="1" Text="{Binding Description}"
-                                               FontSize="13" TextColor="#374151"
-                                               VerticalOptions="Center" LineBreakMode="WordWrap"/>
-                                        <Label Grid.Column="2" Text="{Binding TimeAgo}"
-                                               FontSize="11" TextColor="#9ca3af" VerticalOptions="Center"/>
-                                    </Grid>
+                <!-- ═══════════════════════════════════════════════════════════
+                     TAB 10 — REPORTS
+                ════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsReportsTab}" Spacing="12" Padding="16,16,16,0">
+
+                    <!-- ملخص رقمي -->
+                    <Border BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="16,14">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <Grid ColumnDefinitions="*,Auto,*,Auto,*" ColumnSpacing="0">
+                            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
+                                <Label Text="{Binding StatVolunteers}" FontSize="22" FontAttributes="Bold"
+                                       TextColor="White" HorizontalTextAlignment="Center"/>
+                                <Label Text="متطوع" FontSize="10" TextColor="#a6c8e8"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                            <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="#ffffff30" Margin="0,4"/>
+                            <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
+                                <Label Text="{Binding StatRequests}" FontSize="22" FontAttributes="Bold"
+                                       TextColor="White" HorizontalTextAlignment="Center"/>
+                                <Label Text="طلب" FontSize="10" TextColor="#a6c8e8"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                            <BoxView Grid.Column="3" WidthRequest="1" BackgroundColor="#ffffff30" Margin="0,4"/>
+                            <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center" Spacing="2">
+                                <Label Text="{Binding StatPatients}" FontSize="22" FontAttributes="Bold"
+                                       TextColor="White" HorizontalTextAlignment="Center"/>
+                                <Label Text="مريض" FontSize="10" TextColor="#a6c8e8"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- نسبة نشاط المتطوعين -->
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16,14">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="📊 نسبة النشاط" FontSize="14" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                <Label Grid.Column="0" Text="نشط" FontSize="12" TextColor="#6b7280" VerticalOptions="Center"/>
+                                <Border Grid.Column="1" BackgroundColor="#f1f5f9" StrokeThickness="0" HeightRequest="10">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="5"/></Border.StrokeShape>
+                                    <Border BackgroundColor="#16a34a" StrokeThickness="0" HorizontalOptions="Start"
+                                            WidthRequest="180" HeightRequest="10">
+                                        <Border.StrokeShape><RoundRectangle CornerRadius="5"/></Border.StrokeShape>
+                                    </Border>
                                 </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                                <Label Grid.Column="2" Text="{Binding StatActiveVolunteers}" FontSize="12"
+                                       FontAttributes="Bold" TextColor="#1a3a5c" VerticalOptions="Center"/>
+                            </Grid>
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                <Label Grid.Column="0" Text="معلق" FontSize="12" TextColor="#6b7280" VerticalOptions="Center"/>
+                                <Border Grid.Column="1" BackgroundColor="#f1f5f9" StrokeThickness="0" HeightRequest="10">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="5"/></Border.StrokeShape>
+                                    <Border BackgroundColor="#f59e0b" StrokeThickness="0" HorizontalOptions="Start"
+                                            WidthRequest="80" HeightRequest="10">
+                                        <Border.StrokeShape><RoundRectangle CornerRadius="5"/></Border.StrokeShape>
+                                    </Border>
+                                </Border>
+                                <Label Grid.Column="2" Text="{Binding StatPendingVolunteers}" FontSize="12"
+                                       FontAttributes="Bold" TextColor="#1a3a5c" VerticalOptions="Center"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- هذا الشهر -->
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16,14">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="📈 هذا الشهر" FontSize="14" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                                <Border Grid.Column="0" BackgroundColor="#f0f9ff" StrokeThickness="0" Padding="12,10">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                                        <Label Text="{Binding StatNewVolunteersMonth}" FontSize="22"
+                                               FontAttributes="Bold" TextColor="#1a3a5c"
+                                               HorizontalTextAlignment="Center"/>
+                                        <Label Text="متطوع جديد" FontSize="11" TextColor="#6b7280"
+                                               HorizontalTextAlignment="Center"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                                <Border Grid.Column="1" BackgroundColor="#f0fdf4" StrokeThickness="0" Padding="12,10">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                                        <Label Text="{Binding StatNewRequestsMonth}" FontSize="22"
+                                               FontAttributes="Bold" TextColor="#0a5c46"
+                                               HorizontalTextAlignment="Center"/>
+                                        <Label Text="طلب جديد" FontSize="11" TextColor="#6b7280"
+                                               HorizontalTextAlignment="Center"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
                 </VerticalStackLayout>
 
-                <!-- ── المتطوعون المعلقون ── -->
-                <VerticalStackLayout IsVisible="{Binding IsVolunteersTab}" Spacing="10">
-                    <Label Text="طلبات التطوع المعلقة" FontSize="16" FontAttributes="Bold"
-                           TextColor="#1a3a5c"/>
-                    <CollectionView ItemsSource="{Binding PendingVolunteers}">
+                <!-- ═══════════════════════════════════════════════════════════
+                     TAB 11 — CONTRIBUTIONS
+                ════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsContributionsTab}" Spacing="12" Padding="16,16,16,0">
+
+                    <!-- ملخص مالي -->
+                    <Border BackgroundColor="#0a5c46" StrokeThickness="0" Padding="16,14">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="0">
+                            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
+                                <Label Text="{Binding StatContributions}" FontSize="24"
+                                       FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center"/>
+                                <Label Text="إجمالي" FontSize="10" TextColor="#a0d4c0"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                            <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="#ffffff20" Margin="0,4"/>
+                            <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
+                                <Label Text="{Binding StatPendingContributions}" FontSize="24"
+                                       FontAttributes="Bold" TextColor="#fcd34d" HorizontalTextAlignment="Center"/>
+                                <Label Text="تنتظر التأكيد" FontSize="10" TextColor="#a0d4c0"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- قائمة المساهمات -->
+                    <CollectionView ItemsSource="{Binding ContributionsList}">
                         <CollectionView.EmptyView>
-                            <Label Text="✅ لا توجد طلبات معلقة" FontSize="14"
-                                   TextColor="#6b7280" HorizontalTextAlignment="Center" Margin="0,20"/>
+                            <Label Text="لا توجد مساهمات مسجلة" FontSize="13"
+                                   TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
                         </CollectionView.EmptyView>
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="m:VolunteerResponse">
+                            <DataTemplate x:DataType="m:ContributionItem">
                                 <Border BackgroundColor="White" StrokeThickness="0"
-                                        Padding="14,12" Margin="0,0,0,8">
-                                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
-                                    <VerticalStackLayout Spacing="6">
-                                        <Label Text="{Binding FullName}" FontSize="15" FontAttributes="Bold"
-                                               TextColor="#1a3a5c"/>
-                                        <Label FontSize="12" TextColor="#6b7280">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="📍 "/>
-                                                    <Span Text="{Binding Municipality}"/>
-                                                    <Span Text="   📞 "/>
-                                                    <Span Text="{Binding Phone}"/>
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                        <HorizontalStackLayout Spacing="8" HorizontalOptions="End">
-                                            <Border BackgroundColor="#16a34a" StrokeThickness="0" Padding="12,6">
-                                                <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
-                                                <Border.GestureRecognizers>
-                                                    <TapGestureRecognizer
-                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ApproveVolunteerCommand}"
-                                                        CommandParameter="{Binding .}"/>
-                                                </Border.GestureRecognizers>
-                                                <Label Text="✓ قبول" FontSize="12" TextColor="White" FontAttributes="Bold"/>
-                                            </Border>
-                                            <Border BackgroundColor="#dc2626" StrokeThickness="0" Padding="12,6">
-                                                <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
-                                                <Border.GestureRecognizers>
-                                                    <TapGestureRecognizer
-                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RejectVolunteerCommand}"
-                                                        CommandParameter="{Binding .}"/>
-                                                </Border.GestureRecognizers>
-                                                <Label Text="✗ رفض" FontSize="12" TextColor="White" FontAttributes="Bold"/>
-                                            </Border>
-                                        </HorizontalStackLayout>
-                                    </VerticalStackLayout>
+                                        Padding="0,0,14,0" Margin="0,0,0,10">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                                    <Grid ColumnDefinitions="6,*" ColumnSpacing="12">
+                                        <!-- خط ملون حسب النوع -->
+                                        <BoxView Grid.Column="0" BackgroundColor="{Binding TypeColor}"
+                                                 CornerRadius="3,0,0,3" VerticalOptions="Fill"/>
+                                        <VerticalStackLayout Grid.Column="1" Spacing="7" Padding="0,12,0,12">
+                                            <!-- الاسم + الحالة -->
+                                            <Grid ColumnDefinitions="*,Auto">
+                                                <Label Grid.Column="0" Text="{Binding ContributorName}"
+                                                       FontSize="14" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                                <Border Grid.Column="1" StrokeThickness="0" Padding="7,3">
+                                                    <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                                    <Border.BackgroundColor>
+                                                        <Binding Path="StatusColor"/>
+                                                    </Border.BackgroundColor>
+                                                    <Label Text="{Binding StatusLabel}" FontSize="10"
+                                                           TextColor="White" FontAttributes="Bold"/>
+                                                </Border>
+                                            </Grid>
+                                            <!-- الهاتف + النوع -->
+                                            <HorizontalStackLayout Spacing="8">
+                                                <Border BackgroundColor="{Binding TypeColor}" StrokeThickness="0"
+                                                        Padding="7,3" Opacity="0.15">
+                                                    <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                </Border>
+                                                <Label Text="{Binding TypeLabel}" FontSize="11"
+                                                       FontAttributes="Bold" TextColor="{Binding TypeColor}"/>
+                                                <Label Text="·" FontSize="11" TextColor="#9ca3af"/>
+                                                <Label Text="{Binding Phone}" FontSize="11" TextColor="#6b7280"/>
+                                            </HorizontalStackLayout>
+                                            <!-- المبلغ / الوصف -->
+                                            <Label Text="{Binding Amount}" FontSize="15"
+                                                   FontAttributes="Bold" TextColor="#1a3a5c"
+                                                   IsVisible="{Binding Amount, Converter={StaticResource StringNotEmptyConverter}}"/>
+                                            <Label Text="{Binding Description}" FontSize="12"
+                                                   TextColor="#6b7280" LineBreakMode="WordWrap"
+                                                   IsVisible="{Binding Description, Converter={StaticResource StringNotEmptyConverter}}"/>
+                                            <!-- الرسالة -->
+                                            <Label FontSize="11" TextColor="#9ca3af" FontAttributes="Italic"
+                                                   LineBreakMode="WordWrap"
+                                                   IsVisible="{Binding Message, Converter={StaticResource StringNotEmptyConverter}}">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="""/>
+                                                        <Span Text="{Binding Message}"/>
+                                                        <Span Text="""/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <!-- التاريخ + الأزرار -->
+                                            <Label Text="{Binding CreatedAt, StringFormat='📅 {0:dd/MM/yyyy}'}"
+                                                   FontSize="10" TextColor="#94a3b8"/>
+                                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                                <!-- واتساب -->
+                                                <Border Grid.Column="0" BackgroundColor="#25d366"
+                                                        StrokeThickness="0" Padding="0,9">
+                                                    <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                                    <Border.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ContactWhatsAppCommand}"
+                                                            CommandParameter="{Binding Phone}"/>
+                                                    </Border.GestureRecognizers>
+                                                    <Label Text="💬 واتساب" FontSize="11" FontAttributes="Bold"
+                                                           TextColor="White" HorizontalTextAlignment="Center"/>
+                                                </Border>
+                                                <!-- تأكيد -->
+                                                <Border Grid.Column="1" BackgroundColor="#1a3a5c"
+                                                        StrokeThickness="0" Padding="0,9">
+                                                    <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                                    <Border.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ConfirmContributionCommand}"
+                                                            CommandParameter="{Binding .}"/>
+                                                    </Border.GestureRecognizers>
+                                                    <Label Text="✓ تأكيد" FontSize="11" FontAttributes="Bold"
+                                                           TextColor="White" HorizontalTextAlignment="Center"/>
+                                                </Border>
+                                            </Grid>
+                                        </VerticalStackLayout>
+                                    </Grid>
                                 </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -352,12 +1318,6 @@
 
             </VerticalStackLayout>
         </ScrollView>
-
-        <!-- ══ FOOTER ══ -->
-        <Border Grid.Row="2" BackgroundColor="#0f2236" StrokeThickness="0" Padding="16,10">
-            <Label Text="© 2025 جمعية أصدقاء المريض – سكيكدة" FontSize="11"
-                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
-        </Border>
 
     </Grid>
 </ContentPage>

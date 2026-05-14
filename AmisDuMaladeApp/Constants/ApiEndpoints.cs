@@ -41,6 +41,11 @@ public static class ApiEndpoints
     // Dashboard [Auth]
     public const string Dashboard = "api/dashboard";
 
+    // Contribution [Auth for list, public for submit]
+    public const string Contributions = "api/contribution";
+    public static string ContributionById(Guid id)      => $"api/contribution/{id}";
+    public static string ContributionStatus(Guid id)    => $"api/contribution/{id}/status";
+
     // Sync [Auth]
     public const string SyncPull = "api/sync/pull";
     public const string SyncPush = "api/sync/push";

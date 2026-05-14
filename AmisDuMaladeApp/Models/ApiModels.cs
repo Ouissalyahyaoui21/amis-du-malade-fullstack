@@ -123,3 +123,49 @@ public class ApiIdResponse
 {
     public Guid Id { get; set; }
 }
+
+// ── Contribution ─────────────────────────────────────────────────────────────
+
+public class ContributionItem
+{
+    public Guid   Id              { get; set; }
+    public string ContributorName { get; set; } = "";
+    public string Phone           { get; set; } = "";
+    public string Type            { get; set; } = "Money"; // Money | Goods | Time
+    public string? Amount         { get; set; }
+    public string? Description    { get; set; }
+    public string? Message        { get; set; }
+    public string Status          { get; set; } = "Pending"; // Pending | Confirmed | Distributed
+    public DateTime CreatedAt     { get; set; }
+
+    public string TypeIcon => Type switch
+    {
+        "Goods" => "📦",
+        "Time"  => "⏰",
+        _       => "💵",
+    };
+    public string TypeLabel => Type switch
+    {
+        "Goods" => "عيني",
+        "Time"  => "وقت",
+        _       => "نقدي",
+    };
+    public string StatusLabel => Status switch
+    {
+        "Confirmed"   => "✅ مؤكد",
+        "Distributed" => "📤 موزَّع",
+        _             => "⏳ معلق",
+    };
+    public Color StatusColor => Status switch
+    {
+        "Confirmed"   => Color.FromArgb("#16a34a"),
+        "Distributed" => Color.FromArgb("#64748b"),
+        _             => Color.FromArgb("#b45309"),
+    };
+    public Color TypeColor => Type switch
+    {
+        "Goods" => Color.FromArgb("#1d4ed8"),
+        "Time"  => Color.FromArgb("#7c3aed"),
+        _       => Color.FromArgb("#15803d"),
+    };
+}

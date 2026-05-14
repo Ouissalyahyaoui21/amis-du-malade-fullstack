@@ -2,7 +2,8 @@
 <Application
     x:Class="AmisDuMaladeApp.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:AmisDuMaladeApp.Converters">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -13,6 +14,11 @@
             <Color x:Key="AppBg">#f2ede6</Color>
             <Color x:Key="Red">#dc2626</Color>
             <Color x:Key="Green">#16a34a</Color>
+
+            <!-- ── المحولات ──────────────────────────────────────────────── -->
+            <conv:IntToBoolConverter      x:Key="IntToBoolConverter"/>
+            <conv:FirstCharConverter      x:Key="FirstCharConverter"/>
+            <conv:StringNotEmptyConverter x:Key="StringNotEmptyConverter"/>
 
             <!-- ── أنماط مشتركة ──────────────────────────────────────────── -->
             <Style TargetType="Label">
