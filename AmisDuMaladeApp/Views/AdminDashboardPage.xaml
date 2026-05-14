@@ -357,12 +357,36 @@
         </ScrollView>
 
         <!-- ══ CONTENT AREA ══ -->
-        <ScrollView Grid.Row="2">
+        <RefreshView Grid.Row="2"
+                     Command="{Binding RefreshCurrentTabCommand}"
+                     IsRefreshing="{Binding IsBusy}">
+        <ScrollView>
             <VerticalStackLayout Spacing="0" Padding="0,0,0,24">
 
                 <!-- Loading indicator -->
                 <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
                                    Color="#1a3a5c" HeightRequest="48" Margin="0,20"/>
+
+                <!-- ══ ERROR BANNER ══ -->
+                <Border IsVisible="{Binding HasLoadError}"
+                        BackgroundColor="#fee2e2" StrokeThickness="0"
+                        Padding="14,12" Margin="16,8,16,0">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                        <Label Grid.Column="0" Text="⚠️" FontSize="20" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding LoadErrorMessage}"
+                               FontSize="12" TextColor="#991b1b"
+                               LineBreakMode="WordWrap" VerticalOptions="Center"/>
+                        <Border Grid.Column="2" BackgroundColor="#dc2626"
+                                StrokeThickness="0" Padding="10,7" VerticalOptions="Center">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding RefreshCurrentTabCommand}"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="إعادة المحاولة" FontSize="11" TextColor="White" FontAttributes="Bold"/>
+                        </Border>
+                    </Grid>
+                </Border>
 
                 <!-- ═══════════════════════════════════════════════════════════
                      TAB 1 — OVERVIEW
@@ -784,10 +808,20 @@
                                                 <Label Text="🌙 ليلي" FontSize="10" TextColor="#6d28d9"/>
                                             </Border>
                                         </HorizontalStackLayout>
-                                        <!-- الأزرار -->
-                                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
-                                            <!-- واتساب -->
-                                            <Border Grid.Column="0" BackgroundColor="#25d366"
+                                        <!-- الأزرار — صفان: [تفاصيل + واتساب] ثم [قبول + رفض] -->
+                                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8" Margin="0,0,0,6">
+                                            <Border Grid.Column="0" BackgroundColor="#e0f2fe"
+                                                    StrokeThickness="0" Padding="0,9">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ViewVolunteerCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Border.GestureRecognizers>
+                                                <Label Text="👁 التفاصيل" FontSize="11" FontAttributes="Bold"
+                                                       TextColor="#0369a1" HorizontalTextAlignment="Center"/>
+                                            </Border>
+                                            <Border Grid.Column="1" BackgroundColor="#25d366"
                                                     StrokeThickness="0" Padding="0,9">
                                                 <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
                                                 <Border.GestureRecognizers>
@@ -798,8 +832,9 @@
                                                 <Label Text="💬 واتساب" FontSize="11" FontAttributes="Bold"
                                                        TextColor="White" HorizontalTextAlignment="Center"/>
                                             </Border>
-                                            <!-- قبول -->
-                                            <Border Grid.Column="1" BackgroundColor="#16a34a"
+                                        </Grid>
+                                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                            <Border Grid.Column="0" BackgroundColor="#16a34a"
                                                     StrokeThickness="0" Padding="0,9">
                                                 <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
                                                 <Border.GestureRecognizers>
@@ -810,8 +845,7 @@
                                                 <Label Text="✓ قبول" FontSize="11" FontAttributes="Bold"
                                                        TextColor="White" HorizontalTextAlignment="Center"/>
                                             </Border>
-                                            <!-- رفض -->
-                                            <Border Grid.Column="2" BackgroundColor="#fee2e2"
+                                            <Border Grid.Column="1" BackgroundColor="#fee2e2"
                                                     StrokeThickness="0" Padding="0,9">
                                                 <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
                                                 <Border.GestureRecognizers>
@@ -932,6 +966,11 @@
                                             <Border BackgroundColor="#1a3a5c" StrokeThickness="0"
                                                     Padding="10,6" HorizontalOptions="End">
                                                 <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenAssignPopupCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Border.GestureRecognizers>
                                                 <Label Text="🤝 تعيين متطوع" FontSize="12"
                                                        TextColor="White" FontAttributes="Bold"/>
                                             </Border>
@@ -1318,6 +1357,105 @@
 
             </VerticalStackLayout>
         </ScrollView>
+        </RefreshView>
+
+        <!-- ══ ASSIGN VOLUNTEER POPUP ══ -->
+        <Grid Grid.RowSpan="3"
+              IsVisible="{Binding IsAssignPopupVisible}"
+              BackgroundColor="#80000000">
+            <Border BackgroundColor="White" StrokeThickness="0"
+                    Padding="0" Margin="16,60"
+                    VerticalOptions="Center" HorizontalOptions="Fill">
+                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                <VerticalStackLayout Spacing="0">
+
+                    <!-- Header -->
+                    <Grid BackgroundColor="#1a3a5c" Padding="18,16" ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="🤝 تعيين متطوع"
+                               FontSize="15" FontAttributes="Bold" TextColor="White"
+                               VerticalOptions="Center"/>
+                        <Border Grid.Column="1" BackgroundColor="#ffffff20" StrokeThickness="0"
+                                Padding="8,4">
+                            <Border.StrokeShape><Ellipse/></Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CloseAssignPopupCommand}"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="✕" FontSize="14" TextColor="White" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Request info -->
+                    <VerticalStackLayout Padding="16,12" Spacing="4"
+                                         BackgroundColor="#f0f4f8">
+                        <Label Text="الطلب:" FontSize="11" TextColor="#6b7280"/>
+                        <Label Text="{Binding SelectedRequest.RequesterName, StringFormat='طالب: {0}'}"
+                               FontSize="12" TextColor="#1a3a5c" FontAttributes="Bold"/>
+                        <Label Text="{Binding SelectedRequest.PatientName, StringFormat='مريض: {0}'}"
+                               FontSize="12" TextColor="#374151"/>
+                    </VerticalStackLayout>
+
+                    <!-- Loading suggestions -->
+                    <ActivityIndicator IsVisible="{Binding IsLoadingSuggestions}"
+                                       IsRunning="{Binding IsLoadingSuggestions}"
+                                       Color="#1a3a5c" HeightRequest="44" Margin="0,8"/>
+
+                    <!-- Suggestions list -->
+                    <CollectionView ItemsSource="{Binding Suggestions}"
+                                    MaximumHeightRequest="320"
+                                    Margin="0,0,0,0">
+                        <CollectionView.EmptyView>
+                            <Label Text="لا توجد مقترحات متاحة حالياً"
+                                   FontSize="13" TextColor="#9ca3af"
+                                   HorizontalTextAlignment="Center" Margin="0,20"/>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:VolunteerSuggestion">
+                                <Border BackgroundColor="White" StrokeThickness="0"
+                                        Padding="14,12" Margin="12,4">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                        <!-- نقاط التوافق -->
+                                        <Border Grid.Column="0" WidthRequest="46" HeightRequest="46"
+                                                BackgroundColor="#1a3a5c" StrokeThickness="0">
+                                            <Border.StrokeShape><Ellipse/></Border.StrokeShape>
+                                            <Label Text="{Binding MatchScore, StringFormat='{0:P0}'}"
+                                                   FontSize="10" FontAttributes="Bold" TextColor="White"
+                                                   HorizontalOptions="Center" VerticalOptions="Center"
+                                                   HorizontalTextAlignment="Center"/>
+                                        </Border>
+                                        <!-- بيانات المتطوع -->
+                                        <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                            <Label Text="{Binding FullName}" FontSize="13"
+                                                   FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                            <Label Text="{Binding Municipality, StringFormat='📍 {0}'}"
+                                                   FontSize="11" TextColor="#6b7280"/>
+                                        </VerticalStackLayout>
+                                        <!-- زر التعيين -->
+                                        <Border Grid.Column="2" BackgroundColor="#16a34a"
+                                                StrokeThickness="0" Padding="10,7" VerticalOptions="Center">
+                                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AssignVolunteerCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                            </Border.GestureRecognizers>
+                                            <Label Text="تعيين" FontSize="12" TextColor="White" FontAttributes="Bold"/>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <!-- Footer -->
+                    <Border BackgroundColor="#f8fafc" StrokeThickness="0" Padding="16,12">
+                        <Label Text="💡 مرتّبة حسب درجة التوافق مع الطلب"
+                               FontSize="11" TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
 
     </Grid>
 </ContentPage>

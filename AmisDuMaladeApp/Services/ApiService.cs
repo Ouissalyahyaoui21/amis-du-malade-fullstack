@@ -113,6 +113,19 @@ public class ApiService
         catch { return new(); }
     }
 
+    public async Task<bool> AssignVolunteerAsync(Guid requestId, Guid volunteerId)
+    {
+        SetAuthHeader();
+        try
+        {
+            var response = await _http.PostAsJsonAsync(
+                ApiEndpoints.Assignments,
+                new { CareRequestId = requestId, VolunteerId = volunteerId });
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
     // ── Patient ───────────────────────────────────────────────────────────────
 
     public async Task<List<PatientResponse>> GetPatientsAsync()

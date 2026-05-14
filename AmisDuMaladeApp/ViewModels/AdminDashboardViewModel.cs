@@ -25,6 +25,10 @@ public partial class AdminDashboardViewModel : BaseViewModel
     [ObservableProperty] private int statContributions;
     [ObservableProperty] private int statPendingContributions;
 
+    // ── Error state ───────────────────────────────────────────────────────────
+    [ObservableProperty] private bool   hasLoadError;
+    [ObservableProperty] private string loadErrorMessage = "";
+
     // ── Collections ────────────────────────────────────────────────────────────
     public ObservableCollection<AlertResponse>       OpenAlertsList    { get; } = new();
     public ObservableCollection<ActivityItem>        RecentActivities  { get; } = new();
@@ -44,6 +48,17 @@ public partial class AdminDashboardViewModel : BaseViewModel
         VolunteerFilter == "All"
             ? AllVolunteers
             : AllVolunteers.Where(v => v.Status == VolunteerFilter);
+
+    // ── Assign volunteer popup ─────────────────────────────────────────────────
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsAssignPopupVisible))]
+    private CareRequestListItem? selectedRequest;
+
+    public bool IsAssignPopupVisible => SelectedRequest != null;
+
+    public ObservableCollection<VolunteerSuggestion> Suggestions { get; } = new();
+
+    [ObservableProperty] private bool isLoadingSuggestions;
 
     // ── Active tab ─────────────────────────────────────────────────────────────
     [ObservableProperty]
@@ -79,11 +94,12 @@ public partial class AdminDashboardViewModel : BaseViewModel
         _auth = auth;
     }
 
-    // ── Initial load (overview data) ──────────────────────────────────────────
+    // ── Initial load ──────────────────────────────────────────────────────────
     [RelayCommand]
     public async Task LoadDataAsync()
     {
-        IsBusy = true;
+        IsBusy       = true;
+        HasLoadError = false;
         try
         {
             await Task.WhenAll(
@@ -95,6 +111,32 @@ public partial class AdminDashboardViewModel : BaseViewModel
         finally { IsBusy = false; }
     }
 
+    // ── Pull-to-refresh per tab ───────────────────────────────────────────────
+    [RelayCommand]
+    private async Task RefreshCurrentTabAsync()
+    {
+        HasLoadError = false;
+        try
+        {
+            await (ActiveTab switch
+            {
+                "overview"      => Task.WhenAll(LoadOverviewAsync(), LoadVolunteersAsync(), LoadRequestsAsync()),
+                "volunteers"    => LoadVolunteersAsync(),
+                "newrequests"   => LoadRequestsAsync(),
+                "requests"      => LoadRequestsAsync(),
+                "patients"      => LoadPatientsAsync(),
+                "alerts"        => LoadOverviewAsync(),
+                "contributions" => LoadContributionsAsync(),
+                _               => Task.CompletedTask
+            });
+        }
+        catch
+        {
+            HasLoadError      = true;
+            LoadErrorMessage  = "تعذّر الاتصال بالخادم. تحقق من الإنترنت وأعد المحاولة.";
+        }
+    }
+
     private async Task LoadOverviewAsync()
     {
         try
@@ -102,14 +144,14 @@ public partial class AdminDashboardViewModel : BaseViewModel
             var dash = await _api.GetDashboardAsync();
             if (dash != null)
             {
-                StatVolunteers         = dash.TotalVolunteers;
-                StatActiveVolunteers   = dash.ActiveVolunteers;
-                StatPendingVolunteers  = dash.PendingVolunteers;
-                StatPatients           = dash.TotalPatients;
-                StatRequests           = dash.TotalCareRequests;
-                StatPendingRequests    = dash.PendingRequests;
-                StatAssignments        = dash.ActiveAssignments;
-                StatAlerts             = dash.OpenAlerts;
+                StatVolunteers           = dash.TotalVolunteers;
+                StatActiveVolunteers     = dash.ActiveVolunteers;
+                StatPendingVolunteers    = dash.PendingVolunteers;
+                StatPatients             = dash.TotalPatients;
+                StatRequests             = dash.TotalCareRequests;
+                StatPendingRequests      = dash.PendingRequests;
+                StatAssignments          = dash.ActiveAssignments;
+                StatAlerts               = dash.OpenAlerts;
                 StatNewVolunteersMonth   = dash.NewVolunteersThisMonth;
                 StatNewRequestsMonth     = dash.NewRequestsThisMonth;
                 StatContributions        = dash.TotalContributions;
@@ -124,7 +166,11 @@ public partial class AdminDashboardViewModel : BaseViewModel
             foreach (var a in alerts) OpenAlertsList.Add(a);
             StatAlerts = OpenAlertsList.Count;
         }
-        catch { /* graceful offline */ }
+        catch
+        {
+            HasLoadError     = true;
+            LoadErrorMessage = "تعذّر تحميل بيانات لوحة التحكم. تحقق من اتصالك.";
+        }
     }
 
     private async Task LoadVolunteersAsync()
@@ -141,7 +187,11 @@ public partial class AdminDashboardViewModel : BaseViewModel
             }
             OnPropertyChanged(nameof(FilteredVolunteers));
         }
-        catch { }
+        catch
+        {
+            HasLoadError     = true;
+            LoadErrorMessage = "تعذّر تحميل قائمة المتطوعين.";
+        }
     }
 
     private async Task LoadRequestsAsync()
@@ -157,7 +207,11 @@ public partial class AdminDashboardViewModel : BaseViewModel
                 if (r.Status == "Pending") NewRequests.Add(r);
             }
         }
-        catch { }
+        catch
+        {
+            HasLoadError     = true;
+            LoadErrorMessage = "تعذّر تحميل طلبات الرعاية.";
+        }
     }
 
     private async Task LoadPatientsAsync()
@@ -168,7 +222,11 @@ public partial class AdminDashboardViewModel : BaseViewModel
             PatientsList.Clear();
             foreach (var p in list) PatientsList.Add(p);
         }
-        catch { }
+        catch
+        {
+            HasLoadError     = true;
+            LoadErrorMessage = "تعذّر تحميل قائمة المرضى.";
+        }
     }
 
     private async Task LoadContributionsAsync()
@@ -181,7 +239,11 @@ public partial class AdminDashboardViewModel : BaseViewModel
             StatContributions        = ContributionsList.Count;
             StatPendingContributions = ContributionsList.Count(c => c.Status == "Pending");
         }
-        catch { }
+        catch
+        {
+            HasLoadError     = true;
+            LoadErrorMessage = "تعذّر تحميل المساهمات.";
+        }
     }
 
     // ── Tab switching with lazy load ───────────────────────────────────────────
@@ -199,10 +261,44 @@ public partial class AdminDashboardViewModel : BaseViewModel
 
     // ── Volunteer filter ───────────────────────────────────────────────────────
     [RelayCommand]
-    private void FilterVolunteers(string filter)
+    private void FilterVolunteers(string filter) => VolunteerFilter = filter;
+
+    // ── Assign volunteer popup ─────────────────────────────────────────────────
+    [RelayCommand]
+    private async Task OpenAssignPopupAsync(CareRequestListItem request)
     {
-        VolunteerFilter = filter;
+        SelectedRequest      = request;
+        IsLoadingSuggestions = true;
+        Suggestions.Clear();
+        try
+        {
+            var list = await _api.GetSuggestionsAsync(request.Id);
+            foreach (var s in list) Suggestions.Add(s);
+        }
+        catch { }
+        finally { IsLoadingSuggestions = false; }
     }
+
+    [RelayCommand]
+    private void CloseAssignPopup() => SelectedRequest = null;
+
+    [RelayCommand]
+    private async Task AssignVolunteerAsync(VolunteerSuggestion suggestion)
+    {
+        if (SelectedRequest == null) return;
+        var ok = await _api.AssignVolunteerAsync(SelectedRequest.Id, suggestion.VolunteerId);
+        if (ok)
+        {
+            var req = NewRequests.FirstOrDefault(r => r.Id == SelectedRequest.Id);
+            if (req != null) { req.Status = "Active"; NewRequests.Remove(req); }
+            SelectedRequest = null;
+        }
+    }
+
+    // ── Volunteer detail navigation ────────────────────────────────────────────
+    [RelayCommand]
+    private async Task ViewVolunteerAsync(VolunteerResponse v) =>
+        await Shell.Current.GoToAsync($"VolunteerDetailPage?volunteerId={v.Id}");
 
     // ── WhatsApp ───────────────────────────────────────────────────────────────
     [RelayCommand]
@@ -256,7 +352,6 @@ public partial class AdminDashboardViewModel : BaseViewModel
         {
             c.Status = "Confirmed";
             StatPendingContributions = Math.Max(0, StatPendingContributions - 1);
-            // Force CollectionView to re-render the item
             var idx = ContributionsList.IndexOf(c);
             if (idx >= 0) { ContributionsList.RemoveAt(idx); ContributionsList.Insert(idx, c); }
         }

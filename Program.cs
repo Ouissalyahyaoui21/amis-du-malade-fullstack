@@ -53,11 +53,27 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// ── تأكد من إنشاء جداول قاعدة البيانات تلقائياً ──────────────────────────
+// ── تأكد من إنشاء جداول قاعدة البيانات تلقائياً + Seed بيانات الإدارة ─────
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AmisduMalade.Data.AppDbContext>();
     db.Database.EnsureCreated();
+
+    // Seed مستخدم الإدارة الافتراضي إذا لم يكن موجوداً
+    if (!db.Users.Any(u => u.Email == "admin@amisdumalade.dz"))
+    {
+        db.Users.Add(new AmisduMalade.Models.User
+        {
+            Id           = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+            FullName     = "مدير الجمعية",
+            Email        = "admin@amisdumalade.dz",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin2024!"),
+            Role         = "Admin",
+            IsActive     = true,
+            CreatedAt    = DateTime.UtcNow
+        });
+        db.SaveChanges();
+    }
 }
 
 app.UseCors("AllowAll");
