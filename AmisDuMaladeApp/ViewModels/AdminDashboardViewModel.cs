@@ -204,7 +204,7 @@ public partial class AdminDashboardViewModel : BaseViewModel
             foreach (var r in list)
             {
                 AllRequests.Add(r);
-                if (r.Status == "Pending") NewRequests.Add(r);
+                if (r.Status == "New") NewRequests.Add(r);
             }
         }
         catch
@@ -290,7 +290,7 @@ public partial class AdminDashboardViewModel : BaseViewModel
         if (ok)
         {
             var req = NewRequests.FirstOrDefault(r => r.Id == SelectedRequest.Id);
-            if (req != null) { req.Status = "Active"; NewRequests.Remove(req); }
+            if (req != null) { req.Status = "Assigned"; NewRequests.Remove(req); }
             SelectedRequest = null;
         }
     }
@@ -323,9 +323,9 @@ public partial class AdminDashboardViewModel : BaseViewModel
     [RelayCommand]
     private async Task ApproveVolunteerAsync(VolunteerResponse v)
     {
-        if (await _api.UpdateVolunteerStatusAsync(v.Id, "Active"))
+        if (await _api.UpdateVolunteerStatusAsync(v.Id, "Approved"))
         {
-            v.Status = "Active";
+            v.Status = "Approved";
             PendingVolunteers.Remove(v);
             StatPendingVolunteers = Math.Max(0, StatPendingVolunteers - 1);
             StatActiveVolunteers++;

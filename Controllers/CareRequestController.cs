@@ -12,12 +12,24 @@ namespace AmisduMalade.Controllers
         private readonly ICareRequestService _service;
         public CareRequestController(ICareRequestService service) { _service = service; }
 
-        // مفتوح - العائلة ترسل طلب
+        // مفتوح — الموبايل يرسل بيانات المريض + الطلب مباشرة
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateCareRequestVM vm)
+        public async Task<IActionResult> CreatePublic([FromBody] CreateCareRequestPublicVM vm)
+        {
+            if (string.IsNullOrWhiteSpace(vm.PatientName) || string.IsNullOrWhiteSpace(vm.RequesterPhone))
+                return BadRequest(new { message = "اسم المريض ورقم الهاتف مطلوبان" });
+
+            var result = await _service.CreatePublicAsync(vm);
+            return Ok(new { message = "تم إرسال الطلب بنجاح", id = result.Id, referenceNumber = result.ReferenceNumber });
+        }
+
+        // مفتوح (Admin) — إنشاء طلب داخلي مع PatientId موجود
+        [Authorize]
+        [HttpPost("admin")]
+        public async Task<IActionResult> CreateInternal([FromBody] CreateCareRequestVM vm)
         {
             var result = await _service.CreateAsync(vm);
-            return Ok(new { message = "تم إرسال الطلب بنجاح", id = result.Id });
+            return Ok(new { message = "تم إنشاء الطلب", id = result.Id });
         }
 
         [Authorize]
@@ -25,7 +37,18 @@ namespace AmisduMalade.Controllers
         public async Task<IActionResult> GetAll()
         {
             var list = await _service.GetAllAsync();
-            return Ok(list);
+            // تحويل إلى نموذج مبسط للموبايل
+            var result = list.Select(r => new
+            {
+                id           = r.Id,
+                requesterName = r.Patient.Contacts.FirstOrDefault(c => c.IsPrimaryContact)?.FullName ?? r.Patient.FullName,
+                patientName  = r.Patient.FullName,
+                status       = r.Status,
+                priority     = r.PriorityLevel,
+                municipality = r.Municipality,
+                createdAt    = r.CreatedAt
+            });
+            return Ok(result);
         }
 
         [Authorize]

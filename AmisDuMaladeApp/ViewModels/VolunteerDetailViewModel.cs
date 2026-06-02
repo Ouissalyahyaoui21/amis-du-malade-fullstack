@@ -13,25 +13,28 @@ public partial class VolunteerDetailViewModel : BaseViewModel
     [ObservableProperty] private string volunteerId = "";
     [ObservableProperty] private VolunteerResponse? volunteer;
 
-    // computed display helpers
     public string StatusLabel => Volunteer?.Status switch
     {
-        "Active"   => "✓ نشط",
-        "Pending"  => "⏳ معلق",
-        "Rejected" => "✗ مرفوض",
-        _          => Volunteer?.Status ?? ""
+        "Approved"  => "✓ نشط ومعتمد",
+        "Pending"   => "⏳ معلق",
+        "Rejected"  => "✗ مرفوض",
+        "Interview" => "📋 مقابلة",
+        "Suspended" => "⛔ موقوف",
+        _           => Volunteer?.Status ?? ""
     };
     public Color StatusColor => Volunteer?.Status switch
     {
-        "Active"   => Color.FromArgb("#16a34a"),
-        "Rejected" => Color.FromArgb("#dc2626"),
-        _          => Color.FromArgb("#b45309")
+        "Approved"  => Color.FromArgb("#16a34a"),
+        "Rejected"  => Color.FromArgb("#dc2626"),
+        "Suspended" => Color.FromArgb("#dc2626"),
+        _           => Color.FromArgb("#b45309")
     };
     public Color StatusBg => Volunteer?.Status switch
     {
-        "Active"   => Color.FromArgb("#dcfce7"),
-        "Rejected" => Color.FromArgb("#fee2e2"),
-        _          => Color.FromArgb("#fef3c7")
+        "Approved"  => Color.FromArgb("#dcfce7"),
+        "Rejected"  => Color.FromArgb("#fee2e2"),
+        "Suspended" => Color.FromArgb("#fee2e2"),
+        _           => Color.FromArgb("#fef3c7")
     };
 
     public VolunteerDetailViewModel(ApiService api, LocalizationService loc) : base(loc)
@@ -74,9 +77,9 @@ public partial class VolunteerDetailViewModel : BaseViewModel
     private async Task ApproveAsync()
     {
         if (Volunteer == null) return;
-        if (await _api.UpdateVolunteerStatusAsync(Volunteer.Id, "Active"))
+        if (await _api.UpdateVolunteerStatusAsync(Volunteer.Id, "Approved"))
         {
-            Volunteer.Status = "Active";
+            Volunteer.Status = "Approved";
             OnPropertyChanged(nameof(Volunteer));
             OnPropertyChanged(nameof(StatusLabel));
             OnPropertyChanged(nameof(StatusColor));

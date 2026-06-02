@@ -12,7 +12,7 @@ namespace AmisduMalade.Controllers
         private readonly IVolunteerService _service;
         public VolunteerController(IVolunteerService service) { _service = service; }
 
-        // مفتوح - الموبايل يسجل
+        // مفتوح — الموبايل يسجل مباشرة
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] VolunteerRegisterVM vm)
         {
@@ -25,7 +25,23 @@ namespace AmisduMalade.Controllers
         public async Task<IActionResult> GetAll()
         {
             var list = await _service.GetAllAsync();
-            return Ok(list);
+            // تحويل إلى DTO مبسط متوافق مع الموبايل
+            var result = list.Select(v => new
+            {
+                id                = v.Id,
+                fullName          = v.FullName,
+                phone             = v.Phone,
+                email             = v.Email,
+                municipality      = v.Municipality,
+                volunteerCategory = v.VolunteerCategory,
+                status            = v.Status,
+                canHomeVisit      = v.CanHomeVisit,
+                canHospitalVisit  = v.CanHospitalVisit,
+                canNightPresence  = v.CanNightPresence,
+                hasTransportation = v.HasTransportation,
+                createdAt         = v.CreatedAt
+            });
+            return Ok(result);
         }
 
         [Authorize]
@@ -34,13 +50,32 @@ namespace AmisduMalade.Controllers
         {
             var v = await _service.GetByIdAsync(id);
             if (v == null) return NotFound(new { message = "المتطوع غير موجود" });
-            return Ok(v);
+            return Ok(new
+            {
+                id                = v.Id,
+                fullName          = v.FullName,
+                phone             = v.Phone,
+                email             = v.Email,
+                municipality      = v.Municipality,
+                volunteerCategory = v.VolunteerCategory,
+                status            = v.Status,
+                canHomeVisit      = v.CanHomeVisit,
+                canHospitalVisit  = v.CanHospitalVisit,
+                canNightPresence  = v.CanNightPresence,
+                hasTransportation = v.HasTransportation,
+                createdAt         = v.CreatedAt
+            });
         }
 
         [Authorize]
         [HttpPut("{id}/status")]
         public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateVolunteerStatusVM vm)
         {
+            // التحقق من القيمة قبل الحفظ
+            var validStatuses = new[] { "Pending", "Interview", "Approved", "Rejected", "Suspended" };
+            if (!validStatuses.Contains(vm.Status))
+                return BadRequest(new { message = "قيمة الحالة غير صالحة" });
+
             var result = await _service.UpdateStatusAsync(id, vm.Status);
             if (!result) return NotFound(new { message = "المتطوع غير موجود" });
             return Ok(new { message = "تم تحديث الحالة" });

@@ -235,21 +235,61 @@ public partial class CareRequestViewModel : BaseViewModel
         IsBusy = true;
         try
         {
-            // TODO: send to API
-            await Task.Delay(800);
-            ReferenceNumber = $"#{DateTime.Now:yyyy}-{Random.Shared.Next(1000, 9999)}";
-            IsSuccess = true;
-            NotifyStep();
-            OnPropertyChanged(nameof(IsSuccess));
-            OnPropertyChanged(nameof(ShowSingleNav));
-            OnPropertyChanged(nameof(ShowDoubleNav));
-            OnPropertyChanged(nameof(ShowSubmitNav));
-            OnPropertyChanged(nameof(HasInsurance));
-            OnPropertyChanged(nameof(SummaryRequester));
-            OnPropertyChanged(nameof(SummaryPatient));
-            OnPropertyChanged(nameof(SummaryInsurance));
-            OnPropertyChanged(nameof(SummaryLocation));
-            OnPropertyChanged(nameof(SummaryDuration));
+            // تحويل مفاتيح الموقع إلى نص
+            var locationKey  = Locations.FirstOrDefault(l => l.IsSelected)?.Key ?? "home";
+            var relationKey  = Relations.FirstOrDefault(r => r.IsSelected)?.Key ?? "";
+            var healthKeys   = HealthConditions.Where(h => h.IsSelected).Select(h => h.Key).ToList();
+            var qualKeys     = RequiredQualifications.Where(q => q.IsSelected).Select(q => q.Key).ToList();
+
+            // تجميع الملاحظات الطبية
+            var healthLabels = HealthConditions.Where(h => h.IsSelected)
+                                               .Select(h => h.Label).ToList();
+            var medicalSummary = healthLabels.Any()
+                ? string.Join("، ", healthLabels)
+                : null;
+
+            var payload = new CareRequestPublicPayload
+            {
+                PatientName           = PatientName,
+                PatientAge            = int.TryParse(PatientAge, out var age) ? age : null,
+                PatientGender         = PatientGender,
+                PatientMunicipality   = CityDistrict,
+                RequesterName         = RequesterName,
+                RequesterPhone        = RequesterPhone,
+                RequesterRelation     = relationKey,
+                CareLocationType      = locationKey,
+                Municipality          = CityDistrict,
+                RequestedStartDate    = StartDate,
+                NeedsNightPresence    = NeedsNightPresence,
+                NeedsTransportSupport = qualKeys.Contains("transport"),
+                PriorityLevel         = "Normal",
+                MedicalSummary        = medicalSummary,
+                SupportSummary        = string.IsNullOrWhiteSpace(CompanionNotes) ? null : CompanionNotes,
+                RequiredSkillNames    = qualKeys,
+            };
+
+            var (success, refNum, error) = await _api.SubmitCareRequestAsync(payload);
+
+            if (success)
+            {
+                ReferenceNumber = refNum ?? "—";
+                IsSuccess = true;
+                NotifyStep();
+                OnPropertyChanged(nameof(IsSuccess));
+                OnPropertyChanged(nameof(ShowSingleNav));
+                OnPropertyChanged(nameof(ShowDoubleNav));
+                OnPropertyChanged(nameof(ShowSubmitNav));
+                OnPropertyChanged(nameof(HasInsurance));
+                OnPropertyChanged(nameof(SummaryRequester));
+                OnPropertyChanged(nameof(SummaryPatient));
+                OnPropertyChanged(nameof(SummaryInsurance));
+                OnPropertyChanged(nameof(SummaryLocation));
+                OnPropertyChanged(nameof(SummaryDuration));
+            }
+            else
+            {
+                await ShowErrorAsync("فشل إرسال الطلب. تحقق من الاتصال وأعد المحاولة.");
+            }
         }
         finally { IsBusy = false; }
     }

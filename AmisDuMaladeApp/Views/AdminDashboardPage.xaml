@@ -622,7 +622,7 @@
                                     <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="All">
                                         <Setter Property="BackgroundColor" Value="#1a3a5c"/>
                                     </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Active">
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Approved">
                                         <Setter Property="BackgroundColor" Value="White"/>
                                     </DataTrigger>
                                     <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Pending">
@@ -637,7 +637,7 @@
                                         <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="All">
                                             <Setter Property="TextColor" Value="White"/>
                                         </DataTrigger>
-                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Active">
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Approved">
                                             <Setter Property="TextColor" Value="#6b7280"/>
                                         </DataTrigger>
                                         <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Pending">
@@ -652,10 +652,10 @@
                             <Border Padding="12,7" StrokeThickness="0">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
                                 <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding FilterVolunteersCommand}" CommandParameter="Active"/>
+                                    <TapGestureRecognizer Command="{Binding FilterVolunteersCommand}" CommandParameter="Approved"/>
                                 </Border.GestureRecognizers>
                                 <Border.Triggers>
-                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Active">
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Approved">
                                         <Setter Property="BackgroundColor" Value="#16a34a"/>
                                     </DataTrigger>
                                     <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="All">
@@ -670,7 +670,7 @@
                                 </Border.Triggers>
                                 <Label Text="✓ نشط" FontSize="12" FontAttributes="Bold">
                                     <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Active">
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Approved">
                                             <Setter Property="TextColor" Value="White"/>
                                         </DataTrigger>
                                         <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="All">
@@ -697,7 +697,7 @@
                                     <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="All">
                                         <Setter Property="BackgroundColor" Value="White"/>
                                     </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Active">
+                                    <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Approved">
                                         <Setter Property="BackgroundColor" Value="White"/>
                                     </DataTrigger>
                                     <DataTrigger TargetType="Border" Binding="{Binding VolunteerFilter}" Value="Rejected">
@@ -712,7 +712,7 @@
                                         <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="All">
                                             <Setter Property="TextColor" Value="#6b7280"/>
                                         </DataTrigger>
-                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Active">
+                                        <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Approved">
                                             <Setter Property="TextColor" Value="#6b7280"/>
                                         </DataTrigger>
                                         <DataTrigger TargetType="Label" Binding="{Binding VolunteerFilter}" Value="Rejected">
@@ -743,7 +743,7 @@
                                             <Border Grid.Column="1" StrokeThickness="0" Padding="8,3">
                                                 <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
                                                 <Border.Triggers>
-                                                    <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Active">
+                                                    <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Approved">
                                                         <Setter Property="BackgroundColor" Value="#dcfce7"/>
                                                     </DataTrigger>
                                                     <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Pending">
@@ -755,7 +755,7 @@
                                                 </Border.Triggers>
                                                 <Label Text="{Binding Status}" FontSize="11" FontAttributes="Bold">
                                                     <Label.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Active">
+                                                        <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Approved">
                                                             <Setter Property="TextColor" Value="#15803d"/>
                                                         </DataTrigger>
                                                         <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Pending">
@@ -1019,7 +1019,7 @@
                                                 <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Pending">
                                                     <Setter Property="BackgroundColor" Value="#fef3c7"/>
                                                 </DataTrigger>
-                                                <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Active">
+                                                <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Approved">
                                                     <Setter Property="BackgroundColor" Value="#dcfce7"/>
                                                 </DataTrigger>
                                                 <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Completed">
@@ -1031,7 +1031,7 @@
                                                     <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Pending">
                                                         <Setter Property="TextColor" Value="#b45309"/>
                                                     </DataTrigger>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Active">
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Approved">
                                                         <Setter Property="TextColor" Value="#15803d"/>
                                                     </DataTrigger>
                                                     <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Completed">

@@ -12,7 +12,7 @@ This is a **complete full-stack project** consisting of two parts:
 
 | Part | Technology | Description |
 |---|---|---|
-| **Backend** | ASP.NET Core 8 + PostgreSQL | REST API with JWT authentication |
+| **Backend** | ASP.NET Core **10** + PostgreSQL | REST API with JWT authentication |
 | **Mobile App** | .NET MAUI (Android / iOS) | Cross-platform mobile application |
 
 ---
@@ -374,10 +374,10 @@ amis-du-malade-backend/
 
 | Technology | Version | Usage |
 |---|---|---|
-| ASP.NET Core | 8.0 | REST API framework |
-| Entity Framework Core | 8.0 | ORM + PostgreSQL driver |
+| ASP.NET Core | **10.0** | REST API framework |
+| Entity Framework Core | **10.0** | ORM + PostgreSQL driver |
 | BCrypt.Net-Next | 4.1 | Secure password hashing |
-| JWT Bearer | 8.0 | Stateless authentication |
+| JWT Bearer | **10.0** | Stateless authentication |
 | .NET MAUI | 10.0 | Cross-platform mobile |
 | CommunityToolkit.Mvvm | 8.3 | MVVM + source generators |
 | PostgreSQL | 14+ | Relational database |

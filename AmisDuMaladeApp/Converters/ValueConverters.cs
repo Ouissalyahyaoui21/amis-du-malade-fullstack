@@ -41,3 +41,6 @@ public class InverseBoolConverter : IValueConverter
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         => value is bool b && !b;
 }
+
+// Alias — بعض الـ XAML يستخدم هذا الاسم
+public class InvertBoolConverter : InverseBoolConverter { }

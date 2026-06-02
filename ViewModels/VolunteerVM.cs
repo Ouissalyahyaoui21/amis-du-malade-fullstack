@@ -26,7 +26,7 @@ namespace AmisduMalade.ViewModels
 
     public class VolunteerSkillVM
     {
-        public Guid SkillId { get; set; }
+        public string SkillName { get; set; } = "";  // e.g. "patient_care", "transport"
         public string? Level { get; set; }
     }
 

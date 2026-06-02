@@ -31,12 +31,19 @@ namespace AmisduMalade.Services
                 Status = "Pending"
             };
 
-            // إضافة المهارات
-            foreach (var s in vm.Skills)
+            // إضافة المهارات — إيجاد أو إنشاء Skill بالاسم
+            foreach (var s in vm.Skills.Where(x => !string.IsNullOrWhiteSpace(x.SkillName)))
             {
+                var skill = await _db.Skills.FirstOrDefaultAsync(sk => sk.Name == s.SkillName);
+                if (skill == null)
+                {
+                    skill = new Skill { Name = s.SkillName };
+                    _db.Skills.Add(skill);
+                    await _db.SaveChangesAsync();
+                }
                 volunteer.Skills.Add(new VolunteerSkill
                 {
-                    SkillId = s.SkillId,
+                    SkillId = skill.Id,
                     Level = s.Level
                 });
             }

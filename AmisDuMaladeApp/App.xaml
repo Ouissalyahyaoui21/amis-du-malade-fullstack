@@ -20,6 +20,7 @@
             <conv:FirstCharConverter      x:Key="FirstCharConverter"/>
             <conv:StringNotEmptyConverter x:Key="StringNotEmptyConverter"/>
             <conv:InverseBoolConverter    x:Key="InverseBoolConverter"/>
+            <conv:InvertBoolConverter     x:Key="InvertBool"/>
 
             <!-- ── أنماط مشتركة ──────────────────────────────────────────── -->
             <Style TargetType="Label">

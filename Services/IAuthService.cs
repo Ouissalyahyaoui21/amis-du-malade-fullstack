@@ -4,7 +4,7 @@ namespace AmisduMalade.Services
 {
     public interface IAuthService
     {
-        Task<string?> LoginAsync(LoginVM vm);
+        Task<(string? Token, string? Error)> LoginAsync(LoginVM vm);
         Task<bool> RegisterAsync(RegisterUserVM vm);
     }
 }

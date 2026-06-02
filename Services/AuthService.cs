@@ -20,16 +20,48 @@ namespace AmisduMalade.Services
             _config = config;
         }
 
-        public async Task<string?> LoginAsync(LoginVM vm)
+        public async Task<(string? Token, string? Error)> LoginAsync(LoginVM vm)
         {
             var user = await _db.Users
                 .FirstOrDefaultAsync(u => u.Email == vm.Email);
-            if (user == null) return null;
+            if (user == null)
+                return (null, "البريد أو كلمة المرور غير صحيحة");
+
+            // Account lockout check
+            if (user.LockoutUntil.HasValue && user.LockoutUntil.Value > DateTime.UtcNow)
+            {
+                var remaining = (int)(user.LockoutUntil.Value - DateTime.UtcNow).TotalMinutes + 1;
+                return (null, $"الحساب مقفل. حاول مرة أخرى بعد {remaining} دقيقة");
+            }
 
             bool valid = BCrypt.Net.BCrypt.Verify(vm.Password, user.PasswordHash);
-            if (!valid) return null;
+            if (!valid)
+            {
+                user.FailedLoginAttempts++;
+                if (user.FailedLoginAttempts >= 5)
+                {
+                    user.LockoutUntil = DateTime.UtcNow.AddMinutes(15);
+                    user.FailedLoginAttempts = 0;
+                    _db.AuditLogs.Add(new AuditLog { UserId = user.Id, Action = "ACCOUNT_LOCKED", EntityName = "User", EntityId = user.Id });
+                }
+                else
+                {
+                    _db.AuditLogs.Add(new AuditLog { UserId = user.Id, Action = "LOGIN_FAILED", EntityName = "User", EntityId = user.Id });
+                }
+                await _db.SaveChangesAsync();
+                return (null, "البريد أو كلمة المرور غير صحيحة");
+            }
 
-            return GenerateToken(user);
+            if (!user.IsActive)
+                return (null, "هذا الحساب موقوف. تواصل مع المسؤول");
+
+            // Reset failed attempts on successful login + log it
+            user.FailedLoginAttempts = 0;
+            user.LockoutUntil = null;
+            _db.AuditLogs.Add(new AuditLog { UserId = user.Id, Action = "LOGIN_SUCCESS", EntityName = "User", EntityId = user.Id });
+            await _db.SaveChangesAsync();
+
+            return (GenerateToken(user), null);
         }
 
         public async Task<bool> RegisterAsync(RegisterUserVM vm)

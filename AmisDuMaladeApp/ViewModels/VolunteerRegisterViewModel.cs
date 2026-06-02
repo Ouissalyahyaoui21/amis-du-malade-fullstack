@@ -278,17 +278,28 @@ public partial class VolunteerRegisterViewModel : BaseViewModel
             var availabilities = BuildAvailabilities();
             var skills = Skills
                 .Where(s => s.IsSelected)
-                .Select(s => new VolunteerSkillRequest { Level = s.Key })
+                .Select(s => new VolunteerSkillRequest { SkillName = s.Key })
                 .ToList();
+
+            // استنتاج القدرات من المهارات المختارة والوقت
+            bool hasTransport   = Skills.FirstOrDefault(s => s.Key == "transport")?.IsSelected ?? false;
+            bool canNight       = Slot1820;  // متاح مساءً = يقدر حضور ليلي
 
             var request = new VolunteerRegisterRequest
             {
-                FullName          = FullName,
-                Phone             = Phone,
-                Municipality      = Municipality,
-                VolunteerCategory = Profession,
-                Skills            = skills,
-                Availabilities    = availabilities,
+                FullName           = FullName,
+                Phone              = Phone,
+                Municipality       = Municipality,
+                VolunteerCategory  = Profession,
+                CanHomeVisit       = true,
+                CanHospitalVisit   = Skills.FirstOrDefault(s => s.Key == "patient_care")?.IsSelected ?? false,
+                CanNightPresence   = canNight,
+                HasTransportation  = hasTransport,
+                Skills             = skills,
+                Availabilities     = availabilities,
+                CoverageAreas      = string.IsNullOrWhiteSpace(Municipality)
+                                         ? new()
+                                         : new List<string> { Municipality },
             };
 
             var (success, _) = await _api.RegisterVolunteerAsync(request);

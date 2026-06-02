@@ -11,6 +11,8 @@ namespace AmisduMalade.Models
         public string Role { get; set; } = "Admin";
         // Admin / Coordinator
         public bool IsActive { get; set; } = true;
+        public int FailedLoginAttempts { get; set; } = 0;
+        public DateTime? LockoutUntil { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

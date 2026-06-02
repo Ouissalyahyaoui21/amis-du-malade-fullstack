@@ -70,7 +70,7 @@ public class ApiService
 
     // ── Care Request ──────────────────────────────────────────────────────────
 
-    public async Task<(bool Success, string? ReferenceNumber, string? Error)> SubmitCareRequestAsync(CareRequestPayload payload)
+    public async Task<(bool Success, string? ReferenceNumber, string? Error)> SubmitCareRequestAsync(CareRequestPublicPayload payload)
     {
         try
         {
@@ -106,7 +106,7 @@ public class ApiService
         SetAuthHeader();
         try
         {
-            var response = await _http.GetFromJsonAsync<SuggestionsResponse>(
+            var response = await _http.GetFromJsonAsync<SuggestionsApiResponse>(
                 ApiEndpoints.CareRequestSuggestions(requestId));
             return response?.Suggestions ?? new();
         }

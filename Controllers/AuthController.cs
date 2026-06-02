@@ -1,5 +1,6 @@
 using AmisduMalade.Services;
 using AmisduMalade.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmisduMalade.Controllers
@@ -14,12 +15,14 @@ namespace AmisduMalade.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginVM vm)
         {
-            var token = await _service.LoginAsync(vm);
+            var (token, error) = await _service.LoginAsync(vm);
             if (token == null)
-                return Unauthorized(new { message = "البريد أو كلمة المرور غير صحيحة" });
+                return Unauthorized(new { message = error });
             return Ok(new { message = "تم تسجيل الدخول", token });
         }
 
+        // محمي — فقط أدمن يقدر يصنع حساب جديد
+        [Authorize(Roles = "Admin")]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserVM vm)
         {

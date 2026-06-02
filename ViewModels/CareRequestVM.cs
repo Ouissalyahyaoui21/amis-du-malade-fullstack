@@ -28,4 +28,42 @@ namespace AmisduMalade.ViewModels
         public string? RequiredLevel { get; set; }
         public bool Mandatory { get; set; } = true;
     }
+
+    // نموذج مخصص للموبايل — يقبل بيانات المريض والطالب مباشرة
+    public class CreateCareRequestPublicVM
+    {
+        // معلومات المريض (يُنشأ تلقائياً)
+        public string PatientName { get; set; } = "";
+        public int? PatientAge { get; set; }
+        public string? PatientGender { get; set; }
+        public string? PatientMunicipality { get; set; }
+
+        // معلومات الطالب (جهة الاتصال)
+        public string RequesterName { get; set; } = "";
+        public string RequesterPhone { get; set; } = "";
+        public string? RequesterRelation { get; set; }
+
+        // تفاصيل الطلب
+        public string? CareLocationType { get; set; }   // Home/Hospital/NursingHome/Other
+        public string? Municipality { get; set; }
+        public DateTime RequestedStartDate { get; set; } = DateTime.UtcNow;
+        public bool NeedsNightPresence { get; set; } = false;
+        public bool NeedsTransportSupport { get; set; } = false;
+        public string PriorityLevel { get; set; } = "Normal";
+        public string? MedicalSummary { get; set; }     // الحالات الصحية
+        public string? SupportSummary { get; set; }     // ملاحظات المرافقة
+
+        // أسماء المهارات المطلوبة (مثل "nursing", "transport")
+        public List<string> RequiredSkillNames { get; set; } = new();
+    }
+
+    // استجابة موحدة لطلب المرافقة
+    public class CareRequestResponseVM
+    {
+        public Guid Id { get; set; }
+        public string? ReferenceNumber { get; set; }
+        public string Status { get; set; } = "";
+        public string PatientName { get; set; } = "";
+        public DateTime CreatedAt { get; set; }
+    }
 }
