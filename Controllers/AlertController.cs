@@ -39,9 +39,19 @@ namespace AmisduMalade.Controllers
 
         // PUT: api/alert/5/resolve
         [HttpPut("{id}/resolve")]
-        public async Task<IActionResult> Resolve(Guid id, [FromBody] ResolveAlertVM vm)
+        public async Task<IActionResult> Resolve(Guid id, [FromBody] ResolveAlertVM? vm)
         {
-            var result = await _service.ResolveAsync(id, vm);
+            // Extract resolver identity from JWT — never trust client-provided userId
+            var userIdStr = User.FindFirst("UserId")?.Value;
+            var resolvedBy = Guid.TryParse(userIdStr, out var uid) ? uid : Guid.Empty;
+
+            var resolveVm = new ResolveAlertVM
+            {
+                ResolvedByUserId = resolvedBy,
+                ResolutionNotes  = vm?.ResolutionNotes
+            };
+
+            var result = await _service.ResolveAsync(id, resolveVm);
             if (!result) return NotFound(new { message = "التنبيه غير موجود" });
             return Ok(new { message = "تم حل التنبيه ✅" });
         }

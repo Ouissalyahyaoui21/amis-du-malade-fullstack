@@ -66,4 +66,9 @@ namespace AmisduMalade.ViewModels
         public string PatientName { get; set; } = "";
         public DateTime CreatedAt { get; set; }
     }
+
+    public class UpdateCareRequestStatusVM
+    {
+        public string Status { get; set; } = "";
+    }
 }

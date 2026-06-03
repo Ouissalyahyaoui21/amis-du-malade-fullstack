@@ -62,9 +62,9 @@ namespace AmisduMalade.Controllers
 
         [Authorize]
         [HttpPut("{id}/status")]
-        public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] string status)
+        public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateCareRequestStatusVM vm)
         {
-            var result = await _service.UpdateStatusAsync(id, status);
+            var result = await _service.UpdateStatusAsync(id, vm.Status);
             if (!result) return NotFound(new { message = "الطلب غير موجود" });
             return Ok(new { message = "تم تحديث الحالة" });
         }
