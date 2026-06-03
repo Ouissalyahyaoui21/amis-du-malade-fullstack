@@ -26,8 +26,8 @@ This is a **complete full-stack project** consisting of two parts:
 └──────────────┬──────────────────────┘
                │  REST API (JSON + JWT)
 ┌──────────────▼──────────────────────┐
-│   Backend API — ASP.NET Core 8      │
-│   10 controllers · 9 services       │
+│   Backend API — ASP.NET Core 10     │
+│   10 controllers · 10 services      │
 └──────────────┬──────────────────────┘
                │
 ┌──────────────▼──────────────────────┐
