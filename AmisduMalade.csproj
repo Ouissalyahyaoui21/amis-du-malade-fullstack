@@ -6,6 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!-- Exclude MAUI app from backend compilation -->
+  <ItemGroup>
+    <Compile Remove="AmisDuMaladeApp\**" />
+    <Content Remove="AmisDuMaladeApp\**" />
+    <None Remove="AmisDuMaladeApp\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.6" />
