@@ -120,7 +120,8 @@ public class ApiService
         {
             var response = await _http.PostAsJsonAsync(
                 ApiEndpoints.Assignments,
-                new { CareRequestId = requestId, VolunteerId = volunteerId });
+                new { CareRequestId = requestId, VolunteerId = volunteerId,
+                      AssignmentType = "Primary", StartDate = DateTime.UtcNow });
             return response.IsSuccessStatusCode;
         }
         catch { return false; }
@@ -137,16 +138,17 @@ public class ApiService
 
     // ── Contribution ─────────────────────────────────────────────────────────
 
-    public async Task<(bool Success, string? Error)> SubmitContributionAsync(ContributionPayload payload)
+    public async Task<(bool Success, string? Id, string? Error)> SubmitContributionAsync(ContributionPayload payload)
     {
         try
         {
             var response = await _http.PostAsJsonAsync(ApiEndpoints.Contributions, payload);
-            return response.IsSuccessStatusCode
-                ? (true, null)
-                : (false, await response.Content.ReadAsStringAsync());
+            if (!response.IsSuccessStatusCode)
+                return (false, null, await response.Content.ReadAsStringAsync());
+            var body = await response.Content.ReadFromJsonAsync<ContributionApiResponse>();
+            return (true, body?.Id.ToString(), null);
         }
-        catch (Exception ex) { return (false, ex.Message); }
+        catch (Exception ex) { return (false, null, ex.Message); }
     }
 
     public async Task<List<ContributionItem>> GetContributionsAsync()

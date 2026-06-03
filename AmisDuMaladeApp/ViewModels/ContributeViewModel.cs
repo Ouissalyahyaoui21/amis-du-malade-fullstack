@@ -11,8 +11,9 @@ public partial class ContributeViewModel : BaseViewModel
     private readonly ApiService _api;
 
     // ── Wizard state ─────────────────────────────────────────────────────────
-    [ObservableProperty] private int  currentStep = 2;
-    [ObservableProperty] private bool isSuccess;
+    [ObservableProperty] private int    currentStep = 2;
+    [ObservableProperty] private bool   isSuccess;
+    [ObservableProperty] private string referenceNumber = "";
 
     public bool IsStep2      => CurrentStep == 2 && !IsSuccess;
     public bool IsStep3      => CurrentStep == 3 && !IsSuccess;
@@ -211,9 +212,10 @@ public partial class ContributeViewModel : BaseViewModel
         {
             var typeMap = SelectedTypeKey switch
             {
-                "inkind" => "Goods",
-                "time"   => "Time",
-                _        => "Money"
+                "inkind"  => "Goods",
+                "office"  => "Time",
+                "patient" => "Goods",
+                _         => "Money"
             };
 
             decimal? amount = null;
@@ -230,9 +232,10 @@ public partial class ContributeViewModel : BaseViewModel
                 Message         = string.IsNullOrWhiteSpace(Notes) ? null : Notes.Trim()
             };
 
-            var (success, _) = await _api.SubmitContributionAsync(payload);
+            var (success, id, _) = await _api.SubmitContributionAsync(payload);
             if (success)
             {
+                ReferenceNumber = id != null ? $"#{id.Substring(0, 8).ToUpper()}" : "#----";
                 IsSuccess = true;
                 NotifyStep();
                 OnPropertyChanged(nameof(IsSuccess));

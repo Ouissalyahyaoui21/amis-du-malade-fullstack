@@ -9,4 +9,9 @@ namespace AmisduMalade.ViewModels
         public DateTime? EndDate { get; set; }
         public string? Notes { get; set; }
     }
+
+    public class UpdateAssignmentStatusVM
+    {
+        public string Status { get; set; } = "";
+    }
 }

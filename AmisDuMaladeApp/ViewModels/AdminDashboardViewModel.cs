@@ -291,6 +291,7 @@ public partial class AdminDashboardViewModel : BaseViewModel
         {
             var req = NewRequests.FirstOrDefault(r => r.Id == SelectedRequest.Id);
             if (req != null) { req.Status = "Assigned"; NewRequests.Remove(req); }
+            StatPendingRequests = Math.Max(0, StatPendingRequests - 1);
             SelectedRequest = null;
         }
     }

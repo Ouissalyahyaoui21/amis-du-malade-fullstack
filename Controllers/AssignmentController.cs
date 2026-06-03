@@ -28,9 +28,9 @@ namespace AmisduMalade.Controllers
         }
 
         [HttpPut("{id}/status")]
-        public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] string status)
+        public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] UpdateAssignmentStatusVM vm)
         {
-            var result = await _service.UpdateStatusAsync(id, status);
+            var result = await _service.UpdateStatusAsync(id, vm.Status);
             if (!result) return NotFound(new { message = "التكليف غير موجود" });
             return Ok(new { message = "تم التحديث" });
         }

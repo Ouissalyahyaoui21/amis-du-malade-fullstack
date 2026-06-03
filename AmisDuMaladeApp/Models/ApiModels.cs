@@ -170,6 +170,12 @@ public class ApiIdResponse
     public Guid Id { get; set; }
 }
 
+public class ContributionApiResponse
+{
+    public Guid   Id      { get; set; }
+    public string? Message { get; set; }
+}
+
 // ── Contribution ─────────────────────────────────────────────────────────────
 
 public class ContributionItem

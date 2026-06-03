@@ -82,7 +82,7 @@ public partial class AdminLoginViewModel : BaseViewModel
         {
             var request = new LoginRequest
             {
-                Email    = IsEmailTab ? credential : "",
+                Email    = credential,
                 Password = Password
             };
 
