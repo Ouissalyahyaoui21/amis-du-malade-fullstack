@@ -13,7 +13,7 @@ namespace AmisduMalade.Services
         public async Task<DashboardVM> GetDashboardAsync()
         {
             var now = DateTime.UtcNow;
-            var thisMonth = new DateTime(now.Year, now.Month, 1);
+            var thisMonth = new DateTime(now.Year, now.Month, 1, 0, 0, 0, DateTimeKind.Utc);
 
             // الأرقام الأساسية
             var totalVolunteers = await _db.Volunteers.CountAsync();
