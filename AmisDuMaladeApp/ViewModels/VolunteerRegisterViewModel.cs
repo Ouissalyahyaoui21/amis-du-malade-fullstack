@@ -325,20 +325,20 @@ public partial class VolunteerRegisterViewModel : BaseViewModel
     // ── Helpers ──────────────────────────────────────────────────────────────
     private List<VolunteerAvailabilityRequest> BuildAvailabilities()
     {
-        var days = new List<(bool on, string name)>
+        var days = new List<(bool enabled, string name)>
         {
             (DaySat, "Saturday"), (DaySun, "Sunday"),  (DayMon, "Monday"),
             (DayTue, "Tuesday"),  (DayWed, "Wednesday"), (DayThu, "Thursday"),
         };
-        var slots = new List<(bool on, string s, string e)>
+        var slots = new List<(bool enabled, string s, string e)>
         {
             (Slot0810, "08:00", "10:00"), (Slot1012, "10:00", "12:00"),
             (Slot1214, "12:00", "14:00"), (Slot1416, "14:00", "16:00"),
             (Slot1618, "16:00", "18:00"), (Slot1820, "18:00", "20:00"),
         };
 
-        return (from d  in days  where d.on
-                from sl in slots where sl.on
+        return (from d  in days  where d.enabled
+                from sl in slots where sl.enabled
                 select new VolunteerAvailabilityRequest
                 {
                     DayOfWeek = d.name,
