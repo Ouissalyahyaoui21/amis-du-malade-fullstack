@@ -21,6 +21,24 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
   </PropertyGroup>
 
+  <!-- استبعاد ملفات المنصات غير المستهدفة من الترجمة -->
+  <ItemGroup Condition="!$(TargetFramework.StartsWith('net10.0-android'))">
+    <Compile Remove="Platforms\Android\**" />
+    <None Include="Platforms\Android\**" />
+  </ItemGroup>
+  <ItemGroup Condition="!$(TargetFramework.StartsWith('net10.0-ios'))">
+    <Compile Remove="Platforms\iOS\**" />
+    <None Include="Platforms\iOS\**" />
+  </ItemGroup>
+  <ItemGroup Condition="!$(TargetFramework.StartsWith('net10.0-maccatalyst'))">
+    <Compile Remove="Platforms\MacCatalyst\**" />
+    <None Include="Platforms\MacCatalyst\**" />
+  </ItemGroup>
+  <ItemGroup Condition="!$(TargetFramework.Contains('-windows'))">
+    <Compile Remove="Platforms\Windows\**" />
+    <None Include="Platforms\Windows\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <MauiIcon Include="Resources/AppIcon/appicon.svg" ForegroundFile="Resources/AppIcon/appiconfg.svg" Color="#1a3a5c" />
     <MauiSplashScreen Include="Resources/Splash/splash.svg" Color="#1a3a5c" BaseSize="128,128" />
