@@ -1312,9 +1312,9 @@
                                                    IsVisible="{Binding Message, Converter={StaticResource StringNotEmptyConverter}}">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="""/>
+                                                        <Span Text="&quot;"/>
                                                         <Span Text="{Binding Message}"/>
-                                                        <Span Text="""/>
+                                                        <Span Text="&quot;"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
