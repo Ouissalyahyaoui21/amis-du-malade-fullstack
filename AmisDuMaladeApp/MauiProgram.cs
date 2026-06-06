@@ -34,6 +34,7 @@ public static class MauiProgram
         builder.Services.AddTransient<AboutViewModel>();
 
         // ── Pages ──────────────────────────────────────────────────────────────
+        builder.Services.AddSingleton<AppShell>();
         builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<VolunteerRegisterPage>();
         builder.Services.AddTransient<CareRequestPage>();
