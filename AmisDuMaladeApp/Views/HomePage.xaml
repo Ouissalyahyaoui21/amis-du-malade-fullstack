@@ -31,7 +31,7 @@
                             FontSize="11" FontAttributes="Bold"
                             CornerRadius="14" HeightRequest="28" WidthRequest="36"
                             Padding="0"
-                            BorderColor="#3ffffff40" BorderWidth="1"/>
+                            BorderColor="#40ffffff" BorderWidth="1"/>
                     <Button Text="En"
                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=SetLanguageCommand}"
                             CommandParameter="en"
