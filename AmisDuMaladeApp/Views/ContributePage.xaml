@@ -62,9 +62,13 @@
 
                 <!-- موجة الانتقال -->
                 <Grid HeightRequest="32" BackgroundColor="#1a3a5c">
-                    <BoxView BackgroundColor="#f0ebe3"
-                             CornerRadius="24,24,0,0"
-                             VerticalOptions="End" HeightRequest="32"/>
+                    <Border BackgroundColor="#f0ebe3"
+                            StrokeThickness="0"
+                            VerticalOptions="End" HeightRequest="32">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="24,24,0,0"/>
+                        </Border.StrokeShape>
+                    </Border>
                 </Grid>
 
                 <VerticalStackLayout Padding="14,16,14,16" Spacing="14">

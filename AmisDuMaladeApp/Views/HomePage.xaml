@@ -18,14 +18,14 @@
                 <!-- مبدّل اللغة -->
                 <HorizontalStackLayout Spacing="6" HorizontalOptions="Start" Margin="0,0,0,12">
                     <Button Text="ع"
-                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=SetLanguageCommand}"
+                            Command="{Binding SetLanguageCommand}"
                             CommandParameter="ar"
                             BackgroundColor="#c8a53a" TextColor="White"
                             FontSize="13" FontAttributes="Bold"
                             CornerRadius="14" HeightRequest="28" WidthRequest="36"
                             Padding="0"/>
                     <Button Text="Fr"
-                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=SetLanguageCommand}"
+                            Command="{Binding SetLanguageCommand}"
                             CommandParameter="fr"
                             BackgroundColor="Transparent" TextColor="White"
                             FontSize="11" FontAttributes="Bold"
@@ -33,7 +33,7 @@
                             Padding="0"
                             BorderColor="#40ffffff" BorderWidth="1"/>
                     <Button Text="En"
-                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=SetLanguageCommand}"
+                            Command="{Binding SetLanguageCommand}"
                             CommandParameter="en"
                             BackgroundColor="Transparent" TextColor="White"
                             FontSize="11" FontAttributes="Bold"
@@ -76,10 +76,14 @@
 
             <!-- موجة الانتقال -->
             <Grid HeightRequest="36" BackgroundColor="#1a3a5c">
-                <BoxView BackgroundColor="#f2ede6"
-                         CornerRadius="28,28,0,0"
-                         VerticalOptions="End"
-                         HeightRequest="36"/>
+                <Border BackgroundColor="#f2ede6"
+                        StrokeThickness="0"
+                        VerticalOptions="End"
+                        HeightRequest="36">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="28,28,0,0"/>
+                    </Border.StrokeShape>
+                </Border>
             </Grid>
 
             <!-- ══ CONTENT ══ -->

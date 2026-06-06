@@ -102,8 +102,13 @@
 
             <!-- موجة الانتقال -->
             <Grid HeightRequest="28" BackgroundColor="#0d2440">
-                <BoxView BackgroundColor="#f2ede6" CornerRadius="24,24,0,0"
-                         VerticalOptions="End" HeightRequest="28"/>
+                <Border BackgroundColor="#f2ede6"
+                        StrokeThickness="0"
+                        VerticalOptions="End" HeightRequest="28">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24,24,0,0"/>
+                    </Border.StrokeShape>
+                </Border>
             </Grid>
 
             <!-- ══ المهمة ══ -->

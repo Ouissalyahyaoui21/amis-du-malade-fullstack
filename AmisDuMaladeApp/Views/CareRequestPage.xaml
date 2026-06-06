@@ -236,7 +236,7 @@
                                                Padding="14,10" VerticalOptions="Center"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CareRequestViewModel}}, Path=SelectRelationCommand}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectRelationCommand}"
                                                 CommandParameter="{Binding .}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
@@ -348,7 +348,7 @@
                                                Padding="14,10" VerticalOptions="Center"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CareRequestViewModel}}, Path=SelectInsuranceCommand}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectInsuranceCommand}"
                                                 CommandParameter="{Binding .}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
@@ -385,7 +385,7 @@
                                                Padding="14,10" VerticalOptions="Center"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CareRequestViewModel}}, Path=ToggleHealthCommand}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleHealthCommand}"
                                                 CommandParameter="{Binding .}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
@@ -450,7 +450,7 @@
                                                Padding="14,10" VerticalOptions="Center"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CareRequestViewModel}}, Path=SelectLocationCommand}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectLocationCommand}"
                                                 CommandParameter="{Binding .}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
@@ -499,7 +499,7 @@
                                                Padding="14,10" VerticalOptions="Center"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CareRequestViewModel}}, Path=SelectDurationCommand}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectDurationCommand}"
                                                 CommandParameter="{Binding .}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
@@ -575,7 +575,7 @@
                                     </VerticalStackLayout>
                                     <Border.GestureRecognizers>
                                         <TapGestureRecognizer
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CareRequestViewModel}}, Path=ToggleQualificationCommand}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleQualificationCommand}"
                                             CommandParameter="{Binding .}"/>
                                     </Border.GestureRecognizers>
                                 </Border>

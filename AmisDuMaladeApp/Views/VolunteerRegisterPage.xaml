@@ -730,7 +730,7 @@
                                     </HorizontalStackLayout>
                                     <Border.GestureRecognizers>
                                         <TapGestureRecognizer
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:VolunteerRegisterViewModel}}, Path=ToggleSkillCommand}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleSkillCommand}"
                                             CommandParameter="{Binding .}"/>
                                     </Border.GestureRecognizers>
                                 </Border>
