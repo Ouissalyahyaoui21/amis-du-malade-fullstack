@@ -26,7 +26,7 @@ namespace AmisduMalade.Controllers
         public async Task<IActionResult> GetAll()
         {
             var alerts = await _service.GetAllAsync();
-            return Ok(alerts);
+            return Ok(alerts.Select(MapAlert));
         }
 
         // GET: api/alert/open
@@ -34,8 +34,18 @@ namespace AmisduMalade.Controllers
         public async Task<IActionResult> GetOpen()
         {
             var alerts = await _service.GetOpenAsync();
-            return Ok(alerts);
+            return Ok(alerts.Select(MapAlert));
         }
+
+        private static object MapAlert(AmisduMalade.Models.Alert a) => new
+        {
+            id          = a.Id,
+            title       = a.Title,
+            description = a.Description ?? "",
+            status      = a.Status,
+            type        = a.Severity,
+            createdAt   = a.CreatedAt
+        };
 
         // PUT: api/alert/5/resolve
         [HttpPut("{id}/resolve")]

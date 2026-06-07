@@ -139,7 +139,7 @@ namespace AmisduMalade.Services
         public async Task<List<CareRequest>> GetAllAsync()
         {
             return await _db.CareRequests
-                .Include(r => r.Patient)
+                .Include(r => r.Patient).ThenInclude(p => p.Contacts)
                 .Include(r => r.RequiredSkills).ThenInclude(s => s.Skill)
                 .OrderByDescending(r => r.CreatedAt)
                 .ToListAsync();

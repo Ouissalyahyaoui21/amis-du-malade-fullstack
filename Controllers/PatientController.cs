@@ -24,7 +24,18 @@ namespace AmisduMalade.Controllers
         public async Task<IActionResult> GetAll()
         {
             var list = await _service.GetAllAsync();
-            return Ok(list);
+            var result = list.Select(p => new
+            {
+                id           = p.Id,
+                fullName     = p.FullName,
+                phone        = p.Phone,
+                age          = p.BirthDate.HasValue
+                                   ? (int?)((DateTime.UtcNow - p.BirthDate.Value).TotalDays / 365)
+                                   : null,
+                municipality = p.Municipality,
+                createdAt    = p.CreatedAt
+            });
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
