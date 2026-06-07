@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="AmisDuMaladeApp.Views.AboutPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -67,7 +67,7 @@
 
                 <!-- شارة التأسيس -->
                 <Border BackgroundColor="#18c8a53a" StrokeThickness="1" Stroke="#50c8a53a"
-                        CornerRadius="20" Padding="16,5"
+                        StrokeShape="RoundRectangle 20" Padding="16,5"
                         HorizontalOptions="Center" Margin="0,0,0,20">
                     <Label Text="تأسست 1 أكتوبر 2002  ·  القرار 2002/54"
                            TextColor="#c8a53a" FontSize="11"
@@ -122,14 +122,14 @@
                              HeightRequest="3" WidthRequest="60" VerticalOptions="Center" CornerRadius="2"/>
                 </Grid>
 
-                <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16"
+                <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16"
                         Padding="18,16" Margin="0,0,0,12">
                     <Label Text="جمعية أصدقاء المريض منظمة إنسانية غير حكومية، تأسست بسكيكدة عام 2002، تسعى إلى تقديم الدعم الطبي والإنساني للمرضى المحتاجين وذويهم، وتعزيز التضامن الاجتماعي في مواجهة المرض."
                            TextColor="#333" FontSize="14" LineBreakMode="WordWrap"
                            LineHeight="1.7" HorizontalTextAlignment="Right"/>
                 </Border>
 
-                <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16" Padding="16,8">
+                <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="16,8">
                     <VerticalStackLayout Spacing="0">
 
                         <Grid ColumnDefinitions="*,48" Padding="0,12" ColumnSpacing="12">
@@ -137,7 +137,7 @@
                                    TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
                                    VerticalOptions="Center" HorizontalTextAlignment="Right"/>
                             <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
-                                    StrokeThickness="0" CornerRadius="12" HorizontalOptions="Center" VerticalOptions="Center">
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 12" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label Text="💊" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
                         </Grid>
@@ -148,7 +148,7 @@
                                    TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
                                    VerticalOptions="Center" HorizontalTextAlignment="Right"/>
                             <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
-                                    StrokeThickness="0" CornerRadius="12" HorizontalOptions="Center" VerticalOptions="Center">
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 12" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label Text="🏠" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
                         </Grid>
@@ -159,7 +159,7 @@
                                    TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
                                    VerticalOptions="Center" HorizontalTextAlignment="Right"/>
                             <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
-                                    StrokeThickness="0" CornerRadius="12" HorizontalOptions="Center" VerticalOptions="Center">
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 12" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label Text="🏥" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
                         </Grid>
@@ -170,7 +170,7 @@
                                    TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
                                    VerticalOptions="Center" HorizontalTextAlignment="Right"/>
                             <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
-                                    StrokeThickness="0" CornerRadius="12" HorizontalOptions="Center" VerticalOptions="Center">
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 12" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label Text="✈️" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
                         </Grid>
@@ -181,7 +181,7 @@
                                    TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
                                    VerticalOptions="Center" HorizontalTextAlignment="Right"/>
                             <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
-                                    StrokeThickness="0" CornerRadius="12" HorizontalOptions="Center" VerticalOptions="Center">
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 12" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label Text="🌍" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
                         </Grid>
@@ -203,7 +203,7 @@
 
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto" RowSpacing="12">
 
-                    <Border Grid.Row="0" Grid.Column="0" BackgroundColor="White" StrokeThickness="0" CornerRadius="14">
+                    <Border Grid.Row="0" Grid.Column="0" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 14">
                         <VerticalStackLayout Spacing="0">
                             <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
                             <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
@@ -216,7 +216,7 @@
                         </VerticalStackLayout>
                     </Border>
 
-                    <Border Grid.Row="0" Grid.Column="1" BackgroundColor="White" StrokeThickness="0" CornerRadius="14">
+                    <Border Grid.Row="0" Grid.Column="1" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 14">
                         <VerticalStackLayout Spacing="0">
                             <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
                             <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
@@ -229,7 +229,7 @@
                         </VerticalStackLayout>
                     </Border>
 
-                    <Border Grid.Row="1" Grid.Column="0" BackgroundColor="White" StrokeThickness="0" CornerRadius="14">
+                    <Border Grid.Row="1" Grid.Column="0" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 14">
                         <VerticalStackLayout Spacing="0">
                             <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
                             <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
@@ -242,7 +242,7 @@
                         </VerticalStackLayout>
                     </Border>
 
-                    <Border Grid.Row="1" Grid.Column="1" BackgroundColor="White" StrokeThickness="0" CornerRadius="14">
+                    <Border Grid.Row="1" Grid.Column="1" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 14">
                         <VerticalStackLayout Spacing="0">
                             <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
                             <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
@@ -271,7 +271,7 @@
                 <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" RowDefinitions="Auto,Auto" RowSpacing="10">
 
                     <Border Grid.Row="0" Grid.Column="0" BackgroundColor="White" StrokeThickness="0"
-                            CornerRadius="14" Padding="10,14">
+                            StrokeShape="RoundRectangle 14" Padding="10,14">
                         <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
                             <Label Text="🤝" FontSize="24" HorizontalTextAlignment="Center"/>
                             <Label Text="التضامن" TextColor="#1a3a5c" FontSize="12"
@@ -280,7 +280,7 @@
                     </Border>
 
                     <Border Grid.Row="0" Grid.Column="1" BackgroundColor="White" StrokeThickness="0"
-                            CornerRadius="14" Padding="10,14">
+                            StrokeShape="RoundRectangle 14" Padding="10,14">
                         <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
                             <Label Text="💙" FontSize="24" HorizontalTextAlignment="Center"/>
                             <Label Text="الرحمة" TextColor="#1a3a5c" FontSize="12"
@@ -289,7 +289,7 @@
                     </Border>
 
                     <Border Grid.Row="0" Grid.Column="2" BackgroundColor="White" StrokeThickness="0"
-                            CornerRadius="14" Padding="10,14">
+                            StrokeShape="RoundRectangle 14" Padding="10,14">
                         <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
                             <Label Text="⚖️" FontSize="24" HorizontalTextAlignment="Center"/>
                             <Label Text="العدالة" TextColor="#1a3a5c" FontSize="12"
@@ -298,7 +298,7 @@
                     </Border>
 
                     <Border Grid.Row="1" Grid.Column="0" BackgroundColor="White" StrokeThickness="0"
-                            CornerRadius="14" Padding="10,14">
+                            StrokeShape="RoundRectangle 14" Padding="10,14">
                         <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
                             <Label Text="🌟" FontSize="24" HorizontalTextAlignment="Center"/>
                             <Label Text="التميز" TextColor="#1a3a5c" FontSize="12"
@@ -307,7 +307,7 @@
                     </Border>
 
                     <Border Grid.Row="1" Grid.Column="1" BackgroundColor="White" StrokeThickness="0"
-                            CornerRadius="14" Padding="10,14">
+                            StrokeShape="RoundRectangle 14" Padding="10,14">
                         <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
                             <Label Text="🔬" FontSize="24" HorizontalTextAlignment="Center"/>
                             <Label Text="الاحترافية" TextColor="#1a3a5c" FontSize="12"
@@ -316,7 +316,7 @@
                     </Border>
 
                     <Border Grid.Row="1" Grid.Column="2" BackgroundColor="White" StrokeThickness="0"
-                            CornerRadius="14" Padding="10,14">
+                            StrokeShape="RoundRectangle 14" Padding="10,14">
                         <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
                             <Label Text="🌿" FontSize="24" HorizontalTextAlignment="Center"/>
                             <Label Text="الشفافية" TextColor="#1a3a5c" FontSize="12"
@@ -337,7 +337,7 @@
                              HeightRequest="3" WidthRequest="60" VerticalOptions="Center" CornerRadius="2"/>
                 </Grid>
 
-                <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16" Padding="16,8">
+                <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="16,8">
                     <VerticalStackLayout Spacing="0">
 
                         <Grid ColumnDefinitions="*,10" Padding="0,12,0,12" ColumnSpacing="10">
@@ -405,10 +405,10 @@
                              HeightRequest="3" WidthRequest="60" VerticalOptions="Center" CornerRadius="2"/>
                 </Grid>
 
-                <Border BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="16" Padding="20">
+                <Border BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="20">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
                         <Border Grid.Column="0" WidthRequest="68" HeightRequest="68"
-                                BackgroundColor="#c8a53a" StrokeThickness="0" CornerRadius="34"
+                                BackgroundColor="#c8a53a" StrokeThickness="0" StrokeShape="RoundRectangle 34"
                                 HorizontalOptions="Center" VerticalOptions="Center">
                             <Label Text="👤" FontSize="30"
                                    HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -437,7 +437,7 @@
 
                 <!-- زر الموقع -->
                 <Border BackgroundColor="#0fffffff" StrokeThickness="1" Stroke="#15ffffff"
-                        CornerRadius="14" Margin="0,0,0,12">
+                        StrokeShape="RoundRectangle 14" Margin="0,0,0,12">
                     <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
                         <Label Grid.Column="0" Text="🌐" FontSize="22" VerticalOptions="Center"/>
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
@@ -454,7 +454,7 @@
 
                 <!-- زر فيسبوك -->
                 <Border BackgroundColor="#0fffffff" StrokeThickness="1" Stroke="#15ffffff"
-                        CornerRadius="14" Margin="0,0,0,12">
+                        StrokeShape="RoundRectangle 14" Margin="0,0,0,12">
                     <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
                         <Label Grid.Column="0" Text="📘" FontSize="22" VerticalOptions="Center"/>
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
@@ -471,7 +471,7 @@
 
                 <!-- الموقع الجغرافي -->
                 <Border BackgroundColor="#0fffffff" StrokeThickness="1" Stroke="#15ffffff"
-                        CornerRadius="14">
+                        StrokeShape="RoundRectangle 14">
                     <Grid ColumnDefinitions="Auto,*" Padding="16,14" ColumnSpacing="14">
                         <Label Grid.Column="0" Text="📍" FontSize="22" VerticalOptions="Center"/>
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="AmisDuMaladeApp.Views.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -90,12 +90,12 @@
             <VerticalStackLayout Padding="18,0" Spacing="12">
 
                 <!-- بطاقة: طلب مرافق -->
-                <Border BackgroundColor="#1e4a7a" StrokeThickness="0" CornerRadius="18">
+                <Border BackgroundColor="#1e4a7a" StrokeThickness="0" StrokeShape="RoundRectangle 18">
                     <Grid ColumnDefinitions="68,*,28" Padding="14,14,16,14">
                         <Border Grid.Column="0"
                                 WidthRequest="52" HeightRequest="52"
                                 BackgroundColor="#1fffffff"
-                                StrokeThickness="0" CornerRadius="14">
+                                StrokeThickness="0" StrokeShape="RoundRectangle 14">
                             <Label Text="🏥" FontSize="26"
                                    HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
@@ -115,12 +115,12 @@
                 </Border>
 
                 <!-- بطاقة: تسجيل كمتطوع -->
-                <Border BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="18">
+                <Border BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 18">
                     <Grid ColumnDefinitions="68,*,28" Padding="14,14,16,14">
                         <Border Grid.Column="0"
                                 WidthRequest="52" HeightRequest="52"
                                 BackgroundColor="#1fffffff"
-                                StrokeThickness="0" CornerRadius="14">
+                                StrokeThickness="0" StrokeShape="RoundRectangle 14">
                             <Label Text="🤝" FontSize="26"
                                    HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
@@ -140,17 +140,17 @@
                 </Border>
 
                 <!-- بطاقة: المساهمة -->
-                <Border BackgroundColor="#0a5c46" StrokeThickness="0" CornerRadius="18">
+                <Border BackgroundColor="#0a5c46" StrokeThickness="0" StrokeShape="RoundRectangle 18">
                     <Grid ColumnDefinitions="68,*,28" Padding="14,14,16,14">
                         <Grid Grid.Column="0">
                             <Border WidthRequest="52" HeightRequest="52"
                                     BackgroundColor="#1fffffff"
-                                    StrokeThickness="0" CornerRadius="14">
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 14">
                                 <Label Text="♥" FontSize="26" TextColor="White"
                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
                             <!-- شارة "جديد" -->
-                            <Border BackgroundColor="#c8a53a" StrokeThickness="0" CornerRadius="8"
+                            <Border BackgroundColor="#c8a53a" StrokeThickness="0" StrokeShape="RoundRectangle 8"
                                     Padding="5,2" VerticalOptions="Start" HorizontalOptions="End"
                                     Margin="0,-6,-4,0">
                                 <Label Text="{Binding NewBadge}"
@@ -175,11 +175,11 @@
                 <!-- بطاقتان ثانويتان: حسابي + حول الجمعية -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,4,0,0">
                     <Border Grid.Column="0"
-                            BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                            BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
                         <VerticalStackLayout Spacing="8" Padding="18,18,18,18" HorizontalOptions="Center">
                             <Border WidthRequest="44" HeightRequest="44"
                                     BackgroundColor="#f0f4f8"
-                                    StrokeThickness="0" CornerRadius="22"
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 22"
                                     HorizontalOptions="Center">
                                 <Label Text="👤" FontSize="22"
                                        HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -190,11 +190,11 @@
                         </VerticalStackLayout>
                     </Border>
                     <Border Grid.Column="1"
-                            BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                            BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
                         <VerticalStackLayout Spacing="8" Padding="18,18,18,18" HorizontalOptions="Center">
                             <Border WidthRequest="44" HeightRequest="44"
                                     BackgroundColor="#f0f4f8"
-                                    StrokeThickness="0" CornerRadius="22"
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 22"
                                     HorizontalOptions="Center">
                                 <Label Text="ℹ️" FontSize="22"
                                        HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -217,7 +217,7 @@
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                         <!-- واتساب -->
                         <Border Grid.Column="0"
-                                BackgroundColor="#25d366" StrokeThickness="0" CornerRadius="14">
+                                BackgroundColor="#25d366" StrokeThickness="0" StrokeShape="RoundRectangle 14">
                             <Grid ColumnDefinitions="Auto,*" Padding="14,13" ColumnSpacing="8">
                                 <Label Grid.Column="0" Text="💬" FontSize="18" VerticalOptions="Center"/>
                                 <Label Grid.Column="1" Text="{Binding WhatsAppLabel}"
@@ -230,7 +230,7 @@
                         </Border>
                         <!-- فيسبوك -->
                         <Border Grid.Column="1"
-                                BackgroundColor="#1877f2" StrokeThickness="0" CornerRadius="14">
+                                BackgroundColor="#1877f2" StrokeThickness="0" StrokeShape="RoundRectangle 14">
                             <Grid ColumnDefinitions="Auto,*" Padding="14,13" ColumnSpacing="8">
                                 <Label Grid.Column="0" Text="f"
                                        TextColor="White" FontSize="18" FontAttributes="Bold"

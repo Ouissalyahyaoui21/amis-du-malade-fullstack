@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="AmisDuMaladeApp.Views.ContributePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -37,7 +37,7 @@
                 </HorizontalStackLayout>
                 <!-- زر الرجوع -->
                 <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
-                        BackgroundColor="#26ffffff" StrokeThickness="0" CornerRadius="10"
+                        BackgroundColor="#26ffffff" StrokeThickness="0" StrokeShape="RoundRectangle 10"
                         HorizontalOptions="Start">
                     <Label Text="‹" TextColor="White" FontSize="22"
                            HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -49,7 +49,7 @@
 
             <!-- حبة ساهم معنا -->
             <Border BackgroundColor="#1affffff" StrokeThickness="1"
-                    Stroke="#80c8a53a" CornerRadius="20"
+                    Stroke="#80c8a53a" StrokeShape="RoundRectangle 20"
                     HorizontalOptions="Center" Padding="18,6">
                 <Label Text="ساهم معنا 💛" TextColor="White"
                        FontSize="14" FontAttributes="Bold"/>
@@ -78,7 +78,7 @@
                         <Grid ColumnDefinitions="38,*,38,*,38" VerticalOptions="Center">
                             <!-- خطوة 1 ✓ -->
                             <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
-                                    BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="19">
+                                    BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 19">
                                 <Label Text="✓" TextColor="White" FontSize="15" FontAttributes="Bold"
                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
@@ -86,7 +86,7 @@
                                      VerticalOptions="Center" CornerRadius="2"/>
                             <!-- خطوة 2 -->
                             <Border Grid.Column="2" WidthRequest="38" HeightRequest="38"
-                                    BackgroundColor="{Binding Sc2Bg}" StrokeThickness="0" CornerRadius="19">
+                                    BackgroundColor="{Binding Sc2Bg}" StrokeThickness="0" StrokeShape="RoundRectangle 19">
                                 <Label Text="{Binding Sc2Text}" TextColor="White"
                                        FontSize="15" FontAttributes="Bold"
                                        HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -96,7 +96,7 @@
                                      VerticalOptions="Center" CornerRadius="2"/>
                             <!-- خطوة 3 -->
                             <Border Grid.Column="4" WidthRequest="38" HeightRequest="38"
-                                    BackgroundColor="{Binding Sc3Bg}" StrokeThickness="0" CornerRadius="19">
+                                    BackgroundColor="{Binding Sc3Bg}" StrokeThickness="0" StrokeShape="RoundRectangle 19">
                                 <Label Text="{Binding Sc3Text}" TextColor="White"
                                        FontSize="15" FontAttributes="Bold"
                                        HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -128,14 +128,14 @@
                     <VerticalStackLayout Spacing="14" IsVisible="{Binding IsStep2}">
 
                         <!-- 1. نوع المساهمة -->
-                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                        <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
                             <VerticalStackLayout Padding="16" Spacing="14">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Grid.Column="0" Text="نوع المساهمة"
                                            FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"
                                            VerticalOptions="Center"/>
                                     <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
-                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 13">
                                         <Label Text="1" TextColor="White" FontSize="13" FontAttributes="Bold"
                                                HorizontalOptions="Center" VerticalOptions="Center"/>
                                     </Border>
@@ -147,7 +147,7 @@
                                     </BindableLayout.ItemsSource>
                                     <!-- هدية عينية -->
                                     <Border Grid.Row="0" Grid.Column="0"
-                                            StrokeThickness="1.5" CornerRadius="14" Padding="10,14">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14">
                                         <Border.Style>
                                             <Style TargetType="Border">
                                                 <Setter Property="Stroke" Value="#e5e7eb"/>
@@ -164,7 +164,7 @@
                                         </Border.Triggers>
                                         <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                                             <Border WidthRequest="44" HeightRequest="44"
-                                                    StrokeThickness="0" CornerRadius="12"
+                                                    StrokeThickness="0" StrokeShape="RoundRectangle 12"
                                                     HorizontalOptions="Center">
                                                 <Border.Triggers>
                                                     <DataTrigger TargetType="Border"
@@ -193,7 +193,7 @@
                                     </Border>
                                     <!-- مساهمة مالية -->
                                     <Border Grid.Row="0" Grid.Column="1"
-                                            StrokeThickness="1.5" CornerRadius="14" Padding="10,14">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding ContribTypes[1].IsSelected}"
@@ -210,7 +210,7 @@
                                         </Border.Triggers>
                                         <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                                             <Border WidthRequest="44" HeightRequest="44"
-                                                    StrokeThickness="0" CornerRadius="12"
+                                                    StrokeThickness="0" StrokeShape="RoundRectangle 12"
                                                     HorizontalOptions="Center">
                                                 <Border.Triggers>
                                                     <DataTrigger TargetType="Border"
@@ -239,7 +239,7 @@
                                     </Border>
                                     <!-- زيارة المكتب -->
                                     <Border Grid.Row="1" Grid.Column="0"
-                                            StrokeThickness="1.5" CornerRadius="14" Padding="10,14">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding ContribTypes[2].IsSelected}"
@@ -256,7 +256,7 @@
                                         </Border.Triggers>
                                         <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                                             <Border WidthRequest="44" HeightRequest="44"
-                                                    StrokeThickness="0" CornerRadius="12"
+                                                    StrokeThickness="0" StrokeShape="RoundRectangle 12"
                                                     HorizontalOptions="Center">
                                                 <Border.Triggers>
                                                     <DataTrigger TargetType="Border"
@@ -285,7 +285,7 @@
                                     </Border>
                                     <!-- لمريض محدد -->
                                     <Border Grid.Row="1" Grid.Column="1"
-                                            StrokeThickness="1.5" CornerRadius="14" Padding="10,14">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding ContribTypes[3].IsSelected}"
@@ -302,7 +302,7 @@
                                         </Border.Triggers>
                                         <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                                             <Border WidthRequest="44" HeightRequest="44"
-                                                    StrokeThickness="0" CornerRadius="12"
+                                                    StrokeThickness="0" StrokeShape="RoundRectangle 12"
                                                     HorizontalOptions="Center">
                                                 <Border.Triggers>
                                                     <DataTrigger TargetType="Border"
@@ -334,13 +334,13 @@
                         </Border>
 
                         <!-- 2. فئة النشاط -->
-                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                        <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
                             <VerticalStackLayout Padding="16" Spacing="14">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Grid.Column="0" Text="فئة النشاط"
                                            FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
                                     <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
-                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 13">
                                         <Label Text="2" TextColor="White" FontSize="13" FontAttributes="Bold"
                                                HorizontalOptions="Center" VerticalOptions="Center"/>
                                     </Border>
@@ -348,7 +348,7 @@
                                 <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
                                       ColumnSpacing="8" RowSpacing="8">
                                     <Border Grid.Row="0" Grid.Column="0"
-                                            StrokeThickness="1.5" CornerRadius="22" Padding="12,9">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding ActivityCategories[0].IsSelected}"
@@ -371,7 +371,7 @@
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="0" Grid.Column="1"
-                                            StrokeThickness="1.5" CornerRadius="22" Padding="12,9">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding ActivityCategories[1].IsSelected}"
@@ -394,7 +394,7 @@
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="1" Grid.Column="0"
-                                            StrokeThickness="1.5" CornerRadius="22" Padding="12,9">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding ActivityCategories[2].IsSelected}"
@@ -417,7 +417,7 @@
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="1" Grid.Column="1"
-                                            StrokeThickness="1.5" CornerRadius="22" Padding="12,9">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border"
                                                          Binding="{Binding ActivityCategories[3].IsSelected}"
@@ -444,13 +444,13 @@
                         </Border>
 
                         <!-- 3. المبلغ أو الشيء المُقدَّم -->
-                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                        <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
                             <VerticalStackLayout Padding="16" Spacing="14">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Grid.Column="0" Text="المبلغ أو الشيء المُقدَّم"
                                            FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
                                     <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
-                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 13">
                                         <Label Text="3" TextColor="White" FontSize="13" FontAttributes="Bold"
                                                HorizontalOptions="Center" VerticalOptions="Center"/>
                                     </Border>
@@ -459,7 +459,7 @@
                                 <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto"
                                       ColumnSpacing="8" RowSpacing="8">
                                     <Border Grid.Row="0" Grid.Column="2"
-                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[0].IsSelected}" Value="True">
                                                 <Setter Property="Stroke" Value="#c8a53a"/>
@@ -486,7 +486,7 @@
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="0" Grid.Column="1"
-                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[1].IsSelected}" Value="True">
                                                 <Setter Property="Stroke" Value="#c8a53a"/>
@@ -513,7 +513,7 @@
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="0" Grid.Column="0"
-                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[2].IsSelected}" Value="True">
                                                 <Setter Property="Stroke" Value="#c8a53a"/>
@@ -540,7 +540,7 @@
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="1" Grid.Column="2"
-                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[3].IsSelected}" Value="True">
                                                 <Setter Property="Stroke" Value="#c8a53a"/>
@@ -567,7 +567,7 @@
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="1" Grid.Column="1"
-                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[4].IsSelected}" Value="True">
                                                 <Setter Property="Stroke" Value="#c8a53a"/>
@@ -594,7 +594,7 @@
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="1" Grid.Column="0"
-                                            StrokeThickness="1.5" CornerRadius="20" Padding="6,9">
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
                                         <Border.Triggers>
                                             <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[5].IsSelected}" Value="True">
                                                 <Setter Property="Stroke" Value="#c8a53a"/>
@@ -614,7 +614,7 @@
                                 </Grid>
                                 <!-- حقل المبلغ -->
                                 <Border StrokeThickness="1.5" Stroke="#e5e7eb"
-                                        CornerRadius="12" Padding="14,10"
+                                        StrokeShape="RoundRectangle 12" Padding="14,10"
                                         BackgroundColor="White">
                                     <Grid ColumnDefinitions="*,Auto">
                                         <Entry Grid.Column="0"
@@ -634,20 +634,20 @@
                         </Border>
 
                         <!-- 4. طريقة المساهمة -->
-                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                        <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
                             <VerticalStackLayout Padding="16" Spacing="10">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Grid.Column="0" Text="طريقة المساهمة"
                                            FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
                                     <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
-                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 13">
                                         <Label Text="4" TextColor="White" FontSize="13" FontAttributes="Bold"
                                                HorizontalOptions="Center" VerticalOptions="Center"/>
                                     </Border>
                                 </Grid>
 
                                 <!-- CCP -->
-                                <Border StrokeThickness="1.5" CornerRadius="14" Padding="14">
+                                <Border StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="14">
                                     <Border.Triggers>
                                         <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[0].IsSelected}" Value="True">
                                             <Setter Property="Stroke" Value="#1a3a5c"/>
@@ -667,12 +667,12 @@
                                                        FontSize="12" TextColor="#6b7280"/>
                                             </VerticalStackLayout>
                                             <Border Grid.Column="1" WidthRequest="34" HeightRequest="34"
-                                                    BackgroundColor="#f3f4f6" StrokeThickness="0" CornerRadius="8">
+                                                    BackgroundColor="#f3f4f6" StrokeThickness="0" StrokeShape="RoundRectangle 8">
                                                 <Label Text="💳" FontSize="16"
                                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                                             </Border>
                                             <Border Grid.Column="2" WidthRequest="20" HeightRequest="20"
-                                                    StrokeThickness="2" CornerRadius="10"
+                                                    StrokeThickness="2" StrokeShape="RoundRectangle 10"
                                                     VerticalOptions="Center">
                                                 <Border.Triggers>
                                                     <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[0].IsSelected}" Value="True">
@@ -689,7 +689,7 @@
                                             </Border>
                                         </Grid>
                                         <!-- معلومات CCP -->
-                                        <Border BackgroundColor="#f0f4ff" StrokeThickness="0" CornerRadius="10"
+                                        <Border BackgroundColor="#f0f4ff" StrokeThickness="0" StrokeShape="RoundRectangle 10"
                                                 Padding="12,10"
                                                 IsVisible="{Binding PaymentMethods[0].IsSelected}">
                                             <VerticalStackLayout Spacing="4">
@@ -721,7 +721,7 @@
                                 </Border>
 
                                 <!-- مكتب البريد -->
-                                <Border StrokeThickness="1.5" CornerRadius="14" Padding="14">
+                                <Border StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="14">
                                     <Border.Triggers>
                                         <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[1].IsSelected}" Value="True">
                                             <Setter Property="Stroke" Value="#1a3a5c"/>
@@ -740,12 +740,12 @@
                                                    FontSize="12" TextColor="#6b7280"/>
                                         </VerticalStackLayout>
                                         <Border Grid.Column="1" WidthRequest="34" HeightRequest="34"
-                                                BackgroundColor="#f3f4f6" StrokeThickness="0" CornerRadius="8">
+                                                BackgroundColor="#f3f4f6" StrokeThickness="0" StrokeShape="RoundRectangle 8">
                                             <Label Text="🏠" FontSize="16"
                                                    HorizontalOptions="Center" VerticalOptions="Center"/>
                                         </Border>
                                         <Border Grid.Column="2" WidthRequest="20" HeightRequest="20"
-                                                StrokeThickness="2" CornerRadius="10" VerticalOptions="Center">
+                                                StrokeThickness="2" StrokeShape="RoundRectangle 10" VerticalOptions="Center">
                                             <Border.Triggers>
                                                 <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[1].IsSelected}" Value="True">
                                                     <Setter Property="Stroke" Value="#1a3a5c"/>
@@ -767,7 +767,7 @@
                                 </Border>
 
                                 <!-- مكتب الجمعية -->
-                                <Border StrokeThickness="1.5" CornerRadius="14" Padding="14">
+                                <Border StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="14">
                                     <Border.Triggers>
                                         <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[2].IsSelected}" Value="True">
                                             <Setter Property="Stroke" Value="#1a3a5c"/>
@@ -787,12 +787,12 @@
                                                        FontSize="12" TextColor="#6b7280"/>
                                             </VerticalStackLayout>
                                             <Border Grid.Column="1" WidthRequest="34" HeightRequest="34"
-                                                    BackgroundColor="#f3f4f6" StrokeThickness="0" CornerRadius="8">
+                                                    BackgroundColor="#f3f4f6" StrokeThickness="0" StrokeShape="RoundRectangle 8">
                                                 <Label Text="📍" FontSize="16"
                                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                                             </Border>
                                             <Border Grid.Column="2" WidthRequest="20" HeightRequest="20"
-                                                    StrokeThickness="2" CornerRadius="10" VerticalOptions="Center">
+                                                    StrokeThickness="2" StrokeShape="RoundRectangle 10" VerticalOptions="Center">
                                                 <Border.Triggers>
                                                     <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[2].IsSelected}" Value="True">
                                                         <Setter Property="Stroke" Value="#1a3a5c"/>
@@ -808,7 +808,7 @@
                                             </Border>
                                         </Grid>
                                         <!-- معلومات المكتب -->
-                                        <Border BackgroundColor="#f0f4ff" StrokeThickness="0" CornerRadius="10"
+                                        <Border BackgroundColor="#f0f4ff" StrokeThickness="0" StrokeShape="RoundRectangle 10"
                                                 Padding="14,12"
                                                 IsVisible="{Binding PaymentMethods[2].IsSelected}">
                                             <VerticalStackLayout Spacing="8">
@@ -852,18 +852,18 @@
                         </Border>
 
                         <!-- 5. رفع وصل الاستلام -->
-                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                        <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
                             <VerticalStackLayout Padding="16" Spacing="14">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Grid.Column="0" Text="رفع وصل الاستلام"
                                            FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
                                     <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
-                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 13">
                                         <Label Text="5" TextColor="White" FontSize="13" FontAttributes="Bold"
                                                HorizontalOptions="Center" VerticalOptions="Center"/>
                                     </Border>
                                 </Grid>
-                                <Border StrokeThickness="2" CornerRadius="14" Padding="28,28">
+                                <Border StrokeThickness="2" StrokeShape="RoundRectangle 14" Padding="28,28">
                                     <Border.Triggers>
                                         <DataTrigger TargetType="Border" Binding="{Binding HasReceipt}" Value="True">
                                             <Setter Property="Stroke" Value="#16a34a"/>
@@ -908,20 +908,20 @@
                     <VerticalStackLayout Spacing="14" IsVisible="{Binding IsStep3}">
 
                         <!-- 1. بيانات المتبرع -->
-                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                        <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
                             <VerticalStackLayout Padding="16" Spacing="14">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Grid.Column="0" Text="بيانات المتبرع"
                                            FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
                                     <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
-                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 13">
                                         <Label Text="1" TextColor="White" FontSize="13" FontAttributes="Bold"
                                                HorizontalOptions="Center" VerticalOptions="Center"/>
                                     </Border>
                                 </Grid>
                                 <VerticalStackLayout Spacing="6">
                                     <Label Text="الاسم الكامل *" FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c"/>
-                                    <Border StrokeThickness="1.5" Stroke="#e5e7eb" CornerRadius="12"
+                                    <Border StrokeThickness="1.5" Stroke="#e5e7eb" StrokeShape="RoundRectangle 12"
                                             Padding="14,0" BackgroundColor="White">
                                         <Entry Text="{Binding DonorName}"
                                                Placeholder="أدخل اسمك الكامل"
@@ -933,7 +933,7 @@
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Spacing="6">
                                     <Label Text="رقم الهاتف *" FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c"/>
-                                    <Border StrokeThickness="1.5" Stroke="#e5e7eb" CornerRadius="12"
+                                    <Border StrokeThickness="1.5" Stroke="#e5e7eb" StrokeShape="RoundRectangle 12"
                                             Padding="14,0" BackgroundColor="White">
                                         <Entry Text="{Binding DonorPhone}"
                                                Placeholder="05XX XX XX XX"
@@ -948,13 +948,13 @@
                         </Border>
 
                         <!-- 2. ملخص المساهمة -->
-                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                        <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
                             <VerticalStackLayout Padding="16" Spacing="0">
                                 <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
                                     <Label Grid.Column="0" Text="ملخص المساهمة"
                                            FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
                                     <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
-                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 13">
                                         <Label Text="2" TextColor="White" FontSize="13" FontAttributes="Bold"
                                                HorizontalOptions="Center" VerticalOptions="Center"/>
                                     </Border>
@@ -991,18 +991,18 @@
                         </Border>
 
                         <!-- 3. ملاحظة -->
-                        <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="16">
+                        <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
                             <VerticalStackLayout Padding="16" Spacing="14">
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Grid.Column="0" Text="ملاحظة إضافية (اختياري)"
                                            FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"/>
                                     <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
-                                            BackgroundColor="#1a3a5c" StrokeThickness="0" CornerRadius="13">
+                                            BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 13">
                                         <Label Text="3" TextColor="White" FontSize="13" FontAttributes="Bold"
                                                HorizontalOptions="Center" VerticalOptions="Center"/>
                                     </Border>
                                 </Grid>
-                                <Border StrokeThickness="1.5" Stroke="#e5e7eb" CornerRadius="12"
+                                <Border StrokeThickness="1.5" Stroke="#e5e7eb" StrokeShape="RoundRectangle 12"
                                         Padding="14,8" BackgroundColor="White">
                                     <Editor Text="{Binding Notes}"
                                             Placeholder="أي معلومة إضافية تودّ إضافتها..."
@@ -1025,7 +1025,7 @@
                                    FontSize="14" TextColor="#6b7280"
                                    HorizontalTextAlignment="Center" LineBreakMode="WordWrap"
                                    MaximumWidthRequest="280"/>
-                            <Border BackgroundColor="White" StrokeThickness="0" CornerRadius="14"
+                            <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 14"
                                     Padding="20,14" HorizontalOptions="Fill">
                                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                                     <Label Text="🔢" FontSize="20" VerticalOptions="Center"/>
