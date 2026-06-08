@@ -126,7 +126,7 @@
                         Padding="18,16" Margin="0,0,0,12">
                     <Label Text="جمعية أصدقاء المريض منظمة إنسانية غير حكومية، تأسست بسكيكدة عام 2002، تسعى إلى تقديم الدعم الطبي والإنساني للمرضى المحتاجين وذويهم، وتعزيز التضامن الاجتماعي في مواجهة المرض."
                            TextColor="#333" FontSize="14" LineBreakMode="WordWrap"
-                           LineHeight="1.7" HorizontalTextAlignment="Right"/>
+                           LineHeight="1.7" HorizontalTextAlignment="End"/>
                 </Border>
 
                 <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="16,8">
@@ -135,7 +135,7 @@
                         <Grid ColumnDefinitions="*,48" Padding="0,12" ColumnSpacing="12">
                             <Label Grid.Column="0" Text="توزيع الأدوية يومياً على المرضى غير القادرين على اقتناءها"
                                    TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
-                                   VerticalOptions="Center" HorizontalTextAlignment="Right"/>
+                                   VerticalOptions="Center" HorizontalTextAlignment="End"/>
                             <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
                                     StrokeThickness="0" StrokeShape="RoundRectangle 12" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label Text="💊" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -146,7 +146,7 @@
                         <Grid ColumnDefinitions="*,48" Padding="0,12" ColumnSpacing="12">
                             <Label Grid.Column="0" Text="متابعة المرضى في منازلهم وتقديم الدعم الميداني لذويهم"
                                    TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
-                                   VerticalOptions="Center" HorizontalTextAlignment="Right"/>
+                                   VerticalOptions="Center" HorizontalTextAlignment="End"/>
                             <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
                                     StrokeThickness="0" StrokeShape="RoundRectangle 12" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label Text="🏠" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -157,7 +157,7 @@
                         <Grid ColumnDefinitions="*,48" Padding="0,12" ColumnSpacing="12">
                             <Label Grid.Column="0" Text="توفير المعدات الطبية والأجهزة الضرورية للمرضى المحتاجين"
                                    TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
-                                   VerticalOptions="Center" HorizontalTextAlignment="Right"/>
+                                   VerticalOptions="Center" HorizontalTextAlignment="End"/>
                             <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
                                     StrokeThickness="0" StrokeShape="RoundRectangle 12" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label Text="🏥" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -168,7 +168,7 @@
                         <Grid ColumnDefinitions="*,48" Padding="0,12" ColumnSpacing="12">
                             <Label Grid.Column="0" Text="تنسيق رحلات العلاج للمرضى خارج الولاية"
                                    TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
-                                   VerticalOptions="Center" HorizontalTextAlignment="Right"/>
+                                   VerticalOptions="Center" HorizontalTextAlignment="End"/>
                             <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
                                     StrokeThickness="0" StrokeShape="RoundRectangle 12" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label Text="✈️" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -179,7 +179,7 @@
                         <Grid ColumnDefinitions="*,48" Padding="0,12" ColumnSpacing="12">
                             <Label Grid.Column="0" Text="شراكة دولية مع فرنسا لاستقبال المعدات الطبية منذ 2004"
                                    TextColor="#333" FontSize="13" LineBreakMode="WordWrap" LineHeight="1.6"
-                                   VerticalOptions="Center" HorizontalTextAlignment="Right"/>
+                                   VerticalOptions="Center" HorizontalTextAlignment="End"/>
                             <Border Grid.Column="1" WidthRequest="44" HeightRequest="44" BackgroundColor="#1a3a5c"
                                     StrokeThickness="0" StrokeShape="RoundRectangle 12" HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label Text="🌍" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -343,10 +343,10 @@
                         <Grid ColumnDefinitions="*,10" Padding="0,12,0,12" ColumnSpacing="10">
                             <VerticalStackLayout Grid.Column="0" Spacing="3">
                                 <Label Text="أكتوبر 2002" TextColor="#c8a53a" FontSize="13"
-                                       FontAttributes="Bold" HorizontalTextAlignment="Right"/>
+                                       FontAttributes="Bold" HorizontalTextAlignment="End"/>
                                 <Label Text="تأسيس الجمعية بسكيكدة بموجب القرار رقم 2002/54"
                                        TextColor="#333" FontSize="13" LineBreakMode="WordWrap"
-                                       HorizontalTextAlignment="Right"/>
+                                       HorizontalTextAlignment="End"/>
                             </VerticalStackLayout>
                             <Ellipse Grid.Column="1" Fill="#c8a53a" WidthRequest="10" HeightRequest="10"
                                      VerticalOptions="Start" Margin="0,5,0,0"/>
@@ -356,10 +356,10 @@
                         <Grid ColumnDefinitions="*,10" Padding="0,12,0,12" ColumnSpacing="10">
                             <VerticalStackLayout Grid.Column="0" Spacing="3">
                                 <Label Text="2004" TextColor="#c8a53a" FontSize="13"
-                                       FontAttributes="Bold" HorizontalTextAlignment="Right"/>
+                                       FontAttributes="Bold" HorizontalTextAlignment="End"/>
                                 <Label Text="انطلاق الشراكة الدولية مع فرنسا واستقبال أولى حاويات المعدات الطبية"
                                        TextColor="#333" FontSize="13" LineBreakMode="WordWrap"
-                                       HorizontalTextAlignment="Right"/>
+                                       HorizontalTextAlignment="End"/>
                             </VerticalStackLayout>
                             <Ellipse Grid.Column="1" Fill="#c8a53a" WidthRequest="10" HeightRequest="10"
                                      VerticalOptions="Start" Margin="0,5,0,0"/>
@@ -369,10 +369,10 @@
                         <Grid ColumnDefinitions="*,10" Padding="0,12,0,12" ColumnSpacing="10">
                             <VerticalStackLayout Grid.Column="0" Spacing="3">
                                 <Label Text="2010 – 2020" TextColor="#c8a53a" FontSize="13"
-                                       FontAttributes="Bold" HorizontalTextAlignment="Right"/>
+                                       FontAttributes="Bold" HorizontalTextAlignment="End"/>
                                 <Label Text="توسيع المتابعة المنزلية ومعالجة آلاف الملفات الصيدلانية وتركيب الزرعات القوقعية"
                                        TextColor="#333" FontSize="13" LineBreakMode="WordWrap"
-                                       HorizontalTextAlignment="Right"/>
+                                       HorizontalTextAlignment="End"/>
                             </VerticalStackLayout>
                             <Ellipse Grid.Column="1" Fill="#c8a53a" WidthRequest="10" HeightRequest="10"
                                      VerticalOptions="Start" Margin="0,5,0,0"/>
@@ -382,10 +382,10 @@
                         <Grid ColumnDefinitions="*,10" Padding="0,12,0,4" ColumnSpacing="10">
                             <VerticalStackLayout Grid.Column="0" Spacing="3">
                                 <Label Text="اليوم" TextColor="#1a3a5c" FontSize="13"
-                                       FontAttributes="Bold" HorizontalTextAlignment="Right"/>
+                                       FontAttributes="Bold" HorizontalTextAlignment="End"/>
                                 <Label Text="أكثر من 10,000 مريض استفاد من خدماتنا ونواصل رسالتنا في جميع بلديات الولاية"
                                        TextColor="#333" FontSize="13" LineBreakMode="WordWrap"
-                                       HorizontalTextAlignment="Right"/>
+                                       HorizontalTextAlignment="End"/>
                             </VerticalStackLayout>
                             <Ellipse Grid.Column="1" Fill="#1a3a5c" WidthRequest="10" HeightRequest="10"
                                      VerticalOptions="Start" Margin="0,5,0,0"/>
