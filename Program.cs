@@ -7,16 +7,22 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Controllers
 builder.Services.AddControllers()
     .AddJsonOptions(x =>
         x.JsonSerializerOptions.ReferenceHandler =
             System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Database
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ── كل الـ Services ──────────────────────
+// Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IVolunteerService, VolunteerService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
@@ -28,7 +34,7 @@ builder.Services.AddScoped<ISyncService, SyncService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IContributionService, ContributionService>();
 
-// ── JWT ──────────────────────────────────
+// JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -48,37 +54,45 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
-        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
 });
 
 var app = builder.Build();
 
-// ── تأكد من إنشاء جداول قاعدة البيانات تلقائياً + Seed بيانات الإدارة ─────
+// Swagger
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// Seed Database
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<AmisduMalade.Data.AppDbContext>();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
 
-    // Seed مستخدم الإدارة الافتراضي إذا لم يكن موجوداً
     if (!db.Users.Any(u => u.Email == "admin@amisdumalade.dz"))
     {
         db.Users.Add(new AmisduMalade.Models.User
         {
-            Id           = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
-            FullName     = "مدير الجمعية",
-            Email        = "admin@amisdumalade.dz",
+            Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"),
+            FullName = "مدير الجمعية",
+            Email = "admin@amisdumalade.dz",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin2024!"),
-            Role         = "Admin",
-            IsActive     = true,
-            CreatedAt    = DateTime.UtcNow
+            Role = "Admin",
+            IsActive = true,
+            CreatedAt = DateTime.UtcNow
         });
+
         db.SaveChanges();
     }
 }
 
 app.UseCors("AllowAll");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
