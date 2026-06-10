@@ -142,9 +142,6 @@
                                 </Grid>
                                 <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
                                       ColumnSpacing="10" RowSpacing="10">
-                                    <BindableLayout.ItemsSource>
-                                        <x:Null/>
-                                    </BindableLayout.ItemsSource>
                                     <!-- هدية عينية -->
                                     <Border Grid.Row="0" Grid.Column="0"
                                             StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14">

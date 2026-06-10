@@ -534,7 +534,8 @@
                         <VerticalStackLayout Spacing="8">
                             <Label Text="⚡ آخر الأنشطة" FontSize="14" FontAttributes="Bold"
                                    TextColor="#1a3a5c"/>
-                            <CollectionView ItemsSource="{Binding RecentActivities}">
+                            <CollectionView ItemsSource="{Binding RecentActivities}"
+                                            HeightRequest="320">
                                 <CollectionView.EmptyView>
                                     <Label Text="لا توجد أنشطة حديثة" FontSize="13"
                                            TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,12"/>
@@ -572,7 +573,8 @@
                                     </Label.GestureRecognizers>
                                 </Label>
                             </Grid>
-                            <CollectionView ItemsSource="{Binding OpenAlertsList}">
+                            <CollectionView ItemsSource="{Binding OpenAlertsList}"
+                                            HeightRequest="260">
                                 <CollectionView.EmptyView>
                                     <Label Text="✅ لا توجد تنبيهات" FontSize="12"
                                            TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,8"/>
@@ -725,7 +727,8 @@
                     </ScrollView>
 
                     <!-- قائمة المتطوعين -->
-                    <CollectionView ItemsSource="{Binding FilteredVolunteers}">
+                    <CollectionView ItemsSource="{Binding FilteredVolunteers}"
+                                    HeightRequest="640">
                         <CollectionView.EmptyView>
                             <Label Text="لا يوجد متطوعون في هذه الفئة" FontSize="13"
                                    TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
@@ -928,7 +931,8 @@
                 <VerticalStackLayout IsVisible="{Binding IsNewRequestsTab}" Spacing="10" Padding="16,16,16,0">
                     <Label Text="{Binding StatPendingRequests, StringFormat='⏳ {0} طلبات تنتظر التعيين'}"
                            FontSize="13" FontAttributes="Bold" TextColor="#b45309"/>
-                    <CollectionView ItemsSource="{Binding NewRequests}">
+                    <CollectionView ItemsSource="{Binding NewRequests}"
+                                    HeightRequest="520">
                         <CollectionView.EmptyView>
                             <Label Text="✅ لا توجد طلبات معلقة" FontSize="13"
                                    TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
@@ -988,7 +992,8 @@
                 <VerticalStackLayout IsVisible="{Binding IsRequestsTab}" Spacing="10" Padding="16,16,16,0">
                     <Label Text="{Binding StatRequests, StringFormat='📋 إجمالي الطلبات: {0}'}"
                            FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c"/>
-                    <CollectionView ItemsSource="{Binding AllRequests}">
+                    <CollectionView ItemsSource="{Binding AllRequests}"
+                                    HeightRequest="640">
                         <CollectionView.EmptyView>
                             <Label Text="لا توجد طلبات" FontSize="13"
                                    TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
@@ -1053,7 +1058,8 @@
                 <VerticalStackLayout IsVisible="{Binding IsPatientsTab}" Spacing="10" Padding="16,16,16,0">
                     <Label Text="{Binding StatPatients, StringFormat='👥 إجمالي المرضى: {0}'}"
                            FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c"/>
-                    <CollectionView ItemsSource="{Binding PatientsList}">
+                    <CollectionView ItemsSource="{Binding PatientsList}"
+                                    HeightRequest="520">
                         <CollectionView.EmptyView>
                             <Label Text="لا يوجد مرضى مسجلون" FontSize="13"
                                    TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
@@ -1098,7 +1104,8 @@
                 <VerticalStackLayout IsVisible="{Binding IsAlertsTab}" Spacing="10" Padding="16,16,16,0">
                     <Label Text="{Binding StatAlerts, StringFormat='🚨 {0} تنبيه مفتوح'}"
                            FontSize="13" FontAttributes="Bold" TextColor="#dc2626"/>
-                    <CollectionView ItemsSource="{Binding OpenAlertsList}">
+                    <CollectionView ItemsSource="{Binding OpenAlertsList}"
+                                    HeightRequest="420">
                         <CollectionView.EmptyView>
                             <Border BackgroundColor="#dcfce7" StrokeThickness="0" Padding="16">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
@@ -1260,7 +1267,8 @@
                     </Border>
 
                     <!-- قائمة المساهمات -->
-                    <CollectionView ItemsSource="{Binding ContributionsList}">
+                    <CollectionView ItemsSource="{Binding ContributionsList}"
+                                    HeightRequest="520">
                         <CollectionView.EmptyView>
                             <Label Text="لا توجد مساهمات مسجلة" FontSize="13"
                                    TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
