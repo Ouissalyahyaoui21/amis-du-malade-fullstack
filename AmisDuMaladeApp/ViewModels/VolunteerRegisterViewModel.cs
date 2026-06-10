@@ -231,6 +231,8 @@ public partial class VolunteerRegisterViewModel : BaseViewModel
                 {
                     { DevicePlatform.Android, new[] { "image/*", "application/pdf" } },
                     { DevicePlatform.iOS,     new[] { "public.image", "com.adobe.pdf" } },
+                    { DevicePlatform.WinUI,   new[] { ".jpg", ".jpeg", ".png", ".pdf" } },
+                    { DevicePlatform.MacCatalyst, new[] { "public.image", "com.adobe.pdf" } },
                 }),
                 PickerTitle = "بطاقة التعريف الوطنية"
             });

@@ -87,6 +87,19 @@
                                  Padding="18,8,18,28"
                                  Spacing="16">
 
+                <!-- ── رسالة الخطأ ────────────────────────────────────── -->
+                <Border IsVisible="{Binding HasError}"
+                        BackgroundColor="#fef2f2" Stroke="#fecaca"
+                        StrokeThickness="1" StrokeShape="RoundRectangle 10"
+                        Padding="14,10" Margin="0,4,0,0">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="⚠️" FontSize="14" VerticalOptions="Start"/>
+                        <Label Text="{Binding ErrorMessage}" FontSize="13" TextColor="#dc2626"
+                               FontAttributes="Bold" LineBreakMode="WordWrap"
+                               HorizontalOptions="FillAndExpand"/>
+                    </HorizontalStackLayout>
+                </Border>
+
                 <!-- ── Step indicator ─────────────────────────────────────── -->
                 <Grid ColumnDefinitions="Auto,*,Auto,*,Auto,*,Auto"
                       Margin="4,0">
