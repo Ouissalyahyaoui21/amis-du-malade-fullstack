@@ -55,7 +55,7 @@
                     </Border.StrokeShape>
                     <Image Source="logo.png"
                            WidthRequest="96" HeightRequest="96"
-                           Aspect="AspectFit"
+                           Aspect="AspectFill"
                            HorizontalOptions="Center" VerticalOptions="Center"/>
                 </Border>
 

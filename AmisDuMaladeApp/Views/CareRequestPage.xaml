@@ -43,7 +43,7 @@
                             Shadow="{Shadow Brush=Black, Offset='0,3', Radius=8, Opacity=0.25}">
                         <Image Source="logo.png"
                                HeightRequest="58" WidthRequest="58"
-                               Aspect="AspectFit"
+                               Aspect="AspectFill"
                                HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Border>
                 </Grid>
