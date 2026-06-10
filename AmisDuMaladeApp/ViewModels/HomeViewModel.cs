@@ -50,7 +50,7 @@ public partial class HomeViewModel : BaseViewModel
 
     [RelayCommand]
     private async Task OpenFacebook() =>
-        await Launcher.OpenAsync("https://www.facebook.com/");
+        await Launcher.OpenAsync(AppConstants.FacebookUrl);
 
     [RelayCommand]
     private void SetLanguage(string lang)

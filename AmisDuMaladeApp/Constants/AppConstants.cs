@@ -11,5 +11,8 @@ public static class AppConstants
     public const string TokenKey        = "auth_token";
     public const string LanguageKey     = "app_language";
     public const string DefaultLanguage = "ar";
-    public const string WhatsAppNumber  = "213561000000";  // رقم جمعية أصدقاء المريض
+    public const string WhatsAppNumber  = "213667476967";  // واتساب جمعية أصدقاء المريض سكيكدة
+    public const string PhoneNumber     = "0780422194";    // هاتف الجمعية
+    public const string ContactEmail    = "lam_skikda@yahoo.fr";
+    public const string FacebookUrl     = "https://www.facebook.com/profile.php?id=jami3atAssdiqaeAlmardSkikda"; // TODO: استبدل بالرابط الصحيح
 }

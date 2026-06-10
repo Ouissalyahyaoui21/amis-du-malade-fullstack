@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.Input;
+using AmisDuMaladeApp.Constants;
 using AmisDuMaladeApp.Services;
 
 namespace AmisDuMaladeApp.ViewModels;
@@ -18,5 +19,5 @@ public partial class AboutViewModel : BaseViewModel
 
     [RelayCommand]
     private async Task OpenFacebook() =>
-        await Launcher.OpenAsync("https://www.facebook.com/");
+        await Launcher.OpenAsync(AppConstants.FacebookUrl);
 }
