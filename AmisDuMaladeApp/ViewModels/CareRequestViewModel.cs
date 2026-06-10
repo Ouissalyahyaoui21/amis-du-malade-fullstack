@@ -174,6 +174,10 @@ public partial class CareRequestViewModel : BaseViewModel
 
     // ── Navigation ───────────────────────────────────────────────────────────
     [RelayCommand]
+    private async Task GoHome() =>
+        await Shell.Current.GoToAsync("//HomePage");
+
+    [RelayCommand]
     private void NextStep()
     {
         if (!ValidateStep()) return;

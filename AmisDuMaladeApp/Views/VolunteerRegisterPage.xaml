@@ -59,6 +59,18 @@
                                TextColor="White" FontSize="13"/>
                     </Border>
                 </VerticalStackLayout>
+
+                <!-- زر الرجوع -->
+                <Border WidthRequest="36" HeightRequest="36"
+                        BackgroundColor="#26ffffff" StrokeThickness="0" StrokeShape="RoundRectangle 10"
+                        HorizontalOptions="End" VerticalOptions="Start">
+                    <Label Text="‹" TextColor="White" FontSize="22"
+                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoHomeCommand}"/>
+                    </Border.GestureRecognizers>
+                </Border>
+
             </Grid>
 
             <!-- Wave transition -->
