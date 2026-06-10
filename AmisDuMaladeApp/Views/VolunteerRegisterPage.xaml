@@ -339,7 +339,7 @@
                                 </Border.Triggers>
                                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                     <Label Text="📋" FontSize="16" VerticalOptions="Center"/>
-                                    <Label Text="مطلق / مطلقة" TextColor="#1a3a5c"
+                                    <Label Text="مطلقة" TextColor="#1a3a5c"
                                            FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
                                 <Border.GestureRecognizers>
@@ -366,7 +366,7 @@
                                 </Border.Triggers>
                                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                     <Label Text="🕊️" FontSize="16" VerticalOptions="Center"/>
-                                    <Label Text="أرمل / أرملة" TextColor="#1a3a5c"
+                                    <Label Text="أرملة" TextColor="#1a3a5c"
                                            FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
                                 <Border.GestureRecognizers>
