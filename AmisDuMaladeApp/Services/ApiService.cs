@@ -13,7 +13,11 @@ public class ApiService
     public ApiService(AuthTokenService auth)
     {
         _auth = auth;
-        _http = new HttpClient { BaseAddress = new Uri(AppConstants.BaseUrl) };
+        _http = new HttpClient
+        {
+            BaseAddress = new Uri(AppConstants.BaseUrl),
+            Timeout     = TimeSpan.FromSeconds(15)
+        };
     }
 
     private void SetAuthHeader()

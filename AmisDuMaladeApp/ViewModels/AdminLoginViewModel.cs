@@ -99,7 +99,7 @@ public partial class AdminLoginViewModel : BaseViewModel
                 _failedAttempts++;
                 if (_failedAttempts >= 5)
                 {
-                    SetLoginError("تم تأمين الحساب مؤقتاً. أعد المحاولة بعد قليل.");
+                    SetLoginError("تم تأمين الحساب لمدة 5 دقائق بسبب محاولات خاطئة متعددة.");
                     ShowAttemptsWarning = false;
                     IsLocked = true;
                     _ = Task.Delay(TimeSpan.FromMinutes(5)).ContinueWith(_ =>

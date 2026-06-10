@@ -50,8 +50,7 @@
                             BackgroundColor="White" StrokeShape="Ellipse"
                             StrokeThickness="2" Stroke="#c8a53a"
                             HeightRequest="68" WidthRequest="68"
-                            VerticalOptions="Start"
-                            Shadow="{Shadow Brush=Black, Offset='0,3', Radius=8, Opacity=0.25}">
+                            VerticalOptions="Start">
                         <Image Source="logo.png"
                                HeightRequest="58" WidthRequest="58"
                                Aspect="AspectFill"
@@ -662,7 +661,6 @@
                     <!-- Reference number -->
                     <Border BackgroundColor="White" StrokeShape="RoundRectangle 14"
                             StrokeThickness="1.5" Stroke="#e2e8f0"
-                            Shadow="{Shadow Brush=Black, Offset='0,2', Radius=6, Opacity=0.06}"
                             Padding="16,14">
                         <Grid ColumnDefinitions="Auto,*">
                             <Label Grid.Column="0" Text="🔢" FontSize="20" VerticalOptions="Center"/>
