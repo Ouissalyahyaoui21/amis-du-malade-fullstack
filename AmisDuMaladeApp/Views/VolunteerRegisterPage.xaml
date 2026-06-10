@@ -49,7 +49,7 @@
                            TextColor="#c8a53a"
                            FontSize="12"
                            HorizontalOptions="Center"/>
-                    <Border BackgroundColor="#ffffff18"
+                    <Border BackgroundColor="#18ffffff"
                             StrokeShape="RoundRectangle 20"
                             StrokeThickness="0"
                             HorizontalOptions="Center"
