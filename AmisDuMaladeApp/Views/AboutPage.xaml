@@ -39,7 +39,7 @@
                     <Border.StrokeShape><Ellipse/></Border.StrokeShape>
                     <Image Source="logo.png"
                            WidthRequest="94" HeightRequest="94"
-                           Aspect="AspectFit"
+                           Aspect="AspectFill"
                            HorizontalOptions="Center" VerticalOptions="Center"/>
                 </Border>
 

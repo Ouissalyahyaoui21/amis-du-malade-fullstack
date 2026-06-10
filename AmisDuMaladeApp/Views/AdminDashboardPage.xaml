@@ -19,7 +19,7 @@
             <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
                 <Border WidthRequest="36" HeightRequest="36" StrokeThickness="2" Stroke="#c8a53a">
                     <Border.StrokeShape><Ellipse/></Border.StrokeShape>
-                    <Image Source="logo.png" Aspect="AspectFit"/>
+                    <Image Source="logo.png" Aspect="AspectFill"/>
                 </Border>
                 <VerticalStackLayout Spacing="1" VerticalOptions="Center">
                     <Label Text="أصدقاء المريض" FontSize="13" FontAttributes="Bold" TextColor="White"/>

@@ -23,7 +23,7 @@
                             Stroke="#c8a53a">
                         <Border.StrokeShape><Ellipse/></Border.StrokeShape>
                         <Image Source="logo.png" WidthRequest="44" HeightRequest="44"
-                               Aspect="AspectFit"
+                               Aspect="AspectFill"
                                HorizontalOptions="Center" VerticalOptions="Center"/>
                     </Border>
                     <VerticalStackLayout VerticalOptions="Center" Spacing="2">
