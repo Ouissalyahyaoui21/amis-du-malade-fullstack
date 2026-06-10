@@ -14,5 +14,5 @@ public static class AppConstants
     public const string WhatsAppNumber  = "213667476967";  // واتساب جمعية أصدقاء المريض سكيكدة
     public const string PhoneNumber     = "0780422194";    // هاتف الجمعية
     public const string ContactEmail    = "lam_skikda@yahoo.fr";
-    public const string FacebookUrl     = "https://www.facebook.com/profile.php?id=jami3atAssdiqaeAlmardSkikda"; // TODO: استبدل بالرابط الصحيح
+    public const string FacebookUrl     = "https://www.facebook.com/profile.php?id=100063806393009";
 }

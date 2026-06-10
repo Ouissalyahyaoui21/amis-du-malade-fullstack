@@ -191,6 +191,9 @@
                     </Border>
                     <Border Grid.Column="1"
                             BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenAboutCommand}"/>
+                        </Border.GestureRecognizers>
                         <VerticalStackLayout Spacing="8" Padding="18,18,18,18" HorizontalOptions="Center">
                             <Border WidthRequest="44" HeightRequest="44"
                                     BackgroundColor="#f0f4f8"
@@ -202,9 +205,6 @@
                             <Label Text="{Binding AboutLabel}"
                                    TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold"
                                    HorizontalTextAlignment="Center"/>
-                            <VerticalStackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenAboutCommand}"/>
-                            </VerticalStackLayout.GestureRecognizers>
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
