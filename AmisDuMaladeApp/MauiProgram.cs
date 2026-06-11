@@ -18,6 +18,15 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+#if WINDOWS
+        builder.ConfigureMauiHandlers(static h =>
+        {
+            h.AddHandler<Microsoft.Maui.Controls.Window, Platforms.Windows.TitleBarLtrWindowHandler>();
+            h.AddHandler<Microsoft.Maui.Controls.Border, Platforms.Windows.HandCursorBorderHandler>();
+            h.AddHandler<Microsoft.Maui.Controls.Label,  Platforms.Windows.HandCursorLabelHandler>();
+        });
+#endif
+
         // ── Services (order matters: AuthToken first, ApiService depends on it) ──
         builder.Services.AddSingleton<LocalizationService>();
         builder.Services.AddSingleton<AuthTokenService>();
