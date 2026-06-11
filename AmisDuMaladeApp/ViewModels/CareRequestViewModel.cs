@@ -292,7 +292,7 @@ public partial class CareRequestViewModel : BaseViewModel
             }
             else
             {
-                await Shell.Current.DisplayAlert(
+                await Shell.Current.DisplayAlertAsync(
                     "تعذّر إرسال الطلب",
                     "تأكد من اتصال الجهاز بالإنترنت وأن خادم التطبيق يعمل، ثم أعد المحاولة.\n\nإذا استمرت المشكلة، تواصل معنا مباشرة عبر الواتساب.",
                     "حسناً");
