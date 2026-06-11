@@ -292,7 +292,10 @@ public partial class CareRequestViewModel : BaseViewModel
             }
             else
             {
-                await ShowErrorAsync("فشل إرسال الطلب. تحقق من الاتصال وأعد المحاولة.");
+                await Shell.Current.DisplayAlert(
+                    "تعذّر إرسال الطلب",
+                    "تأكد من اتصال الجهاز بالإنترنت وأن خادم التطبيق يعمل، ثم أعد المحاولة.\n\nإذا استمرت المشكلة، تواصل معنا مباشرة عبر الواتساب.",
+                    "حسناً");
             }
         }
         finally { IsBusy = false; }
