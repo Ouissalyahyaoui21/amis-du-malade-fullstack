@@ -15,7 +15,7 @@
             <VerticalStackLayout BackgroundColor="#1a3a5c" Spacing="0">
 
                 <!-- شريط التنقل -->
-                <Grid Padding="20,52,20,12" ColumnDefinitions="Auto,*">
+                <Grid Padding="20,52,20,12" ColumnDefinitions="Auto,*,Auto">
                     <Label Grid.Column="0"
                            Text="رجوع"
                            TextColor="#c8a53a" FontSize="15" FontAttributes="Bold"
@@ -28,6 +28,8 @@
                            Text="{Binding PageTitle}"
                            TextColor="White" FontSize="17" FontAttributes="Bold"
                            HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                    <!-- عمود ثالث فارغ لتوسيط العنوان تماماً -->
+                    <BoxView Grid.Column="2" WidthRequest="60" Color="Transparent"/>
                 </Grid>
 
                 <!-- شعار الجمعية -->
@@ -53,17 +55,18 @@
                        HorizontalTextAlignment="Center" Margin="0,0,0,14"/>
 
                 <!-- الشعار الكتابي -->
-                <Grid ColumnDefinitions="3,*" Margin="24,0,24,14" BackgroundColor="#10ffffff">
-                    <BoxView Grid.Column="0" BackgroundColor="#c8a53a" CornerRadius="2"/>
-                    <VerticalStackLayout Grid.Column="1" Padding="12,10" Spacing="2">
-                        <Label Text="&quot;من أجل بعث الأمل... وتخفيف الألم..."
-                               TextColor="#ccddf0" FontSize="12" FontAttributes="Italic"
-                               HorizontalTextAlignment="End"/>
-                        <Label Text="اليوم هو وغداً... ربما أنا أو أنت&quot;"
-                               TextColor="#ccddf0" FontSize="12" FontAttributes="Italic"
-                               HorizontalTextAlignment="End"/>
+                <Border BackgroundColor="#18ffffff" StrokeThickness="1" Stroke="#40c8a53a"
+                        StrokeShape="RoundRectangle 12"
+                        Margin="20,0,20,14" Padding="16,14">
+                    <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                        <Label Text="&quot; من أجل بعث الأمل... وتخفيف الألم..."
+                               TextColor="#e8f4ff" FontSize="15" FontAttributes="Italic"
+                               HorizontalTextAlignment="Center"/>
+                        <Label Text="اليوم هو وغداً... ربما أنا أو أنت &quot;"
+                               TextColor="#c8a53a" FontSize="15" FontAttributes="Italic"
+                               HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
-                </Grid>
+                </Border>
 
                 <!-- شارة التأسيس -->
                 <Border BackgroundColor="#18c8a53a" StrokeThickness="1" Stroke="#50c8a53a"
