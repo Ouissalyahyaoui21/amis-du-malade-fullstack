@@ -8,7 +8,9 @@ public class HandCursorLabelHandler : LabelHandler
     protected override void ConnectHandler(TextBlock platformView)
     {
         base.ConnectHandler(platformView);
-        if (VirtualView is Microsoft.Maui.Controls.Label label && label.GestureRecognizers.Count > 0)
+        if (VirtualView is Microsoft.Maui.Controls.Label labelView && labelView.GestureRecognizers.Count > 0)
+        {
             CursorHelper.ApplyHandCursor(platformView);
+        }
     }
 }
