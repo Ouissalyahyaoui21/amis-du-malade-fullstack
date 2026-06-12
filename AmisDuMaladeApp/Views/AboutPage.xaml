@@ -73,34 +73,10 @@
                            HorizontalTextAlignment="Center"/>
                 </Border>
 
-                <!-- شريط الإحصاءات -->
-                <Grid ColumnDefinitions="*,1,*,1,*" BackgroundColor="#0d2440">
-                    <VerticalStackLayout Grid.Column="0" Padding="4,14" HorizontalOptions="Center" Spacing="3">
-                        <Label Text="+10,000" TextColor="#c8a53a" FontSize="20" FontAttributes="Bold"
-                               HorizontalTextAlignment="Center"/>
-                        <Label Text="مريض استفاد" TextColor="#80b0cc" FontSize="11"
-                               HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
-                    <BoxView Grid.Column="1" BackgroundColor="#25ffffff"/>
-                    <VerticalStackLayout Grid.Column="2" Padding="4,14" HorizontalOptions="Center" Spacing="3">
-                        <Label Text="+4,000" TextColor="#c8a53a" FontSize="20" FontAttributes="Bold"
-                               HorizontalTextAlignment="Center"/>
-                        <Label Text="ملف صيدلاني" TextColor="#80b0cc" FontSize="11"
-                               HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
-                    <BoxView Grid.Column="3" BackgroundColor="#25ffffff"/>
-                    <VerticalStackLayout Grid.Column="4" Padding="4,14" HorizontalOptions="Center" Spacing="3">
-                        <Label Text="30" TextColor="#c8a53a" FontSize="20" FontAttributes="Bold"
-                               HorizontalTextAlignment="Center"/>
-                        <Label Text="طفل أصم بزرعة" TextColor="#80b0cc" FontSize="11"
-                               HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
-                </Grid>
-
             </VerticalStackLayout>
 
             <!-- موجة الانتقال -->
-            <Grid HeightRequest="28" BackgroundColor="#0d2440">
+            <Grid HeightRequest="28" BackgroundColor="#1a3a5c">
                 <Border BackgroundColor="#f2ede6"
                         StrokeThickness="0"
                         VerticalOptions="End" HeightRequest="28">
@@ -188,73 +164,6 @@
                     </VerticalStackLayout>
                 </Border>
 
-            </VerticalStackLayout>
-
-            <!-- ══ الإنجازات ══ -->
-            <VerticalStackLayout Padding="18,0,18,0" Spacing="0">
-
-                <Grid ColumnDefinitions="*,Auto" Margin="0,24,0,12">
-                    <Label Grid.Column="0" Text="🏆  إنجازاتنا"
-                           TextColor="#1a3a5c" FontSize="17" FontAttributes="Bold" VerticalOptions="Center"/>
-                    <BoxView Grid.Column="1" BackgroundColor="#c8a53a"
-                             HeightRequest="3" WidthRequest="60" VerticalOptions="Center" CornerRadius="2"/>
-                </Grid>
-
-                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto" RowSpacing="12">
-
-                    <Border Grid.Row="0" Grid.Column="0" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 14">
-                        <VerticalStackLayout Spacing="0">
-                            <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
-                            <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
-                                <Label Text="❤️" FontSize="28" HorizontalTextAlignment="Center"/>
-                                <Label Text="+10,000" TextColor="#1a3a5c" FontSize="19"
-                                       FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                                <Label Text="مريض استفاد من خدماتنا" TextColor="#888" FontSize="11"
-                                       HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
-                            </VerticalStackLayout>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <Border Grid.Row="0" Grid.Column="1" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 14">
-                        <VerticalStackLayout Spacing="0">
-                            <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
-                            <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
-                                <Label Text="📋" FontSize="28" HorizontalTextAlignment="Center"/>
-                                <Label Text="+4,000" TextColor="#1a3a5c" FontSize="19"
-                                       FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                                <Label Text="ملف صيدلاني مُعالَج" TextColor="#888" FontSize="11"
-                                       HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
-                            </VerticalStackLayout>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <Border Grid.Row="1" Grid.Column="0" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 14">
-                        <VerticalStackLayout Spacing="0">
-                            <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
-                            <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
-                                <Label Text="👂" FontSize="28" HorizontalTextAlignment="Center"/>
-                                <Label Text="30" TextColor="#1a3a5c" FontSize="19"
-                                       FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                                <Label Text="طفل أصم بزرعة قوقعة" TextColor="#888" FontSize="11"
-                                       HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
-                            </VerticalStackLayout>
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <Border Grid.Row="1" Grid.Column="1" BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 14">
-                        <VerticalStackLayout Spacing="0">
-                            <BoxView BackgroundColor="#c8a53a" HeightRequest="3"/>
-                            <VerticalStackLayout Padding="12,12" Spacing="5" HorizontalOptions="Center">
-                                <Label Text="🚢" FontSize="28" HorizontalTextAlignment="Center"/>
-                                <Label Text="+6" TextColor="#1a3a5c" FontSize="19"
-                                       FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                                <Label Text="حاويات معدات طبية من فرنسا" TextColor="#888" FontSize="11"
-                                       HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
-                            </VerticalStackLayout>
-                        </VerticalStackLayout>
-                    </Border>
-
-                </Grid>
             </VerticalStackLayout>
 
             <!-- ══ القيم ══ -->

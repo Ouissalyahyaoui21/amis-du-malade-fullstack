@@ -58,6 +58,85 @@
                     <Label Text="🤝 انضم إلى فريقنا" TextColor="White" FontSize="12"/>
                 </Border>
 
+                <!-- مؤشر الخطوات — داخل الهيدر -->
+                <Grid ColumnDefinitions="Auto,*,Auto,*,Auto,*,Auto"
+                      Margin="4,12,4,0">
+
+                    <!-- Step 4 (الوثائق) — leftmost in RTL -->
+                    <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="4">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="40" WidthRequest="40"
+                                BackgroundColor="{Binding Step4Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step4Text}"
+                                   TextColor="White" FontSize="15" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="{Binding Step4Label}" TextColor="White"
+                               FontSize="10" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Line 3-4 -->
+                    <BoxView Grid.Column="1"
+                             HeightRequest="2" VerticalOptions="Start"
+                             Margin="0,20,0,0"
+                             Color="{Binding Line34Color}"/>
+
+                    <!-- Step 3 (المهارات) -->
+                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="4">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="40" WidthRequest="40"
+                                BackgroundColor="{Binding Step3Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step3Text}"
+                                   TextColor="White" FontSize="15" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="{Binding Step3Label}" TextColor="White"
+                               FontSize="10" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Line 2-3 -->
+                    <BoxView Grid.Column="3"
+                             HeightRequest="2" VerticalOptions="Start"
+                             Margin="0,20,0,0"
+                             Color="{Binding Line23Color}"/>
+
+                    <!-- Step 2 (التوفر) -->
+                    <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center" Spacing="4">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="40" WidthRequest="40"
+                                BackgroundColor="{Binding Step2Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step2Text}"
+                                   TextColor="White" FontSize="15" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="{Binding Step2Label}" TextColor="White"
+                               FontSize="10" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Line 1-2 -->
+                    <BoxView Grid.Column="5"
+                             HeightRequest="2" VerticalOptions="Start"
+                             Margin="0,20,0,0"
+                             Color="{Binding Line12Color}"/>
+
+                    <!-- Step 1 (المعلومات) — rightmost in RTL -->
+                    <VerticalStackLayout Grid.Column="6" HorizontalOptions="Center" Spacing="4">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="40" WidthRequest="40"
+                                BackgroundColor="{Binding Step1Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step1Text}"
+                                   TextColor="White" FontSize="15" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="{Binding Step1Label}" TextColor="White"
+                               FontSize="10" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Grid>
+
             </VerticalStackLayout>
 
             <!-- Wave transition -->
@@ -87,89 +166,6 @@
                                HorizontalOptions="FillAndExpand"/>
                     </HorizontalStackLayout>
                 </Border>
-
-                <!-- ── Step indicator ─────────────────────────────────────── -->
-                <Grid ColumnDefinitions="Auto,*,Auto,*,Auto,*,Auto"
-                      Margin="4,0">
-
-                    <!-- Step 4 (الوثائق) — leftmost in RTL -->
-                    <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="4">
-                        <Border StrokeShape="Ellipse" StrokeThickness="0"
-                                HeightRequest="40" WidthRequest="40"
-                                BackgroundColor="{Binding Step4Bg}"
-                                HorizontalOptions="Center">
-                            <Label Text="{Binding Step4Text}"
-                                   TextColor="White" FontSize="15" FontAttributes="Bold"
-                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </Border>
-                        <Label Text="{Binding Step4Label}"
-                               TextColor="{Binding Step4Bg}"
-                               FontSize="10" HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-
-                    <!-- Line 3-4 -->
-                    <BoxView Grid.Column="1"
-                             HeightRequest="2" VerticalOptions="Start"
-                             Margin="0,20,0,0"
-                             Color="{Binding Line34Color}"/>
-
-                    <!-- Step 3 (المهارات) -->
-                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="4">
-                        <Border StrokeShape="Ellipse" StrokeThickness="0"
-                                HeightRequest="40" WidthRequest="40"
-                                BackgroundColor="{Binding Step3Bg}"
-                                HorizontalOptions="Center">
-                            <Label Text="{Binding Step3Text}"
-                                   TextColor="White" FontSize="15" FontAttributes="Bold"
-                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </Border>
-                        <Label Text="{Binding Step3Label}"
-                               TextColor="{Binding Step3Bg}"
-                               FontSize="10" HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-
-                    <!-- Line 2-3 -->
-                    <BoxView Grid.Column="3"
-                             HeightRequest="2" VerticalOptions="Start"
-                             Margin="0,20,0,0"
-                             Color="{Binding Line23Color}"/>
-
-                    <!-- Step 2 (التوفر) -->
-                    <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center" Spacing="4">
-                        <Border StrokeShape="Ellipse" StrokeThickness="0"
-                                HeightRequest="40" WidthRequest="40"
-                                BackgroundColor="{Binding Step2Bg}"
-                                HorizontalOptions="Center">
-                            <Label Text="{Binding Step2Text}"
-                                   TextColor="White" FontSize="15" FontAttributes="Bold"
-                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </Border>
-                        <Label Text="{Binding Step2Label}"
-                               TextColor="{Binding Step2Bg}"
-                               FontSize="10" HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-
-                    <!-- Line 1-2 -->
-                    <BoxView Grid.Column="5"
-                             HeightRequest="2" VerticalOptions="Start"
-                             Margin="0,20,0,0"
-                             Color="{Binding Line12Color}"/>
-
-                    <!-- Step 1 (المعلومات) — rightmost in RTL -->
-                    <VerticalStackLayout Grid.Column="6" HorizontalOptions="Center" Spacing="4">
-                        <Border StrokeShape="Ellipse" StrokeThickness="0"
-                                HeightRequest="40" WidthRequest="40"
-                                BackgroundColor="{Binding Step1Bg}"
-                                HorizontalOptions="Center">
-                            <Label Text="{Binding Step1Text}"
-                                   TextColor="White" FontSize="15" FontAttributes="Bold"
-                                   HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </Border>
-                        <Label Text="{Binding Step1Label}"
-                               TextColor="{Binding Step1Bg}"
-                               FontSize="10" HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-                </Grid>
 
                 <!-- ════════════════════════════════════════════════════════
                      STEP 1 — المعلومات الشخصية

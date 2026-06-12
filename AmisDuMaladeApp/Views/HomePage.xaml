@@ -15,34 +15,6 @@
             <!-- ══ HEADER ══ -->
             <VerticalStackLayout BackgroundColor="#1a3a5c" Padding="20,52,20,0" Spacing="0">
 
-                <!-- مبدّل اللغة -->
-                <HorizontalStackLayout Spacing="6" HorizontalOptions="Start" Margin="0,0,0,12">
-                    <Button Text="ع"
-                            Command="{Binding SetLanguageCommand}"
-                            CommandParameter="ar"
-                            BackgroundColor="{Binding ArBtnBg}" TextColor="White"
-                            FontSize="13" FontAttributes="Bold"
-                            CornerRadius="14" HeightRequest="28" WidthRequest="36"
-                            Padding="0"
-                            BorderColor="#40ffffff" BorderWidth="1"/>
-                    <Button Text="Fr"
-                            Command="{Binding SetLanguageCommand}"
-                            CommandParameter="fr"
-                            BackgroundColor="{Binding FrBtnBg}" TextColor="White"
-                            FontSize="11" FontAttributes="Bold"
-                            CornerRadius="14" HeightRequest="28" WidthRequest="36"
-                            Padding="0"
-                            BorderColor="#40ffffff" BorderWidth="1"/>
-                    <Button Text="En"
-                            Command="{Binding SetLanguageCommand}"
-                            CommandParameter="en"
-                            BackgroundColor="{Binding EnBtnBg}" TextColor="White"
-                            FontSize="11" FontAttributes="Bold"
-                            CornerRadius="14" HeightRequest="28" WidthRequest="36"
-                            Padding="0"
-                            BorderColor="#40ffffff" BorderWidth="1"/>
-                </HorizontalStackLayout>
-
                 <!-- الشعار -->
                 <Border
                     WidthRequest="110" HeightRequest="110"

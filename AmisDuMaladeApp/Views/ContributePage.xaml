@@ -54,6 +54,57 @@
                        FontSize="14" FontAttributes="Bold"/>
             </Border>
 
+            <!-- مؤشر الخطوات — داخل الهيدر -->
+            <VerticalStackLayout Spacing="4" Margin="4,12,4,0">
+                <Grid ColumnDefinitions="38,*,38,*,38" VerticalOptions="Center">
+                    <!-- خطوة 1 ✓ -->
+                    <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                            BackgroundColor="{Binding Sc1Bg}" StrokeThickness="0" StrokeShape="RoundRectangle 19">
+                        <Label Text="✓" TextColor="White" FontSize="15" FontAttributes="Bold"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <BoxView Grid.Column="1" HeightRequest="3" BackgroundColor="{Binding Line12}"
+                             VerticalOptions="Center" CornerRadius="2"/>
+                    <!-- خطوة 2 -->
+                    <Border Grid.Column="2" WidthRequest="38" HeightRequest="38"
+                            BackgroundColor="{Binding Sc2Bg}" StrokeThickness="0" StrokeShape="RoundRectangle 19">
+                        <Label Text="{Binding Sc2Text}" TextColor="White"
+                               FontSize="15" FontAttributes="Bold"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <BoxView Grid.Column="3" HeightRequest="3"
+                             BackgroundColor="{Binding Line23}"
+                             VerticalOptions="Center" CornerRadius="2"/>
+                    <!-- خطوة 3 -->
+                    <Border Grid.Column="4" WidthRequest="38" HeightRequest="38"
+                            BackgroundColor="{Binding Sc3Bg}" StrokeThickness="0" StrokeShape="RoundRectangle 19">
+                        <Label Text="{Binding Sc3Text}" TextColor="White"
+                               FontSize="15" FontAttributes="Bold"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                </Grid>
+                <Grid ColumnDefinitions="38,*,38,*,38">
+                    <Label Grid.Column="0" Text="النوع" FontSize="11"
+                           TextColor="White" FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"/>
+                    <Label Grid.Column="2" Text="التفاصيل" FontSize="11"
+                           TextColor="White" FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"
+                           IsVisible="{Binding IsStep2}"/>
+                    <Label Grid.Column="2" Text="التفاصيل" FontSize="11"
+                           TextColor="White" FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"
+                           IsVisible="{Binding IsStep3}"/>
+                    <Label Grid.Column="4" Text="الإرسال" FontSize="11"
+                           TextColor="#80b0cc" HorizontalTextAlignment="Center"
+                           IsVisible="{Binding IsStep2}"/>
+                    <Label Grid.Column="4" Text="الإرسال" FontSize="11"
+                           TextColor="White" FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"
+                           IsVisible="{Binding IsStep3}"/>
+                </Grid>
+            </VerticalStackLayout>
+
         </VerticalStackLayout>
 
         <!-- ══ CONTENT ══ -->
@@ -72,57 +123,6 @@
                 </Grid>
 
                 <VerticalStackLayout Padding="14,16,14,16" Spacing="14">
-
-                    <!-- مؤشر الخطوات -->
-                    <VerticalStackLayout Spacing="4" Margin="4,0">
-                        <Grid ColumnDefinitions="38,*,38,*,38" VerticalOptions="Center">
-                            <!-- خطوة 1 ✓ -->
-                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
-                                    BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 19">
-                                <Label Text="✓" TextColor="White" FontSize="15" FontAttributes="Bold"
-                                       HorizontalOptions="Center" VerticalOptions="Center"/>
-                            </Border>
-                            <BoxView Grid.Column="1" HeightRequest="3" BackgroundColor="#1a3a5c"
-                                     VerticalOptions="Center" CornerRadius="2"/>
-                            <!-- خطوة 2 -->
-                            <Border Grid.Column="2" WidthRequest="38" HeightRequest="38"
-                                    BackgroundColor="{Binding Sc2Bg}" StrokeThickness="0" StrokeShape="RoundRectangle 19">
-                                <Label Text="{Binding Sc2Text}" TextColor="White"
-                                       FontSize="15" FontAttributes="Bold"
-                                       HorizontalOptions="Center" VerticalOptions="Center"/>
-                            </Border>
-                            <BoxView Grid.Column="3" HeightRequest="3"
-                                     BackgroundColor="{Binding Line23}"
-                                     VerticalOptions="Center" CornerRadius="2"/>
-                            <!-- خطوة 3 -->
-                            <Border Grid.Column="4" WidthRequest="38" HeightRequest="38"
-                                    BackgroundColor="{Binding Sc3Bg}" StrokeThickness="0" StrokeShape="RoundRectangle 19">
-                                <Label Text="{Binding Sc3Text}" TextColor="White"
-                                       FontSize="15" FontAttributes="Bold"
-                                       HorizontalOptions="Center" VerticalOptions="Center"/>
-                            </Border>
-                        </Grid>
-                        <Grid ColumnDefinitions="38,*,38,*,38">
-                            <Label Grid.Column="0" Text="النوع" FontSize="11"
-                                   TextColor="#1a3a5c" FontAttributes="Bold"
-                                   HorizontalTextAlignment="Center"/>
-                            <Label Grid.Column="2" Text="التفاصيل" FontSize="11"
-                                   TextColor="#c8a53a" FontAttributes="Bold"
-                                   HorizontalTextAlignment="Center"
-                                   IsVisible="{Binding IsStep2}"/>
-                            <Label Grid.Column="2" Text="التفاصيل" FontSize="11"
-                                   TextColor="#1a3a5c" FontAttributes="Bold"
-                                   HorizontalTextAlignment="Center"
-                                   IsVisible="{Binding IsStep3}"/>
-                            <Label Grid.Column="4" Text="الإرسال" FontSize="11"
-                                   TextColor="#9ca3af" HorizontalTextAlignment="Center"
-                                   IsVisible="{Binding IsStep2}"/>
-                            <Label Grid.Column="4" Text="الإرسال" FontSize="11"
-                                   TextColor="#c8a53a" FontAttributes="Bold"
-                                   HorizontalTextAlignment="Center"
-                                   IsVisible="{Binding IsStep3}"/>
-                        </Grid>
-                    </VerticalStackLayout>
 
                     <!-- ══════════ STEP 2 ══════════ -->
                     <VerticalStackLayout Spacing="14" IsVisible="{Binding IsStep2}">
@@ -1012,37 +1012,37 @@
                             </VerticalStackLayout>
                         </Border>
 
-                        <!-- شاشة النجاح -->
-                        <VerticalStackLayout Spacing="16" HorizontalOptions="Center"
-                                             IsVisible="{Binding IsSuccess}">
-                            <Label Text="✅" FontSize="72" HorizontalOptions="Center"/>
-                            <Label Text="شكراً على مساهمتك!" FontSize="22" FontAttributes="Bold"
-                                   TextColor="#16a34a" HorizontalTextAlignment="Center"/>
-                            <Label Text="تلقّينا طلب مساهمتك. سيتواصل معك فريق الجمعية للتأكيد عبر الواتساب أو اتصال عادي."
-                                   FontSize="14" TextColor="#6b7280"
-                                   HorizontalTextAlignment="Center" LineBreakMode="WordWrap"
-                                   MaximumWidthRequest="280"/>
-                            <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 14"
-                                    Padding="20,14" HorizontalOptions="Fill">
-                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-                                    <Label Text="🔢" FontSize="20" VerticalOptions="Center"/>
-                                    <Label Text="{Binding ReferenceNumber}" FontSize="20" FontAttributes="Bold"
-                                           TextColor="#1a3a5c" VerticalOptions="Center"/>
-                                </HorizontalStackLayout>
-                            </Border>
-                            <Label Text="رقم مرجعي لمتابعة مساهمتك"
-                                   FontSize="12" TextColor="#6b7280"
-                                   HorizontalTextAlignment="Center"/>
-                            <Button Text="← العودة للرئيسية"
-                                    Command="{Binding GoHomeCommand}"
-                                    BackgroundColor="White"
-                                    TextColor="#1a3a5c"
-                                    BorderColor="#1a3a5c" BorderWidth="2"
-                                    CornerRadius="14" Padding="24,14"
-                                    FontSize="14" FontAttributes="Bold"/>
-                        </VerticalStackLayout>
-
                     </VerticalStackLayout><!-- /step3 -->
+
+                    <!-- شاشة النجاح -->
+                    <VerticalStackLayout Spacing="16" HorizontalOptions="Center"
+                                         IsVisible="{Binding IsSuccess}">
+                        <Label Text="✅" FontSize="72" HorizontalOptions="Center"/>
+                        <Label Text="شكراً على مساهمتك!" FontSize="22" FontAttributes="Bold"
+                               TextColor="#16a34a" HorizontalTextAlignment="Center"/>
+                        <Label Text="تلقّينا طلب مساهمتك. سيتواصل معك فريق الجمعية للتأكيد عبر الواتساب أو اتصال عادي."
+                               FontSize="14" TextColor="#6b7280"
+                               HorizontalTextAlignment="Center" LineBreakMode="WordWrap"
+                               MaximumWidthRequest="280"/>
+                        <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 14"
+                                Padding="20,14" HorizontalOptions="Fill">
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                                <Label Text="🔢" FontSize="20" VerticalOptions="Center"/>
+                                <Label Text="{Binding ReferenceNumber}" FontSize="20" FontAttributes="Bold"
+                                       TextColor="#1a3a5c" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                        <Label Text="رقم مرجعي لمتابعة مساهمتك"
+                               FontSize="12" TextColor="#6b7280"
+                               HorizontalTextAlignment="Center"/>
+                        <Button Text="← العودة للرئيسية"
+                                Command="{Binding GoHomeCommand}"
+                                BackgroundColor="White"
+                                TextColor="#1a3a5c"
+                                BorderColor="#1a3a5c" BorderWidth="2"
+                                CornerRadius="14" Padding="24,14"
+                                FontSize="14" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
 
                 </VerticalStackLayout>
             </VerticalStackLayout>

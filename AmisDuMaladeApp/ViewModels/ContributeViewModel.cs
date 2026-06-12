@@ -23,15 +23,15 @@ public partial class ContributeViewModel : BaseViewModel
     // ── Step indicator ───────────────────────────────────────────────────────
     public string Sc2Text  => CurrentStep > 2 || IsSuccess ? "✓" : "2";
     public string Sc3Text  => IsSuccess ? "✓" : "3";
-    public Color  Sc1Bg    => Color.FromArgb("#1a3a5c");
-    public Color  Sc2Bg    => IsSuccess || CurrentStep > 2 ? Color.FromArgb("#1a3a5c") :
+    public Color  Sc1Bg    => Color.FromArgb("#16a34a");
+    public Color  Sc2Bg    => IsSuccess || CurrentStep > 2 ? Color.FromArgb("#16a34a") :
                               CurrentStep == 2             ? Color.FromArgb("#c8a53a") :
                                                              Color.FromArgb("#d1d5db");
-    public Color  Sc3Bg    => IsSuccess ? Color.FromArgb("#1a3a5c") :
+    public Color  Sc3Bg    => IsSuccess ? Color.FromArgb("#16a34a") :
                               CurrentStep == 3 ? Color.FromArgb("#c8a53a") :
                                                  Color.FromArgb("#d1d5db");
-    public Color  Line12   => Color.FromArgb("#1a3a5c");
-    public Color  Line23   => CurrentStep > 2 || IsSuccess ? Color.FromArgb("#1a3a5c") : Color.FromArgb("#d1d5db");
+    public Color  Line12   => Color.FromArgb("#16a34a");
+    public Color  Line23   => CurrentStep > 2 || IsSuccess ? Color.FromArgb("#16a34a") : Color.FromArgb("#d1d5db");
     public Color  Sc2TextColor => CurrentStep == 2 && !IsSuccess ? Colors.White : Colors.White;
     public Color  Sc3TextColor => Colors.White;
 
