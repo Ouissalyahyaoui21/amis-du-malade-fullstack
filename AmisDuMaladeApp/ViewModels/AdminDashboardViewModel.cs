@@ -369,6 +369,11 @@ public partial class AdminDashboardViewModel : BaseViewModel
         }
     }
 
+    // ── Home navigation ───────────────────────────────────────────────────────
+    [RelayCommand]
+    private async Task GoHomeAsync() =>
+        await Shell.Current.GoToAsync("//HomePage");
+
     // ── Logout ────────────────────────────────────────────────────────────────
     [RelayCommand]
     private async Task LogoutAsync()

@@ -13,7 +13,11 @@ public partial class BaseViewModel : ObservableObject
 
     public FlowDirection FlowDirection => Loc.FlowDirection;
 
-    protected BaseViewModel(LocalizationService loc) => Loc = loc;
+    protected BaseViewModel(LocalizationService loc)
+    {
+        Loc = loc;
+        Loc.LanguageChanged += (_, _) => OnPropertyChanged(nameof(FlowDirection));
+    }
 
     protected async Task ShowErrorAsync(string message)
     {

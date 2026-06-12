@@ -26,7 +26,7 @@ public partial class AdminLoginViewModel : BaseViewModel
     private bool isPasswordVisible;
 
     public bool   IsPasswordHidden   => !IsPasswordVisible;
-    public string PasswordToggleIcon => IsPasswordVisible ? "🙈" : "👁️";
+    public string PasswordToggleIcon => IsPasswordVisible ? "🔓" : "🔒";
 
     [ObservableProperty] private bool rememberMe = true;
 

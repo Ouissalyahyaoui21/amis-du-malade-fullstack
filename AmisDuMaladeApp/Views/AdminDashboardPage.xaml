@@ -13,7 +13,7 @@
 
         <!-- ══ TOP BAR ══ -->
         <Grid Grid.Row="0" BackgroundColor="#1a3a5c" Padding="18,52,18,14"
-              ColumnDefinitions="Auto,*,Auto,Auto">
+              ColumnDefinitions="Auto,*,Auto,Auto,Auto">
 
             <!-- الشعار + الاسم -->
             <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
@@ -40,8 +40,21 @@
                 </HorizontalStackLayout>
             </Border>
 
-            <!-- خروج -->
+            <!-- الصفحة الرئيسية -->
             <Border Grid.Column="3" BackgroundColor="#0f2236" StrokeThickness="0"
+                    Padding="10,6" Margin="0,0,6,0" VerticalOptions="Center">
+                <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoHomeCommand}"/>
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout Spacing="4">
+                    <Label Text="🏠" FontSize="13"/>
+                    <Label Text="الرئيسية" FontSize="12" TextColor="White" FontAttributes="Bold"/>
+                </HorizontalStackLayout>
+            </Border>
+
+            <!-- خروج -->
+            <Border Grid.Column="4" BackgroundColor="#0f2236" StrokeThickness="0"
                     Padding="10,6" VerticalOptions="Center">
                 <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
                 <Border.GestureRecognizers>

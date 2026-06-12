@@ -24,6 +24,11 @@ public partial class HomeViewModel : BaseViewModel
     public string OfflineLabel  => Loc.Get("offline_support");
     public string AdminLabel    => Loc.Get("admin_login");
 
+    // ── Language button highlight colors ─────────────────────────────────────
+    public Color ArBtnBg => Loc.CurrentLanguage == "ar" ? Color.FromArgb("#c8a53a") : Colors.Transparent;
+    public Color FrBtnBg => Loc.CurrentLanguage == "fr" ? Color.FromArgb("#c8a53a") : Colors.Transparent;
+    public Color EnBtnBg => Loc.CurrentLanguage == "en" ? Color.FromArgb("#c8a53a") : Colors.Transparent;
+
     public HomeViewModel(LocalizationService loc) : base(loc)
     {
         Loc.LanguageChanged += (_, _) => RefreshLabels();
@@ -76,6 +81,7 @@ public partial class HomeViewModel : BaseViewModel
         OnPropertyChanged(nameof(AboutLabel));    OnPropertyChanged(nameof(ContactLabel));
         OnPropertyChanged(nameof(WhatsAppLabel)); OnPropertyChanged(nameof(FacebookLabel));
         OnPropertyChanged(nameof(OfflineLabel));  OnPropertyChanged(nameof(AdminLabel));
-        OnPropertyChanged(nameof(FlowDirection));
+        OnPropertyChanged(nameof(ArBtnBg));       OnPropertyChanged(nameof(FrBtnBg));
+        OnPropertyChanged(nameof(EnBtnBg));       OnPropertyChanged(nameof(FlowDirection));
     }
 }
