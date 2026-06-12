@@ -16,9 +16,8 @@ builder.Services.AddControllers()
         x.JsonSerializerOptions.ReferenceHandler =
             System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
-// Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// OpenAPI (.NET 10 built-in — replaces Swashbuckle which is incompatible with .NET 10)
+builder.Services.AddOpenApi();
 
 // Database
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -64,9 +63,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Swagger
-app.UseSwagger();
-app.UseSwaggerUI();
+// OpenAPI endpoint: /openapi/v1.json
+app.MapOpenApi();
 
 // Seed Database
 using (var scope = app.Services.CreateScope())
