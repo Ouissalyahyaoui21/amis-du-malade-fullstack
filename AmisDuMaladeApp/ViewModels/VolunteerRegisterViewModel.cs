@@ -283,7 +283,7 @@ public partial class VolunteerRegisterViewModel : BaseViewModel
             var availabilities = BuildAvailabilities();
             var skills = Skills
                 .Where(s => s.IsSelected)
-                .Select(s => new VolunteerSkillRequest { SkillName = s.Key })
+                .Select(s => new VolunteerSkillRequest { SkillName = s.Label })
                 .ToList();
 
             // استنتاج القدرات من المهارات المختارة والوقت
