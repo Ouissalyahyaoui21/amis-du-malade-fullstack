@@ -799,7 +799,7 @@
                       IsVisible="{Binding ShowSubmitNav}">
                     <Button Grid.Column="1"
                             Text="🔍 ابحث عن مرافق مناسب"
-                            Command="{Binding SubmitAsyncCommand}"
+                            Command="{Binding SubmitCommand}"
                             BackgroundColor="#dc2626" TextColor="White"
                             FontSize="13" FontAttributes="Bold"
                             CornerRadius="14" HeightRequest="52"/>
