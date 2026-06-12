@@ -7,7 +7,7 @@
     x:DataType="vm:ContributeViewModel"
     Shell.NavBarIsVisible="False"
     BackgroundColor="#f0ebe3"
-    FlowDirection="{Binding FlowDirection}">
+    FlowDirection="RightToLeft">
 
     <Grid RowDefinitions="Auto,*,Auto">
 
@@ -36,9 +36,9 @@
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
                 <!-- زر الرجوع -->
-                <Border Grid.Column="2" WidthRequest="36" HeightRequest="36"
+                <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
                         BackgroundColor="#26ffffff" StrokeThickness="0" StrokeShape="RoundRectangle 10"
-                        HorizontalOptions="End">
+                        HorizontalOptions="Start">
                     <Label Text="‹" TextColor="White" FontSize="22"
                            HorizontalOptions="Center" VerticalOptions="Center"/>
                     <Border.GestureRecognizers>
@@ -1075,7 +1075,7 @@
                         CornerRadius="14" HeightRequest="52"
                         FontSize="15" FontAttributes="Bold"/>
                 <Button Grid.Column="0" Text="إرسال المساهمة ✓"
-                        Command="{Binding SubmitAsyncCommand}"
+                        Command="{Binding SubmitCommand}"
                         BackgroundColor="#c8a53a" TextColor="White"
                         CornerRadius="14" HeightRequest="52"
                         FontSize="15" FontAttributes="Bold"/>
