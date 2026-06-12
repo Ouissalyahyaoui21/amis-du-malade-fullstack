@@ -270,7 +270,10 @@ public partial class VolunteerRegisterViewModel : BaseViewModel
     {
         if (string.IsNullOrWhiteSpace(NationalIdFileName))
         {
-            await ShowErrorAsync(Loc.Get("required_field"));
+            await Shell.Current.DisplayAlertAsync(
+                "حقل مطلوب",
+                "يرجى رفع صورة بطاقة التعريف الوطنية قبل إرسال الطلب.",
+                "حسناً");
             return;
         }
 
@@ -304,7 +307,7 @@ public partial class VolunteerRegisterViewModel : BaseViewModel
                                          : new List<string> { Municipality },
             };
 
-            var (success, _) = await _api.RegisterVolunteerAsync(request);
+            var (success, error) = await _api.RegisterVolunteerAsync(request);
             if (success)
             {
                 IsSuccess = true;
@@ -315,7 +318,10 @@ public partial class VolunteerRegisterViewModel : BaseViewModel
                 OnPropertyChanged(nameof(ShowSubmitNav));
             }
             else
-                await ShowErrorAsync(Loc.Get("error"));
+                await Shell.Current.DisplayAlertAsync(
+                    "تعذّر التسجيل",
+                    error ?? "تأكد من اتصال الجهاز بالإنترنت وأن خادم التطبيق يعمل، ثم أعد المحاولة.",
+                    "حسناً");
         }
         finally { IsBusy = false; }
     }
