@@ -5,14 +5,14 @@
              x:Class="AmisDuMaladeApp.Views.AdminLoginPage"
              x:DataType="vm:AdminLoginViewModel"
              Shell.NavBarIsVisible="False"
-             FlowDirection="RightToLeft"
+             FlowDirection="{Binding FlowDirection}"
              BackgroundColor="#1a3a5c">
 
     <Grid RowDefinitions="Auto,Auto,*,Auto">
 
         <!-- ══ TOP BAR ══ -->
         <Grid Grid.Row="0" BackgroundColor="#0f2236" Padding="16,10"
-              ColumnDefinitions="Auto,*,Auto">
+              ColumnDefinitions="Auto,*,Auto,Auto">
 
             <Border Grid.Column="0" BackgroundColor="#1f2e3d" StrokeThickness="0" Padding="10,5">
                 <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
@@ -26,11 +26,24 @@
                        TextColor="#c8a53a" HorizontalTextAlignment="Center"/>
             </VerticalStackLayout>
 
-            <Border Grid.Column="2" BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="8,5">
+            <Border Grid.Column="2" BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="8,5" Margin="0,0,6,0">
                 <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
                 <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
                     <Ellipse Fill="#22c55e" WidthRequest="8" HeightRequest="8" VerticalOptions="Center"/>
                     <Label Text="النظام شغال" FontSize="11" TextColor="White" FontAttributes="Bold"/>
+                </HorizontalStackLayout>
+            </Border>
+
+            <!-- زر الرئيسية -->
+            <Border Grid.Column="3" BackgroundColor="#26ffffff" StrokeThickness="0"
+                    Padding="8,5" VerticalOptions="Center">
+                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoHomeCommand}"/>
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                    <Label Text="🏠" FontSize="12"/>
+                    <Label Text="الرئيسية" FontSize="11" TextColor="White" FontAttributes="Bold"/>
                 </HorizontalStackLayout>
             </Border>
         </Grid>

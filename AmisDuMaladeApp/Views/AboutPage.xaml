@@ -6,6 +6,7 @@
     xmlns:vm="clr-namespace:AmisDuMaladeApp.ViewModels"
     x:DataType="vm:AboutViewModel"
     Shell.NavBarIsVisible="False"
+    FlowDirection="{Binding FlowDirection}"
     BackgroundColor="#f2ede6">
 
     <ScrollView>
@@ -16,14 +17,15 @@
 
                 <!-- شريط التنقل -->
                 <Grid Padding="20,52,20,12" ColumnDefinitions="Auto,*,Auto">
-                    <Label Grid.Column="0"
-                           Text="رجوع"
-                           TextColor="#c8a53a" FontSize="15" FontAttributes="Bold"
-                           VerticalOptions="Center">
-                        <Label.GestureRecognizers>
+                    <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                            BackgroundColor="#26ffffff" StrokeThickness="0" StrokeShape="RoundRectangle 10"
+                            VerticalOptions="Center">
+                        <Label Text="‹" TextColor="White" FontSize="22"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
-                        </Label.GestureRecognizers>
-                    </Label>
+                        </Border.GestureRecognizers>
+                    </Border>
                     <Label Grid.Column="1"
                            Text="{Binding PageTitle}"
                            TextColor="White" FontSize="17" FontAttributes="Bold"

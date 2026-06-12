@@ -53,6 +53,10 @@ public partial class AdminLoginViewModel : BaseViewModel
     private void SetUsernameTab() { IsEmailTab = false; ClearLoginErrors(); }
 
     [RelayCommand]
+    private async Task GoHomeAsync() =>
+        await Shell.Current.GoToAsync("//HomePage");
+
+    [RelayCommand]
     private void TogglePassword() => IsPasswordVisible = !IsPasswordVisible;
 
     [RelayCommand]
