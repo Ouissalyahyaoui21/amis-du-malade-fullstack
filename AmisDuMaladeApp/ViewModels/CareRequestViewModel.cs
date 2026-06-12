@@ -244,6 +244,7 @@ public partial class CareRequestViewModel : BaseViewModel
             var relationKey  = Relations.FirstOrDefault(r => r.IsSelected)?.Key ?? "";
             var healthKeys   = HealthConditions.Where(h => h.IsSelected).Select(h => h.Key).ToList();
             var qualKeys     = RequiredQualifications.Where(q => q.IsSelected).Select(q => q.Key).ToList();
+            var qualLabels   = RequiredQualifications.Where(q => q.IsSelected).Select(q => q.Label).ToList();
 
             // تجميع الملاحظات الطبية
             var healthLabels = HealthConditions.Where(h => h.IsSelected)
@@ -269,7 +270,7 @@ public partial class CareRequestViewModel : BaseViewModel
                 PriorityLevel         = "Normal",
                 MedicalSummary        = medicalSummary,
                 SupportSummary        = string.IsNullOrWhiteSpace(CompanionNotes) ? null : CompanionNotes,
-                RequiredSkillNames    = qualKeys,
+                RequiredSkillNames    = qualLabels,
             };
 
             var (success, refNum, error) = await _api.SubmitCareRequestAsync(payload);
