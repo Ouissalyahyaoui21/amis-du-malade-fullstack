@@ -178,9 +178,9 @@ public partial class CareRequestViewModel : BaseViewModel
         await Shell.Current.GoToAsync("//HomePage");
 
     [RelayCommand]
-    private void NextStep()
+    private async Task NextStep()
     {
-        if (!ValidateStep()) return;
+        if (!await ValidateStepAsync()) return;
         if (CurrentStep < 4) { CurrentStep++; NotifyStep(); }
     }
 
@@ -329,17 +329,17 @@ public partial class CareRequestViewModel : BaseViewModel
         item.IsSelected = true;
     }
 
-    private bool ValidateStep()
+    private async Task<bool> ValidateStepAsync()
     {
         if (CurrentStep == 1 &&
             (string.IsNullOrWhiteSpace(RequesterName) || string.IsNullOrWhiteSpace(RequesterPhone)))
         {
-            _ = ShowErrorAsync(Loc.Get("required_field"));
+            await Shell.Current.DisplayAlertAsync("حقل مطلوب", "يرجى تعبئة اسم مقدّم الطلب ورقم هاتفه قبل المتابعة.", "حسناً");
             return false;
         }
         if (CurrentStep == 2 && string.IsNullOrWhiteSpace(PatientName))
         {
-            _ = ShowErrorAsync(Loc.Get("required_field"));
+            await Shell.Current.DisplayAlertAsync("حقل مطلوب", "يرجى إدخال اسم المريض قبل المتابعة.", "حسناً");
             return false;
         }
         return true;

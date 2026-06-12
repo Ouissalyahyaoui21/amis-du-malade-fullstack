@@ -204,7 +204,7 @@ public partial class ContributeViewModel : BaseViewModel
     {
         if (string.IsNullOrWhiteSpace(DonorName) || string.IsNullOrWhiteSpace(DonorPhone))
         {
-            await ShowErrorAsync(Loc.Get("required_field"));
+            await Shell.Current.DisplayAlertAsync("حقل مطلوب", "يرجى تعبئة اسم المتبرع ورقم هاتفه قبل المتابعة.", "حسناً");
             return;
         }
         IsBusy = true;
@@ -243,7 +243,7 @@ public partial class ContributeViewModel : BaseViewModel
             }
             else
             {
-                await ShowErrorAsync("حدث خطأ أثناء الإرسال. تحقق من اتصالك.");
+                await Shell.Current.DisplayAlertAsync("تعذّر الإرسال", "تأكد من اتصال الجهاز بالإنترنت وأن خادم التطبيق يعمل، ثم أعد المحاولة.", "حسناً");
             }
         }
         finally { IsBusy = false; }
