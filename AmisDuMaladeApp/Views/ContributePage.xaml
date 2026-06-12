@@ -13,32 +13,13 @@
 
         <!-- ══ HEADER ══ -->
         <VerticalStackLayout Grid.Row="0" BackgroundColor="#1a3a5c"
-                             Padding="16,44,16,20" Spacing="8">
-            <Grid ColumnDefinitions="36,*,36">
-                <!-- شعار + عنوان -->
-                <HorizontalStackLayout Grid.Column="1" Spacing="10"
-                                       HorizontalOptions="Center" VerticalOptions="Center">
-                    <Border WidthRequest="52" HeightRequest="52"
-                            BackgroundColor="White" StrokeThickness="2"
-                            Stroke="#c8a53a">
-                        <Border.StrokeShape><Ellipse/></Border.StrokeShape>
-                        <Image Source="logo.png" WidthRequest="44" HeightRequest="44"
-                               Aspect="AspectFill"
-                               HorizontalOptions="Center" VerticalOptions="Center"/>
-                    </Border>
-                    <VerticalStackLayout VerticalOptions="Center" Spacing="2">
-                        <Label Text="المساهمة في الجمعية"
-                               TextColor="White" FontSize="18" FontAttributes="Bold"
-                               HorizontalTextAlignment="Center"/>
-                        <Label Text="Association Amis du Malade – Skikda"
-                               TextColor="#c8a53a" FontSize="12"
-                               HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
-                </HorizontalStackLayout>
-                <!-- زر الرجوع -->
+                             Padding="16,52,16,16" Spacing="0">
+
+            <!-- زر الرجوع — يمين دائماً -->
+            <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
                 <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
-                        BackgroundColor="#26ffffff" StrokeThickness="0" StrokeShape="RoundRectangle 10"
-                        HorizontalOptions="Start">
+                        BackgroundColor="#26ffffff" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 10">
                     <Label Text="‹" TextColor="White" FontSize="22"
                            HorizontalOptions="Center" VerticalOptions="Center"/>
                     <Border.GestureRecognizers>
@@ -47,13 +28,32 @@
                 </Border>
             </Grid>
 
-            <!-- حبة ساهم معنا -->
-            <Border BackgroundColor="#1affffff" StrokeThickness="1"
-                    Stroke="#80c8a53a" StrokeShape="RoundRectangle 20"
-                    HorizontalOptions="Center" Padding="18,6">
+            <!-- شعار — وسط -->
+            <Border WidthRequest="64" HeightRequest="64" BackgroundColor="White"
+                    StrokeShape="Ellipse" StrokeThickness="2" Stroke="#c8a53a"
+                    HorizontalOptions="Center">
+                <Image Source="logo.png" WidthRequest="56" HeightRequest="56"
+                       Aspect="AspectFill"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+
+            <!-- عنوان + اسم الجمعية -->
+            <Label Text="المساهمة في الجمعية" TextColor="White"
+                   FontSize="20" FontAttributes="Bold"
+                   HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                   Margin="0,8,0,0"/>
+            <Label Text="Association Amis du Malade — Skikda"
+                   TextColor="#c8a53a" FontSize="12"
+                   HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+
+            <!-- شارة -->
+            <Border BackgroundColor="#1affffff" StrokeThickness="1" Stroke="#80c8a53a"
+                    StrokeShape="RoundRectangle 20"
+                    HorizontalOptions="Center" Padding="18,6" Margin="0,8,0,0">
                 <Label Text="ساهم معنا 💛" TextColor="White"
                        FontSize="14" FontAttributes="Bold"/>
             </Border>
+
         </VerticalStackLayout>
 
         <!-- ══ CONTENT ══ -->

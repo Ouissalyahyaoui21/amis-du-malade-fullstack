@@ -15,23 +15,17 @@
             <!-- ══ HEADER ══ -->
             <VerticalStackLayout BackgroundColor="#1a3a5c" Spacing="0">
 
-                <!-- شريط التنقل -->
-                <Grid Padding="20,52,20,12" ColumnDefinitions="Auto,*,Auto">
+                <!-- زر الرجوع — يمين دائماً -->
+                <Grid Padding="16,52,16,8" ColumnDefinitions="Auto,*,Auto">
                     <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
-                            BackgroundColor="#26ffffff" StrokeThickness="0" StrokeShape="RoundRectangle 10"
-                            VerticalOptions="Center">
+                            BackgroundColor="#26ffffff" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 10" VerticalOptions="Center">
                         <Label Text="‹" TextColor="White" FontSize="22"
                                HorizontalOptions="Center" VerticalOptions="Center"/>
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
                         </Border.GestureRecognizers>
                     </Border>
-                    <Label Grid.Column="1"
-                           Text="{Binding PageTitle}"
-                           TextColor="White" FontSize="17" FontAttributes="Bold"
-                           HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-                    <!-- عمود ثالث فارغ لتوسيط العنوان تماماً -->
-                    <BoxView Grid.Column="2" WidthRequest="60" Color="Transparent"/>
                 </Grid>
 
                 <!-- شعار الجمعية -->

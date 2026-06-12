@@ -17,60 +17,48 @@
     <ScrollView>
         <VerticalStackLayout Spacing="0">
 
-            <!-- ══════════════════════════════════════════════════════════════
-                 HEADER — Navy + logo top-right + title + join pill
-            ═══════════════════════════════════════════════════════════════════ -->
-            <Grid BackgroundColor="#1a3a5c" Padding="20,52,20,20" MinimumHeightRequest="140">
+            <!-- ══ HEADER ══ -->
+            <VerticalStackLayout BackgroundColor="#1a3a5c" Padding="16,52,16,16" Spacing="0">
 
-                <!-- Logo circle — Start = visual right in RTL -->
-                <Border BackgroundColor="White"
-                        StrokeShape="Ellipse"
-                        StrokeThickness="2" Stroke="#c8a53a"
-                        HeightRequest="72" WidthRequest="72"
-                        HorizontalOptions="Start" VerticalOptions="Start">
-                    <Image Source="logo.png"
-                           HeightRequest="62" WidthRequest="62"
+                <!-- زر الرجوع — يمين دائماً (Column 0 في RTL) -->
+                <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
+                    <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                            BackgroundColor="#26ffffff" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 10">
+                        <Label Text="‹" TextColor="White" FontSize="22"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoHomeCommand}"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+
+                <!-- شعار — وسط -->
+                <Border WidthRequest="64" HeightRequest="64" BackgroundColor="White"
+                        StrokeShape="Ellipse" StrokeThickness="2" Stroke="#c8a53a"
+                        HorizontalOptions="Center">
+                    <Image Source="logo.png" WidthRequest="56" HeightRequest="56"
                            Aspect="AspectFill"
                            HorizontalOptions="Center" VerticalOptions="Center"/>
                 </Border>
 
-                <!-- Title + subtitle + pill (centered, shifted to avoid logo) -->
-                <VerticalStackLayout HorizontalOptions="Center"
-                                     VerticalOptions="Center"
-                                     Spacing="5"
-                                     Margin="0,0,80,0">
-                    <Label Text="{Binding TitleLabel}"
-                           TextColor="White"
-                           FontSize="22" FontAttributes="Bold"
-                           HorizontalOptions="Center"
-                           HorizontalTextAlignment="Center"/>
-                    <Label Text="Association Amis du Malade – Skikda"
-                           TextColor="#c8a53a"
-                           FontSize="12"
-                           HorizontalOptions="Center"/>
-                    <Border BackgroundColor="#18ffffff"
-                            StrokeShape="RoundRectangle 20"
-                            StrokeThickness="0"
-                            HorizontalOptions="Center"
-                            Padding="18,8"
-                            Margin="0,8,0,0">
-                        <Label Text="🤝 انضم إلى فريقنا"
-                               TextColor="White" FontSize="13"/>
-                    </Border>
-                </VerticalStackLayout>
+                <!-- عنوان + اسم الجمعية -->
+                <Label Text="{Binding TitleLabel}" TextColor="White"
+                       FontSize="20" FontAttributes="Bold"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                       Margin="0,8,0,0"/>
+                <Label Text="Association Amis du Malade — Skikda"
+                       TextColor="#c8a53a" FontSize="12"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
 
-                <!-- زر الرجوع -->
-                <Border WidthRequest="36" HeightRequest="36"
-                        BackgroundColor="#26ffffff" StrokeThickness="0" StrokeShape="RoundRectangle 10"
-                        HorizontalOptions="End" VerticalOptions="Start">
-                    <Label Text="‹" TextColor="White" FontSize="22"
-                           HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoHomeCommand}"/>
-                    </Border.GestureRecognizers>
+                <!-- شارة -->
+                <Border BackgroundColor="#18ffffff" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 20"
+                        HorizontalOptions="Center" Padding="18,7" Margin="0,8,0,0">
+                    <Label Text="🤝 انضم إلى فريقنا" TextColor="White" FontSize="12"/>
                 </Border>
 
-            </Grid>
+            </VerticalStackLayout>
 
             <!-- Wave transition -->
             <Grid BackgroundColor="#1a3a5c" HeightRequest="36">
