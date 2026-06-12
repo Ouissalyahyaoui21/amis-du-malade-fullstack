@@ -150,13 +150,21 @@
                     <Border Grid.Column="0"
                             BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
                         <VerticalStackLayout Spacing="8" Padding="18,18,18,18" HorizontalOptions="Center">
-                            <Border WidthRequest="44" HeightRequest="44"
-                                    BackgroundColor="#f0f4f8"
-                                    StrokeThickness="0" StrokeShape="RoundRectangle 22"
-                                    HorizontalOptions="Center">
-                                <Label Text="👤" FontSize="22"
-                                       HorizontalOptions="Center" VerticalOptions="Center"/>
-                            </Border>
+                            <Grid HorizontalOptions="Center">
+                                <Border WidthRequest="44" HeightRequest="44"
+                                        BackgroundColor="#f0f4f8"
+                                        StrokeThickness="0" StrokeShape="RoundRectangle 22"
+                                        HorizontalOptions="Center">
+                                    <Label Text="👤" FontSize="22"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                                <Border BackgroundColor="#c8a53a" StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="4,2" VerticalOptions="Start" HorizontalOptions="End"
+                                        Margin="0,-6,-6,0">
+                                    <Label Text="قريباً" TextColor="White" FontSize="8" FontAttributes="Bold"/>
+                                </Border>
+                            </Grid>
                             <Label Text="{Binding AccountLabel}"
                                    TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold"
                                    HorizontalTextAlignment="Center"/>

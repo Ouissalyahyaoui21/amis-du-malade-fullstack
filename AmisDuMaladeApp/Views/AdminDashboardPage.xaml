@@ -936,6 +936,11 @@
                                    TextColor="#6b7280" HorizontalTextAlignment="Center"/>
                         </VerticalStackLayout>
                     </Border>
+                    <Border BackgroundColor="#fef3c7" StrokeThickness="0" Padding="14,12">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                        <Label Text="⭐ لا توجد تقييمات مسجلة حالياً — ستُعرض تقييمات المرضى للمتطوعين هنا"
+                               FontSize="12" TextColor="#92400e" HorizontalTextAlignment="Center"/>
+                    </Border>
                 </VerticalStackLayout>
 
                 <!-- ═══════════════════════════════════════════════════════════
@@ -1201,7 +1206,7 @@
                                 <Border Grid.Column="1" BackgroundColor="#f1f5f9" StrokeThickness="0" HeightRequest="10">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="5"/></Border.StrokeShape>
                                     <Border BackgroundColor="#16a34a" StrokeThickness="0" HorizontalOptions="Start"
-                                            WidthRequest="180" HeightRequest="10">
+                                            WidthRequest="{Binding ActiveBarWidth}" HeightRequest="10">
                                         <Border.StrokeShape><RoundRectangle CornerRadius="5"/></Border.StrokeShape>
                                     </Border>
                                 </Border>
@@ -1213,7 +1218,7 @@
                                 <Border Grid.Column="1" BackgroundColor="#f1f5f9" StrokeThickness="0" HeightRequest="10">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="5"/></Border.StrokeShape>
                                     <Border BackgroundColor="#f59e0b" StrokeThickness="0" HorizontalOptions="Start"
-                                            WidthRequest="80" HeightRequest="10">
+                                            WidthRequest="{Binding PendingBarWidth}" HeightRequest="10">
                                         <Border.StrokeShape><RoundRectangle CornerRadius="5"/></Border.StrokeShape>
                                     </Border>
                                 </Border>

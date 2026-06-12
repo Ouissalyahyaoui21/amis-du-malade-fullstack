@@ -12,9 +12,24 @@ public partial class AdminDashboardViewModel : BaseViewModel
     private readonly AuthTokenService _auth;
 
     // ── Stats ─────────────────────────────────────────────────────────────────
-    [ObservableProperty] private int statVolunteers;
-    [ObservableProperty] private int statActiveVolunteers;
-    [ObservableProperty] private int statPendingVolunteers;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ActiveBarWidth))]
+    [NotifyPropertyChangedFor(nameof(PendingBarWidth))]
+    private int statVolunteers;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ActiveBarWidth))]
+    private int statActiveVolunteers;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PendingBarWidth))]
+    private int statPendingVolunteers;
+
+    public double ActiveBarWidth =>
+        StatVolunteers > 0 ? (double)StatActiveVolunteers / StatVolunteers * 200 : 0;
+    public double PendingBarWidth =>
+        StatVolunteers > 0 ? (double)StatPendingVolunteers / StatVolunteers * 200 : 0;
+
     [ObservableProperty] private int statPatients;
     [ObservableProperty] private int statRequests;
     [ObservableProperty] private int statPendingRequests;
