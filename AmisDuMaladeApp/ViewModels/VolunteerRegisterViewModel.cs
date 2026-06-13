@@ -197,7 +197,11 @@ public partial class VolunteerRegisterViewModel : BaseViewModel
 
     // ── Skills ───────────────────────────────────────────────────────────────
     [RelayCommand]
-    private void ToggleSkill(SelectableItem item) => item.IsSelected = !item.IsSelected;
+    private void ToggleSkill(string key)
+    {
+        var item = Skills.FirstOrDefault(s => s.Key == key);
+        if (item != null) item.IsSelected = !item.IsSelected;
+    }
 
     // ── Training level ───────────────────────────────────────────────────────
     [RelayCommand]

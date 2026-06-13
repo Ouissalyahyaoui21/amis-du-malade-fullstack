@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AmisDuMaladeApp.ViewModels"
-             xmlns:models="clr-namespace:AmisDuMaladeApp.Models"
              xmlns:conv="clr-namespace:AmisDuMaladeApp.Converters"
              x:Class="AmisDuMaladeApp.Views.VolunteerRegisterPage"
              x:DataType="vm:VolunteerRegisterViewModel"
@@ -591,31 +590,139 @@
                     <Label Text="المهارات المتاحة" TextColor="#1a3a5c"
                            FontSize="13" FontAttributes="Bold"/>
 
-                    <FlexLayout BindableLayout.ItemsSource="{Binding Skills}"
-                                Wrap="Wrap" AlignItems="Start" AlignContent="Start"
+                    <FlexLayout Wrap="Wrap" AlignItems="Start" AlignContent="Start"
                                 Margin="0,2,0,0">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="models:SelectableItem">
-                                <Border StrokeShape="RoundRectangle 24"
-                                        StrokeThickness="1.5"
-                                        Margin="0,0,8,8" Padding="0"
-                                        BackgroundColor="{Binding IsSelected, Converter={StaticResource VolBgBlue}}"
-                                        Stroke="{Binding IsSelected, Converter={StaticResource VolStrBlueSk}}">
-                                    <HorizontalStackLayout Padding="14,10" Spacing="7">
-                                        <Label Text="{Binding Icon}" FontSize="15"
-                                               VerticalOptions="Center"/>
-                                        <Label Text="{Binding Label}"
-                                               TextColor="#1e293b" FontSize="13" FontAttributes="Bold"
-                                               VerticalOptions="Center"/>
-                                    </HorizontalStackLayout>
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleSkillCommand}"
-                                            CommandParameter="{Binding .}"/>
-                                    </Border.GestureRecognizers>
-                                </Border>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
+
+                        <!-- [0] patient_care -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[0].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[0].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="patient_care"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🩺" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="رعاية المريض" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [1] hygiene -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[1].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[1].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="hygiene"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🧴" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="نظافة المريض" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [2] medical_help -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[2].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[2].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="medical_help"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="💊" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="مساعدة طبية" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [3] transport -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[3].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[3].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="transport"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🚗" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="نقل المرضى" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [4] food_prep -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[4].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[4].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="food_prep"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🍽️" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="تحضير الطعام" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [5] housework -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[5].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[5].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="housework"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🧹" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="أعمال منزلية" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [6] communication -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[6].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[6].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="communication"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="📞" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="التواصل والمتابعة" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [7] psych_support -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[7].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[7].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="psych_support"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🤗" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="الدعم النفسي" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [8] translation -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[8].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[8].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="translation"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🌐" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="الترجمة" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [9] elder_care -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[9].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[9].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="elder_care"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="👴" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="رعاية المسنين" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
                     </FlexLayout>
 
                     <!-- مستوى التأهيل -->
