@@ -11,5 +11,12 @@ public partial class App : Application
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
-        => new Window(_shell);
+    {
+        var window = new Window(_shell);
+#if WINDOWS
+        window.MinimumHeight = 700;
+        window.MinimumWidth  = 420;
+#endif
+        return window;
+    }
 }

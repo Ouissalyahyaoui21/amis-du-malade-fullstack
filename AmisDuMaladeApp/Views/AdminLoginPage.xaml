@@ -75,11 +75,10 @@
         </VerticalStackLayout>
 
         <!-- ══ CARD ══ -->
-        <ScrollView Grid.Row="2">
-            <Border BackgroundColor="White" StrokeThickness="0" Padding="20,18,20,14">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="28,28,0,0"/>
-                </Border.StrokeShape>
+        <Border Grid.Row="2" BackgroundColor="White" StrokeThickness="0" Padding="20,18,20,14">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="28,28,0,0"/>
+            </Border.StrokeShape>
 
                 <VerticalStackLayout Spacing="0">
 
@@ -282,8 +281,7 @@
                     </HorizontalStackLayout>
 
                 </VerticalStackLayout>
-            </Border>
-        </ScrollView>
+        </Border>
 
         <!-- ══ FOOTER ══ -->
         <VerticalStackLayout Grid.Row="3" BackgroundColor="#0f2236" Padding="14,10" Spacing="6">

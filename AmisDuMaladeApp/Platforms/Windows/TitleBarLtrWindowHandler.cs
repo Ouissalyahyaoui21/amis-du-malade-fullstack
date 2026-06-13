@@ -26,12 +26,24 @@ namespace AmisDuMaladeApp.Platforms.Windows
         {
             base.ConnectHandler(platformView);
             FixTitleBarDirection(platformView);
+            // Backstop: re-apply after the window is fully shown and MAUI content is loaded
+            platformView.Activated += OnWindowActivated;
         }
+
+        protected override void DisconnectHandler(Microsoft.UI.Xaml.Window platformView)
+        {
+            platformView.Activated -= OnWindowActivated;
+            base.DisconnectHandler(platformView);
+        }
+
+        private void OnWindowActivated(object sender, Microsoft.UI.Xaml.WindowActivatedEventArgs _)
+            => FixTitleBarDirection(PlatformView);
 
         public override void UpdateValue(string property)
         {
             base.UpdateValue(property);
-            if (property == nameof(IWindow.FlowDirection))
+            // "Content" fires when MAUI sets the page; "FlowDirection" fires on RTL changes
+            if (property is "Content" or nameof(IWindow.FlowDirection))
                 FixTitleBarDirection(PlatformView);
         }
 
