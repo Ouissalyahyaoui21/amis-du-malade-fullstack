@@ -4,10 +4,31 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:AmisDuMaladeApp.ViewModels"
+    xmlns:conv="clr-namespace:AmisDuMaladeApp.Converters"
     x:DataType="vm:ContributeViewModel"
     Shell.NavBarIsVisible="False"
     BackgroundColor="#f0ebe3"
     FlowDirection="RightToLeft">
+
+    <ContentPage.Resources>
+        <conv:InvertBoolConverter x:Key="InvertBool"/>
+        <!-- ContribTypes outer: selected=blue -->
+        <conv:BoolToColorConverter x:Key="CtBgContrib"  TrueColor="#dbeafe" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="CtStrBlue"    TrueColor="#1a3a5c" FalseColor="#e5e7eb"/>
+        <!-- ContribTypes icon: selected=dark -->
+        <conv:BoolToColorConverter x:Key="CtIconBg"     TrueColor="#1a3a5c" FalseColor="#f3f4f6"/>
+        <!-- ActivityCategories + PaymentMethods outer -->
+        <conv:BoolToColorConverter x:Key="CtCatBg"      TrueColor="#f0f4ff" FalseColor="White"/>
+        <!-- AmountPresets -->
+        <conv:BoolToColorConverter x:Key="CtAmtBg"      TrueColor="#fffbeb" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="CtAmtStr"     TrueColor="#c8a53a" FalseColor="#e5e7eb"/>
+        <conv:BoolToColorConverter x:Key="CtAmtText"    TrueColor="#c8a53a" FalseColor="#374151"/>
+        <!-- PaymentMethods radio circle -->
+        <conv:BoolToColorConverter x:Key="CtPayRadStr"  TrueColor="#1a3a5c" FalseColor="#d1d5db"/>
+        <!-- Receipt upload border -->
+        <conv:BoolToColorConverter x:Key="CtRcptBg"     TrueColor="#f0fdf4" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="CtRcptStr"    TrueColor="#16a34a" FalseColor="#d1d5db"/>
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*,Auto">
 
@@ -144,37 +165,14 @@
                                       ColumnSpacing="10" RowSpacing="10">
                                     <!-- هدية عينية -->
                                     <Border Grid.Row="0" Grid.Column="0"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14">
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </Style>
-                                        </Border.Style>
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ContribTypes[0].IsSelected}"
-                                                         Value="True">
-                                                <Setter Property="Stroke" Value="#1a3a5c"/>
-                                                <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14"
+                                            BackgroundColor="{Binding ContribTypes[0].IsSelected, Converter={StaticResource CtBgContrib}}"
+                                            Stroke="{Binding ContribTypes[0].IsSelected, Converter={StaticResource CtStrBlue}}">
                                         <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                                             <Border WidthRequest="44" HeightRequest="44"
                                                     StrokeThickness="0" StrokeShape="RoundRectangle 12"
-                                                    HorizontalOptions="Center">
-                                                <Border.Triggers>
-                                                    <DataTrigger TargetType="Border"
-                                                                 Binding="{Binding ContribTypes[0].IsSelected}"
-                                                                 Value="True">
-                                                        <Setter Property="BackgroundColor" Value="#1a3a5c"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Border"
-                                                                 Binding="{Binding ContribTypes[0].IsSelected}"
-                                                                 Value="False">
-                                                        <Setter Property="BackgroundColor" Value="#f3f4f6"/>
-                                                    </DataTrigger>
-                                                </Border.Triggers>
+                                                    HorizontalOptions="Center"
+                                                    BackgroundColor="{Binding ContribTypes[0].IsSelected, Converter={StaticResource CtIconBg}}">
                                                 <Label Text="🎁" FontSize="20"
                                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                                             </Border>
@@ -190,37 +188,14 @@
                                     </Border>
                                     <!-- مساهمة مالية -->
                                     <Border Grid.Row="0" Grid.Column="1"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ContribTypes[1].IsSelected}"
-                                                         Value="True">
-                                                <Setter Property="Stroke" Value="#1a3a5c"/>
-                                                <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ContribTypes[1].IsSelected}"
-                                                         Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14"
+                                            BackgroundColor="{Binding ContribTypes[1].IsSelected, Converter={StaticResource CtBgContrib}}"
+                                            Stroke="{Binding ContribTypes[1].IsSelected, Converter={StaticResource CtStrBlue}}">
                                         <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                                             <Border WidthRequest="44" HeightRequest="44"
                                                     StrokeThickness="0" StrokeShape="RoundRectangle 12"
-                                                    HorizontalOptions="Center">
-                                                <Border.Triggers>
-                                                    <DataTrigger TargetType="Border"
-                                                                 Binding="{Binding ContribTypes[1].IsSelected}"
-                                                                 Value="True">
-                                                        <Setter Property="BackgroundColor" Value="#1a3a5c"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Border"
-                                                                 Binding="{Binding ContribTypes[1].IsSelected}"
-                                                                 Value="False">
-                                                        <Setter Property="BackgroundColor" Value="#f3f4f6"/>
-                                                    </DataTrigger>
-                                                </Border.Triggers>
+                                                    HorizontalOptions="Center"
+                                                    BackgroundColor="{Binding ContribTypes[1].IsSelected, Converter={StaticResource CtIconBg}}">
                                                 <Label Text="💳" FontSize="20"
                                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                                             </Border>
@@ -236,37 +211,14 @@
                                     </Border>
                                     <!-- زيارة المكتب -->
                                     <Border Grid.Row="1" Grid.Column="0"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ContribTypes[2].IsSelected}"
-                                                         Value="True">
-                                                <Setter Property="Stroke" Value="#1a3a5c"/>
-                                                <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ContribTypes[2].IsSelected}"
-                                                         Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14"
+                                            BackgroundColor="{Binding ContribTypes[2].IsSelected, Converter={StaticResource CtBgContrib}}"
+                                            Stroke="{Binding ContribTypes[2].IsSelected, Converter={StaticResource CtStrBlue}}">
                                         <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                                             <Border WidthRequest="44" HeightRequest="44"
                                                     StrokeThickness="0" StrokeShape="RoundRectangle 12"
-                                                    HorizontalOptions="Center">
-                                                <Border.Triggers>
-                                                    <DataTrigger TargetType="Border"
-                                                                 Binding="{Binding ContribTypes[2].IsSelected}"
-                                                                 Value="True">
-                                                        <Setter Property="BackgroundColor" Value="#1a3a5c"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Border"
-                                                                 Binding="{Binding ContribTypes[2].IsSelected}"
-                                                                 Value="False">
-                                                        <Setter Property="BackgroundColor" Value="#f3f4f6"/>
-                                                    </DataTrigger>
-                                                </Border.Triggers>
+                                                    HorizontalOptions="Center"
+                                                    BackgroundColor="{Binding ContribTypes[2].IsSelected, Converter={StaticResource CtIconBg}}">
                                                 <Label Text="🏛️" FontSize="20"
                                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                                             </Border>
@@ -282,37 +234,14 @@
                                     </Border>
                                     <!-- لمريض محدد -->
                                     <Border Grid.Row="1" Grid.Column="1"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ContribTypes[3].IsSelected}"
-                                                         Value="True">
-                                                <Setter Property="Stroke" Value="#1a3a5c"/>
-                                                <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ContribTypes[3].IsSelected}"
-                                                         Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="10,14"
+                                            BackgroundColor="{Binding ContribTypes[3].IsSelected, Converter={StaticResource CtBgContrib}}"
+                                            Stroke="{Binding ContribTypes[3].IsSelected, Converter={StaticResource CtStrBlue}}">
                                         <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                                             <Border WidthRequest="44" HeightRequest="44"
                                                     StrokeThickness="0" StrokeShape="RoundRectangle 12"
-                                                    HorizontalOptions="Center">
-                                                <Border.Triggers>
-                                                    <DataTrigger TargetType="Border"
-                                                                 Binding="{Binding ContribTypes[3].IsSelected}"
-                                                                 Value="True">
-                                                        <Setter Property="BackgroundColor" Value="#1a3a5c"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Border"
-                                                                 Binding="{Binding ContribTypes[3].IsSelected}"
-                                                                 Value="False">
-                                                        <Setter Property="BackgroundColor" Value="#f3f4f6"/>
-                                                    </DataTrigger>
-                                                </Border.Triggers>
+                                                    HorizontalOptions="Center"
+                                                    BackgroundColor="{Binding ContribTypes[3].IsSelected, Converter={StaticResource CtIconBg}}">
                                                 <Label Text="🤲" FontSize="20"
                                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                                             </Border>
@@ -345,21 +274,9 @@
                                 <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
                                       ColumnSpacing="8" RowSpacing="8">
                                     <Border Grid.Row="0" Grid.Column="0"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ActivityCategories[0].IsSelected}"
-                                                         Value="True">
-                                                <Setter Property="Stroke" Value="#1a3a5c"/>
-                                                <Setter Property="BackgroundColor" Value="#f0f4ff"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ActivityCategories[0].IsSelected}"
-                                                         Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9"
+                                            BackgroundColor="{Binding ActivityCategories[0].IsSelected, Converter={StaticResource CtCatBg}}"
+                                            Stroke="{Binding ActivityCategories[0].IsSelected, Converter={StaticResource CtStrBlue}}">
                                         <Label Text="التجهيزات الطبية" FontSize="13" FontAttributes="Bold"
                                                TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
                                         <Border.GestureRecognizers>
@@ -368,21 +285,9 @@
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="0" Grid.Column="1"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ActivityCategories[1].IsSelected}"
-                                                         Value="True">
-                                                <Setter Property="Stroke" Value="#1a3a5c"/>
-                                                <Setter Property="BackgroundColor" Value="#f0f4ff"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ActivityCategories[1].IsSelected}"
-                                                         Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9"
+                                            BackgroundColor="{Binding ActivityCategories[1].IsSelected, Converter={StaticResource CtCatBg}}"
+                                            Stroke="{Binding ActivityCategories[1].IsSelected, Converter={StaticResource CtStrBlue}}">
                                         <Label Text="رعاية المرضى" FontSize="13" FontAttributes="Bold"
                                                TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
                                         <Border.GestureRecognizers>
@@ -391,21 +296,9 @@
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="1" Grid.Column="0"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ActivityCategories[2].IsSelected}"
-                                                         Value="True">
-                                                <Setter Property="Stroke" Value="#1a3a5c"/>
-                                                <Setter Property="BackgroundColor" Value="#f0f4ff"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ActivityCategories[2].IsSelected}"
-                                                         Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9"
+                                            BackgroundColor="{Binding ActivityCategories[2].IsSelected, Converter={StaticResource CtCatBg}}"
+                                            Stroke="{Binding ActivityCategories[2].IsSelected, Converter={StaticResource CtStrBlue}}">
                                         <Label Text="عام للجمعية" FontSize="13" FontAttributes="Bold"
                                                TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
                                         <Border.GestureRecognizers>
@@ -414,21 +307,9 @@
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="1" Grid.Column="1"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ActivityCategories[3].IsSelected}"
-                                                         Value="True">
-                                                <Setter Property="Stroke" Value="#1a3a5c"/>
-                                                <Setter Property="BackgroundColor" Value="#f0f4ff"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border"
-                                                         Binding="{Binding ActivityCategories[3].IsSelected}"
-                                                         Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 22" Padding="12,9"
+                                            BackgroundColor="{Binding ActivityCategories[3].IsSelected, Converter={StaticResource CtCatBg}}"
+                                            Stroke="{Binding ActivityCategories[3].IsSelected, Converter={StaticResource CtStrBlue}}">
                                         <Label Text="تدريب المتطوعين" FontSize="13" FontAttributes="Bold"
                                                TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
                                         <Border.GestureRecognizers>
@@ -456,152 +337,64 @@
                                 <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto"
                                       ColumnSpacing="8" RowSpacing="8">
                                     <Border Grid.Row="0" Grid.Column="2"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[0].IsSelected}" Value="True">
-                                                <Setter Property="Stroke" Value="#c8a53a"/>
-                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[0].IsSelected}" Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9"
+                                            BackgroundColor="{Binding AmountPresets[0].IsSelected, Converter={StaticResource CtAmtBg}}"
+                                            Stroke="{Binding AmountPresets[0].IsSelected, Converter={StaticResource CtAmtStr}}">
                                         <Label Text="500 دج" FontSize="13" FontAttributes="Bold"
-                                               HorizontalTextAlignment="Center">
-                                            <Label.Triggers>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[0].IsSelected}" Value="True">
-                                                    <Setter Property="TextColor" Value="#c8a53a"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[0].IsSelected}" Value="False">
-                                                    <Setter Property="TextColor" Value="#374151"/>
-                                                </DataTrigger>
-                                            </Label.Triggers>
-                                        </Label>
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{Binding AmountPresets[0].IsSelected, Converter={StaticResource CtAmtText}}"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPresetCommand}" CommandParameter="{Binding AmountPresets[0]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="0" Grid.Column="1"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[1].IsSelected}" Value="True">
-                                                <Setter Property="Stroke" Value="#c8a53a"/>
-                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[1].IsSelected}" Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9"
+                                            BackgroundColor="{Binding AmountPresets[1].IsSelected, Converter={StaticResource CtAmtBg}}"
+                                            Stroke="{Binding AmountPresets[1].IsSelected, Converter={StaticResource CtAmtStr}}">
                                         <Label Text="1000 دج" FontSize="13" FontAttributes="Bold"
-                                               HorizontalTextAlignment="Center">
-                                            <Label.Triggers>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[1].IsSelected}" Value="True">
-                                                    <Setter Property="TextColor" Value="#c8a53a"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[1].IsSelected}" Value="False">
-                                                    <Setter Property="TextColor" Value="#374151"/>
-                                                </DataTrigger>
-                                            </Label.Triggers>
-                                        </Label>
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{Binding AmountPresets[1].IsSelected, Converter={StaticResource CtAmtText}}"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPresetCommand}" CommandParameter="{Binding AmountPresets[1]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="0" Grid.Column="0"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[2].IsSelected}" Value="True">
-                                                <Setter Property="Stroke" Value="#c8a53a"/>
-                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[2].IsSelected}" Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9"
+                                            BackgroundColor="{Binding AmountPresets[2].IsSelected, Converter={StaticResource CtAmtBg}}"
+                                            Stroke="{Binding AmountPresets[2].IsSelected, Converter={StaticResource CtAmtStr}}">
                                         <Label Text="2000 دج" FontSize="13" FontAttributes="Bold"
-                                               HorizontalTextAlignment="Center">
-                                            <Label.Triggers>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[2].IsSelected}" Value="True">
-                                                    <Setter Property="TextColor" Value="#c8a53a"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[2].IsSelected}" Value="False">
-                                                    <Setter Property="TextColor" Value="#374151"/>
-                                                </DataTrigger>
-                                            </Label.Triggers>
-                                        </Label>
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{Binding AmountPresets[2].IsSelected, Converter={StaticResource CtAmtText}}"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPresetCommand}" CommandParameter="{Binding AmountPresets[2]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="1" Grid.Column="2"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[3].IsSelected}" Value="True">
-                                                <Setter Property="Stroke" Value="#c8a53a"/>
-                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[3].IsSelected}" Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9"
+                                            BackgroundColor="{Binding AmountPresets[3].IsSelected, Converter={StaticResource CtAmtBg}}"
+                                            Stroke="{Binding AmountPresets[3].IsSelected, Converter={StaticResource CtAmtStr}}">
                                         <Label Text="5000 دج" FontSize="13" FontAttributes="Bold"
-                                               HorizontalTextAlignment="Center">
-                                            <Label.Triggers>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[3].IsSelected}" Value="True">
-                                                    <Setter Property="TextColor" Value="#c8a53a"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[3].IsSelected}" Value="False">
-                                                    <Setter Property="TextColor" Value="#374151"/>
-                                                </DataTrigger>
-                                            </Label.Triggers>
-                                        </Label>
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{Binding AmountPresets[3].IsSelected, Converter={StaticResource CtAmtText}}"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPresetCommand}" CommandParameter="{Binding AmountPresets[3]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="1" Grid.Column="1"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[4].IsSelected}" Value="True">
-                                                <Setter Property="Stroke" Value="#c8a53a"/>
-                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[4].IsSelected}" Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9"
+                                            BackgroundColor="{Binding AmountPresets[4].IsSelected, Converter={StaticResource CtAmtBg}}"
+                                            Stroke="{Binding AmountPresets[4].IsSelected, Converter={StaticResource CtAmtStr}}">
                                         <Label Text="10000 دج" FontSize="13" FontAttributes="Bold"
-                                               HorizontalTextAlignment="Center">
-                                            <Label.Triggers>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[4].IsSelected}" Value="True">
-                                                    <Setter Property="TextColor" Value="#c8a53a"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="Label" Binding="{Binding AmountPresets[4].IsSelected}" Value="False">
-                                                    <Setter Property="TextColor" Value="#374151"/>
-                                                </DataTrigger>
-                                            </Label.Triggers>
-                                        </Label>
+                                               HorizontalTextAlignment="Center"
+                                               TextColor="{Binding AmountPresets[4].IsSelected, Converter={StaticResource CtAmtText}}"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding SelectPresetCommand}" CommandParameter="{Binding AmountPresets[4]}"/>
                                         </Border.GestureRecognizers>
                                     </Border>
                                     <Border Grid.Row="1" Grid.Column="0"
-                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[5].IsSelected}" Value="True">
-                                                <Setter Property="Stroke" Value="#c8a53a"/>
-                                                <Setter Property="BackgroundColor" Value="#fffbeb"/>
-                                            </DataTrigger>
-                                            <DataTrigger TargetType="Border" Binding="{Binding AmountPresets[5].IsSelected}" Value="False">
-                                                <Setter Property="Stroke" Value="#e5e7eb"/>
-                                                <Setter Property="BackgroundColor" Value="White"/>
-                                            </DataTrigger>
-                                        </Border.Triggers>
+                                            StrokeThickness="1.5" StrokeShape="RoundRectangle 20" Padding="6,9"
+                                            BackgroundColor="{Binding AmountPresets[5].IsSelected, Converter={StaticResource CtAmtBg}}"
+                                            Stroke="{Binding AmountPresets[5].IsSelected, Converter={StaticResource CtAmtStr}}">
                                         <Label Text="آخر..." FontSize="13" FontAttributes="Bold"
                                                TextColor="#374151" HorizontalTextAlignment="Center"/>
                                         <Border.GestureRecognizers>
@@ -644,17 +437,9 @@
                                 </Grid>
 
                                 <!-- CCP -->
-                                <Border StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="14">
-                                    <Border.Triggers>
-                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[0].IsSelected}" Value="True">
-                                            <Setter Property="Stroke" Value="#1a3a5c"/>
-                                            <Setter Property="BackgroundColor" Value="#f0f4ff"/>
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[0].IsSelected}" Value="False">
-                                            <Setter Property="Stroke" Value="#e5e7eb"/>
-                                            <Setter Property="BackgroundColor" Value="White"/>
-                                        </DataTrigger>
-                                    </Border.Triggers>
+                                <Border StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="14"
+                                        BackgroundColor="{Binding PaymentMethods[0].IsSelected, Converter={StaticResource CtCatBg}}"
+                                        Stroke="{Binding PaymentMethods[0].IsSelected, Converter={StaticResource CtStrBlue}}">
                                     <VerticalStackLayout Spacing="10">
                                         <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                                             <VerticalStackLayout Grid.Column="0" Spacing="2">
@@ -670,15 +455,8 @@
                                             </Border>
                                             <Border Grid.Column="2" WidthRequest="20" HeightRequest="20"
                                                     StrokeThickness="2" StrokeShape="RoundRectangle 10"
-                                                    VerticalOptions="Center">
-                                                <Border.Triggers>
-                                                    <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[0].IsSelected}" Value="True">
-                                                        <Setter Property="Stroke" Value="#1a3a5c"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[0].IsSelected}" Value="False">
-                                                        <Setter Property="Stroke" Value="#d1d5db"/>
-                                                    </DataTrigger>
-                                                </Border.Triggers>
+                                                    VerticalOptions="Center"
+                                                    Stroke="{Binding PaymentMethods[0].IsSelected, Converter={StaticResource CtPayRadStr}}">
                                                 <BoxView WidthRequest="10" HeightRequest="10"
                                                          CornerRadius="5" BackgroundColor="#1a3a5c"
                                                          HorizontalOptions="Center" VerticalOptions="Center"
@@ -718,17 +496,9 @@
                                 </Border>
 
                                 <!-- مكتب البريد -->
-                                <Border StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="14">
-                                    <Border.Triggers>
-                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[1].IsSelected}" Value="True">
-                                            <Setter Property="Stroke" Value="#1a3a5c"/>
-                                            <Setter Property="BackgroundColor" Value="#f0f4ff"/>
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[1].IsSelected}" Value="False">
-                                            <Setter Property="Stroke" Value="#e5e7eb"/>
-                                            <Setter Property="BackgroundColor" Value="White"/>
-                                        </DataTrigger>
-                                    </Border.Triggers>
+                                <Border StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="14"
+                                        BackgroundColor="{Binding PaymentMethods[1].IsSelected, Converter={StaticResource CtCatBg}}"
+                                        Stroke="{Binding PaymentMethods[1].IsSelected, Converter={StaticResource CtStrBlue}}">
                                     <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                                         <VerticalStackLayout Grid.Column="0" Spacing="2">
                                             <Label Text="دفع في مكتب البريد (Versement)"
@@ -742,15 +512,8 @@
                                                    HorizontalOptions="Center" VerticalOptions="Center"/>
                                         </Border>
                                         <Border Grid.Column="2" WidthRequest="20" HeightRequest="20"
-                                                StrokeThickness="2" StrokeShape="RoundRectangle 10" VerticalOptions="Center">
-                                            <Border.Triggers>
-                                                <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[1].IsSelected}" Value="True">
-                                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[1].IsSelected}" Value="False">
-                                                    <Setter Property="Stroke" Value="#d1d5db"/>
-                                                </DataTrigger>
-                                            </Border.Triggers>
+                                                StrokeThickness="2" StrokeShape="RoundRectangle 10" VerticalOptions="Center"
+                                                Stroke="{Binding PaymentMethods[1].IsSelected, Converter={StaticResource CtPayRadStr}}">
                                             <BoxView WidthRequest="10" HeightRequest="10"
                                                      CornerRadius="5" BackgroundColor="#1a3a5c"
                                                      HorizontalOptions="Center" VerticalOptions="Center"
@@ -764,17 +527,9 @@
                                 </Border>
 
                                 <!-- مكتب الجمعية -->
-                                <Border StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="14">
-                                    <Border.Triggers>
-                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[2].IsSelected}" Value="True">
-                                            <Setter Property="Stroke" Value="#1a3a5c"/>
-                                            <Setter Property="BackgroundColor" Value="#f0f4ff"/>
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[2].IsSelected}" Value="False">
-                                            <Setter Property="Stroke" Value="#e5e7eb"/>
-                                            <Setter Property="BackgroundColor" Value="White"/>
-                                        </DataTrigger>
-                                    </Border.Triggers>
+                                <Border StrokeThickness="1.5" StrokeShape="RoundRectangle 14" Padding="14"
+                                        BackgroundColor="{Binding PaymentMethods[2].IsSelected, Converter={StaticResource CtCatBg}}"
+                                        Stroke="{Binding PaymentMethods[2].IsSelected, Converter={StaticResource CtStrBlue}}">
                                     <VerticalStackLayout Spacing="10">
                                         <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                                             <VerticalStackLayout Grid.Column="0" Spacing="2">
@@ -789,15 +544,8 @@
                                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                                             </Border>
                                             <Border Grid.Column="2" WidthRequest="20" HeightRequest="20"
-                                                    StrokeThickness="2" StrokeShape="RoundRectangle 10" VerticalOptions="Center">
-                                                <Border.Triggers>
-                                                    <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[2].IsSelected}" Value="True">
-                                                        <Setter Property="Stroke" Value="#1a3a5c"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Border" Binding="{Binding PaymentMethods[2].IsSelected}" Value="False">
-                                                        <Setter Property="Stroke" Value="#d1d5db"/>
-                                                    </DataTrigger>
-                                                </Border.Triggers>
+                                                    StrokeThickness="2" StrokeShape="RoundRectangle 10" VerticalOptions="Center"
+                                                    Stroke="{Binding PaymentMethods[2].IsSelected, Converter={StaticResource CtPayRadStr}}">
                                                 <BoxView WidthRequest="10" HeightRequest="10"
                                                          CornerRadius="5" BackgroundColor="#1a3a5c"
                                                          HorizontalOptions="Center" VerticalOptions="Center"
@@ -860,17 +608,9 @@
                                                HorizontalOptions="Center" VerticalOptions="Center"/>
                                     </Border>
                                 </Grid>
-                                <Border StrokeThickness="2" StrokeShape="RoundRectangle 14" Padding="28,28">
-                                    <Border.Triggers>
-                                        <DataTrigger TargetType="Border" Binding="{Binding HasReceipt}" Value="True">
-                                            <Setter Property="Stroke" Value="#16a34a"/>
-                                            <Setter Property="BackgroundColor" Value="#f0fdf4"/>
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Border" Binding="{Binding HasReceipt}" Value="False">
-                                            <Setter Property="Stroke" Value="#d1d5db"/>
-                                            <Setter Property="BackgroundColor" Value="White"/>
-                                        </DataTrigger>
-                                    </Border.Triggers>
+                                <Border StrokeThickness="2" StrokeShape="RoundRectangle 14" Padding="28,28"
+                                        BackgroundColor="{Binding HasReceipt, Converter={StaticResource CtRcptBg}}"
+                                        Stroke="{Binding HasReceipt, Converter={StaticResource CtRcptStr}}">
                                     <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
                                         <Label Text="⬆️" FontSize="28" HorizontalOptions="Center"
                                                IsVisible="{Binding HasReceipt, Converter={x:StaticResource InvertBool}}"/>

@@ -44,3 +44,22 @@ public class InverseBoolConverter : IValueConverter
 
 // Alias — بعض الـ XAML يستخدم هذا الاسم
 public class InvertBoolConverter : InverseBoolConverter { }
+
+/// <summary>Converts bool to one of two colors. Use TrueColor/FalseColor in XAML.
+/// Returns SolidColorBrush when target is Brush (for Border.Stroke), Color otherwise.</summary>
+public class BoolToColorConverter : IValueConverter
+{
+    public Color TrueColor  { get; set; } = Colors.Transparent;
+    public Color FalseColor { get; set; } = Colors.Transparent;
+
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        var color = value is true ? TrueColor : FalseColor;
+        return targetType == typeof(Brush)
+            ? (object)new SolidColorBrush(color)
+            : color;
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => throw new NotImplementedException();
+}

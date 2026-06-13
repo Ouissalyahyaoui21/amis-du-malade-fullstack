@@ -12,6 +12,23 @@
 
     <ContentPage.Resources>
         <conv:InvertBoolConverter x:Key="InvertBool"/>
+        <!-- Blue — days, slots, trainable -->
+        <conv:BoolToColorConverter x:Key="VolBgBlue"    TrueColor="#dbeafe" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="VolStrBlue"   TrueColor="#1a3a5c" FalseColor="#e2e8f0"/>
+        <!-- Blue — Skills FlexLayout (different false-stroke) -->
+        <conv:BoolToColorConverter x:Key="VolStrBlueSk" TrueColor="#1a3a5c" FalseColor="#cbd5e1"/>
+        <!-- Red — marital, no-previous -->
+        <conv:BoolToColorConverter x:Key="VolBgRed"     TrueColor="#fee2e2" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="VolStrRed"    TrueColor="#dc2626" FalseColor="#e2e8f0"/>
+        <!-- Yellow — beginner -->
+        <conv:BoolToColorConverter x:Key="VolBgYellow"  TrueColor="#fef9c3" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="VolStrYellow" TrueColor="#ca8a04" FalseColor="#e2e8f0"/>
+        <!-- Green — proficient, yes-previous -->
+        <conv:BoolToColorConverter x:Key="VolBgGreen"   TrueColor="#dcfce7" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="VolStrGreen"  TrueColor="#16a34a" FalseColor="#e2e8f0"/>
+        <!-- Pink — professional -->
+        <conv:BoolToColorConverter x:Key="VolBgPink"    TrueColor="#fce7f3" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="VolStrPink"   TrueColor="#9d174d" FalseColor="#e2e8f0"/>
     </ContentPage.Resources>
 
     <ScrollView>
@@ -278,19 +295,10 @@
                             <!-- أعزب -->
                             <Border Grid.Row="0" Grid.Column="1"
                                     StrokeShape="RoundRectangle 12" StrokeThickness="1.5"
-                                    Padding="12,14">
-                                <Border.Triggers>
-                                    <DataTrigger TargetType="Border"
-                                                 Binding="{Binding IsMaritalSingle}" Value="True">
-                                        <Setter Property="BackgroundColor" Value="#fee2e2"/>
-                                        <Setter Property="Stroke" Value="#dc2626"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Border"
-                                                 Binding="{Binding IsMaritalSingle}" Value="False">
-                                        <Setter Property="BackgroundColor" Value="White"/>
-                                        <Setter Property="Stroke" Value="#e2e8f0"/>
-                                    </DataTrigger>
-                                </Border.Triggers>
+                                    Padding="12,14"
+                                    BackgroundColor="{Binding IsMaritalSingle, Converter={StaticResource VolBgRed}}"
+                                    Stroke="{Binding IsMaritalSingle, Converter={StaticResource VolStrRed}}"
+                                    >
                                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                     <Label Text="👤" FontSize="16" VerticalOptions="Center"/>
                                     <Label Text="أعزب / عزباء" TextColor="#1a3a5c"
@@ -305,19 +313,9 @@
                             <!-- متزوج -->
                             <Border Grid.Row="0" Grid.Column="0"
                                     StrokeShape="RoundRectangle 12" StrokeThickness="1.5"
-                                    Padding="12,14">
-                                <Border.Triggers>
-                                    <DataTrigger TargetType="Border"
-                                                 Binding="{Binding IsMaritalMarried}" Value="True">
-                                        <Setter Property="BackgroundColor" Value="#fee2e2"/>
-                                        <Setter Property="Stroke" Value="#dc2626"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Border"
-                                                 Binding="{Binding IsMaritalMarried}" Value="False">
-                                        <Setter Property="BackgroundColor" Value="White"/>
-                                        <Setter Property="Stroke" Value="#e2e8f0"/>
-                                    </DataTrigger>
-                                </Border.Triggers>
+                                    Padding="12,14"
+                                    BackgroundColor="{Binding IsMaritalMarried, Converter={StaticResource VolBgRed}}"
+                                    Stroke="{Binding IsMaritalMarried, Converter={StaticResource VolStrRed}}">
                                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                     <Label Text="💑" FontSize="16" VerticalOptions="Center"/>
                                     <Label Text="متزوج / متزوجة" TextColor="#1a3a5c"
@@ -332,19 +330,9 @@
                             <!-- مطلق -->
                             <Border Grid.Row="1" Grid.Column="1"
                                     StrokeShape="RoundRectangle 12" StrokeThickness="1.5"
-                                    Padding="12,14">
-                                <Border.Triggers>
-                                    <DataTrigger TargetType="Border"
-                                                 Binding="{Binding IsMaritalDivorced}" Value="True">
-                                        <Setter Property="BackgroundColor" Value="#fee2e2"/>
-                                        <Setter Property="Stroke" Value="#dc2626"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Border"
-                                                 Binding="{Binding IsMaritalDivorced}" Value="False">
-                                        <Setter Property="BackgroundColor" Value="White"/>
-                                        <Setter Property="Stroke" Value="#e2e8f0"/>
-                                    </DataTrigger>
-                                </Border.Triggers>
+                                    Padding="12,14"
+                                    BackgroundColor="{Binding IsMaritalDivorced, Converter={StaticResource VolBgRed}}"
+                                    Stroke="{Binding IsMaritalDivorced, Converter={StaticResource VolStrRed}}">
                                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                     <Label Text="📋" FontSize="16" VerticalOptions="Center"/>
                                     <Label Text="مطلقة" TextColor="#1a3a5c"
@@ -359,19 +347,9 @@
                             <!-- أرمل -->
                             <Border Grid.Row="1" Grid.Column="0"
                                     StrokeShape="RoundRectangle 12" StrokeThickness="1.5"
-                                    Padding="12,14">
-                                <Border.Triggers>
-                                    <DataTrigger TargetType="Border"
-                                                 Binding="{Binding IsMaritalWidowed}" Value="True">
-                                        <Setter Property="BackgroundColor" Value="#fee2e2"/>
-                                        <Setter Property="Stroke" Value="#dc2626"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Border"
-                                                 Binding="{Binding IsMaritalWidowed}" Value="False">
-                                        <Setter Property="BackgroundColor" Value="White"/>
-                                        <Setter Property="Stroke" Value="#e2e8f0"/>
-                                    </DataTrigger>
-                                </Border.Triggers>
+                                    Padding="12,14"
+                                    BackgroundColor="{Binding IsMaritalWidowed, Converter={StaticResource VolBgRed}}"
+                                    Stroke="{Binding IsMaritalWidowed, Converter={StaticResource VolStrRed}}">
                                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                     <Label Text="🕊️" FontSize="16" VerticalOptions="Center"/>
                                     <Label Text="أرملة" TextColor="#1a3a5c"
@@ -420,17 +398,9 @@
 
                         <!-- السبت -->
                         <Border Grid.Row="0" Grid.Column="1"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding DaySat}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding DaySat}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DaySat, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DaySat, Converter={StaticResource VolStrBlue}}">
                             <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                 <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
                                 <Label Text="السبت" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
@@ -442,17 +412,9 @@
 
                         <!-- الأحد -->
                         <Border Grid.Row="0" Grid.Column="0"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding DaySun}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding DaySun}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DaySun, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DaySun, Converter={StaticResource VolStrBlue}}">
                             <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                 <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
                                 <Label Text="الأحد" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
@@ -464,17 +426,9 @@
 
                         <!-- الاثنين -->
                         <Border Grid.Row="1" Grid.Column="1"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding DayMon}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding DayMon}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DayMon, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DayMon, Converter={StaticResource VolStrBlue}}">
                             <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                 <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
                                 <Label Text="الاثنين" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
@@ -486,17 +440,9 @@
 
                         <!-- الثلاثاء -->
                         <Border Grid.Row="1" Grid.Column="0"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding DayTue}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding DayTue}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DayTue, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DayTue, Converter={StaticResource VolStrBlue}}">
                             <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                 <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
                                 <Label Text="الثلاثاء" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
@@ -508,17 +454,9 @@
 
                         <!-- الأربعاء -->
                         <Border Grid.Row="2" Grid.Column="1"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding DayWed}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding DayWed}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DayWed, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DayWed, Converter={StaticResource VolStrBlue}}">
                             <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                 <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
                                 <Label Text="الأربعاء" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
@@ -530,17 +468,9 @@
 
                         <!-- الخميس -->
                         <Border Grid.Row="2" Grid.Column="0"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding DayThu}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding DayThu}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DayThu, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DayThu, Converter={StaticResource VolStrBlue}}">
                             <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                 <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
                                 <Label Text="الخميس" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
@@ -559,17 +489,9 @@
 
                         <!-- 08:00-10:00 -->
                         <Border Grid.Row="0" Grid.Column="2"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot0810}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot0810}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot0810, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot0810, Converter={StaticResource VolStrBlue}}">
                             <Label Text="08:00–10:00" TextColor="#1a3a5c"
                                    FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
                             <Border.GestureRecognizers>
@@ -579,17 +501,9 @@
 
                         <!-- 10:00-12:00 -->
                         <Border Grid.Row="0" Grid.Column="1"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot1012}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot1012}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot1012, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot1012, Converter={StaticResource VolStrBlue}}">
                             <Label Text="10:00–12:00" TextColor="#1a3a5c"
                                    FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
                             <Border.GestureRecognizers>
@@ -599,17 +513,9 @@
 
                         <!-- 12:00-14:00 -->
                         <Border Grid.Row="0" Grid.Column="0"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot1214}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot1214}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot1214, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot1214, Converter={StaticResource VolStrBlue}}">
                             <Label Text="12:00–14:00" TextColor="#1a3a5c"
                                    FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
                             <Border.GestureRecognizers>
@@ -619,17 +525,9 @@
 
                         <!-- 14:00-16:00 -->
                         <Border Grid.Row="1" Grid.Column="2"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot1416}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot1416}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot1416, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot1416, Converter={StaticResource VolStrBlue}}">
                             <Label Text="14:00–16:00" TextColor="#1a3a5c"
                                    FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
                             <Border.GestureRecognizers>
@@ -639,17 +537,9 @@
 
                         <!-- 16:00-18:00 -->
                         <Border Grid.Row="1" Grid.Column="1"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot1618}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot1618}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot1618, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot1618, Converter={StaticResource VolStrBlue}}">
                             <Label Text="16:00–18:00" TextColor="#1a3a5c"
                                    FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
                             <Border.GestureRecognizers>
@@ -659,17 +549,9 @@
 
                         <!-- 18:00-20:00 -->
                         <Border Grid.Row="1" Grid.Column="0"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot1820}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border" Binding="{Binding Slot1820}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot1820, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot1820, Converter={StaticResource VolStrBlue}}">
                             <Label Text="18:00–20:00" TextColor="#1a3a5c"
                                    FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
                             <Border.GestureRecognizers>
@@ -716,19 +598,9 @@
                             <DataTemplate x:DataType="models:SelectableItem">
                                 <Border StrokeShape="RoundRectangle 24"
                                         StrokeThickness="1.5"
-                                        Margin="0,0,8,8" Padding="0">
-                                    <Border.Triggers>
-                                        <DataTrigger TargetType="Border"
-                                                     Binding="{Binding IsSelected}" Value="True">
-                                            <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                            <Setter Property="Stroke" Value="#1a3a5c"/>
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Border"
-                                                     Binding="{Binding IsSelected}" Value="False">
-                                            <Setter Property="BackgroundColor" Value="White"/>
-                                            <Setter Property="Stroke" Value="#cbd5e1"/>
-                                        </DataTrigger>
-                                    </Border.Triggers>
+                                        Margin="0,0,8,8" Padding="0"
+                                        BackgroundColor="{Binding IsSelected, Converter={StaticResource VolBgBlue}}"
+                                        Stroke="{Binding IsSelected, Converter={StaticResource VolStrBlueSk}}">
                                     <HorizontalStackLayout Padding="14,10" Spacing="7">
                                         <Label Text="{Binding Icon}" FontSize="15"
                                                VerticalOptions="Center"/>
@@ -754,19 +626,9 @@
 
                         <!-- مبتدئ -->
                         <Border Grid.Row="0" Grid.Column="1"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsLevelBeginner}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#fef9c3"/>
-                                    <Setter Property="Stroke" Value="#ca8a04"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsLevelBeginner}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding IsLevelBeginner, Converter={StaticResource VolBgYellow}}"
+                                Stroke="{Binding IsLevelBeginner, Converter={StaticResource VolStrYellow}}">
                             <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
                                 <Label Text="🌱" FontSize="22" HorizontalOptions="Center"/>
                                 <Label Text="مبتدئ" TextColor="#1a3a5c"
@@ -782,19 +644,9 @@
 
                         <!-- قابل للتأهيل -->
                         <Border Grid.Row="0" Grid.Column="0"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsLevelTrainable}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dbeafe"/>
-                                    <Setter Property="Stroke" Value="#1a3a5c"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsLevelTrainable}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding IsLevelTrainable, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding IsLevelTrainable, Converter={StaticResource VolStrBlue}}">
                             <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
                                 <Label Text="📚" FontSize="22" HorizontalOptions="Center"/>
                                 <Label Text="قابل للتأهيل" TextColor="#1a3a5c"
@@ -810,19 +662,9 @@
 
                         <!-- متمكن -->
                         <Border Grid.Row="1" Grid.Column="1"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsLevelProficient}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dcfce7"/>
-                                    <Setter Property="Stroke" Value="#16a34a"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsLevelProficient}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding IsLevelProficient, Converter={StaticResource VolBgGreen}}"
+                                Stroke="{Binding IsLevelProficient, Converter={StaticResource VolStrGreen}}">
                             <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
                                 <Label Text="⭐" FontSize="22" HorizontalOptions="Center"/>
                                 <Label Text="متمكن" TextColor="#1a3a5c"
@@ -838,19 +680,9 @@
 
                         <!-- محترف -->
                         <Border Grid.Row="1" Grid.Column="0"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsLevelProfessional}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#fce7f3"/>
-                                    <Setter Property="Stroke" Value="#9d174d"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsLevelProfessional}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding IsLevelProfessional, Converter={StaticResource VolBgPink}}"
+                                Stroke="{Binding IsLevelProfessional, Converter={StaticResource VolStrPink}}">
                             <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
                                 <Label Text="🏅" FontSize="22" HorizontalOptions="Center"/>
                                 <Label Text="محترف" TextColor="#1a3a5c"
@@ -872,19 +704,9 @@
 
                         <!-- نعم -->
                         <Border Grid.Column="1"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,16">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsYesPrev}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#dcfce7"/>
-                                    <Setter Property="Stroke" Value="#16a34a"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsYesPrev}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,16"
+                                BackgroundColor="{Binding IsYesPrev, Converter={StaticResource VolBgGreen}}"
+                                Stroke="{Binding IsYesPrev, Converter={StaticResource VolStrGreen}}">
                             <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                 <Label Text="✅" FontSize="18" VerticalOptions="Center"/>
                                 <Label Text="نعم" TextColor="#1a3a5c" FontSize="15" FontAttributes="Bold"
@@ -898,19 +720,9 @@
 
                         <!-- لا -->
                         <Border Grid.Column="0"
-                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,16">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsNoPrev}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="#fee2e2"/>
-                                    <Setter Property="Stroke" Value="#dc2626"/>
-                                </DataTrigger>
-                                <DataTrigger TargetType="Border"
-                                             Binding="{Binding IsNoPrev}" Value="False">
-                                    <Setter Property="BackgroundColor" Value="White"/>
-                                    <Setter Property="Stroke" Value="#e2e8f0"/>
-                                </DataTrigger>
-                            </Border.Triggers>
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,16"
+                                BackgroundColor="{Binding IsNoPrev, Converter={StaticResource VolBgRed}}"
+                                Stroke="{Binding IsNoPrev, Converter={StaticResource VolStrRed}}">
                             <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
                                 <Label Text="❌" FontSize="18" VerticalOptions="Center"/>
                                 <Label Text="لا" TextColor="#1a3a5c" FontSize="15" FontAttributes="Bold"

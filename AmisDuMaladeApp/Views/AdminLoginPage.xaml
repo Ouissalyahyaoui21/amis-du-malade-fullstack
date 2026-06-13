@@ -2,11 +2,19 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AmisDuMaladeApp.ViewModels"
+             xmlns:conv="clr-namespace:AmisDuMaladeApp.Converters"
              x:Class="AmisDuMaladeApp.Views.AdminLoginPage"
              x:DataType="vm:AdminLoginViewModel"
              Shell.NavBarIsVisible="False"
              FlowDirection="{Binding FlowDirection}"
              BackgroundColor="#1a3a5c">
+
+    <ContentPage.Resources>
+        <conv:BoolToColorConverter x:Key="TabBgConv"   TrueColor="White"    FalseColor="Transparent"/>
+        <conv:BoolToColorConverter x:Key="TabTextConv" TrueColor="#1a3a5c"  FalseColor="#6b7280"/>
+        <conv:BoolToColorConverter x:Key="CheckBgConv" TrueColor="#1a3a5c"  FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="LockBgConv"  TrueColor="#8096ae"  FalseColor="#1a3a5c"/>
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,Auto,*,Auto">
 
@@ -98,57 +106,27 @@
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="0">
 
                             <!-- Username tab (Column 0 = RIGHT in RTL) -->
-                            <Border Grid.Column="0" StrokeThickness="0" Padding="10">
+                            <Border Grid.Column="0" StrokeThickness="0" Padding="10"
+                                    BackgroundColor="{Binding IsUsernameTab, Converter={StaticResource TabBgConv}}">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding SetUsernameTabCommand}"/>
                                 </Border.GestureRecognizers>
-                                <Border.Triggers>
-                                    <DataTrigger TargetType="Border" Binding="{Binding IsUsernameTab}" Value="True">
-                                        <Setter Property="BackgroundColor" Value="White"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding IsUsernameTab}" Value="False">
-                                        <Setter Property="BackgroundColor" Value="Transparent"/>
-                                    </DataTrigger>
-                                </Border.Triggers>
                                 <Label Text="👤 اسم المستخدم" FontSize="13" FontAttributes="Bold"
-                                       HorizontalTextAlignment="Center">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsUsernameTab}" Value="True">
-                                            <Setter Property="TextColor" Value="#1a3a5c"/>
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsUsernameTab}" Value="False">
-                                            <Setter Property="TextColor" Value="#6b7280"/>
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="{Binding IsUsernameTab, Converter={StaticResource TabTextConv}}"/>
                             </Border>
 
                             <!-- Email tab (Column 1 = LEFT in RTL) -->
-                            <Border Grid.Column="1" StrokeThickness="0" Padding="10">
+                            <Border Grid.Column="1" StrokeThickness="0" Padding="10"
+                                    BackgroundColor="{Binding IsEmailTab, Converter={StaticResource TabBgConv}}">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding SetEmailTabCommand}"/>
                                 </Border.GestureRecognizers>
-                                <Border.Triggers>
-                                    <DataTrigger TargetType="Border" Binding="{Binding IsEmailTab}" Value="True">
-                                        <Setter Property="BackgroundColor" Value="White"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding IsEmailTab}" Value="False">
-                                        <Setter Property="BackgroundColor" Value="Transparent"/>
-                                    </DataTrigger>
-                                </Border.Triggers>
                                 <Label Text="📧 البريد الإلكتروني" FontSize="13" FontAttributes="Bold"
-                                       HorizontalTextAlignment="Center">
-                                    <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsEmailTab}" Value="True">
-                                            <Setter Property="TextColor" Value="#1a3a5c"/>
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Label" Binding="{Binding IsEmailTab}" Value="False">
-                                            <Setter Property="TextColor" Value="#6b7280"/>
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="{Binding IsEmailTab, Converter={StaticResource TabTextConv}}"/>
                             </Border>
 
                         </Grid>
@@ -271,18 +249,9 @@
                             <Label Text="تذكرني لمدة 7 أيام" FontSize="13" TextColor="#374151"
                                    VerticalOptions="Center"/>
                             <Border WidthRequest="20" HeightRequest="20"
-                                    StrokeThickness="2" VerticalOptions="Center">
+                                    StrokeThickness="2" Stroke="#1a3a5c" VerticalOptions="Center"
+                                    BackgroundColor="{Binding RememberMe, Converter={StaticResource CheckBgConv}}">
                                 <Border.StrokeShape><RoundRectangle CornerRadius="6"/></Border.StrokeShape>
-                                <Border.Triggers>
-                                    <DataTrigger TargetType="Border" Binding="{Binding RememberMe}" Value="True">
-                                        <Setter Property="BackgroundColor" Value="#1a3a5c"/>
-                                        <Setter Property="Stroke" Value="#1a3a5c"/>
-                                    </DataTrigger>
-                                    <DataTrigger TargetType="Border" Binding="{Binding RememberMe}" Value="False">
-                                        <Setter Property="BackgroundColor" Value="White"/>
-                                        <Setter Property="Stroke" Value="#1a3a5c"/>
-                                    </DataTrigger>
-                                </Border.Triggers>
                                 <Label Text="✓" FontSize="12" TextColor="White"
                                        HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
                                        IsVisible="{Binding RememberMe}"/>
@@ -291,19 +260,12 @@
                     </Grid>
 
                     <!-- ── Login button ── -->
-                    <Border Margin="0,0,0,14" StrokeThickness="0">
+                    <Border Margin="0,0,0,14" StrokeThickness="0"
+                            BackgroundColor="{Binding IsLocked, Converter={StaticResource LockBgConv}}">
                         <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding LoginCommand}"/>
                         </Border.GestureRecognizers>
-                        <Border.Triggers>
-                            <DataTrigger TargetType="Border" Binding="{Binding IsLocked}" Value="True">
-                                <Setter Property="BackgroundColor" Value="#8096ae"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="Border" Binding="{Binding IsLocked}" Value="False">
-                                <Setter Property="BackgroundColor" Value="#1a3a5c"/>
-                            </DataTrigger>
-                        </Border.Triggers>
                         <HorizontalStackLayout HorizontalOptions="Center" Spacing="8" Padding="0,16">
                             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
                                                Color="White" WidthRequest="18" HeightRequest="18"
