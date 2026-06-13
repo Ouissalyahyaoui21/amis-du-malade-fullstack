@@ -1351,7 +1351,7 @@
                                             <!-- التاريخ + الأزرار -->
                                             <Label Text="{Binding CreatedAt, StringFormat='📅 {0:dd/MM/yyyy}'}"
                                                    FontSize="10" TextColor="#94a3b8"/>
-                                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
                                                 <!-- واتساب -->
                                                 <Border Grid.Column="0" BackgroundColor="#25d366"
                                                         StrokeThickness="0" Padding="0,9">
@@ -1374,6 +1374,18 @@
                                                             CommandParameter="{Binding .}"/>
                                                     </Border.GestureRecognizers>
                                                     <Label Text="✓ تأكيد" FontSize="11" FontAttributes="Bold"
+                                                           TextColor="White" HorizontalTextAlignment="Center"/>
+                                                </Border>
+                                                <!-- توزيع -->
+                                                <Border Grid.Column="2" BackgroundColor="#0a5c46"
+                                                        StrokeThickness="0" Padding="0,9">
+                                                    <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                                    <Border.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DistributeContributionCommand}"
+                                                            CommandParameter="{Binding .}"/>
+                                                    </Border.GestureRecognizers>
+                                                    <Label Text="📦 توزيع" FontSize="11" FontAttributes="Bold"
                                                            TextColor="White" HorizontalTextAlignment="Center"/>
                                                 </Border>
                                             </Grid>
