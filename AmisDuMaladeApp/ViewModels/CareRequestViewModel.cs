@@ -192,17 +192,17 @@ public partial class CareRequestViewModel : BaseViewModel
 
     // ── Single-select commands ────────────────────────────────────────────────
     [RelayCommand]
-    private void SelectRelation(SelectableItem item)
+    private void SelectRelation(string key)
     {
-        SelectSingle(Relations, item);
+        SelectSingle(Relations, key);
         OnPropertyChanged(nameof(SelectedRelationLabel));
         OnPropertyChanged(nameof(SummaryRequester));
     }
 
     [RelayCommand]
-    private void SelectInsurance(SelectableItem item)
+    private void SelectInsurance(string key)
     {
-        SelectSingle(InsuranceTypes, item);
+        SelectSingle(InsuranceTypes, key);
         OnPropertyChanged(nameof(SelectedInsuranceLabel));
         OnPropertyChanged(nameof(HasInsurance));
         OnPropertyChanged(nameof(SelectedInsuranceKey));
@@ -210,27 +210,35 @@ public partial class CareRequestViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private void SelectLocation(SelectableItem item)
+    private void SelectLocation(string key)
     {
-        SelectSingle(Locations, item);
+        SelectSingle(Locations, key);
         OnPropertyChanged(nameof(SelectedLocationLabel));
         OnPropertyChanged(nameof(SummaryLocation));
     }
 
     [RelayCommand]
-    private void SelectDuration(SelectableItem item)
+    private void SelectDuration(string key)
     {
-        SelectSingle(Durations, item);
+        SelectSingle(Durations, key);
         OnPropertyChanged(nameof(SelectedDurationLabel));
         OnPropertyChanged(nameof(SummaryDuration));
     }
 
     // ── Multi-select commands ─────────────────────────────────────────────────
     [RelayCommand]
-    private void ToggleHealth(SelectableItem item) => item.IsSelected = !item.IsSelected;
+    private void ToggleHealth(string key)
+    {
+        var item = HealthConditions.FirstOrDefault(i => i.Key == key);
+        if (item != null) item.IsSelected = !item.IsSelected;
+    }
 
     [RelayCommand]
-    private void ToggleQualification(SelectableItem item) => item.IsSelected = !item.IsSelected;
+    private void ToggleQualification(string key)
+    {
+        var item = RequiredQualifications.FirstOrDefault(i => i.Key == key);
+        if (item != null) item.IsSelected = !item.IsSelected;
+    }
 
     // ── Submit ───────────────────────────────────────────────────────────────
     [RelayCommand]
@@ -323,10 +331,11 @@ public partial class CareRequestViewModel : BaseViewModel
     }
 
     // ── Helpers ──────────────────────────────────────────────────────────────
-    private static void SelectSingle(ObservableCollection<SelectableItem> col, SelectableItem item)
+    private static void SelectSingle(ObservableCollection<SelectableItem> col, string key)
     {
         foreach (var i in col) i.IsSelected = false;
-        item.IsSelected = true;
+        var target = col.FirstOrDefault(i => i.Key == key);
+        if (target != null) target.IsSelected = true;
     }
 
     private async Task<bool> ValidateStepAsync()
