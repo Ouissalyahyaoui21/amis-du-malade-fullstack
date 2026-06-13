@@ -249,8 +249,7 @@
                                             Stroke="{Binding IsSelected, Converter={StaticResource SelStrBlue}}">
                                         <Label Text="{Binding Label}"
                                                TextColor="#1e293b" FontSize="13" FontAttributes="Bold"
-                                               Padding="14,10" VerticalOptions="Center"
-                                               InputTransparent="True"/>
+                                               Padding="14,10" VerticalOptions="Center"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectRelationCommand}"
@@ -352,8 +351,7 @@
                                             Stroke="{Binding IsSelected, Converter={StaticResource SelStrBlue}}">
                                         <Label Text="{Binding Label}"
                                                TextColor="#1e293b" FontSize="12" FontAttributes="Bold"
-                                               Padding="14,10" VerticalOptions="Center"
-                                               InputTransparent="True"/>
+                                               Padding="14,10" VerticalOptions="Center"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectInsuranceCommand}"
@@ -380,8 +378,7 @@
                                             Stroke="{Binding IsSelected, Converter={StaticResource SelStrRed}}">
                                         <Label Text="{Binding Label}"
                                                TextColor="#1e293b" FontSize="13" FontAttributes="Bold"
-                                               Padding="14,10" VerticalOptions="Center"
-                                               InputTransparent="True"/>
+                                               Padding="14,10" VerticalOptions="Center"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ToggleHealthCommand}"
@@ -436,8 +433,7 @@
                                             Stroke="{Binding IsSelected, Converter={StaticResource SelStrBlue}}">
                                         <Label Text="{Binding Label}"
                                                TextColor="#1e293b" FontSize="13" FontAttributes="Bold"
-                                               Padding="14,10" VerticalOptions="Center"
-                                               InputTransparent="True"/>
+                                               Padding="14,10" VerticalOptions="Center"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectLocationCommand}"
@@ -476,8 +472,7 @@
                                             Stroke="{Binding IsSelected, Converter={StaticResource SelStrBlue}}">
                                         <Label Text="{Binding Label}"
                                                TextColor="#1e293b" FontSize="13" FontAttributes="Bold"
-                                               Padding="14,10" VerticalOptions="Center"
-                                               InputTransparent="True"/>
+                                               Padding="14,10" VerticalOptions="Center"/>
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectDurationCommand}"
@@ -536,8 +531,7 @@
                                         BackgroundColor="{Binding IsSelected, Converter={StaticResource SelBgBlue}}"
                                         Stroke="{Binding IsSelected, Converter={StaticResource SelStrBlue}}">
                                     <VerticalStackLayout HorizontalOptions="Center"
-                                                         VerticalOptions="Center" Spacing="6"
-                                                         InputTransparent="True">
+                                                         VerticalOptions="Center" Spacing="6">
                                         <Label Text="{Binding Icon}" FontSize="28"
                                                HorizontalOptions="Center"/>
                                         <Label Text="{Binding Label}"

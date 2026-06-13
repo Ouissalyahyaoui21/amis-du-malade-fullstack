@@ -601,8 +601,7 @@
                                         Margin="0,0,8,8" Padding="0"
                                         BackgroundColor="{Binding IsSelected, Converter={StaticResource VolBgBlue}}"
                                         Stroke="{Binding IsSelected, Converter={StaticResource VolStrBlueSk}}">
-                                    <HorizontalStackLayout Padding="14,10" Spacing="7"
-                                                           InputTransparent="True">
+                                    <HorizontalStackLayout Padding="14,10" Spacing="7">
                                         <Label Text="{Binding Icon}" FontSize="15"
                                                VerticalOptions="Center"/>
                                         <Label Text="{Binding Label}"

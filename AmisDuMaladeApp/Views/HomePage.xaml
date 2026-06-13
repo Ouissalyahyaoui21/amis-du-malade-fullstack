@@ -73,8 +73,7 @@
                         <Border Grid.Column="0"
                                 WidthRequest="52" HeightRequest="52"
                                 BackgroundColor="#1fffffff"
-                                StrokeThickness="0" StrokeShape="RoundRectangle 14"
-                                InputTransparent="True">
+                                StrokeThickness="0" StrokeShape="RoundRectangle 14">
                             <Label Text="🏥" FontSize="26"
                                    HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
@@ -99,8 +98,7 @@
                         <Border Grid.Column="0"
                                 WidthRequest="52" HeightRequest="52"
                                 BackgroundColor="#1fffffff"
-                                StrokeThickness="0" StrokeShape="RoundRectangle 14"
-                                InputTransparent="True">
+                                StrokeThickness="0" StrokeShape="RoundRectangle 14">
                             <Label Text="🤝" FontSize="26"
                                    HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
@@ -125,15 +123,14 @@
                         <Grid Grid.Column="0">
                             <Border WidthRequest="52" HeightRequest="52"
                                     BackgroundColor="#1fffffff"
-                                    StrokeThickness="0" StrokeShape="RoundRectangle 14"
-                                    InputTransparent="True">
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 14">
                                 <Label Text="♥" FontSize="26" TextColor="White"
                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
                             <!-- شارة "جديد" -->
                             <Border BackgroundColor="#c8a53a" StrokeThickness="0" StrokeShape="RoundRectangle 8"
                                     Padding="5,2" VerticalOptions="Start" HorizontalOptions="End"
-                                    Margin="0,-6,-4,0" InputTransparent="True">
+                                    Margin="0,-6,-4,0">
                                 <Label Text="{Binding NewBadge}"
                                        TextColor="White" FontSize="9" FontAttributes="Bold"/>
                             </Border>
@@ -185,8 +182,7 @@
                             <Border WidthRequest="44" HeightRequest="44"
                                     BackgroundColor="#f0f4f8"
                                     StrokeThickness="0" StrokeShape="RoundRectangle 22"
-                                    HorizontalOptions="Center"
-                                    InputTransparent="True">
+                                    HorizontalOptions="Center">
                                 <Label Text="ℹ️" FontSize="22"
                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
