@@ -58,33 +58,24 @@
 
         <!-- ══ HEADER ══ -->
         <VerticalStackLayout Grid.Row="1" BackgroundColor="#1a3a5c"
-                             Padding="20,28,20,0" Spacing="10" HorizontalOptions="Center">
+                             Padding="16,8,16,0" Spacing="6" HorizontalOptions="Center">
 
             <!-- Logo circle -->
-            <Border WidthRequest="90" HeightRequest="90"
-                    BackgroundColor="White" Stroke="#c8a53a" StrokeThickness="3"
+            <Border WidthRequest="68" HeightRequest="68"
+                    BackgroundColor="White" Stroke="#c8a53a" StrokeThickness="2"
                     HorizontalOptions="Center">
                 <Border.StrokeShape><Ellipse/></Border.StrokeShape>
-                <Border.Shadow>
-                    <Shadow Brush="Black" Offset="0,4" Radius="20" Opacity="0.3"/>
-                </Border.Shadow>
                 <Image Source="logo.png" Aspect="AspectFill"/>
             </Border>
 
-            <Label Text="نظام إدارة الجمعية" FontSize="22" FontAttributes="Bold"
+            <Label Text="نظام إدارة الجمعية" FontSize="20" FontAttributes="Bold"
                    TextColor="White" HorizontalTextAlignment="Center"/>
-            <Label Text="Association Amis du Malade – Skikda" FontSize="13"
-                   TextColor="#c8a53a" HorizontalTextAlignment="Center"/>
-            <Label Text="📍 ولاية سكيكدة · الجزائر" FontSize="12"
-                   TextColor="#9ca3af" HorizontalTextAlignment="Center"/>
-
-            <BoxView WidthRequest="48" HeightRequest="3" Color="#c8a53a" CornerRadius="2"
-                     HorizontalOptions="Center" Margin="0,4,0,24"/>
+            <Label Text="Association Amis du Malade – Skikda" FontSize="12"
+                   TextColor="#c8a53a" HorizontalTextAlignment="Center" Margin="0,0,0,10"/>
         </VerticalStackLayout>
 
         <!-- ══ CARD ══ -->
-        <ScrollView Grid.Row="2">
-            <Border BackgroundColor="White" StrokeThickness="0" Padding="24,32,24,20">
+        <Border Grid.Row="2" BackgroundColor="White" StrokeThickness="0" Padding="20,18,20,14">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="28,28,0,0"/>
                 </Border.StrokeShape>
@@ -92,16 +83,16 @@
                 <VerticalStackLayout Spacing="0">
 
                     <!-- Greeting -->
-                    <Label Text="👋" FontSize="36" HorizontalTextAlignment="Center" Margin="0,0,0,8"/>
-                    <Label Text="أهلاً وسهلاً بك" FontSize="22" FontAttributes="Bold"
-                           TextColor="#1a3a5c" HorizontalTextAlignment="Center" Margin="0,0,0,6"/>
-                    <Label Text="نسعد بخدمتك – سجل دخولك للوصول إلى لوحة التحكم"
-                           FontSize="13" TextColor="#6b7280" HorizontalTextAlignment="Center"
-                           LineBreakMode="WordWrap" Margin="0,0,0,24"/>
+                    <Label Text="👋" FontSize="28" HorizontalTextAlignment="Center" Margin="0,0,0,4"/>
+                    <Label Text="أهلاً وسهلاً بك" FontSize="19" FontAttributes="Bold"
+                           TextColor="#1a3a5c" HorizontalTextAlignment="Center" Margin="0,0,0,4"/>
+                    <Label Text="سجل دخولك للوصول إلى لوحة التحكم"
+                           FontSize="12" TextColor="#6b7280" HorizontalTextAlignment="Center"
+                           LineBreakMode="WordWrap" Margin="0,0,0,14"/>
 
                     <!-- ── Tab switcher ── -->
                     <Border BackgroundColor="#f3f4f6" StrokeThickness="0"
-                            Padding="4" Margin="0,0,0,20">
+                            Padding="4" Margin="0,0,0,14">
                         <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="0">
 
@@ -290,11 +281,10 @@
                     </HorizontalStackLayout>
 
                 </VerticalStackLayout>
-            </Border>
-        </ScrollView>
+        </Border>
 
         <!-- ══ FOOTER ══ -->
-        <VerticalStackLayout Grid.Row="3" BackgroundColor="#0f2236" Padding="20,16" Spacing="10">
+        <VerticalStackLayout Grid.Row="3" BackgroundColor="#0f2236" Padding="14,10" Spacing="6">
             <Label Text="© 2025 جمعية أصدقاء المريض – سكيكدة · جميع الحقوق محفوظة"
                    FontSize="11" TextColor="#6b7280" HorizontalTextAlignment="Center"/>
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="12">

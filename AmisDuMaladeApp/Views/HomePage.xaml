@@ -22,7 +22,8 @@
                     BackgroundColor="White"
                     Margin="0,0,0,16"
                     StrokeThickness="3"
-                    Stroke="#c8a53a">
+                    Stroke="#c8a53a"
+                    InputTransparent="True">
                     <Border.StrokeShape>
                         <Ellipse/>
                     </Border.StrokeShape>
@@ -52,7 +53,8 @@
                 <Border BackgroundColor="#f2ede6"
                         StrokeThickness="0"
                         VerticalOptions="End"
-                        HeightRequest="36">
+                        HeightRequest="36"
+                        InputTransparent="True">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="28,28,0,0"/>
                     </Border.StrokeShape>
@@ -71,7 +73,8 @@
                         <Border Grid.Column="0"
                                 WidthRequest="52" HeightRequest="52"
                                 BackgroundColor="#1fffffff"
-                                StrokeThickness="0" StrokeShape="RoundRectangle 14">
+                                StrokeThickness="0" StrokeShape="RoundRectangle 14"
+                                InputTransparent="True">
                             <Label Text="🏥" FontSize="26"
                                    HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
@@ -96,7 +99,8 @@
                         <Border Grid.Column="0"
                                 WidthRequest="52" HeightRequest="52"
                                 BackgroundColor="#1fffffff"
-                                StrokeThickness="0" StrokeShape="RoundRectangle 14">
+                                StrokeThickness="0" StrokeShape="RoundRectangle 14"
+                                InputTransparent="True">
                             <Label Text="🤝" FontSize="26"
                                    HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
@@ -121,14 +125,15 @@
                         <Grid Grid.Column="0">
                             <Border WidthRequest="52" HeightRequest="52"
                                     BackgroundColor="#1fffffff"
-                                    StrokeThickness="0" StrokeShape="RoundRectangle 14">
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 14"
+                                    InputTransparent="True">
                                 <Label Text="♥" FontSize="26" TextColor="White"
                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
                             <!-- شارة "جديد" -->
                             <Border BackgroundColor="#c8a53a" StrokeThickness="0" StrokeShape="RoundRectangle 8"
                                     Padding="5,2" VerticalOptions="Start" HorizontalOptions="End"
-                                    Margin="0,-6,-4,0">
+                                    Margin="0,-6,-4,0" InputTransparent="True">
                                 <Label Text="{Binding NewBadge}"
                                        TextColor="White" FontSize="9" FontAttributes="Bold"/>
                             </Border>
@@ -148,7 +153,8 @@
                 <!-- بطاقتان ثانويتان: حسابي + حول الجمعية -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,4,0,0">
                     <Border Grid.Column="0"
-                            BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
+                            BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16"
+                            InputTransparent="True">
                         <VerticalStackLayout Spacing="8" Padding="18,18,18,18" HorizontalOptions="Center">
                             <Grid HorizontalOptions="Center">
                                 <Border WidthRequest="44" HeightRequest="44"
@@ -179,7 +185,8 @@
                             <Border WidthRequest="44" HeightRequest="44"
                                     BackgroundColor="#f0f4f8"
                                     StrokeThickness="0" StrokeShape="RoundRectangle 22"
-                                    HorizontalOptions="Center">
+                                    HorizontalOptions="Center"
+                                    InputTransparent="True">
                                 <Label Text="ℹ️" FontSize="22"
                                        HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
