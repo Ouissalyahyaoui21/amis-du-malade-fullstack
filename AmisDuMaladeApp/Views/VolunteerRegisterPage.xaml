@@ -267,6 +267,7 @@
                             <Picker ItemsSource="{Binding Municipalities}"
                                     SelectedItem="{Binding Municipality}"
                                     Title="اختر البلدية"
+                                    FlowDirection="LeftToRight"
                                     FontSize="15" HeightRequest="46"/>
                         </Border>
                     </VerticalStackLayout>
@@ -280,6 +281,7 @@
                             <Picker ItemsSource="{Binding Professions}"
                                     SelectedItem="{Binding Profession}"
                                     Title="اختر المهنة"
+                                    FlowDirection="LeftToRight"
                                     FontSize="15" HeightRequest="46"/>
                         </Border>
                     </VerticalStackLayout>
