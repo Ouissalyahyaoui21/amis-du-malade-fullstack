@@ -134,6 +134,18 @@ public class ApiService
         catch { return false; }
     }
 
+    public async Task<bool> EnrollVolunteerInTrainingAsync(Guid trainingId, Guid volunteerId)
+    {
+        SetAuthHeader();
+        try
+        {
+            var response = await _http.PostAsJsonAsync(
+                ApiEndpoints.TrainingEnroll(trainingId), new { volunteerId });
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
     // ── Care Request ──────────────────────────────────────────────────────────
 
     public async Task<(bool Success, string? ReferenceNumber, string? Error)> SubmitCareRequestAsync(CareRequestPublicPayload payload)

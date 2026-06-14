@@ -1098,6 +1098,19 @@
                                             </Border>
                                         </Grid>
 
+                                        <!-- Enroll volunteer button -->
+                                        <Border BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="0,10">
+                                            <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EnrollVolunteerInTrainingCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                            </Border.GestureRecognizers>
+                                            <Label Text="+ تسجيل متطوع في الدورة"
+                                                   FontSize="12" FontAttributes="Bold"
+                                                   TextColor="#c8a53a" HorizontalTextAlignment="Center"/>
+                                        </Border>
+
                                     </VerticalStackLayout>
                                 </Border>
                             </DataTemplate>

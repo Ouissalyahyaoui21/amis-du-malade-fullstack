@@ -535,6 +535,53 @@ public partial class AdminDashboardViewModel : BaseViewModel
         }
     }
 
+    [RelayCommand]
+    private async Task EnrollVolunteerInTrainingAsync(TrainingItem training)
+    {
+        var approved = AllVolunteers.Where(v => v.Status == "Approved").ToList();
+        if (approved.Count == 0)
+        {
+            await Shell.Current.DisplayAlert(
+                "لا يوجد متطوعون مقبولون",
+                "يجب قبول متطوعين عبر تبويبة المقابلات أولاً", "حسناً");
+            return;
+        }
+
+        if (training.EnrolledCount >= training.Capacity)
+        {
+            await Shell.Current.DisplayAlert(
+                "الدورة مكتملة",
+                $"وصلت الدورة إلى الحد الأقصى ({training.Capacity} مشارك)", "حسناً");
+            return;
+        }
+
+        var names = approved.Select(v => $"{v.FullName} — {v.Phone}").ToArray();
+        var selected = await Shell.Current.DisplayActionSheet(
+            $"تسجيل في: {training.Title}", "إلغاء", null, names);
+
+        if (string.IsNullOrEmpty(selected) || selected == "إلغاء") return;
+
+        var volunteer = approved.FirstOrDefault(v => selected.StartsWith(v.FullName));
+        if (volunteer == null) return;
+
+        var ok = await _api.EnrollVolunteerInTrainingAsync(training.Id, volunteer.Id);
+        if (ok)
+        {
+            training.EnrolledCount++;
+            var idx = TrainingsList.IndexOf(training);
+            if (idx >= 0) { TrainingsList.RemoveAt(idx); TrainingsList.Insert(idx, training); }
+            await Shell.Current.DisplayAlert(
+                "تم التسجيل",
+                $"تم تسجيل {volunteer.FullName} في دورة '{training.Title}'", "حسناً");
+        }
+        else
+        {
+            await Shell.Current.DisplayAlert(
+                "خطأ في التسجيل",
+                "تعذّر التسجيل. ربما المتطوع مسجّل في هذه الدورة مسبقاً.", "حسناً");
+        }
+    }
+
     // ── Contribution actions ───────────────────────────────────────────────────
     [RelayCommand]
     private async Task ConfirmContributionAsync(ContributionItem c)
