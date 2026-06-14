@@ -909,6 +909,160 @@
                                FontSize="11" TextColor="#0369a1" HorizontalTextAlignment="Center"/>
                     </Border>
 
+                    <!-- فلتر المقابلات -->
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout Spacing="8">
+                            <!-- الكل -->
+                            <Border Padding="12,7" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterInterviewsCommand}" CommandParameter="All"/>
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="All">
+                                        <Setter Property="BackgroundColor" Value="#1a3a5c"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Scheduled">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Completed">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Cancelled">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="الكل" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="All">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Scheduled">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Completed">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Cancelled">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                            <!-- مجدولة -->
+                            <Border Padding="12,7" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterInterviewsCommand}" CommandParameter="Scheduled"/>
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Scheduled">
+                                        <Setter Property="BackgroundColor" Value="#b45309"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="All">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Completed">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Cancelled">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="⏳ مجدولة" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Scheduled">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="All">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Completed">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Cancelled">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                            <!-- مكتملة -->
+                            <Border Padding="12,7" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterInterviewsCommand}" CommandParameter="Completed"/>
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Completed">
+                                        <Setter Property="BackgroundColor" Value="#16a34a"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="All">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Scheduled">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Cancelled">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="✓ مكتملة" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Completed">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="All">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Scheduled">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Cancelled">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                            <!-- ملغاة -->
+                            <Border Padding="12,7" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterInterviewsCommand}" CommandParameter="Cancelled"/>
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Cancelled">
+                                        <Setter Property="BackgroundColor" Value="#dc2626"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="All">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Scheduled">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding InterviewFilter}" Value="Completed">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="❌ ملغاة" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Cancelled">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="All">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Scheduled">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Completed">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+
                     <!-- Empty state -->
                     <Border IsVisible="{Binding HasNoInterviews}"
                             BackgroundColor="#fef3c7" StrokeThickness="0" Padding="14,12">
@@ -918,7 +1072,7 @@
                     </Border>
 
                     <!-- Interviews list -->
-                    <CollectionView ItemsSource="{Binding InterviewsList}" HeightRequest="560">
+                    <CollectionView ItemsSource="{Binding FilteredInterviews}" HeightRequest="560">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="m:VolunteerInterviewItem">
                                 <Border BackgroundColor="White" StrokeThickness="0"

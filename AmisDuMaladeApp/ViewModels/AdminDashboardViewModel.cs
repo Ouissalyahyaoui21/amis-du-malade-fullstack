@@ -79,6 +79,16 @@ public partial class AdminDashboardViewModel : BaseViewModel
             ? AllVolunteers
             : AllVolunteers.Where(v => v.Status == VolunteerFilter);
 
+    // ── Interview filter ───────────────────────────────────────────────────────
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FilteredInterviews))]
+    private string interviewFilter = "All";
+
+    public IEnumerable<VolunteerInterviewItem> FilteredInterviews =>
+        InterviewFilter == "All"
+            ? InterviewsList
+            : InterviewsList.Where(i => i.Status == InterviewFilter);
+
     // ── Assign volunteer popup ─────────────────────────────────────────────────
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsAssignPopupVisible))]
@@ -247,6 +257,7 @@ public partial class AdminDashboardViewModel : BaseViewModel
             IsLoadingInterviews = false;
             OnPropertyChanged(nameof(HasNoInterviews));
             OnPropertyChanged(nameof(InterviewsCount));
+            OnPropertyChanged(nameof(FilteredInterviews));
         }
     }
 
@@ -342,6 +353,10 @@ public partial class AdminDashboardViewModel : BaseViewModel
     // ── Volunteer filter ───────────────────────────────────────────────────────
     [RelayCommand]
     private void FilterVolunteers(string filter) => VolunteerFilter = filter;
+
+    // ── Interview filter ───────────────────────────────────────────────────────
+    [RelayCommand]
+    private void FilterInterviews(string filter) => InterviewFilter = filter;
 
     // ── Assign volunteer popup ─────────────────────────────────────────────────
     [RelayCommand]
