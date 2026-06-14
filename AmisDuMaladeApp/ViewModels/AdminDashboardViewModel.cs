@@ -53,8 +53,9 @@ public partial class AdminDashboardViewModel : BaseViewModel
     [NotifyPropertyChangedFor(nameof(HasNoTrainings))]
     private bool isLoadingTrainings;
 
-    public bool HasNoInterviews => !IsLoadingInterviews && InterviewsList.Count == 0;
-    public bool HasNoTrainings  => !IsLoadingTrainings  && TrainingsList.Count  == 0;
+    public bool HasNoInterviews  => !IsLoadingInterviews && InterviewsList.Count == 0;
+    public bool HasNoTrainings   => !IsLoadingTrainings  && TrainingsList.Count  == 0;
+    public int  InterviewsCount  => InterviewsList.Count;
 
     // ── Collections ────────────────────────────────────────────────────────────
     public ObservableCollection<AlertResponse>          OpenAlertsList    { get; } = new();
@@ -166,6 +167,7 @@ public partial class AdminDashboardViewModel : BaseViewModel
             HasLoadError      = true;
             LoadErrorMessage  = "تعذّر الاتصال بالخادم. تحقق من الإنترنت وأعد المحاولة.";
         }
+        finally { IsBusy = false; }
     }
 
     private async Task LoadOverviewAsync()
@@ -244,6 +246,7 @@ public partial class AdminDashboardViewModel : BaseViewModel
         {
             IsLoadingInterviews = false;
             OnPropertyChanged(nameof(HasNoInterviews));
+            OnPropertyChanged(nameof(InterviewsCount));
         }
     }
 
