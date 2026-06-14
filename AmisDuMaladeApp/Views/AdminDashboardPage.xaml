@@ -886,11 +886,18 @@
                 <VerticalStackLayout IsVisible="{Binding IsInterviewsTab}" Spacing="12" Padding="16,16,16,0">
 
                     <!-- Header -->
-                    <Grid ColumnDefinitions="*,Auto" Padding="0,4,0,0">
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Padding="0,4,0,0">
                         <Label Grid.Column="0" Text="🗣 المقابلات المجدولة"
                                FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"
                                VerticalOptions="Center"/>
-                        <Border Grid.Column="1" BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="12,6">
+                        <Border Grid.Column="1" BackgroundColor="#f0f4f8" StrokeThickness="0" Padding="10,6">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding RefreshCurrentTabCommand}"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="🔄" FontSize="14" VerticalOptions="Center"/>
+                        </Border>
+                        <Border Grid.Column="2" BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="12,6">
                             <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
                             <Label Text="{Binding InterviewsCount}" TextColor="#c8a53a"
                                    FontSize="13" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
@@ -1154,7 +1161,8 @@
 
                                         <!-- Cancel button (only for scheduled interviews) -->
                                         <Border IsVisible="{Binding IsScheduled}"
-                                                BackgroundColor="#f3f4f6" StrokeThickness="0" Padding="0,8">
+                                                BackgroundColor="#fff1f2" StrokeThickness="1"
+                                                Stroke="#fecdd3" Padding="0,9">
                                             <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
                                             <Border.GestureRecognizers>
                                                 <TapGestureRecognizer
@@ -1162,7 +1170,7 @@
                                                     CommandParameter="{Binding .}"/>
                                             </Border.GestureRecognizers>
                                             <Label Text="✕ إلغاء المقابلة" FontSize="11" FontAttributes="Bold"
-                                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                                                   TextColor="#e11d48" HorizontalTextAlignment="Center"/>
                                         </Border>
 
                                         <!-- Result banner for completed interviews -->
@@ -1190,11 +1198,18 @@
                 <VerticalStackLayout IsVisible="{Binding IsTrainingTab}" Spacing="12" Padding="16,16,16,0">
 
                     <!-- Header + Create button -->
-                    <Grid ColumnDefinitions="*,Auto">
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                         <Label Grid.Column="0" Text="🎓 الدورات التدريبية"
                                FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"
                                VerticalOptions="Center"/>
-                        <Border Grid.Column="1" BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="12,8">
+                        <Border Grid.Column="1" BackgroundColor="#f0f4f8" StrokeThickness="0" Padding="10,8">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding RefreshCurrentTabCommand}"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="🔄" FontSize="14" VerticalOptions="Center"/>
+                        </Border>
+                        <Border Grid.Column="2" BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="12,8">
                             <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding CreateTrainingCommand}"/>

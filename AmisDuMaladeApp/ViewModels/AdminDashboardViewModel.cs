@@ -433,15 +433,41 @@ public partial class AdminDashboardViewModel : BaseViewModel
         var location = await Shell.Current.DisplayPromptAsync(
             "جدولة مقابلة",
             $"المتطوع: {v.FullName}\nأدخل مكان المقابلة:",
-            "تأكيد", "إلغاء",
+            "التالي", "إلغاء",
             "مقر الجمعية - سكيكدة");
-
         if (location == null) return;
+
+        var dateStr = await Shell.Current.DisplayPromptAsync(
+            "تاريخ المقابلة",
+            "أدخل تاريخ المقابلة:",
+            "التالي", "إلغاء",
+            DateTime.Now.AddDays(7).ToString("dd/MM/yyyy"));
+        if (dateStr == null) return;
+
+        var timeStr = await Shell.Current.DisplayPromptAsync(
+            "وقت المقابلة",
+            "أدخل وقت المقابلة:",
+            "تأكيد", "إلغاء",
+            "10:00");
+        if (timeStr == null) return;
+
+        if (!DateTime.TryParseExact($"{dateStr.Trim()} {timeStr.Trim()}",
+                "dd/MM/yyyy HH:mm",
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None,
+                out var scheduledAt))
+        {
+            await Shell.Current.DisplayAlert(
+                "تنسيق خاطئ",
+                "أدخل التاريخ بالشكل dd/MM/yyyy (مثال: 25/06/2026)\nوالوقت بالشكل HH:mm (مثال: 10:30)",
+                "حسناً");
+            return;
+        }
 
         var ok = await _api.ScheduleInterviewAsync(new ScheduleInterviewRequest
         {
             VolunteerId = v.Id,
-            ScheduledAt = DateTime.UtcNow.AddDays(7),
+            ScheduledAt = scheduledAt.ToUniversalTime(),
             Location    = string.IsNullOrWhiteSpace(location) ? "مقر الجمعية" : location
         });
 
@@ -449,6 +475,8 @@ public partial class AdminDashboardViewModel : BaseViewModel
         {
             v.Status = "Interview";
             PendingVolunteers.Remove(v);
+            var allIdx = AllVolunteers.IndexOf(v);
+            if (allIdx >= 0) { AllVolunteers.RemoveAt(allIdx); AllVolunteers.Insert(allIdx, v); }
             StatPendingVolunteers = Math.Max(0, StatPendingVolunteers - 1);
             OnPropertyChanged(nameof(FilteredVolunteers));
             await LoadInterviewsAsync();
@@ -470,6 +498,8 @@ public partial class AdminDashboardViewModel : BaseViewModel
         {
             v.Status = "Rejected";
             PendingVolunteers.Remove(v);
+            var allIdx = AllVolunteers.IndexOf(v);
+            if (allIdx >= 0) { AllVolunteers.RemoveAt(allIdx); AllVolunteers.Insert(allIdx, v); }
             OnPropertyChanged(nameof(FilteredVolunteers));
         }
     }
@@ -499,6 +529,7 @@ public partial class AdminDashboardViewModel : BaseViewModel
             if (idx >= 0) { InterviewsList.RemoveAt(idx); InterviewsList.Insert(idx, interview); }
             StatActiveVolunteers++;
             NotifyInterviewCountsChanged();
+            await LoadVolunteersAsync();
             await Shell.Current.DisplayAlert("تم القبول", $"تم قبول {interview.VolunteerName} كمتطوع", "حسناً");
         }
     }
@@ -525,6 +556,7 @@ public partial class AdminDashboardViewModel : BaseViewModel
             var idx = InterviewsList.IndexOf(interview);
             if (idx >= 0) { InterviewsList.RemoveAt(idx); InterviewsList.Insert(idx, interview); }
             NotifyInterviewCountsChanged();
+            await LoadVolunteersAsync();
         }
     }
 
