@@ -350,7 +350,6 @@
                                     StrokeThickness="1" Stroke="#e2e8f0" Padding="10,4">
                                 <Picker ItemsSource="{Binding Genders}"
                                         SelectedItem="{Binding PatientGender}"
-                                        FlowDirection="LeftToRight"
                                         FontSize="15" HeightRequest="46"/>
                             </Border>
                         </VerticalStackLayout>

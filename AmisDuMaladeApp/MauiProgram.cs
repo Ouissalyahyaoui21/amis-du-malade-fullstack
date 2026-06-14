@@ -25,6 +25,20 @@ public static class MauiProgram
             h.AddHandler<Microsoft.Maui.Controls.Border, Platforms.Windows.HandCursorBorderHandler>();
             h.AddHandler<Microsoft.Maui.Controls.Label,  Platforms.Windows.HandCursorLabelHandler>();
         });
+
+        // Fix: WinUI ComboBox (Picker) with inherited RTL FlowDirection hides selected item text.
+        // Force LTR at the native level after MAUI's own mapping runs, then right-align content
+        // so Arabic text appears on the correct side (matching other fields in the RTL page).
+        Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping(
+            nameof(Microsoft.Maui.Controls.Picker.Title),
+            (handler, _) =>
+            {
+                if (handler.PlatformView is Microsoft.UI.Xaml.Controls.ComboBox cb)
+                {
+                    cb.FlowDirection              = Microsoft.UI.Xaml.FlowDirection.LeftToRight;
+                    cb.HorizontalContentAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
+                }
+            });
 #endif
 
         // ── Services (order matters: AuthToken first, ApiService depends on it) ──
