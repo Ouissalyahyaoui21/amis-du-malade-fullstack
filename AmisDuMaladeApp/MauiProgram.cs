@@ -26,8 +26,9 @@ public static class MauiProgram
             h.AddHandler<Microsoft.Maui.Controls.Label,  Platforms.Windows.HandCursorLabelHandler>();
         });
 
-        // Intercept MAUI's RTL FlowDirection re-propagation to Picker — runs AFTER MAUI's mapper.
-        // Without this, MAUI keeps pushing page-level RTL onto the ComboBox and hiding selected text.
+        // ─── Picker/ComboBox: keep selected text visible and right-aligned in RTL pages ───
+        // MAUI repeatedly pushes the page's RTL FlowDirection down to every child handler;
+        // intercept it each time to restore LTR so the selected-item presenter stays visible.
         Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping(
             "FlowDirection",
             (handler, _) =>
@@ -51,24 +52,32 @@ public static class MauiProgram
                     if (s is not Microsoft.UI.Xaml.Controls.ComboBox combo) return;
                     combo.FlowDirection              = Microsoft.UI.Xaml.FlowDirection.LeftToRight;
                     combo.HorizontalContentAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
-                    FixPresenter(combo);
-
-                    static void FixPresenter(Microsoft.UI.Xaml.DependencyObject node)
-                    {
-                        var n = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChildrenCount(node);
-                        for (var i = 0; i < n; i++)
-                        {
-                            var child = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChild(node, i);
-                            if (child is Microsoft.UI.Xaml.Controls.ContentPresenter
-                                { Name: "ContentPresenter" } cp)
-                            {
-                                cp.HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
-                                return;
-                            }
-                            FixPresenter(child);
-                        }
-                    }
                 };
+                // WinUI rebuilds the selected-item ContentPresenter on each selection, which can
+                // reset alignment. Re-apply at Low priority so we run after the UI update finishes.
+                cb.SelectionChanged += (s, e) =>
+                {
+                    if (s is not Microsoft.UI.Xaml.Controls.ComboBox combo) return;
+                    combo.DispatcherQueue.TryEnqueue(
+                        Microsoft.UI.Dispatching.DispatcherQueuePriority.Low,
+                        () =>
+                        {
+                            combo.FlowDirection              = Microsoft.UI.Xaml.FlowDirection.LeftToRight;
+                            combo.HorizontalContentAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
+                        });
+                };
+            });
+
+        // ─── Entry/TextBox: keep typed text right-aligned in RTL pages ──────────────────
+        // MAUI resolves HorizontalTextAlignment="Start" against the TextBox FlowDirection at
+        // the moment the mapper runs; if FlowDirection hasn't propagated yet it defaults to
+        // LTR-Start (= Left).  Force Right here after every FlowDirection update.
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(
+            "FlowDirection",
+            (handler, _) =>
+            {
+                if (handler.PlatformView is Microsoft.UI.Xaml.Controls.TextBox tb)
+                    tb.TextAlignment = Microsoft.UI.Xaml.TextAlignment.Right;
             });
 #endif
 
