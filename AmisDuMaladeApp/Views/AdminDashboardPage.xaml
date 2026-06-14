@@ -884,63 +884,284 @@
                      TAB 3 — INTERVIEWS (placeholder content)
                 ════════════════════════════════════════════════════════════ -->
                 <VerticalStackLayout IsVisible="{Binding IsInterviewsTab}" Spacing="12" Padding="16,16,16,0">
-                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
-                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                            <Label Text="🗣" FontSize="40" HorizontalTextAlignment="Center"/>
-                            <Label Text="إدارة المقابلات" FontSize="16" FontAttributes="Bold"
-                                   TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
-                            <Label Text="جدولة وتتبع مقابلات المتطوعين الجدد" FontSize="13"
-                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
-                        </VerticalStackLayout>
+
+                    <!-- Header -->
+                    <Grid ColumnDefinitions="*,Auto" Padding="0,4,0,0">
+                        <Label Grid.Column="0" Text="🗣 المقابلات المجدولة"
+                               FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"
+                               VerticalOptions="Center"/>
+                        <Border Grid.Column="1" BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="12,6">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                            <Label Text="{Binding InterviewsCount}" TextColor="#c8a53a"
+                                   FontSize="13" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Loading -->
+                    <ActivityIndicator IsRunning="{Binding IsLoadingInterviews}"
+                                       IsVisible="{Binding IsLoadingInterviews}"
+                                       Color="#1a3a5c" HorizontalOptions="Center"/>
+
+                    <!-- Info tip -->
+                    <Border BackgroundColor="#e0f2fe" StrokeThickness="0" Padding="12,10">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                        <Label Text="💡 اضغط ✓ قبول في تبويبة المتطوعين لجدولة مقابلة"
+                               FontSize="11" TextColor="#0369a1" HorizontalTextAlignment="Center"/>
                     </Border>
-                    <Border BackgroundColor="#fef3c7" StrokeThickness="0" Padding="14,12">
+
+                    <!-- Empty state -->
+                    <Border IsVisible="{Binding HasNoInterviews}"
+                            BackgroundColor="#fef3c7" StrokeThickness="0" Padding="14,12">
                         <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
-                        <Label Text="📅 لا توجد مقابلات مجدولة — يمكن جدولة مقابلة من ملف المتطوع المعلق"
+                        <Label Text="📅 لا توجد مقابلات مجدولة حالياً"
                                FontSize="12" TextColor="#92400e" HorizontalTextAlignment="Center"/>
                     </Border>
+
+                    <!-- Interviews list -->
+                    <CollectionView ItemsSource="{Binding InterviewsList}" HeightRequest="560">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:VolunteerInterviewItem">
+                                <Border BackgroundColor="White" StrokeThickness="0"
+                                        Padding="14,12" Margin="0,0,0,10">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                                    <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.08"/></Border.Shadow>
+                                    <VerticalStackLayout Spacing="10">
+
+                                        <!-- Name + Status badge -->
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <Label Grid.Column="0"
+                                                   Text="{Binding VolunteerName}"
+                                                   FontSize="15" FontAttributes="Bold"
+                                                   TextColor="#1a3a5c" VerticalOptions="Center"/>
+                                            <Border Grid.Column="1"
+                                                    BackgroundColor="{Binding StatusBgColor}"
+                                                    StrokeThickness="0" Padding="8,4">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                <Label Text="{Binding StatusLabel}"
+                                                       FontSize="11" FontAttributes="Bold"
+                                                       TextColor="{Binding StatusTextColor}"/>
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Date + Location -->
+                                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                            <Border Grid.Column="0" BackgroundColor="#f0f4f8"
+                                                    StrokeThickness="0" Padding="8,6">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                <HorizontalStackLayout Spacing="4">
+                                                    <Label Text="📅" FontSize="12"/>
+                                                    <Label Text="{Binding ScheduledAtLabel}"
+                                                           FontSize="11" TextColor="#374151"
+                                                           VerticalOptions="Center"/>
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                            <Border Grid.Column="1" BackgroundColor="#f0f4f8"
+                                                    StrokeThickness="0" Padding="8,6">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                <HorizontalStackLayout Spacing="4">
+                                                    <Label Text="📍" FontSize="12"/>
+                                                    <Label Text="{Binding Location}"
+                                                           FontSize="11" TextColor="#374151"
+                                                           VerticalOptions="Center"/>
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Action buttons for Scheduled interviews -->
+                                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8"
+                                              IsVisible="{Binding IsScheduled}">
+                                            <Border Grid.Column="0" BackgroundColor="#16a34a"
+                                                    StrokeThickness="0" Padding="0,9">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RecordInterviewAcceptedCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Border.GestureRecognizers>
+                                                <Label Text="✓ قبول المتطوع" FontSize="11" FontAttributes="Bold"
+                                                       TextColor="White" HorizontalTextAlignment="Center"/>
+                                            </Border>
+                                            <Border Grid.Column="1" BackgroundColor="#fee2e2"
+                                                    StrokeThickness="0" Padding="0,9">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RecordInterviewRejectedCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Border.GestureRecognizers>
+                                                <Label Text="✗ رفض المتطوع" FontSize="11" FontAttributes="Bold"
+                                                       TextColor="#dc2626" HorizontalTextAlignment="Center"/>
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Result banner for completed interviews -->
+                                        <Border IsVisible="{Binding IsCompleted}"
+                                                BackgroundColor="{Binding ResultBgColor}"
+                                                StrokeThickness="0" Padding="10,7">
+                                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                            <Label Text="{Binding ResultLabel}"
+                                                   FontSize="12" FontAttributes="Bold"
+                                                   TextColor="{Binding ResultTextColor}"
+                                                   HorizontalTextAlignment="Center"/>
+                                        </Border>
+
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
                 </VerticalStackLayout>
 
                 <!-- ═══════════════════════════════════════════════════════════
                      TAB 4 — TRAINING (placeholder content)
                 ════════════════════════════════════════════════════════════ -->
                 <VerticalStackLayout IsVisible="{Binding IsTrainingTab}" Spacing="12" Padding="16,16,16,0">
-                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16">
-                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
-                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                            <Label Text="🎓" FontSize="40" HorizontalTextAlignment="Center"/>
-                            <Label Text="التدريبات" FontSize="16" FontAttributes="Bold"
-                                   TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
-                            <Label Text="إدارة دورات تدريب المتطوعين وتتبع الحضور" FontSize="13"
-                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
-                        </VerticalStackLayout>
-                    </Border>
-                    <Border BackgroundColor="#dcfce7" StrokeThickness="0" Padding="14,12">
+
+                    <!-- Header + Create button -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="🎓 الدورات التدريبية"
+                               FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"
+                               VerticalOptions="Center"/>
+                        <Border Grid.Column="1" BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="12,8">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CreateTrainingCommand}"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="+ دورة جديدة" TextColor="#c8a53a"
+                                   FontSize="12" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Loading -->
+                    <ActivityIndicator IsRunning="{Binding IsLoadingTrainings}"
+                                       IsVisible="{Binding IsLoadingTrainings}"
+                                       Color="#1a3a5c" HorizontalOptions="Center"/>
+
+                    <!-- Empty state -->
+                    <Border IsVisible="{Binding HasNoTrainings}"
+                            BackgroundColor="#dcfce7" StrokeThickness="0" Padding="14,12">
                         <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
-                        <Label Text="🎓 لا توجد دورات تدريبية نشطة حالياً"
+                        <Label Text="🎓 لا توجد دورات تدريبية — اضغط على (+ دورة جديدة) لإنشاء دورة"
                                FontSize="12" TextColor="#15803d" HorizontalTextAlignment="Center"/>
                     </Border>
+
+                    <!-- Trainings list -->
+                    <CollectionView ItemsSource="{Binding TrainingsList}" HeightRequest="560">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="m:TrainingItem">
+                                <Border BackgroundColor="White" StrokeThickness="0"
+                                        Padding="14,12" Margin="0,0,0,10">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                                    <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.08"/></Border.Shadow>
+                                    <VerticalStackLayout Spacing="10">
+
+                                        <!-- Title + Capacity badge -->
+                                        <Grid ColumnDefinitions="*,Auto">
+                                            <Label Grid.Column="0" Text="{Binding Title}"
+                                                   FontSize="15" FontAttributes="Bold"
+                                                   TextColor="#1a3a5c" VerticalOptions="Center"/>
+                                            <Border Grid.Column="1" BackgroundColor="#e0f2fe"
+                                                    StrokeThickness="0" Padding="8,4">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                <Label Text="{Binding CapacityLabel}"
+                                                       FontSize="11" FontAttributes="Bold"
+                                                       TextColor="#0369a1"/>
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Description -->
+                                        <Label Text="{Binding Description}"
+                                               FontSize="12" TextColor="#6b7280"/>
+
+                                        <!-- Date + Location -->
+                                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                            <Border Grid.Column="0" BackgroundColor="#f0f4f8"
+                                                    StrokeThickness="0" Padding="8,6">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                <HorizontalStackLayout Spacing="4">
+                                                    <Label Text="📅" FontSize="12"/>
+                                                    <Label Text="{Binding StartDateLabel}"
+                                                           FontSize="11" TextColor="#374151"
+                                                           VerticalOptions="Center"/>
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                            <Border Grid.Column="1" BackgroundColor="#f0f4f8"
+                                                    StrokeThickness="0" Padding="8,6">
+                                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                                <HorizontalStackLayout Spacing="4">
+                                                    <Label Text="📍" FontSize="12"/>
+                                                    <Label Text="{Binding Location}"
+                                                           FontSize="11" TextColor="#374151"
+                                                           VerticalOptions="Center"/>
+                                                </HorizontalStackLayout>
+                                            </Border>
+                                        </Grid>
+
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
                 </VerticalStackLayout>
 
                 <!-- ═══════════════════════════════════════════════════════════
                      TAB 5 — EVALUATIONS (placeholder)
                 ════════════════════════════════════════════════════════════ -->
                 <VerticalStackLayout IsVisible="{Binding IsEvaluationsTab}" Spacing="12" Padding="16,16,16,0">
-                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16">
+
+                    <!-- Header -->
+                    <Grid ColumnDefinitions="*,Auto" Padding="0,4,0,0">
+                        <Label Grid.Column="0" Text="⭐ تقييمات المتطوعين"
+                               FontSize="15" FontAttributes="Bold" TextColor="#1a3a5c"
+                               VerticalOptions="Center"/>
+                    </Grid>
+
+                    <!-- Info card -->
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="20,18">
                         <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
-                        <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                            <Label Text="⭐" FontSize="40" HorizontalTextAlignment="Center"/>
-                            <Label Text="تقييمات المتطوعين" FontSize="16" FontAttributes="Bold"
+                        <Border.Shadow><Shadow Brush="Black" Offset="0,2" Radius="6" Opacity="0.08"/></Border.Shadow>
+                        <VerticalStackLayout Spacing="14" HorizontalOptions="Center">
+                            <Label Text="⭐" FontSize="48" HorizontalTextAlignment="Center"/>
+                            <Label Text="تقييمات أداء المتطوعين" FontSize="16" FontAttributes="Bold"
                                    TextColor="#1a3a5c" HorizontalTextAlignment="Center"/>
-                            <Label Text="استعراض تقييمات أداء المتطوعين من المرضى" FontSize="13"
-                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                            <Label Text="ستُعرض هنا تقييمات المرضى وذويهم لأداء المتطوعين خلال الزيارات"
+                                   FontSize="13" TextColor="#6b7280" HorizontalTextAlignment="Center" LineHeight="1.4"/>
                         </VerticalStackLayout>
                     </Border>
-                    <Border BackgroundColor="#fef3c7" StrokeThickness="0" Padding="14,12">
+
+                    <!-- Stats cards -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <Border Grid.Column="0" BackgroundColor="#fef3c7" StrokeThickness="0" Padding="16,14">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="📊" FontSize="28" HorizontalTextAlignment="Center"/>
+                                <Label Text="تقييم الزيارات" FontSize="11" FontAttributes="Bold"
+                                       TextColor="#92400e" HorizontalTextAlignment="Center"/>
+                                <Label Text="قيد التطوير" FontSize="10" TextColor="#b45309"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" BackgroundColor="#dcfce7" StrokeThickness="0" Padding="16,14">
+                            <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="🏆" FontSize="28" HorizontalTextAlignment="Center"/>
+                                <Label Text="أفضل المتطوعين" FontSize="11" FontAttributes="Bold"
+                                       TextColor="#15803d" HorizontalTextAlignment="Center"/>
+                                <Label Text="قيد التطوير" FontSize="10" TextColor="#16a34a"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <!-- Note -->
+                    <Border BackgroundColor="#f0f4f8" StrokeThickness="0" Padding="14,12">
                         <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
-                        <Label Text="⭐ لا توجد تقييمات مسجلة حالياً — ستُعرض تقييمات المرضى للمتطوعين هنا"
-                               FontSize="12" TextColor="#92400e" HorizontalTextAlignment="Center"/>
+                        <Label Text="💡 التقييمات تُسجَّل تلقائياً بعد كل زيارة مكتملة من قِبَل المريض أو ذويه"
+                               FontSize="12" TextColor="#374151" HorizontalTextAlignment="Center"/>
                     </Border>
+
                 </VerticalStackLayout>
 
                 <!-- ═══════════════════════════════════════════════════════════
