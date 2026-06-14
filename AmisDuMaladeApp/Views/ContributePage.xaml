@@ -30,10 +30,13 @@
         <conv:BoolToColorConverter x:Key="CtRcptStr"    TrueColor="#16a34a" FalseColor="#d1d5db"/>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView Grid.Row="0">
+        <VerticalStackLayout Spacing="0">
 
         <!-- ══ HEADER ══ -->
-        <VerticalStackLayout Grid.Row="0" BackgroundColor="#1a3a5c"
+        <VerticalStackLayout BackgroundColor="#1a3a5c"
                              Padding="{OnPlatform Default='16,52,16,16', WinUI='16,16,16,16'}"
                              Spacing="0">
 
@@ -130,8 +133,6 @@
         </VerticalStackLayout>
 
         <!-- ══ CONTENT ══ -->
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="0">
 
                 <!-- موجة الانتقال -->
                 <Grid HeightRequest="32" BackgroundColor="#1a3a5c">
@@ -665,7 +666,7 @@
                                                Placeholder="أدخل اسمك الكامل"
                                                PlaceholderColor="#9ca3af"
                                                TextColor="#1a3a5c" FontSize="14"
-                                               HorizontalTextAlignment="End"
+                                               HorizontalTextAlignment="Start"
                                                BackgroundColor="Transparent"/>
                                     </Border>
                                 </VerticalStackLayout>
@@ -678,7 +679,7 @@
                                                PlaceholderColor="#9ca3af"
                                                Keyboard="Telephone"
                                                TextColor="#1a3a5c" FontSize="14"
-                                               HorizontalTextAlignment="End"
+                                               HorizontalTextAlignment="Start"
                                                BackgroundColor="Transparent"/>
                                     </Border>
                                 </VerticalStackLayout>
@@ -790,7 +791,7 @@
         </ScrollView>
 
         <!-- ══ NAV BAR ══ -->
-        <Border Grid.Row="2" BackgroundColor="White" StrokeThickness="0"
+        <Border Grid.Row="1" BackgroundColor="White" StrokeThickness="0"
                 Padding="14,12">
             <Grid ColumnDefinitions="*,*" ColumnSpacing="10" IsVisible="{Binding ShowStep2Nav}">
                 <Button Grid.Column="1" Text="→ السابق"
@@ -806,7 +807,7 @@
                         FontSize="15" FontAttributes="Bold"/>
             </Grid>
         </Border>
-        <Border Grid.Row="2" BackgroundColor="White" StrokeThickness="0"
+        <Border Grid.Row="1" BackgroundColor="White" StrokeThickness="0"
                 Padding="14,12" IsVisible="{Binding ShowStep3Nav}">
             <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
                 <Button Grid.Column="1" Text="→ السابق"

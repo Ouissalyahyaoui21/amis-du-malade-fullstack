@@ -26,28 +26,49 @@ public static class MauiProgram
             h.AddHandler<Microsoft.Maui.Controls.Label,  Platforms.Windows.HandCursorLabelHandler>();
         });
 
-        // Fix: WinUI ComboBox (Picker) with inherited RTL FlowDirection hides selected item text.
-        // Force LTR at the native level after MAUI's own mapping runs, then right-align content
-        // so Arabic text appears on the correct side (matching other fields in the RTL page).
+        // Intercept MAUI's RTL FlowDirection re-propagation to Picker — runs AFTER MAUI's mapper.
+        // Without this, MAUI keeps pushing page-level RTL onto the ComboBox and hiding selected text.
         Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping(
-            nameof(Microsoft.Maui.Controls.Picker.Title),
+            "FlowDirection",
             (handler, _) =>
             {
                 if (handler.PlatformView is Microsoft.UI.Xaml.Controls.ComboBox cb)
                 {
-                    // Apply immediately (before template load)
                     cb.FlowDirection              = Microsoft.UI.Xaml.FlowDirection.LeftToRight;
                     cb.HorizontalContentAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
-                    // Re-apply after WinUI template is fully loaded — template resets ContentPresenter alignment
-                    cb.Loaded += (s, e) =>
-                    {
-                        if (s is Microsoft.UI.Xaml.Controls.ComboBox combo)
-                        {
-                            combo.FlowDirection              = Microsoft.UI.Xaml.FlowDirection.LeftToRight;
-                            combo.HorizontalContentAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
-                        }
-                    };
                 }
+            });
+
+        Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping(
+            nameof(Microsoft.Maui.Controls.Picker.Title),
+            (handler, _) =>
+            {
+                if (handler.PlatformView is not Microsoft.UI.Xaml.Controls.ComboBox cb) return;
+                cb.FlowDirection              = Microsoft.UI.Xaml.FlowDirection.LeftToRight;
+                cb.HorizontalContentAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
+                cb.Loaded += (s, e) =>
+                {
+                    if (s is not Microsoft.UI.Xaml.Controls.ComboBox combo) return;
+                    combo.FlowDirection              = Microsoft.UI.Xaml.FlowDirection.LeftToRight;
+                    combo.HorizontalContentAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
+                    FixPresenter(combo);
+
+                    static void FixPresenter(Microsoft.UI.Xaml.DependencyObject node)
+                    {
+                        var n = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChildrenCount(node);
+                        for (var i = 0; i < n; i++)
+                        {
+                            var child = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChild(node, i);
+                            if (child is Microsoft.UI.Xaml.Controls.ContentPresenter
+                                { Name: "ContentPresenter" } cp)
+                            {
+                                cp.HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
+                                return;
+                            }
+                            FixPresenter(child);
+                        }
+                    }
+                };
             });
 #endif
 
