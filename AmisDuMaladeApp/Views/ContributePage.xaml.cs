@@ -9,4 +9,12 @@ public partial class ContributePage : ContentPage
         InitializeComponent();
         BindingContext = vm;
     }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        Content.Opacity = 0;
+        await Task.Delay(1);
+        await Content.FadeTo(1, 280, Easing.CubicOut);
+    }
 }
