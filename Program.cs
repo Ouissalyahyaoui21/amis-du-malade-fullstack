@@ -35,6 +35,8 @@ builder.Services.AddScoped<IAlertService, AlertService>();
 builder.Services.AddScoped<ISyncService, SyncService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IContributionService, ContributionService>();
+builder.Services.AddScoped<IInterviewService, InterviewService>();
+builder.Services.AddScoped<ITrainingService, TrainingService>();
 
 // JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
