@@ -16,44 +16,50 @@
         <conv:BoolToColorConverter x:Key="LockBgConv"  TrueColor="#8096ae"  FalseColor="#1a3a5c"/>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,Auto,*,Auto">
+    <Grid RowDefinitions="Auto,Auto,*">
 
         <!-- ══ TOP BAR ══ -->
-        <Grid Grid.Row="0" BackgroundColor="#0f2236" Padding="16,10"
-              ColumnDefinitions="Auto,*,Auto,Auto">
+        <Grid Grid.Row="0" BackgroundColor="#0f2236" Padding="16,10">
 
-            <Border Grid.Column="0" BackgroundColor="#1f2e3d" StrokeThickness="0" Padding="10,5">
-                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
-                <Label Text="ولاية سكيكدة" FontSize="11" TextColor="#d1d5db" FontAttributes="Bold"/>
-            </Border>
+            <!-- Side items — own internal grid -->
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                <Border Grid.Column="0" BackgroundColor="#1f2e3d" StrokeThickness="0" Padding="10,5">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                    <Label Text="ولاية سكيكدة" FontSize="11" TextColor="#d1d5db" FontAttributes="Bold"/>
+                </Border>
 
-            <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                <!-- Col 1 empty — center text is in overlay -->
+
+                <Border Grid.Column="2" BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="8,5" Margin="0,0,6,0">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                    <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
+                        <Ellipse Fill="#22c55e" WidthRequest="8" HeightRequest="8" VerticalOptions="Center"/>
+                        <Label Text="النظام شغال" FontSize="11" TextColor="White" FontAttributes="Bold"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- زر الرئيسية -->
+                <Border Grid.Column="3" BackgroundColor="#26ffffff" StrokeThickness="0"
+                        Padding="8,5" VerticalOptions="Center">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoHomeCommand}"/>
+                    </Border.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="🏠" FontSize="12"/>
+                        <Label Text="الرئيسية" FontSize="11" TextColor="White" FontAttributes="Bold"/>
+                    </HorizontalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Center text overlay — perfectly centered regardless of side widths -->
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center"
+                                 InputTransparent="True">
                 <Label Text="جمعية أصدقاء المريض" FontSize="14" TextColor="White"
                        FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                 <Label Text="Association Amis du Malade – Skikda" FontSize="10"
                        TextColor="#c8a53a" HorizontalTextAlignment="Center"/>
             </VerticalStackLayout>
-
-            <Border Grid.Column="2" BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="8,5" Margin="0,0,6,0">
-                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
-                <HorizontalStackLayout Spacing="5" VerticalOptions="Center">
-                    <Ellipse Fill="#22c55e" WidthRequest="8" HeightRequest="8" VerticalOptions="Center"/>
-                    <Label Text="النظام شغال" FontSize="11" TextColor="White" FontAttributes="Bold"/>
-                </HorizontalStackLayout>
-            </Border>
-
-            <!-- زر الرئيسية -->
-            <Border Grid.Column="3" BackgroundColor="#26ffffff" StrokeThickness="0"
-                    Padding="8,5" VerticalOptions="Center">
-                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding GoHomeCommand}"/>
-                </Border.GestureRecognizers>
-                <HorizontalStackLayout Spacing="4" VerticalOptions="Center">
-                    <Label Text="🏠" FontSize="12"/>
-                    <Label Text="الرئيسية" FontSize="11" TextColor="White" FontAttributes="Bold"/>
-                </HorizontalStackLayout>
-            </Border>
         </Grid>
 
         <!-- ══ HEADER ══ -->
@@ -283,22 +289,8 @@
                 </VerticalStackLayout>
         </Border>
 
-        <!-- ══ FOOTER ══ -->
-        <VerticalStackLayout Grid.Row="3" BackgroundColor="#0f2236" Padding="14,10" Spacing="6">
-            <Label Text="© 2025 جمعية أصدقاء المريض – سكيكدة · جميع الحقوق محفوظة"
-                   FontSize="11" TextColor="#6b7280" HorizontalTextAlignment="Center"/>
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="12">
-                <Border BackgroundColor="#1a3a5c" StrokeThickness="0" Padding="10,4">
-                    <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
-                    <Label Text="v2.1.0" FontSize="11" TextColor="#c8a53a" FontAttributes="Bold"/>
-                </Border>
-                <Label Text="سياسة الخصوصية" FontSize="11" TextColor="#9ca3af" TextDecorations="Underline"/>
-                <Label Text="الدعم التقني" FontSize="11" TextColor="#9ca3af" TextDecorations="Underline"/>
-            </HorizontalStackLayout>
-        </VerticalStackLayout>
-
         <!-- ══ FORGOT PASSWORD DIALOG OVERLAY ══ -->
-        <Grid Grid.RowSpan="4" BackgroundColor="#80000000" IsVisible="{Binding ShowForgotDialog}">
+        <Grid Grid.RowSpan="3" BackgroundColor="#80000000" IsVisible="{Binding ShowForgotDialog}">
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding CloseForgotDialogCommand}"/>
             </Grid.GestureRecognizers>

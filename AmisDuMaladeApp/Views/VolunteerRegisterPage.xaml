@@ -34,7 +34,9 @@
         <VerticalStackLayout Spacing="0">
 
             <!-- ══ HEADER ══ -->
-            <VerticalStackLayout BackgroundColor="#1a3a5c" Padding="16,52,16,16" Spacing="0">
+            <VerticalStackLayout BackgroundColor="#1a3a5c"
+                                 Padding="{OnPlatform Default='16,52,16,16', WinUI='16,16,16,16'}"
+                                 Spacing="0">
 
                 <!-- زر الرجوع — يمين دائماً (Column 0 في RTL) -->
                 <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">

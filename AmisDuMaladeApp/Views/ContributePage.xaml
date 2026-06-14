@@ -34,7 +34,8 @@
 
         <!-- ══ HEADER ══ -->
         <VerticalStackLayout Grid.Row="0" BackgroundColor="#1a3a5c"
-                             Padding="16,52,16,16" Spacing="0">
+                             Padding="{OnPlatform Default='16,52,16,16', WinUI='16,16,16,16'}"
+                             Spacing="0">
 
             <!-- زر الرجوع — يمين دائماً -->
             <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">

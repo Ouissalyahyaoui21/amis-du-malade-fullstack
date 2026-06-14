@@ -35,8 +35,18 @@ public static class MauiProgram
             {
                 if (handler.PlatformView is Microsoft.UI.Xaml.Controls.ComboBox cb)
                 {
+                    // Apply immediately (before template load)
                     cb.FlowDirection              = Microsoft.UI.Xaml.FlowDirection.LeftToRight;
                     cb.HorizontalContentAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
+                    // Re-apply after WinUI template is fully loaded — template resets ContentPresenter alignment
+                    cb.Loaded += (s, e) =>
+                    {
+                        if (s is Microsoft.UI.Xaml.Controls.ComboBox combo)
+                        {
+                            combo.FlowDirection              = Microsoft.UI.Xaml.FlowDirection.LeftToRight;
+                            combo.HorizontalContentAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
+                        }
+                    };
                 }
             });
 #endif
