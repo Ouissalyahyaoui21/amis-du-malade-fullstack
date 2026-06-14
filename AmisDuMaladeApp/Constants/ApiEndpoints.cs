@@ -12,6 +12,17 @@ public static class ApiEndpoints
     public static string VolunteerById(Guid id) => $"api/volunteer/{id}";
     public static string VolunteerStatus(Guid id) => $"api/volunteer/{id}/status";
 
+    // Interview [Auth]
+    public const string Interviews = "api/interview";
+    public static string InterviewResult(Guid id) => $"api/interview/{id}/result";
+    public static string InterviewCancel(Guid id) => $"api/interview/{id}/cancel";
+
+    // Training [Auth]
+    public const string Trainings = "api/training";
+    public static string TrainingById(Guid id) => $"api/training/{id}";
+    public static string TrainingEnroll(Guid id) => $"api/training/{id}/enroll";
+    public static string TrainingEnrollments(Guid id) => $"api/training/{id}/enrollments";
+
     // CareRequest
     public const string CareRequests = "api/carerequest";              // POST public, GET [Auth]
     public static string CareRequestById(Guid id) => $"api/carerequest/{id}";

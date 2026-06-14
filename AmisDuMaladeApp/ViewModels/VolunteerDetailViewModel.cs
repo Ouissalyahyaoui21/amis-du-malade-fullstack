@@ -18,7 +18,7 @@ public partial class VolunteerDetailViewModel : BaseViewModel
         "Approved"  => "✓ نشط ومعتمد",
         "Pending"   => "⏳ معلق",
         "Rejected"  => "✗ مرفوض",
-        "Interview" => "📋 مقابلة",
+        "Interview" => "📋 في مرحلة المقابلة",
         "Suspended" => "⛔ موقوف",
         _           => Volunteer?.Status ?? ""
     };
@@ -36,6 +36,10 @@ public partial class VolunteerDetailViewModel : BaseViewModel
         "Suspended" => Color.FromArgb("#fee2e2"),
         _           => Color.FromArgb("#fef3c7")
     };
+
+    public bool IsPending   => Volunteer?.Status == "Pending";
+    public bool IsInterview => Volunteer?.Status == "Interview";
+    public bool IsApproved  => Volunteer?.Status == "Approved";
 
     public VolunteerDetailViewModel(ApiService api, LocalizationService loc) : base(loc)
     {
@@ -57,12 +61,20 @@ public partial class VolunteerDetailViewModel : BaseViewModel
             if (Guid.TryParse(VolunteerId, out var guid))
             {
                 Volunteer = list.FirstOrDefault(v => v.Id == guid);
-                OnPropertyChanged(nameof(StatusLabel));
-                OnPropertyChanged(nameof(StatusColor));
-                OnPropertyChanged(nameof(StatusBg));
+                NotifyStatusChanged();
             }
         }
         finally { IsBusy = false; }
+    }
+
+    private void NotifyStatusChanged()
+    {
+        OnPropertyChanged(nameof(StatusLabel));
+        OnPropertyChanged(nameof(StatusColor));
+        OnPropertyChanged(nameof(StatusBg));
+        OnPropertyChanged(nameof(IsPending));
+        OnPropertyChanged(nameof(IsInterview));
+        OnPropertyChanged(nameof(IsApproved));
     }
 
     [RelayCommand]
@@ -77,13 +89,27 @@ public partial class VolunteerDetailViewModel : BaseViewModel
     private async Task ApproveAsync()
     {
         if (Volunteer == null) return;
-        if (await _api.UpdateVolunteerStatusAsync(Volunteer.Id, "Approved"))
+
+        var location = await Shell.Current.DisplayPromptAsync(
+            "جدولة مقابلة",
+            $"المتطوع: {Volunteer.FullName}\nأدخل مكان المقابلة:",
+            "تأكيد", "إلغاء",
+            "مقر الجمعية - سكيكدة");
+
+        if (location == null) return;
+
+        var ok = await _api.ScheduleInterviewAsync(new ScheduleInterviewRequest
         {
-            Volunteer.Status = "Approved";
-            OnPropertyChanged(nameof(Volunteer));
-            OnPropertyChanged(nameof(StatusLabel));
-            OnPropertyChanged(nameof(StatusColor));
-            OnPropertyChanged(nameof(StatusBg));
+            VolunteerId = Volunteer.Id,
+            ScheduledAt = DateTime.UtcNow.AddDays(7),
+            Location    = string.IsNullOrWhiteSpace(location) ? "مقر الجمعية" : location
+        });
+
+        if (ok)
+        {
+            Volunteer.Status = "Interview";
+            NotifyStatusChanged();
+            await Shell.Current.DisplayAlert("تمت الجدولة", "تمت جدولة المقابلة بنجاح", "حسناً");
         }
     }
 
@@ -91,13 +117,18 @@ public partial class VolunteerDetailViewModel : BaseViewModel
     private async Task RejectAsync()
     {
         if (Volunteer == null) return;
+
+        bool confirmed = await Shell.Current.DisplayAlert(
+            "رفض المتطوع",
+            $"هل أنت متأكد من رفض طلب {Volunteer.FullName}؟",
+            "نعم، ارفض", "إلغاء");
+
+        if (!confirmed) return;
+
         if (await _api.UpdateVolunteerStatusAsync(Volunteer.Id, "Rejected"))
         {
             Volunteer.Status = "Rejected";
-            OnPropertyChanged(nameof(Volunteer));
-            OnPropertyChanged(nameof(StatusLabel));
-            OnPropertyChanged(nameof(StatusColor));
-            OnPropertyChanged(nameof(StatusBg));
+            NotifyStatusChanged();
         }
     }
 

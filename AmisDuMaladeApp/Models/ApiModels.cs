@@ -221,3 +221,101 @@ public class ContributionItem
         _       => Color.FromArgb("#15803d"),
     };
 }
+
+// ── Interview ─────────────────────────────────────────────────────────────────
+
+public class ScheduleInterviewRequest
+{
+    public Guid VolunteerId { get; set; }
+    public DateTime ScheduledAt { get; set; }
+    public string Location { get; set; } = "";
+}
+
+public class RecordInterviewResultRequest
+{
+    public string Result { get; set; } = ""; // Accepted / Rejected
+    public int? Score { get; set; }
+    public string? Notes { get; set; }
+}
+
+public class VolunteerInterviewItem
+{
+    public Guid Id { get; set; }
+    public Guid VolunteerId { get; set; }
+    public string VolunteerName { get; set; } = "";
+    public string VolunteerPhone { get; set; } = "";
+    public DateTime ScheduledAt { get; set; }
+    public string Location { get; set; } = "";
+    public string Status { get; set; } = "Scheduled";
+    public int? Score { get; set; }
+    public string? Result { get; set; }
+    public string? Notes { get; set; }
+    public DateTime CreatedAt { get; set; }
+
+    public string ScheduledAtLabel => ScheduledAt.ToString("dd/MM/yyyy HH:mm");
+
+    public string StatusLabel => (Status, Result) switch
+    {
+        ("Scheduled", _)             => "⏳ مجدولة",
+        ("Completed", "Accepted")    => "✓ مقبول",
+        ("Completed", _)             => "✗ مرفوض",
+        ("Cancelled", _)             => "❌ ملغاة",
+        _                            => Status
+    };
+
+    public bool IsScheduled => Status == "Scheduled";
+    public bool IsCompleted => Status == "Completed";
+
+    public Color StatusBgColor => (Status, Result) switch
+    {
+        ("Scheduled", _)          => Color.FromArgb("#fef3c7"),
+        ("Completed", "Accepted") => Color.FromArgb("#dcfce7"),
+        ("Completed", _)          => Color.FromArgb("#fee2e2"),
+        _                         => Color.FromArgb("#f1f5f9")
+    };
+
+    public Color StatusTextColor => (Status, Result) switch
+    {
+        ("Scheduled", _)          => Color.FromArgb("#92400e"),
+        ("Completed", "Accepted") => Color.FromArgb("#15803d"),
+        ("Completed", _)          => Color.FromArgb("#dc2626"),
+        _                         => Color.FromArgb("#64748b")
+    };
+
+    public string ResultLabel => Result == "Accepted" ? "✓ تم قبول المتطوع" : "✗ تم رفض المتطوع";
+
+    public Color ResultBgColor => Result == "Accepted"
+        ? Color.FromArgb("#dcfce7")
+        : Color.FromArgb("#fee2e2");
+
+    public Color ResultTextColor => Result == "Accepted"
+        ? Color.FromArgb("#15803d")
+        : Color.FromArgb("#dc2626");
+}
+
+// ── Training ─────────────────────────────────────────────────────────────────
+
+public class CreateTrainingRequest
+{
+    public string Title { get; set; } = "";
+    public string? Description { get; set; }
+    public DateTime StartDate { get; set; }
+    public string? Location { get; set; }
+    public int Capacity { get; set; } = 20;
+}
+
+public class TrainingItem
+{
+    public Guid Id { get; set; }
+    public string Title { get; set; } = "";
+    public string? Description { get; set; }
+    public DateTime StartDate { get; set; }
+    public string? Location { get; set; }
+    public int Capacity { get; set; }
+    public int EnrolledCount { get; set; }
+    public string Status { get; set; } = "Active";
+    public DateTime CreatedAt { get; set; }
+
+    public string StartDateLabel => StartDate.ToString("dd/MM/yyyy");
+    public string CapacityLabel => $"{EnrolledCount}/{Capacity} مقعد";
+}

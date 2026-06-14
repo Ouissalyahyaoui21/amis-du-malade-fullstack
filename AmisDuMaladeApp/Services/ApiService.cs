@@ -72,6 +72,68 @@ public class ApiService
         catch { return false; }
     }
 
+    // ── Interview ─────────────────────────────────────────────────────────────
+
+    public async Task<List<VolunteerInterviewItem>> GetInterviewsAsync()
+    {
+        SetAuthHeader();
+        try { return await _http.GetFromJsonAsync<List<VolunteerInterviewItem>>(ApiEndpoints.Interviews) ?? new(); }
+        catch { return new(); }
+    }
+
+    public async Task<bool> ScheduleInterviewAsync(ScheduleInterviewRequest request)
+    {
+        SetAuthHeader();
+        try
+        {
+            var response = await _http.PostAsJsonAsync(ApiEndpoints.Interviews, request);
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
+    public async Task<bool> RecordInterviewResultAsync(Guid id, RecordInterviewResultRequest request)
+    {
+        SetAuthHeader();
+        try
+        {
+            var response = await _http.PutAsJsonAsync(ApiEndpoints.InterviewResult(id), request);
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
+    public async Task<bool> CancelInterviewAsync(Guid id)
+    {
+        SetAuthHeader();
+        try
+        {
+            var response = await _http.PutAsJsonAsync(ApiEndpoints.InterviewCancel(id), new { });
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
+    // ── Training ──────────────────────────────────────────────────────────────
+
+    public async Task<List<TrainingItem>> GetTrainingsAsync()
+    {
+        SetAuthHeader();
+        try { return await _http.GetFromJsonAsync<List<TrainingItem>>(ApiEndpoints.Trainings) ?? new(); }
+        catch { return new(); }
+    }
+
+    public async Task<bool> CreateTrainingAsync(CreateTrainingRequest request)
+    {
+        SetAuthHeader();
+        try
+        {
+            var response = await _http.PostAsJsonAsync(ApiEndpoints.Trainings, request);
+            return response.IsSuccessStatusCode;
+        }
+        catch { return false; }
+    }
+
     // ── Care Request ──────────────────────────────────────────────────────────
 
     public async Task<(bool Success, string? ReferenceNumber, string? Error)> SubmitCareRequestAsync(CareRequestPublicPayload payload)

@@ -44,15 +44,29 @@ public partial class AdminDashboardViewModel : BaseViewModel
     [ObservableProperty] private bool   hasLoadError;
     [ObservableProperty] private string loadErrorMessage = "";
 
+    // ── Loading states ────────────────────────────────────────────────────────
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasNoInterviews))]
+    private bool isLoadingInterviews;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasNoTrainings))]
+    private bool isLoadingTrainings;
+
+    public bool HasNoInterviews => !IsLoadingInterviews && InterviewsList.Count == 0;
+    public bool HasNoTrainings  => !IsLoadingTrainings  && TrainingsList.Count  == 0;
+
     // ── Collections ────────────────────────────────────────────────────────────
-    public ObservableCollection<AlertResponse>       OpenAlertsList    { get; } = new();
-    public ObservableCollection<ActivityItem>        RecentActivities  { get; } = new();
-    public ObservableCollection<VolunteerResponse>   AllVolunteers     { get; } = new();
-    public ObservableCollection<VolunteerResponse>   PendingVolunteers { get; } = new();
-    public ObservableCollection<CareRequestListItem> NewRequests       { get; } = new();
-    public ObservableCollection<CareRequestListItem> AllRequests       { get; } = new();
-    public ObservableCollection<PatientResponse>     PatientsList      { get; } = new();
-    public ObservableCollection<ContributionItem>    ContributionsList { get; } = new();
+    public ObservableCollection<AlertResponse>          OpenAlertsList    { get; } = new();
+    public ObservableCollection<ActivityItem>           RecentActivities  { get; } = new();
+    public ObservableCollection<VolunteerResponse>      AllVolunteers     { get; } = new();
+    public ObservableCollection<VolunteerResponse>      PendingVolunteers { get; } = new();
+    public ObservableCollection<CareRequestListItem>    NewRequests       { get; } = new();
+    public ObservableCollection<CareRequestListItem>    AllRequests       { get; } = new();
+    public ObservableCollection<PatientResponse>        PatientsList      { get; } = new();
+    public ObservableCollection<ContributionItem>       ContributionsList { get; } = new();
+    public ObservableCollection<VolunteerInterviewItem> InterviewsList    { get; } = new();
+    public ObservableCollection<TrainingItem>           TrainingsList     { get; } = new();
 
     // ── Volunteer filter ───────────────────────────────────────────────────────
     [ObservableProperty]
@@ -137,6 +151,8 @@ public partial class AdminDashboardViewModel : BaseViewModel
             {
                 "overview"      => Task.WhenAll(LoadOverviewAsync(), LoadVolunteersAsync(), LoadRequestsAsync()),
                 "volunteers"    => LoadVolunteersAsync(),
+                "interviews"    => LoadInterviewsAsync(),
+                "training"      => LoadTrainingsAsync(),
                 "newrequests"   => LoadRequestsAsync(),
                 "requests"      => LoadRequestsAsync(),
                 "patients"      => LoadPatientsAsync(),
@@ -209,6 +225,50 @@ public partial class AdminDashboardViewModel : BaseViewModel
         }
     }
 
+    private async Task LoadInterviewsAsync()
+    {
+        IsLoadingInterviews = true;
+        OnPropertyChanged(nameof(HasNoInterviews));
+        try
+        {
+            var list = await _api.GetInterviewsAsync();
+            InterviewsList.Clear();
+            foreach (var i in list) InterviewsList.Add(i);
+        }
+        catch
+        {
+            HasLoadError     = true;
+            LoadErrorMessage = "تعذّر تحميل قائمة المقابلات.";
+        }
+        finally
+        {
+            IsLoadingInterviews = false;
+            OnPropertyChanged(nameof(HasNoInterviews));
+        }
+    }
+
+    private async Task LoadTrainingsAsync()
+    {
+        IsLoadingTrainings = true;
+        OnPropertyChanged(nameof(HasNoTrainings));
+        try
+        {
+            var list = await _api.GetTrainingsAsync();
+            TrainingsList.Clear();
+            foreach (var t in list) TrainingsList.Add(t);
+        }
+        catch
+        {
+            HasLoadError     = true;
+            LoadErrorMessage = "تعذّر تحميل الدورات التدريبية.";
+        }
+        finally
+        {
+            IsLoadingTrainings = false;
+            OnPropertyChanged(nameof(HasNoTrainings));
+        }
+    }
+
     private async Task LoadRequestsAsync()
     {
         try
@@ -268,7 +328,9 @@ public partial class AdminDashboardViewModel : BaseViewModel
         ActiveTab = tab;
         _ = tab switch
         {
-            "patients"      when PatientsList.Count     == 0 => LoadPatientsAsync(),
+            "interviews"    when InterviewsList.Count    == 0 => LoadInterviewsAsync(),
+            "training"      when TrainingsList.Count     == 0 => LoadTrainingsAsync(),
+            "patients"      when PatientsList.Count      == 0 => LoadPatientsAsync(),
             "contributions" when ContributionsList.Count == 0 => LoadContributionsAsync(),
             _ => Task.CompletedTask
         };
@@ -335,28 +397,138 @@ public partial class AdminDashboardViewModel : BaseViewModel
         }
     }
 
-    // ── Volunteer actions ──────────────────────────────────────────────────────
+    // ── Volunteer approve → schedules interview ────────────────────────────────
     [RelayCommand]
     private async Task ApproveVolunteerAsync(VolunteerResponse v)
     {
-        if (await _api.UpdateVolunteerStatusAsync(v.Id, "Approved"))
+        var location = await Shell.Current.DisplayPromptAsync(
+            "جدولة مقابلة",
+            $"المتطوع: {v.FullName}\nأدخل مكان المقابلة:",
+            "تأكيد", "إلغاء",
+            "مقر الجمعية - سكيكدة");
+
+        if (location == null) return;
+
+        var ok = await _api.ScheduleInterviewAsync(new ScheduleInterviewRequest
         {
-            v.Status = "Approved";
+            VolunteerId = v.Id,
+            ScheduledAt = DateTime.UtcNow.AddDays(7),
+            Location    = string.IsNullOrWhiteSpace(location) ? "مقر الجمعية" : location
+        });
+
+        if (ok)
+        {
+            v.Status = "Interview";
             PendingVolunteers.Remove(v);
             StatPendingVolunteers = Math.Max(0, StatPendingVolunteers - 1);
-            StatActiveVolunteers++;
             OnPropertyChanged(nameof(FilteredVolunteers));
+            await LoadInterviewsAsync();
+            await Shell.Current.DisplayAlert("تمت جدولة المقابلة", $"تمت جدولة مقابلة مع {v.FullName}", "حسناً");
         }
     }
 
     [RelayCommand]
     private async Task RejectVolunteerAsync(VolunteerResponse v)
     {
+        bool confirmed = await Shell.Current.DisplayAlert(
+            "رفض المتطوع",
+            $"هل أنت متأكد من رفض طلب {v.FullName}؟",
+            "نعم، ارفض", "إلغاء");
+
+        if (!confirmed) return;
+
         if (await _api.UpdateVolunteerStatusAsync(v.Id, "Rejected"))
         {
             v.Status = "Rejected";
             PendingVolunteers.Remove(v);
             OnPropertyChanged(nameof(FilteredVolunteers));
+        }
+    }
+
+    // ── Interview actions ──────────────────────────────────────────────────────
+    [RelayCommand]
+    private async Task RecordInterviewAcceptedAsync(VolunteerInterviewItem interview)
+    {
+        var notes = await Shell.Current.DisplayPromptAsync(
+            "قبول المتطوع",
+            $"المتطوع: {interview.VolunteerName}\nملاحظات (اختياري):",
+            "قبول", "إلغاء");
+
+        if (notes == null) return;
+
+        var ok = await _api.RecordInterviewResultAsync(interview.Id, new RecordInterviewResultRequest
+        {
+            Result = "Accepted",
+            Notes  = string.IsNullOrWhiteSpace(notes) ? null : notes
+        });
+
+        if (ok)
+        {
+            interview.Status = "Completed";
+            interview.Result = "Accepted";
+            var idx = InterviewsList.IndexOf(interview);
+            if (idx >= 0) { InterviewsList.RemoveAt(idx); InterviewsList.Insert(idx, interview); }
+            StatActiveVolunteers++;
+            await Shell.Current.DisplayAlert("تم القبول", $"تم قبول {interview.VolunteerName} كمتطوع", "حسناً");
+        }
+    }
+
+    [RelayCommand]
+    private async Task RecordInterviewRejectedAsync(VolunteerInterviewItem interview)
+    {
+        bool confirmed = await Shell.Current.DisplayAlert(
+            "رفض المتطوع",
+            $"هل تريد رفض {interview.VolunteerName} بعد المقابلة؟",
+            "نعم، ارفض", "إلغاء");
+
+        if (!confirmed) return;
+
+        var ok = await _api.RecordInterviewResultAsync(interview.Id, new RecordInterviewResultRequest
+        {
+            Result = "Rejected"
+        });
+
+        if (ok)
+        {
+            interview.Status = "Completed";
+            interview.Result = "Rejected";
+            var idx = InterviewsList.IndexOf(interview);
+            if (idx >= 0) { InterviewsList.RemoveAt(idx); InterviewsList.Insert(idx, interview); }
+        }
+    }
+
+    // ── Training actions ───────────────────────────────────────────────────────
+    [RelayCommand]
+    private async Task CreateTrainingAsync()
+    {
+        var title = await Shell.Current.DisplayPromptAsync(
+            "دورة تدريبية جديدة",
+            "أدخل عنوان الدورة التدريبية:",
+            "التالي", "إلغاء",
+            "دورة تدريبية للمتطوعين");
+
+        if (string.IsNullOrWhiteSpace(title)) return;
+
+        var location = await Shell.Current.DisplayPromptAsync(
+            "مكان الدورة",
+            "أدخل مكان انعقاد الدورة:",
+            "إنشاء", "إلغاء",
+            "مقر الجمعية - سكيكدة");
+
+        if (location == null) return;
+
+        var ok = await _api.CreateTrainingAsync(new CreateTrainingRequest
+        {
+            Title     = title,
+            StartDate = DateTime.UtcNow.AddDays(14),
+            Location  = string.IsNullOrWhiteSpace(location) ? "مقر الجمعية" : location,
+            Capacity  = 20
+        });
+
+        if (ok)
+        {
+            await LoadTrainingsAsync();
+            await Shell.Current.DisplayAlert("تم الإنشاء", $"تم إنشاء دورة '{title}' بنجاح", "حسناً");
         }
     }
 
