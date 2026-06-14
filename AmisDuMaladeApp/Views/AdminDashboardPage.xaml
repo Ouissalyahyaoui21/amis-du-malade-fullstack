@@ -932,7 +932,8 @@
                                         <Setter Property="BackgroundColor" Value="White"/>
                                     </DataTrigger>
                                 </Border.Triggers>
-                                <Label Text="الكل" FontSize="12" FontAttributes="Bold">
+                                <Label Text="{Binding InterviewsCount, StringFormat='الكل ({0})'}"
+                                       FontSize="12" FontAttributes="Bold">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="All">
                                             <Setter Property="TextColor" Value="White"/>
@@ -969,7 +970,8 @@
                                         <Setter Property="BackgroundColor" Value="White"/>
                                     </DataTrigger>
                                 </Border.Triggers>
-                                <Label Text="⏳ مجدولة" FontSize="12" FontAttributes="Bold">
+                                <Label Text="{Binding InterviewsCountScheduled, StringFormat='⏳ مجدولة ({0})'}"
+                                       FontSize="12" FontAttributes="Bold">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Scheduled">
                                             <Setter Property="TextColor" Value="White"/>
@@ -1006,7 +1008,8 @@
                                         <Setter Property="BackgroundColor" Value="White"/>
                                     </DataTrigger>
                                 </Border.Triggers>
-                                <Label Text="✓ مكتملة" FontSize="12" FontAttributes="Bold">
+                                <Label Text="{Binding InterviewsCountCompleted, StringFormat='✓ مكتملة ({0})'}"
+                                       FontSize="12" FontAttributes="Bold">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Completed">
                                             <Setter Property="TextColor" Value="White"/>
@@ -1043,7 +1046,8 @@
                                         <Setter Property="BackgroundColor" Value="White"/>
                                     </DataTrigger>
                                 </Border.Triggers>
-                                <Label Text="❌ ملغاة" FontSize="12" FontAttributes="Bold">
+                                <Label Text="{Binding InterviewsCountCancelled, StringFormat='❌ ملغاة ({0})'}"
+                                       FontSize="12" FontAttributes="Bold">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding InterviewFilter}" Value="Cancelled">
                                             <Setter Property="TextColor" Value="White"/>
@@ -1147,6 +1151,19 @@
                                                        TextColor="#dc2626" HorizontalTextAlignment="Center"/>
                                             </Border>
                                         </Grid>
+
+                                        <!-- Cancel button (only for scheduled interviews) -->
+                                        <Border IsVisible="{Binding IsScheduled}"
+                                                BackgroundColor="#f3f4f6" StrokeThickness="0" Padding="0,8">
+                                            <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CancelInterviewCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                            </Border.GestureRecognizers>
+                                            <Label Text="✕ إلغاء المقابلة" FontSize="11" FontAttributes="Bold"
+                                                   TextColor="#6b7280" HorizontalTextAlignment="Center"/>
+                                        </Border>
 
                                         <!-- Result banner for completed interviews -->
                                         <Border IsVisible="{Binding IsCompleted}"

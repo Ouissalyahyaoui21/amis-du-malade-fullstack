@@ -53,9 +53,12 @@ public partial class AdminDashboardViewModel : BaseViewModel
     [NotifyPropertyChangedFor(nameof(HasNoTrainings))]
     private bool isLoadingTrainings;
 
-    public bool HasNoInterviews  => !IsLoadingInterviews && InterviewsList.Count == 0;
-    public bool HasNoTrainings   => !IsLoadingTrainings  && TrainingsList.Count  == 0;
-    public int  InterviewsCount  => InterviewsList.Count;
+    public bool HasNoInterviews      => !IsLoadingInterviews && InterviewsList.Count == 0;
+    public bool HasNoTrainings       => !IsLoadingTrainings  && TrainingsList.Count  == 0;
+    public int  InterviewsCount      => InterviewsList.Count;
+    public int  InterviewsCountScheduled => InterviewsList.Count(i => i.Status == "Scheduled");
+    public int  InterviewsCountCompleted => InterviewsList.Count(i => i.Status == "Completed");
+    public int  InterviewsCountCancelled => InterviewsList.Count(i => i.Status == "Cancelled");
 
     // ── Collections ────────────────────────────────────────────────────────────
     public ObservableCollection<AlertResponse>          OpenAlertsList    { get; } = new();
@@ -255,10 +258,18 @@ public partial class AdminDashboardViewModel : BaseViewModel
         finally
         {
             IsLoadingInterviews = false;
-            OnPropertyChanged(nameof(HasNoInterviews));
-            OnPropertyChanged(nameof(InterviewsCount));
-            OnPropertyChanged(nameof(FilteredInterviews));
+            NotifyInterviewCountsChanged();
         }
+    }
+
+    private void NotifyInterviewCountsChanged()
+    {
+        OnPropertyChanged(nameof(HasNoInterviews));
+        OnPropertyChanged(nameof(InterviewsCount));
+        OnPropertyChanged(nameof(InterviewsCountScheduled));
+        OnPropertyChanged(nameof(InterviewsCountCompleted));
+        OnPropertyChanged(nameof(InterviewsCountCancelled));
+        OnPropertyChanged(nameof(FilteredInterviews));
     }
 
     private async Task LoadTrainingsAsync()
@@ -487,6 +498,7 @@ public partial class AdminDashboardViewModel : BaseViewModel
             var idx = InterviewsList.IndexOf(interview);
             if (idx >= 0) { InterviewsList.RemoveAt(idx); InterviewsList.Insert(idx, interview); }
             StatActiveVolunteers++;
+            NotifyInterviewCountsChanged();
             await Shell.Current.DisplayAlert("تم القبول", $"تم قبول {interview.VolunteerName} كمتطوع", "حسناً");
         }
     }
@@ -512,6 +524,26 @@ public partial class AdminDashboardViewModel : BaseViewModel
             interview.Result = "Rejected";
             var idx = InterviewsList.IndexOf(interview);
             if (idx >= 0) { InterviewsList.RemoveAt(idx); InterviewsList.Insert(idx, interview); }
+            NotifyInterviewCountsChanged();
+        }
+    }
+
+    [RelayCommand]
+    private async Task CancelInterviewAsync(VolunteerInterviewItem interview)
+    {
+        bool confirmed = await Shell.Current.DisplayAlert(
+            "إلغاء المقابلة",
+            $"هل تريد إلغاء مقابلة {interview.VolunteerName}؟",
+            "نعم، ألغِ", "تراجع");
+        if (!confirmed) return;
+
+        var ok = await _api.CancelInterviewAsync(interview.Id);
+        if (ok)
+        {
+            interview.Status = "Cancelled";
+            var idx = InterviewsList.IndexOf(interview);
+            if (idx >= 0) { InterviewsList.RemoveAt(idx); InterviewsList.Insert(idx, interview); }
+            NotifyInterviewCountsChanged();
         }
     }
 
