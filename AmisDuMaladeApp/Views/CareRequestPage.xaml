@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AmisDuMaladeApp.ViewModels"
+             xmlns:conv="clr-namespace:AmisDuMaladeApp.Converters"
+             x:Class="AmisDuMaladeApp.Views.CareRequestPage"
+             x:DataType="vm:CareRequestViewModel"
+             FlowDirection="{Binding FlowDirection}"
+             BackgroundColor="#f2ede6"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <conv:BoolToColorConverter x:Key="SelBgBlue"  TrueColor="#dbeafe" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="SelStrBlue" TrueColor="#1a3a5c" FalseColor="#cbd5e1"/>
+        <conv:BoolToColorConverter x:Key="SelBgRed"   TrueColor="#fee2e2" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="SelStrRed"  TrueColor="#dc2626" FalseColor="#cbd5e1"/>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!-- ══ HEADER ══ -->
+            <VerticalStackLayout BackgroundColor="#1a3a5c" Padding="16,52,16,16" Spacing="0">
+
+                <!-- زر الرجوع — يمين دائماً -->
+                <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
+                    <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                            BackgroundColor="#26ffffff" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 10">
+                        <Label Text="‹" TextColor="White" FontSize="22"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoHomeCommand}"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+
+                <!-- شعار — وسط -->
+                <Border WidthRequest="64" HeightRequest="64" BackgroundColor="White"
+                        StrokeShape="Ellipse" StrokeThickness="2" Stroke="#c8a53a"
+                        HorizontalOptions="Center">
+                    <Image Source="logo.png" WidthRequest="56" HeightRequest="56"
+                           Aspect="AspectFill"
+                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+
+                <!-- عنوان + اسم الجمعية -->
+                <Label Text="طلب مرافق للمريض" TextColor="White"
+                       FontSize="20" FontAttributes="Bold"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                       Margin="0,8,0,0"/>
+                <Label Text="Association Amis du Malade — Skikda"
+                       TextColor="#c8a53a" FontSize="12"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+
+                <!-- شارة -->
+                <Border BackgroundColor="#18ffffff" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 20"
+                        HorizontalOptions="Center" Padding="18,7" Margin="0,8,0,8">
+                    <Label Text="🤍 نحن هنا من أجلك" TextColor="White" FontSize="12"/>
+                </Border>
+
+                <!-- ── Step indicator (inside header) ──────────────────────── -->
+                <Grid ColumnDefinitions="Auto,*,Auto,*,Auto,*,Auto"
+                      Margin="4,12,4,0">
+
+                    <!-- Step 4 (مؤهلات المرافق) — leftmost in RTL -->
+                    <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="5">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="46" WidthRequest="46"
+                                BackgroundColor="{Binding Step4Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step4Icon}"
+                                   TextColor="{Binding Step4TextColor}"
+                                   FontSize="16" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="مؤهلات المرافق"
+                               TextColor="White" FontSize="9"
+                               HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Line 3-4 -->
+                    <BoxView Grid.Column="1" HeightRequest="1.5"
+                             VerticalOptions="Start" Margin="0,23,0,0"
+                             Color="{Binding Line34Color}"/>
+
+                    <!-- Step 3 (تفاصيل الطلب) -->
+                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="5">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="46" WidthRequest="46"
+                                BackgroundColor="{Binding Step3Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step3Icon}"
+                                   TextColor="{Binding Step3TextColor}"
+                                   FontSize="16" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="تفاصيل الطلب"
+                               TextColor="White" FontSize="9"
+                               HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Line 2-3 -->
+                    <BoxView Grid.Column="3" HeightRequest="1.5"
+                             VerticalOptions="Start" Margin="0,23,0,0"
+                             Color="{Binding Line23Color}"/>
+
+                    <!-- Step 2 (معلومات المريض) -->
+                    <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center" Spacing="5">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="46" WidthRequest="46"
+                                BackgroundColor="{Binding Step2Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step2Icon}"
+                                   TextColor="{Binding Step2TextColor}"
+                                   FontSize="16" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="معلومات المريض"
+                               TextColor="White" FontSize="9"
+                               HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Line 1-2 -->
+                    <BoxView Grid.Column="5" HeightRequest="1.5"
+                             VerticalOptions="Start" Margin="0,23,0,0"
+                             Color="{Binding Line12Color}"/>
+
+                    <!-- Step 1 (معلومات الراغب) — rightmost in RTL -->
+                    <VerticalStackLayout Grid.Column="6" HorizontalOptions="Center" Spacing="5">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="46" WidthRequest="46"
+                                BackgroundColor="{Binding Step1Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step1Icon}"
+                                   TextColor="{Binding Step1TextColor}"
+                                   FontSize="16" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="معلومات الراغب"
+                               TextColor="White" FontSize="9"
+                               HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Wave transition -->
+            <Grid BackgroundColor="#1a3a5c" HeightRequest="36">
+                <Border BackgroundColor="#f2ede6" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 28,28,0,0"
+                        VerticalOptions="Fill" HorizontalOptions="Fill"/>
+            </Grid>
+
+            <!-- ══════════════════════════════════════════════════════════════
+                 CONTENT
+            ═══════════════════════════════════════════════════════════════════ -->
+            <VerticalStackLayout BackgroundColor="#f2ede6"
+                                 Padding="18,8,18,28" Spacing="16">
+
+                <!-- ── رسالة الخطأ ────────────────────────────────────── -->
+                <Border IsVisible="{Binding HasError}"
+                        BackgroundColor="#fef2f2" Stroke="#fecaca"
+                        StrokeThickness="1" StrokeShape="RoundRectangle 10"
+                        Padding="14,10" Margin="0,4,0,0">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="⚠️" FontSize="14" VerticalOptions="Start"/>
+                        <Label Text="{Binding ErrorMessage}" FontSize="13" TextColor="#dc2626"
+                               FontAttributes="Bold" LineBreakMode="WordWrap"
+                               HorizontalOptions="FillAndExpand"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- ════════════════════════════════════════════════════════
+                     STEP 1 — معلومات الراغب في الطلب
+                ═════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsStep1}" Spacing="14">
+
+                    <Border BackgroundColor="#1a3a5c" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12" Padding="16,12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="معلومات الراغب في الطلب"
+                                   TextColor="White" FontSize="16" FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="👤" FontSize="20" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Hint -->
+                    <Grid ColumnDefinitions="4,*">
+                        <BoxView Grid.Column="0" BackgroundColor="#1a3a5c" CornerRadius="2"/>
+                        <Border Grid.Column="1" BackgroundColor="#eef2ff"
+                                StrokeThickness="0" Padding="12,10">
+                            <Label Text="الحقول المُعلّمة بـ * إلزامية."
+                                   TextColor="#4a5568" FontSize="12"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- الاسم الكامل -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="* الاسم الكامل" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="14,0">
+                            <Entry Placeholder="مثال: محمد بن يوسف"
+                                   Text="{Binding RequesterName}"
+                                   FontSize="15" HeightRequest="50"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- رقم الهاتف -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="* رقم الهاتف" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="14,0">
+                            <Entry Placeholder="05XX XX XX XX"
+                                   Text="{Binding RequesterPhone}"
+                                   Keyboard="Telephone"
+                                   FontSize="15" HeightRequest="50"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- المدينة / الحي -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="المدينة / الحي" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="14,0">
+                            <Entry Placeholder="مثال: سكيكدة، حي النصر"
+                                   Text="{Binding CityDistrict}"
+                                   FontSize="15" HeightRequest="50"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- صلة القرابة بالمريض -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="* صلة القرابة بالمريض" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <FlexLayout Wrap="Wrap" AlignItems="Start" AlignContent="Start">
+                            <!-- [0] spouse -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Relations[0].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Relations[0].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectRelationCommand}" CommandParameter="spouse"/></Border.GestureRecognizers>
+                                <Label Text="الزوج / الزوجة" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [1] parent -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Relations[1].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Relations[1].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectRelationCommand}" CommandParameter="parent"/></Border.GestureRecognizers>
+                                <Label Text="الأب / الأم" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [2] child -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Relations[2].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Relations[2].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectRelationCommand}" CommandParameter="child"/></Border.GestureRecognizers>
+                                <Label Text="الابن / البنت" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [3] sibling -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Relations[3].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Relations[3].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectRelationCommand}" CommandParameter="sibling"/></Border.GestureRecognizers>
+                                <Label Text="الأخ / الأخت" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [4] grandp -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Relations[4].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Relations[4].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectRelationCommand}" CommandParameter="grandp"/></Border.GestureRecognizers>
+                                <Label Text="الجد / الجدة" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [5] uncle -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Relations[5].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Relations[5].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectRelationCommand}" CommandParameter="uncle"/></Border.GestureRecognizers>
+                                <Label Text="عم / خال" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [6] friend -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Relations[6].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Relations[6].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectRelationCommand}" CommandParameter="friend"/></Border.GestureRecognizers>
+                                <Label Text="صديق مقرب" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [7] neighbor -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Relations[7].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Relations[7].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectRelationCommand}" CommandParameter="neighbor"/></Border.GestureRecognizers>
+                                <Label Text="جار" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [8] other -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Relations[8].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Relations[8].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectRelationCommand}" CommandParameter="other"/></Border.GestureRecognizers>
+                                <Label Text="أخرى" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- ════════════════════════════════════════════════════════
+                     STEP 2 — معلومات المريض
+                ═════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsStep2}" Spacing="14">
+
+                    <Border BackgroundColor="#1a3a5c" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12" Padding="16,12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="معلومات المريض"
+                                   TextColor="White" FontSize="16" FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="🏥" FontSize="20" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- اسم المريض -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="* اسم المريض" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="14,0">
+                            <Entry Placeholder="الاسم الكامل"
+                                   Text="{Binding PatientName}"
+                                   FontSize="15" HeightRequest="50"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- العمر + الجنس -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="* العمر" TextColor="#1a3a5c"
+                                   FontSize="13" FontAttributes="Bold"/>
+                            <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                    StrokeThickness="1" Stroke="#e2e8f0" Padding="14,0">
+                                <Entry Placeholder="سنة" Text="{Binding PatientAge}"
+                                       Keyboard="Numeric" FontSize="15" HeightRequest="50"/>
+                            </Border>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                            <Label Text="الجنس" TextColor="#1a3a5c"
+                                   FontSize="13" FontAttributes="Bold"/>
+                            <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                    StrokeThickness="1" Stroke="#e2e8f0" Padding="10,4">
+                                <Picker ItemsSource="{Binding Genders}"
+                                        SelectedItem="{Binding PatientGender}"
+                                        FontSize="15" HeightRequest="46"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!-- العنوان التفصيلي -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="* العنوان التفصيلي" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="14,0">
+                            <Entry Placeholder="الحي، الشارع، رقم السكن..."
+                                   Text="{Binding DetailedAddress}"
+                                   FontSize="15" HeightRequest="50"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- الوضعية المهنية / التأمين الاجتماعي -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="الوضعية المهنية / التأمين الاجتماعي"
+                               TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold"/>
+
+                        <!-- Info note -->
+                        <Border BackgroundColor="#eef2ff" StrokeThickness="0"
+                                StrokeShape="RoundRectangle 10" Padding="12,10">
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="💡" FontSize="14" VerticalOptions="Start"/>
+                                <Label Text="هذه المعلومات تساعدنا على معرفة ما تغطّيه جهة التأمين ونوفّر فقط ما يحتاجه المريض فعلاً."
+                                       TextColor="#4a5568" FontSize="12"
+                                       HorizontalOptions="Fill"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <FlexLayout Wrap="Wrap" AlignItems="Start" AlignContent="Start">
+                            <!-- [0] cnas -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding InsuranceTypes[0].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding InsuranceTypes[0].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectInsuranceCommand}" CommandParameter="cnas"/></Border.GestureRecognizers>
+                                <Label Text="وظيف عمومي (CNAS)" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [1] casnos -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding InsuranceTypes[1].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding InsuranceTypes[1].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectInsuranceCommand}" CommandParameter="casnos"/></Border.GestureRecognizers>
+                                <Label Text="عمال مؤسسة خاصة (CASNOS)" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [2] cnr -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding InsuranceTypes[2].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding InsuranceTypes[2].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectInsuranceCommand}" CommandParameter="cnr"/></Border.GestureRecognizers>
+                                <Label Text="متقاعد (CNR)" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [3] mesrs -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding InsuranceTypes[3].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding InsuranceTypes[3].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectInsuranceCommand}" CommandParameter="mesrs"/></Border.GestureRecognizers>
+                                <Label Text="طالب (MESRS)" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [4] cnmss -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding InsuranceTypes[4].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding InsuranceTypes[4].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectInsuranceCommand}" CommandParameter="cnmss"/></Border.GestureRecognizers>
+                                <Label Text="عسكري / أمن (CNMSS)" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [5] cnma -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding InsuranceTypes[5].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding InsuranceTypes[5].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectInsuranceCommand}" CommandParameter="cnma"/></Border.GestureRecognizers>
+                                <Label Text="فلاح (CNMA)" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [6] none -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding InsuranceTypes[6].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding InsuranceTypes[6].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectInsuranceCommand}" CommandParameter="none"/></Border.GestureRecognizers>
+                                <Label Text="بدون تأمين" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+
+                    <!-- الحالة الصحية -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="الحالة الصحية (اختر ما ينطبق)"
+                               TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold"/>
+                        <FlexLayout Wrap="Wrap" AlignItems="Start" AlignContent="Start">
+                            <!-- [0] diabetes -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding HealthConditions[0].IsSelected, Converter={StaticResource SelBgRed}}"
+                                    Stroke="{Binding HealthConditions[0].IsSelected, Converter={StaticResource SelStrRed}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleHealthCommand}" CommandParameter="diabetes"/></Border.GestureRecognizers>
+                                <Label Text="مريض بالسكري" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [1] heart -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding HealthConditions[1].IsSelected, Converter={StaticResource SelBgRed}}"
+                                    Stroke="{Binding HealthConditions[1].IsSelected, Converter={StaticResource SelStrRed}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleHealthCommand}" CommandParameter="heart"/></Border.GestureRecognizers>
+                                <Label Text="أمراض القلب" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [2] paralysis -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding HealthConditions[2].IsSelected, Converter={StaticResource SelBgRed}}"
+                                    Stroke="{Binding HealthConditions[2].IsSelected, Converter={StaticResource SelStrRed}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleHealthCommand}" CommandParameter="paralysis"/></Border.GestureRecognizers>
+                                <Label Text="شلل / إعاقة حركية" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [3] cancer -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding HealthConditions[3].IsSelected, Converter={StaticResource SelBgRed}}"
+                                    Stroke="{Binding HealthConditions[3].IsSelected, Converter={StaticResource SelStrRed}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleHealthCommand}" CommandParameter="cancer"/></Border.GestureRecognizers>
+                                <Label Text="مريض بالسرطان" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [4] post_op -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding HealthConditions[4].IsSelected, Converter={StaticResource SelBgRed}}"
+                                    Stroke="{Binding HealthConditions[4].IsSelected, Converter={StaticResource SelStrRed}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleHealthCommand}" CommandParameter="post_op"/></Border.GestureRecognizers>
+                                <Label Text="بعد عملية جراحية" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [5] elderly -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding HealthConditions[5].IsSelected, Converter={StaticResource SelBgRed}}"
+                                    Stroke="{Binding HealthConditions[5].IsSelected, Converter={StaticResource SelStrRed}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleHealthCommand}" CommandParameter="elderly"/></Border.GestureRecognizers>
+                                <Label Text="مسنّ يحتاج رعاية" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [6] mental -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding HealthConditions[6].IsSelected, Converter={StaticResource SelBgRed}}"
+                                    Stroke="{Binding HealthConditions[6].IsSelected, Converter={StaticResource SelStrRed}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleHealthCommand}" CommandParameter="mental"/></Border.GestureRecognizers>
+                                <Label Text="مريض نفسي" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [7] kidney -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding HealthConditions[7].IsSelected, Converter={StaticResource SelBgRed}}"
+                                    Stroke="{Binding HealthConditions[7].IsSelected, Converter={StaticResource SelStrRed}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleHealthCommand}" CommandParameter="kidney"/></Border.GestureRecognizers>
+                                <Label Text="أمراض الكلى" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [8] accident -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding HealthConditions[8].IsSelected, Converter={StaticResource SelBgRed}}"
+                                    Stroke="{Binding HealthConditions[8].IsSelected, Converter={StaticResource SelStrRed}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleHealthCommand}" CommandParameter="accident"/></Border.GestureRecognizers>
+                                <Label Text="حوادث وإصابات" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [9] other -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding HealthConditions[9].IsSelected, Converter={StaticResource SelBgRed}}"
+                                    Stroke="{Binding HealthConditions[9].IsSelected, Converter={StaticResource SelStrRed}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleHealthCommand}" CommandParameter="other"/></Border.GestureRecognizers>
+                                <Label Text="أخرى" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+
+                    <!-- وصف تفصيلي لحالة المريض -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="وصف تفصيلي لحالة المريض"
+                               TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="12,10">
+                            <Editor Placeholder="اكتب هنا أي تفاصيل إضافية عن الحالة الصحية، الأدوية، الاحتياجات الخاصة..."
+                                    Text="{Binding PatientDescription}"
+                                    HeightRequest="110" FontSize="13"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- ════════════════════════════════════════════════════════
+                     STEP 3 — تفاصيل الطلب
+                ═════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsStep3}" Spacing="14">
+
+                    <Border BackgroundColor="#1a3a5c" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12" Padding="16,12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="تفاصيل الطلب"
+                                   TextColor="White" FontSize="16" FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="📋" FontSize="20" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- مكان المريض -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="* مكان المريض" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <FlexLayout Wrap="Wrap" AlignItems="Start" AlignContent="Start">
+                            <!-- [0] home -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Locations[0].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Locations[0].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectLocationCommand}" CommandParameter="home"/></Border.GestureRecognizers>
+                                <Label Text="المنزل" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [1] hospital -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Locations[1].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Locations[1].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectLocationCommand}" CommandParameter="hospital"/></Border.GestureRecognizers>
+                                <Label Text="المستشفى العمومي" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [2] clinic -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Locations[2].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Locations[2].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectLocationCommand}" CommandParameter="clinic"/></Border.GestureRecognizers>
+                                <Label Text="العيادة الخاصة" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [3] elderly_home -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Locations[3].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Locations[3].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectLocationCommand}" CommandParameter="elderly_home"/></Border.GestureRecognizers>
+                                <Label Text="دار المسنين" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [4] other -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Locations[4].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Locations[4].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectLocationCommand}" CommandParameter="other"/></Border.GestureRecognizers>
+                                <Label Text="مكان آخر" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+
+                    <!-- تاريخ البدء -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="تاريخ البدء" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="14,8">
+                            <DatePicker Date="{Binding StartDate}"
+                                        Format="dd/MM/yyyy"
+                                        FontSize="15"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- مدة الحاجة للمرافق -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="* مدة الحاجة للمرافق" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <FlexLayout Wrap="Wrap" AlignItems="Start" AlignContent="Start">
+                            <!-- [0] 1day -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Durations[0].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Durations[0].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectDurationCommand}" CommandParameter="1day"/></Border.GestureRecognizers>
+                                <Label Text="يوم واحد" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [1] 2_3days -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Durations[1].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Durations[1].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectDurationCommand}" CommandParameter="2_3days"/></Border.GestureRecognizers>
+                                <Label Text="2-3 أيام" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [2] 1week -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Durations[2].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Durations[2].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectDurationCommand}" CommandParameter="1week"/></Border.GestureRecognizers>
+                                <Label Text="أسبوع" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [3] 2weeks -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Durations[3].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Durations[3].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectDurationCommand}" CommandParameter="2weeks"/></Border.GestureRecognizers>
+                                <Label Text="أسبوعان" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [4] 1month -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Durations[4].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Durations[4].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectDurationCommand}" CommandParameter="1month"/></Border.GestureRecognizers>
+                                <Label Text="شهر" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- [5] more -->
+                            <Border StrokeShape="RoundRectangle 20" StrokeThickness="1.5" Margin="0,0,8,8"
+                                    BackgroundColor="{Binding Durations[5].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                    Stroke="{Binding Durations[5].IsSelected, Converter={StaticResource SelStrBlue}}">
+                                <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding SelectDurationCommand}" CommandParameter="more"/></Border.GestureRecognizers>
+                                <Label Text="أكثر من شهر" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" Padding="14,10" VerticalOptions="Center"/>
+                            </Border>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+
+                    <!-- يحتاج مرافقة ليلية -->
+                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                            StrokeThickness="1" Stroke="#e2e8f0" Padding="16,14">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" Text="يحتاج مرافقة ليلية أيضًا"
+                                   TextColor="#1a3a5c" FontSize="14" FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+                            <CheckBox Grid.Column="1"
+                                      IsChecked="{Binding NeedsNightPresence}"
+                                      Color="#1a3a5c" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ════════════════════════════════════════════════════════
+                     STEP 4 — مؤهلات المرافق المطلوبة
+                ═════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsStep4}" Spacing="14">
+
+                    <Border BackgroundColor="#1a3a5c" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12" Padding="16,12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="مؤهلات المرافق المطلوبة"
+                                   TextColor="White" FontSize="16" FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="⭐" FontSize="20" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Subtitle -->
+                    <Label Text="ما الذي تبحث عنه في المرافق؟ (اختياري لكن مفيد)"
+                           TextColor="#64748b" FontSize="12"
+                           HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+
+                    <!-- Qualification cards — 2-column grid via FlexLayout -->
+                    <FlexLayout Wrap="Wrap" AlignItems="Start" AlignContent="Start"
+                                JustifyContent="SpaceBetween">
+                        <!-- [0] nursing -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1.5" Margin="0,0,8,8"
+                                WidthRequest="148" HeightRequest="95"
+                                BackgroundColor="{Binding RequiredQualifications[0].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                Stroke="{Binding RequiredQualifications[0].IsSelected, Converter={StaticResource SelStrBlue}}">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleQualificationCommand}" CommandParameter="nursing"/></Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="💉" FontSize="28" HorizontalOptions="Center"/>
+                                <Label Text="مهارات تمريض اساسية" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- [1] hygiene -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1.5" Margin="0,0,8,8"
+                                WidthRequest="148" HeightRequest="95"
+                                BackgroundColor="{Binding RequiredQualifications[1].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                Stroke="{Binding RequiredQualifications[1].IsSelected, Converter={StaticResource SelStrBlue}}">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleQualificationCommand}" CommandParameter="hygiene"/></Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="🧴" FontSize="28" HorizontalOptions="Center"/>
+                                <Label Text="العناية الشخصية والنظافة" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- [2] mobility -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1.5" Margin="0,0,8,8"
+                                WidthRequest="148" HeightRequest="95"
+                                BackgroundColor="{Binding RequiredQualifications[2].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                Stroke="{Binding RequiredQualifications[2].IsSelected, Converter={StaticResource SelStrBlue}}">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleQualificationCommand}" CommandParameter="mobility"/></Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="♿" FontSize="28" HorizontalOptions="Center"/>
+                                <Label Text="مساعدة على الحركة" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- [3] psych -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1.5" Margin="0,0,8,8"
+                                WidthRequest="148" HeightRequest="95"
+                                BackgroundColor="{Binding RequiredQualifications[3].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                Stroke="{Binding RequiredQualifications[3].IsSelected, Converter={StaticResource SelStrBlue}}">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleQualificationCommand}" CommandParameter="psych"/></Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="💬" FontSize="28" HorizontalOptions="Center"/>
+                                <Label Text="الدعم النفسي والتواصل" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- [4] meds -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1.5" Margin="0,0,8,8"
+                                WidthRequest="148" HeightRequest="95"
+                                BackgroundColor="{Binding RequiredQualifications[4].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                Stroke="{Binding RequiredQualifications[4].IsSelected, Converter={StaticResource SelStrBlue}}">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleQualificationCommand}" CommandParameter="meds"/></Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="💊" FontSize="28" HorizontalOptions="Center"/>
+                                <Label Text="متابعة الأدوية" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- [5] female_only -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1.5" Margin="0,0,8,8"
+                                WidthRequest="148" HeightRequest="95"
+                                BackgroundColor="{Binding RequiredQualifications[5].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                Stroke="{Binding RequiredQualifications[5].IsSelected, Converter={StaticResource SelStrBlue}}">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleQualificationCommand}" CommandParameter="female_only"/></Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="👩" FontSize="28" HorizontalOptions="Center"/>
+                                <Label Text="مرافقة أنثى فقط" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- [6] male_only -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1.5" Margin="0,0,8,8"
+                                WidthRequest="148" HeightRequest="95"
+                                BackgroundColor="{Binding RequiredQualifications[6].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                Stroke="{Binding RequiredQualifications[6].IsSelected, Converter={StaticResource SelStrBlue}}">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleQualificationCommand}" CommandParameter="male_only"/></Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="👨" FontSize="28" HorizontalOptions="Center"/>
+                                <Label Text="مرافق ذكر فقط" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- [7] food -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1.5" Margin="0,0,8,8"
+                                WidthRequest="148" HeightRequest="95"
+                                BackgroundColor="{Binding RequiredQualifications[7].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                Stroke="{Binding RequiredQualifications[7].IsSelected, Converter={StaticResource SelStrBlue}}">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleQualificationCommand}" CommandParameter="food"/></Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="🍜" FontSize="28" HorizontalOptions="Center"/>
+                                <Label Text="إعداد الطعام" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- [8] transport -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1.5" Margin="0,0,8,8"
+                                WidthRequest="148" HeightRequest="95"
+                                BackgroundColor="{Binding RequiredQualifications[8].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                Stroke="{Binding RequiredQualifications[8].IsSelected, Converter={StaticResource SelStrBlue}}">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleQualificationCommand}" CommandParameter="transport"/></Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="🚗" FontSize="28" HorizontalOptions="Center"/>
+                                <Label Text="نقل وتنقّل" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- [9] dialect -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1.5" Margin="0,0,8,8"
+                                WidthRequest="148" HeightRequest="95"
+                                BackgroundColor="{Binding RequiredQualifications[9].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                Stroke="{Binding RequiredQualifications[9].IsSelected, Converter={StaticResource SelStrBlue}}">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleQualificationCommand}" CommandParameter="dialect"/></Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="🗣️" FontSize="28" HorizontalOptions="Center"/>
+                                <Label Text="يتحدث اللهجة المحلية" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                        <!-- [10] teaching -->
+                        <Border StrokeShape="RoundRectangle 16" StrokeThickness="1.5" Margin="0,0,8,8"
+                                WidthRequest="148" HeightRequest="95"
+                                BackgroundColor="{Binding RequiredQualifications[10].IsSelected, Converter={StaticResource SelBgBlue}}"
+                                Stroke="{Binding RequiredQualifications[10].IsSelected, Converter={StaticResource SelStrBlue}}">
+                            <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding ToggleQualificationCommand}" CommandParameter="teaching"/></Border.GestureRecognizers>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
+                                <Label Text="📚" FontSize="28" HorizontalOptions="Center"/>
+                                <Label Text="تدريس" TextColor="#1e293b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </FlexLayout>
+
+                    <!-- ملاحظات إضافية للمرافق -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="ملاحظات إضافية للمرافق" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="12,10">
+                            <Editor Placeholder="أي تعليمات أو تفضيلات أخرى للمرافق المناسب..."
+                                    Text="{Binding CompanionNotes}"
+                                    HeightRequest="90" FontSize="13"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- ملخص الطلب -->
+                    <Border BackgroundColor="#f8fafc" StrokeShape="RoundRectangle 14"
+                            StrokeThickness="1.5" Stroke="#e2e8f0" Padding="16,14">
+                        <VerticalStackLayout Spacing="8">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="📝" FontSize="16" VerticalOptions="Center"/>
+                                <Label Text="ملخص الطلب" TextColor="#1a3a5c"
+                                       FontSize="14" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <BoxView HeightRequest="1" BackgroundColor="#e2e8f0"/>
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                                  ColumnSpacing="8" RowSpacing="6">
+                                <Label Grid.Row="0" Grid.Column="0" Text="الراغب:"
+                                       TextColor="#64748b" FontSize="12"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding SummaryRequester}"
+                                       TextColor="#1e293b" FontSize="12" FontAttributes="Bold"/>
+                                <Label Grid.Row="1" Grid.Column="0" Text="المريض:"
+                                       TextColor="#64748b" FontSize="12"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding SummaryPatient}"
+                                       TextColor="#1e293b" FontSize="12" FontAttributes="Bold"/>
+                                <Label Grid.Row="2" Grid.Column="0" Text="التأمين:"
+                                       TextColor="#64748b" FontSize="12"/>
+                                <Label Grid.Row="2" Grid.Column="1" Text="{Binding SummaryInsurance}"
+                                       TextColor="#1e293b" FontSize="12" FontAttributes="Bold"/>
+                                <Label Grid.Row="3" Grid.Column="0" Text="المكان:"
+                                       TextColor="#64748b" FontSize="12"/>
+                                <Label Grid.Row="3" Grid.Column="1" Text="{Binding SummaryLocation}"
+                                       TextColor="#1e293b" FontSize="12" FontAttributes="Bold"/>
+                                <Label Grid.Row="4" Grid.Column="0" Text="المدة:"
+                                       TextColor="#64748b" FontSize="12"/>
+                                <Label Grid.Row="4" Grid.Column="1" Text="{Binding SummaryDuration}"
+                                       TextColor="#1e293b" FontSize="12" FontAttributes="Bold"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ════════════════════════════════════════════════════════
+                     SUCCESS SCREEN
+                ═════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsSuccess}" Spacing="16" Margin="0,8,0,0">
+
+                    <!-- Checkmark + title -->
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
+                        <Label Text="✅" FontSize="72" HorizontalOptions="Center"/>
+                        <Label Text="تم إرسال طلبك بنجاح!"
+                               TextColor="#1a3a5c" FontSize="22" FontAttributes="Bold"
+                               HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                        <Label Text="جارٍ مراجعة طلبك من قِبَل فريق الجمعية"
+                               TextColor="#64748b" FontSize="13"
+                               HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Reference number -->
+                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 14"
+                            StrokeThickness="1.5" Stroke="#e2e8f0"
+                            Padding="16,14">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Grid.Column="0" Text="🔢" FontSize="20" VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" Margin="10,0,0,0" Spacing="2">
+                                <Label Text="رقم الطلب المرجعي"
+                                       TextColor="#64748b" FontSize="11"/>
+                                <Label Text="{Binding ReferenceNumber}"
+                                       TextColor="#1a3a5c" FontSize="18" FontAttributes="Bold"/>
+                                <Label Text="احتفظ بهذا الرقم للمتابعة"
+                                       TextColor="#94a3b8" FontSize="10"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- Insurance note (visible only when insurance selected) -->
+                    <Border IsVisible="{Binding HasInsurance}"
+                            BackgroundColor="#dcfce7" StrokeShape="RoundRectangle 14"
+                            StrokeThickness="1.5" Stroke="#86efac" Padding="16,14">
+                        <VerticalStackLayout Spacing="6">
+                            <HorizontalStackLayout Spacing="8">
+                                <Label Text="🛡️" FontSize="18" VerticalOptions="Center"/>
+                                <Label Text="تأمين اجتماعي مكتشف"
+                                       TextColor="#166534" FontSize="14" FontAttributes="Bold"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Label TextColor="#166534" FontSize="12" LineHeight="1.4">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="المريض مسجّل لدى "/>
+                                        <Span Text="{Binding SelectedInsuranceLabel}"
+                                              FontAttributes="Bold"/>
+                                        <Span Text=". سنتحقق من الخدمات المُغطّاة ونوفّر فقط ما يحتاجه فعلاً."/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Request summary -->
+                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 14"
+                            StrokeThickness="1" Stroke="#e2e8f0" Padding="16,14">
+                        <VerticalStackLayout Spacing="8">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="📋" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="تفاصيل الطلب" TextColor="#1a3a5c"
+                                       FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <BoxView HeightRequest="1" BackgroundColor="#f1f5f9"/>
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                                  ColumnSpacing="8" RowSpacing="6">
+                                <Label Grid.Row="0" Grid.Column="0" Text="الراغب:"
+                                       TextColor="#64748b" FontSize="12"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding SummaryRequester}"
+                                       TextColor="#1e293b" FontSize="12" FontAttributes="Bold"/>
+                                <Label Grid.Row="1" Grid.Column="0" Text="المريض:"
+                                       TextColor="#64748b" FontSize="12"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding SummaryPatient}"
+                                       TextColor="#1e293b" FontSize="12" FontAttributes="Bold"/>
+                                <Label Grid.Row="2" Grid.Column="0" Text="المكان:"
+                                       TextColor="#64748b" FontSize="12"/>
+                                <Label Grid.Row="2" Grid.Column="1" Text="{Binding SummaryLocation}"
+                                       TextColor="#1e293b" FontSize="12" FontAttributes="Bold"/>
+                                <Label Grid.Row="3" Grid.Column="0" Text="المدة:"
+                                       TextColor="#64748b" FontSize="12"/>
+                                <Label Grid.Row="3" Grid.Column="1" Text="{Binding SummaryDuration}"
+                                       TextColor="#1e293b" FontSize="12" FontAttributes="Bold"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Contact message -->
+                    <Border BackgroundColor="#dcfce7" StrokeShape="RoundRectangle 14"
+                            StrokeThickness="1" Stroke="#86efac" Padding="16,14">
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                            <Label Text="📱" FontSize="20" VerticalOptions="Center"/>
+                            <Label Text="سيتواصل معك الفريق في أقرب وقت ممكن عبر الواتساب أو اتصال عادي"
+                                   TextColor="#166534" FontSize="13" FontAttributes="Bold"
+                                   HorizontalOptions="Fill" LineHeight="1.4"/>
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <!-- New request button -->
+                    <Button Text="← طلب جديد"
+                            Command="{Binding NewRequestCommand}"
+                            BackgroundColor="Transparent"
+                            BorderColor="#1a3a5c" BorderWidth="1.5"
+                            TextColor="#1a3a5c"
+                            FontSize="15" FontAttributes="Bold"
+                            CornerRadius="14" HeightRequest="52"/>
+                </VerticalStackLayout>
+
+                <!-- ── Navigation buttons ──────────────────────────────────── -->
+
+                <!-- Step 1: Next only -->
+                <Button Text="التالي ←"
+                        Command="{Binding NextStepCommand}"
+                        IsVisible="{Binding ShowSingleNav}"
+                        BackgroundColor="#dc2626" TextColor="White"
+                        FontSize="16" FontAttributes="Bold"
+                        CornerRadius="14" HeightRequest="52"/>
+
+                <!-- Steps 2-3: Next + Back -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12"
+                      IsVisible="{Binding ShowDoubleNav}">
+                    <Button Grid.Column="1"
+                            Text="التالي ←"
+                            Command="{Binding NextStepCommand}"
+                            BackgroundColor="#dc2626" TextColor="White"
+                            FontSize="15" FontAttributes="Bold"
+                            CornerRadius="14" HeightRequest="52"/>
+                    <Button Grid.Column="0"
+                            Text="السابق ←"
+                            Command="{Binding PrevStepCommand}"
+                            BackgroundColor="Transparent"
+                            BorderColor="#1a3a5c" BorderWidth="1.5"
+                            TextColor="#1a3a5c"
+                            FontSize="15" FontAttributes="Bold"
+                            CornerRadius="14" HeightRequest="52"/>
+                </Grid>
+
+                <!-- Step 4: Submit + Back -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12"
+                      IsVisible="{Binding ShowSubmitNav}">
+                    <Button Grid.Column="1"
+                            Text="🔍 ابحث عن مرافق مناسب"
+                            Command="{Binding SubmitCommand}"
+                            BackgroundColor="#dc2626" TextColor="White"
+                            FontSize="13" FontAttributes="Bold"
+                            CornerRadius="14" HeightRequest="52"/>
+                    <Button Grid.Column="0"
+                            Text="السابق ←"
+                            Command="{Binding PrevStepCommand}"
+                            BackgroundColor="Transparent"
+                            BorderColor="#1a3a5c" BorderWidth="1.5"
+                            TextColor="#1a3a5c"
+                            FontSize="15" FontAttributes="Bold"
+                            CornerRadius="14" HeightRequest="52"/>
+                </Grid>
+
+                <!-- Loading indicator -->
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Color="#dc2626"
+                                   HorizontalOptions="Center"/>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

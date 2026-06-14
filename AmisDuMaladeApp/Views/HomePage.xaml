@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AmisDuMaladeApp.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AmisDuMaladeApp.ViewModels"
+    x:DataType="vm:HomeViewModel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#f2ede6"
+    FlowDirection="{Binding FlowDirection}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!-- ══ HEADER ══ -->
+            <VerticalStackLayout BackgroundColor="#1a3a5c" Padding="20,52,20,0" Spacing="0">
+
+                <!-- الشعار -->
+                <Border
+                    WidthRequest="110" HeightRequest="110"
+                    HorizontalOptions="Center"
+                    BackgroundColor="White"
+                    Margin="0,0,0,16"
+                    StrokeThickness="3"
+                    Stroke="#c8a53a"
+                    InputTransparent="True">
+                    <Border.StrokeShape>
+                        <Ellipse/>
+                    </Border.StrokeShape>
+                    <Image Source="logo.png"
+                           WidthRequest="96" HeightRequest="96"
+                           Aspect="AspectFill"
+                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+
+                <!-- العنوان -->
+                <Label Text="{Binding TitleLabel}"
+                       TextColor="White"
+                       FontSize="22" FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       LineBreakMode="WordWrap"
+                       Margin="10,0,10,4"/>
+                <Label Text="{Binding SubtitleLabel}"
+                       TextColor="#c8a53a"
+                       FontSize="13"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,0,32"/>
+
+            </VerticalStackLayout>
+
+            <!-- موجة الانتقال -->
+            <Grid HeightRequest="36" BackgroundColor="#1a3a5c">
+                <Border BackgroundColor="#f2ede6"
+                        StrokeThickness="0"
+                        VerticalOptions="End"
+                        HeightRequest="36"
+                        InputTransparent="True">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="28,28,0,0"/>
+                    </Border.StrokeShape>
+                </Border>
+            </Grid>
+
+            <!-- ══ CONTENT ══ -->
+            <VerticalStackLayout Padding="18,0" Spacing="12">
+
+                <!-- بطاقة: طلب مرافق -->
+                <Border BackgroundColor="#1e4a7a" StrokeThickness="0" StrokeShape="RoundRectangle 18">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenCareRequestCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="68,*,28" Padding="14,14,16,14">
+                        <Border Grid.Column="0"
+                                WidthRequest="52" HeightRequest="52"
+                                BackgroundColor="#1fffffff"
+                                StrokeThickness="0" StrokeShape="RoundRectangle 14">
+                            <Label Text="🏥" FontSize="26"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="3" Margin="14,0" VerticalOptions="Center">
+                            <Label Text="{Binding CareLabel}"
+                                   TextColor="White" FontSize="17" FontAttributes="Bold"/>
+                            <Label Text="{Binding CareSub}"
+                                   TextColor="#a6c8e8" FontSize="12"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="›"
+                               TextColor="#c8a53a" FontSize="28" FontAttributes="Bold"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- بطاقة: تسجيل كمتطوع -->
+                <Border BackgroundColor="#1a3a5c" StrokeThickness="0" StrokeShape="RoundRectangle 18">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenVolunteerCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="68,*,28" Padding="14,14,16,14">
+                        <Border Grid.Column="0"
+                                WidthRequest="52" HeightRequest="52"
+                                BackgroundColor="#1fffffff"
+                                StrokeThickness="0" StrokeShape="RoundRectangle 14">
+                            <Label Text="🤝" FontSize="26"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="3" Margin="14,0" VerticalOptions="Center">
+                            <Label Text="{Binding VolLabel}"
+                                   TextColor="White" FontSize="17" FontAttributes="Bold"/>
+                            <Label Text="{Binding VolSub}"
+                                   TextColor="#a6c8e8" FontSize="12"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="›"
+                               TextColor="#c8a53a" FontSize="28" FontAttributes="Bold"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- بطاقة: المساهمة -->
+                <Border BackgroundColor="#0a5c46" StrokeThickness="0" StrokeShape="RoundRectangle 18">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenContributeCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="68,*,28" Padding="14,14,16,14">
+                        <Grid Grid.Column="0">
+                            <Border WidthRequest="52" HeightRequest="52"
+                                    BackgroundColor="#1fffffff"
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 14">
+                                <Label Text="♥" FontSize="26" TextColor="White"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <!-- شارة "جديد" -->
+                            <Border BackgroundColor="#c8a53a" StrokeThickness="0" StrokeShape="RoundRectangle 8"
+                                    Padding="5,2" VerticalOptions="Start" HorizontalOptions="End"
+                                    Margin="0,-6,-4,0">
+                                <Label Text="{Binding NewBadge}"
+                                       TextColor="White" FontSize="9" FontAttributes="Bold"/>
+                            </Border>
+                        </Grid>
+                        <VerticalStackLayout Grid.Column="1" Spacing="3" Margin="14,0" VerticalOptions="Center">
+                            <Label Text="{Binding ContribLabel}"
+                                   TextColor="White" FontSize="17" FontAttributes="Bold"/>
+                            <Label Text="{Binding ContribSub}"
+                                   TextColor="#a0d4c0" FontSize="12"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="›"
+                               TextColor="#c8a53a" FontSize="28" FontAttributes="Bold"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- بطاقتان ثانويتان: حسابي + حول الجمعية -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,4,0,0">
+                    <Border Grid.Column="0"
+                            BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16"
+                            InputTransparent="True">
+                        <VerticalStackLayout Spacing="8" Padding="18,18,18,18" HorizontalOptions="Center">
+                            <Grid HorizontalOptions="Center">
+                                <Border WidthRequest="44" HeightRequest="44"
+                                        BackgroundColor="#f0f4f8"
+                                        StrokeThickness="0" StrokeShape="RoundRectangle 22"
+                                        HorizontalOptions="Center">
+                                    <Label Text="👤" FontSize="22"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                                <Border BackgroundColor="#c8a53a" StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 8"
+                                        Padding="4,2" VerticalOptions="Start" HorizontalOptions="End"
+                                        Margin="0,-6,-6,0">
+                                    <Label Text="قريباً" TextColor="White" FontSize="8" FontAttributes="Bold"/>
+                                </Border>
+                            </Grid>
+                            <Label Text="{Binding AccountLabel}"
+                                   TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1"
+                            BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 16">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenAboutCommand}"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="8" Padding="18,18,18,18" HorizontalOptions="Center">
+                            <Border WidthRequest="44" HeightRequest="44"
+                                    BackgroundColor="#f0f4f8"
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 22"
+                                    HorizontalOptions="Center">
+                                <Label Text="ℹ️" FontSize="22"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="{Binding AboutLabel}"
+                                   TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- قسم التواصل -->
+                <VerticalStackLayout Spacing="10" Margin="0,8,0,0">
+                    <Label Text="{Binding ContactLabel}"
+                           TextColor="#888" FontSize="12"
+                           HorizontalTextAlignment="Center"/>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <!-- واتساب -->
+                        <Border Grid.Column="0"
+                                BackgroundColor="#25d366" StrokeThickness="0" StrokeShape="RoundRectangle 14">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenWhatsAppCommand}"/>
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="Auto,*" Padding="14,13" ColumnSpacing="8">
+                                <Label Grid.Column="0" Text="💬" FontSize="18" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding WhatsAppLabel}"
+                                       TextColor="White" FontSize="14" FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                            </Grid>
+                        </Border>
+                        <!-- فيسبوك -->
+                        <Border Grid.Column="1"
+                                BackgroundColor="#1877f2" StrokeThickness="0" StrokeShape="RoundRectangle 14">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenFacebookCommand}"/>
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="Auto,*" Padding="14,13" ColumnSpacing="8">
+                                <Label Grid.Column="0" Text="f"
+                                       TextColor="White" FontSize="18" FontAttributes="Bold"
+                                       VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding FacebookLabel}"
+                                       TextColor="White" FontSize="14" FontAttributes="Bold"
+                                       HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- التطبيق يعمل بدون إنترنت -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,6,0,4">
+                    <Label Text="📶" FontSize="14"/>
+                    <Label Text="{Binding OfflineLabel}" TextColor="#999" FontSize="12"/>
+                </HorizontalStackLayout>
+
+                <!-- دخول الإدارة -->
+                <Label Text="{Binding AdminLabel}"
+                       TextColor="#bbb" FontSize="11"
+                       HorizontalTextAlignment="Center"
+                       TextDecorations="Underline"
+                       Margin="0,0,0,28">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenAdminCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

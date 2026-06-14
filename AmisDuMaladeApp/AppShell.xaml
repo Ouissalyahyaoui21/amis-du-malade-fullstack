@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="AmisDuMaladeApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:AmisDuMaladeApp.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False">
+
+    <!--  الصفحة الرئيسية  -->
+    <ShellContent
+        Title="الرئيسية"
+        ContentTemplate="{DataTemplate views:HomePage}"
+        Route="HomePage" />
+
+</Shell>

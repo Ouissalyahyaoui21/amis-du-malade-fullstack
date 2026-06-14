@@ -1,0 +1,1098 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AmisDuMaladeApp.ViewModels"
+             xmlns:conv="clr-namespace:AmisDuMaladeApp.Converters"
+             x:Class="AmisDuMaladeApp.Views.VolunteerRegisterPage"
+             x:DataType="vm:VolunteerRegisterViewModel"
+             FlowDirection="{Binding FlowDirection}"
+             BackgroundColor="#f2ede6"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <conv:InvertBoolConverter x:Key="InvertBool"/>
+        <!-- Blue — days, slots, trainable -->
+        <conv:BoolToColorConverter x:Key="VolBgBlue"    TrueColor="#dbeafe" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="VolStrBlue"   TrueColor="#1a3a5c" FalseColor="#e2e8f0"/>
+        <!-- Blue — Skills FlexLayout (different false-stroke) -->
+        <conv:BoolToColorConverter x:Key="VolStrBlueSk" TrueColor="#1a3a5c" FalseColor="#cbd5e1"/>
+        <!-- Red — marital, no-previous -->
+        <conv:BoolToColorConverter x:Key="VolBgRed"     TrueColor="#fee2e2" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="VolStrRed"    TrueColor="#dc2626" FalseColor="#e2e8f0"/>
+        <!-- Yellow — beginner -->
+        <conv:BoolToColorConverter x:Key="VolBgYellow"  TrueColor="#fef9c3" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="VolStrYellow" TrueColor="#ca8a04" FalseColor="#e2e8f0"/>
+        <!-- Green — proficient, yes-previous -->
+        <conv:BoolToColorConverter x:Key="VolBgGreen"   TrueColor="#dcfce7" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="VolStrGreen"  TrueColor="#16a34a" FalseColor="#e2e8f0"/>
+        <!-- Pink — professional -->
+        <conv:BoolToColorConverter x:Key="VolBgPink"    TrueColor="#fce7f3" FalseColor="White"/>
+        <conv:BoolToColorConverter x:Key="VolStrPink"   TrueColor="#9d174d" FalseColor="#e2e8f0"/>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!-- ══ HEADER ══ -->
+            <VerticalStackLayout BackgroundColor="#1a3a5c" Padding="16,52,16,16" Spacing="0">
+
+                <!-- زر الرجوع — يمين دائماً (Column 0 في RTL) -->
+                <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,10">
+                    <Border Grid.Column="0" WidthRequest="36" HeightRequest="36"
+                            BackgroundColor="#26ffffff" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 10">
+                        <Label Text="‹" TextColor="White" FontSize="22"
+                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoHomeCommand}"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+
+                <!-- شعار — وسط -->
+                <Border WidthRequest="64" HeightRequest="64" BackgroundColor="White"
+                        StrokeShape="Ellipse" StrokeThickness="2" Stroke="#c8a53a"
+                        HorizontalOptions="Center">
+                    <Image Source="logo.png" WidthRequest="56" HeightRequest="56"
+                           Aspect="AspectFill"
+                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+
+                <!-- عنوان + اسم الجمعية -->
+                <Label Text="{Binding TitleLabel}" TextColor="White"
+                       FontSize="20" FontAttributes="Bold"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center"
+                       Margin="0,8,0,0"/>
+                <Label Text="Association Amis du Malade — Skikda"
+                       TextColor="#c8a53a" FontSize="12"
+                       HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+
+                <!-- شارة -->
+                <Border BackgroundColor="#18ffffff" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 20"
+                        HorizontalOptions="Center" Padding="18,7" Margin="0,8,0,0">
+                    <Label Text="🤝 انضم إلى فريقنا" TextColor="White" FontSize="12"/>
+                </Border>
+
+                <!-- مؤشر الخطوات — داخل الهيدر -->
+                <Grid ColumnDefinitions="Auto,*,Auto,*,Auto,*,Auto"
+                      Margin="4,12,4,0">
+
+                    <!-- Step 4 (الوثائق) — leftmost in RTL -->
+                    <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="4">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="40" WidthRequest="40"
+                                BackgroundColor="{Binding Step4Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step4Text}"
+                                   TextColor="White" FontSize="15" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="{Binding Step4Label}" TextColor="White"
+                               FontSize="10" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Line 3-4 -->
+                    <BoxView Grid.Column="1"
+                             HeightRequest="2" VerticalOptions="Start"
+                             Margin="0,20,0,0"
+                             Color="{Binding Line34Color}"/>
+
+                    <!-- Step 3 (المهارات) -->
+                    <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="4">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="40" WidthRequest="40"
+                                BackgroundColor="{Binding Step3Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step3Text}"
+                                   TextColor="White" FontSize="15" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="{Binding Step3Label}" TextColor="White"
+                               FontSize="10" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Line 2-3 -->
+                    <BoxView Grid.Column="3"
+                             HeightRequest="2" VerticalOptions="Start"
+                             Margin="0,20,0,0"
+                             Color="{Binding Line23Color}"/>
+
+                    <!-- Step 2 (التوفر) -->
+                    <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center" Spacing="4">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="40" WidthRequest="40"
+                                BackgroundColor="{Binding Step2Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step2Text}"
+                                   TextColor="White" FontSize="15" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="{Binding Step2Label}" TextColor="White"
+                               FontSize="10" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Line 1-2 -->
+                    <BoxView Grid.Column="5"
+                             HeightRequest="2" VerticalOptions="Start"
+                             Margin="0,20,0,0"
+                             Color="{Binding Line12Color}"/>
+
+                    <!-- Step 1 (المعلومات) — rightmost in RTL -->
+                    <VerticalStackLayout Grid.Column="6" HorizontalOptions="Center" Spacing="4">
+                        <Border StrokeShape="Ellipse" StrokeThickness="0"
+                                HeightRequest="40" WidthRequest="40"
+                                BackgroundColor="{Binding Step1Bg}"
+                                HorizontalOptions="Center">
+                            <Label Text="{Binding Step1Text}"
+                                   TextColor="White" FontSize="15" FontAttributes="Bold"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="{Binding Step1Label}" TextColor="White"
+                               FontSize="10" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+            </VerticalStackLayout>
+
+            <!-- Wave transition -->
+            <Grid BackgroundColor="#1a3a5c" HeightRequest="36">
+                <Border BackgroundColor="#f2ede6"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 28,28,0,0"
+                        VerticalOptions="Fill" HorizontalOptions="Fill"/>
+            </Grid>
+
+            <!-- ══════════════════════════════════════════════════════════════
+                 CONTENT
+            ═══════════════════════════════════════════════════════════════════ -->
+            <VerticalStackLayout BackgroundColor="#f2ede6"
+                                 Padding="18,8,18,28"
+                                 Spacing="16">
+
+                <!-- ── رسالة الخطأ ────────────────────────────────────── -->
+                <Border IsVisible="{Binding HasError}"
+                        BackgroundColor="#fef2f2" Stroke="#fecaca"
+                        StrokeThickness="1" StrokeShape="RoundRectangle 10"
+                        Padding="14,10" Margin="0,4,0,0">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="⚠️" FontSize="14" VerticalOptions="Start"/>
+                        <Label Text="{Binding ErrorMessage}" FontSize="13" TextColor="#dc2626"
+                               FontAttributes="Bold" LineBreakMode="WordWrap"
+                               HorizontalOptions="FillAndExpand"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- ════════════════════════════════════════════════════════
+                     STEP 1 — المعلومات الشخصية
+                ═════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsStep1}" Spacing="14">
+
+                    <!-- Section header -->
+                    <Border BackgroundColor="#1a3a5c" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12" Padding="16,12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="المعلومات الشخصية"
+                                   TextColor="White" FontSize="16" FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="👤" FontSize="20" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Hint -->
+                    <Grid ColumnDefinitions="4,*">
+                        <BoxView Grid.Column="0" BackgroundColor="#1a3a5c" CornerRadius="2"/>
+                        <Border Grid.Column="1" BackgroundColor="#eef2ff"
+                                StrokeThickness="0" Padding="12,10">
+                            <Label Text="جميع الحقول المُعلّمة بـ * إلزامية."
+                                   TextColor="#4a5568" FontSize="12"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- الاسم الكامل -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="* الاسم الكامل" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="14,0">
+                            <Entry Placeholder="محمد بن علي"
+                                   Text="{Binding FullName}"
+                                   FontSize="15" HeightRequest="50"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- تاريخ الميلاد -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="* تاريخ الميلاد" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="14,8">
+                            <DatePicker Date="{Binding DateOfBirth}"
+                                        Format="dd/MM/yyyy"
+                                        FontSize="15"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- رقم الهاتف -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="* رقم الهاتف" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Label Text="للتواصل عبر الواتساب" TextColor="#94a3b8" FontSize="11"/>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Border Grid.Column="0" BackgroundColor="White"
+                                    StrokeShape="RoundRectangle 12"
+                                    StrokeThickness="1" Stroke="#e2e8f0" Padding="14,0">
+                                <Entry Placeholder="0XXXXXXXXX"
+                                       Text="{Binding Phone}"
+                                       Keyboard="Telephone"
+                                       FontSize="15" HeightRequest="50"/>
+                            </Border>
+                            <Border Grid.Column="1" BackgroundColor="#f0f4f8"
+                                    StrokeShape="RoundRectangle 12"
+                                    StrokeThickness="1" Stroke="#e2e8f0"
+                                    Padding="12,0" WidthRequest="80">
+                                <Label Text="🇩🇿 +213"
+                                       TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <!-- بلدية السكن -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="* بلدية السكن" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="10,4">
+                            <Picker ItemsSource="{Binding Municipalities}"
+                                    SelectedItem="{Binding Municipality}"
+                                    Title="اختر البلدية"
+                                    FontSize="15" HeightRequest="46"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- المهنة -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="* المهنة" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="10,4">
+                            <Picker ItemsSource="{Binding Professions}"
+                                    SelectedItem="{Binding Profession}"
+                                    Title="اختر المهنة"
+                                    FontSize="15" HeightRequest="46"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- الحالة الاجتماعية -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="* الحالة الاجتماعية" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
+                              ColumnSpacing="10" RowSpacing="10">
+
+                            <!-- أعزب -->
+                            <Border Grid.Row="0" Grid.Column="1"
+                                    StrokeShape="RoundRectangle 12" StrokeThickness="1.5"
+                                    Padding="12,14"
+                                    BackgroundColor="{Binding IsMaritalSingle, Converter={StaticResource VolBgRed}}"
+                                    Stroke="{Binding IsMaritalSingle, Converter={StaticResource VolStrRed}}"
+                                    >
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                    <Label Text="👤" FontSize="16" VerticalOptions="Center"/>
+                                    <Label Text="أعزب / عزباء" TextColor="#1a3a5c"
+                                           FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetMaritalStatusCommand}"
+                                                          CommandParameter="single"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+
+                            <!-- متزوج -->
+                            <Border Grid.Row="0" Grid.Column="0"
+                                    StrokeShape="RoundRectangle 12" StrokeThickness="1.5"
+                                    Padding="12,14"
+                                    BackgroundColor="{Binding IsMaritalMarried, Converter={StaticResource VolBgRed}}"
+                                    Stroke="{Binding IsMaritalMarried, Converter={StaticResource VolStrRed}}">
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                    <Label Text="💑" FontSize="16" VerticalOptions="Center"/>
+                                    <Label Text="متزوج / متزوجة" TextColor="#1a3a5c"
+                                           FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetMaritalStatusCommand}"
+                                                          CommandParameter="married"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+
+                            <!-- مطلق -->
+                            <Border Grid.Row="1" Grid.Column="1"
+                                    StrokeShape="RoundRectangle 12" StrokeThickness="1.5"
+                                    Padding="12,14"
+                                    BackgroundColor="{Binding IsMaritalDivorced, Converter={StaticResource VolBgRed}}"
+                                    Stroke="{Binding IsMaritalDivorced, Converter={StaticResource VolStrRed}}">
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                    <Label Text="📋" FontSize="16" VerticalOptions="Center"/>
+                                    <Label Text="مطلقة" TextColor="#1a3a5c"
+                                           FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetMaritalStatusCommand}"
+                                                          CommandParameter="divorced"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+
+                            <!-- أرمل -->
+                            <Border Grid.Row="1" Grid.Column="0"
+                                    StrokeShape="RoundRectangle 12" StrokeThickness="1.5"
+                                    Padding="12,14"
+                                    BackgroundColor="{Binding IsMaritalWidowed, Converter={StaticResource VolBgRed}}"
+                                    Stroke="{Binding IsMaritalWidowed, Converter={StaticResource VolStrRed}}">
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                    <Label Text="🕊️" FontSize="16" VerticalOptions="Center"/>
+                                    <Label Text="أرملة" TextColor="#1a3a5c"
+                                           FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SetMaritalStatusCommand}"
+                                                          CommandParameter="widowed"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- ════════════════════════════════════════════════════════
+                     STEP 2 — أوقات التوفر
+                ═════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsStep2}" Spacing="14">
+
+                    <!-- Section header -->
+                    <Border BackgroundColor="#1a3a5c" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12" Padding="16,12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="أوقات التوفر"
+                                   TextColor="White" FontSize="16" FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="⏰" FontSize="20" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Hint -->
+                    <Grid ColumnDefinitions="4,*">
+                        <BoxView Grid.Column="0" BackgroundColor="#1a3a5c" CornerRadius="2"/>
+                        <Border Grid.Column="1" BackgroundColor="#eef2ff"
+                                StrokeThickness="0" Padding="12,10">
+                            <Label Text="اختر الأوقات التي تستطيع فيها التطوع."
+                                   TextColor="#4a5568" FontSize="12"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- أيام الأسبوع -->
+                    <Label Text="* أيام الأسبوع" TextColor="#1a3a5c"
+                           FontSize="13" FontAttributes="Bold"/>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto"
+                          ColumnSpacing="10" RowSpacing="10">
+
+                        <!-- السبت -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DaySat, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DaySat, Converter={StaticResource VolStrBlue}}">
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
+                                <Label Text="السبت" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleDayCommand}" CommandParameter="sat"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- الأحد -->
+                        <Border Grid.Row="0" Grid.Column="0"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DaySun, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DaySun, Converter={StaticResource VolStrBlue}}">
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
+                                <Label Text="الأحد" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleDayCommand}" CommandParameter="sun"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- الاثنين -->
+                        <Border Grid.Row="1" Grid.Column="1"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DayMon, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DayMon, Converter={StaticResource VolStrBlue}}">
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
+                                <Label Text="الاثنين" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleDayCommand}" CommandParameter="mon"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- الثلاثاء -->
+                        <Border Grid.Row="1" Grid.Column="0"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DayTue, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DayTue, Converter={StaticResource VolStrBlue}}">
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
+                                <Label Text="الثلاثاء" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleDayCommand}" CommandParameter="tue"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- الأربعاء -->
+                        <Border Grid.Row="2" Grid.Column="1"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DayWed, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DayWed, Converter={StaticResource VolStrBlue}}">
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
+                                <Label Text="الأربعاء" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleDayCommand}" CommandParameter="wed"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- الخميس -->
+                        <Border Grid.Row="2" Grid.Column="0"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding DayThu, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding DayThu, Converter={StaticResource VolStrBlue}}">
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                <Label Text="📅" FontSize="16" VerticalOptions="Center"/>
+                                <Label Text="الخميس" TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleDayCommand}" CommandParameter="thu"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+
+                    <!-- فترات الوقت المتاحة -->
+                    <Label Text="* فترات الوقت المتاحة" TextColor="#1a3a5c"
+                           FontSize="13" FontAttributes="Bold" Margin="0,6,0,0"/>
+                    <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto"
+                          ColumnSpacing="8" RowSpacing="8">
+
+                        <!-- 08:00-10:00 -->
+                        <Border Grid.Row="0" Grid.Column="2"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot0810, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot0810, Converter={StaticResource VolStrBlue}}">
+                            <Label Text="08:00–10:00" TextColor="#1a3a5c"
+                                   FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSlotCommand}" CommandParameter="0810"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- 10:00-12:00 -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot1012, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot1012, Converter={StaticResource VolStrBlue}}">
+                            <Label Text="10:00–12:00" TextColor="#1a3a5c"
+                                   FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSlotCommand}" CommandParameter="1012"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- 12:00-14:00 -->
+                        <Border Grid.Row="0" Grid.Column="0"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot1214, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot1214, Converter={StaticResource VolStrBlue}}">
+                            <Label Text="12:00–14:00" TextColor="#1a3a5c"
+                                   FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSlotCommand}" CommandParameter="1214"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- 14:00-16:00 -->
+                        <Border Grid.Row="1" Grid.Column="2"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot1416, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot1416, Converter={StaticResource VolStrBlue}}">
+                            <Label Text="14:00–16:00" TextColor="#1a3a5c"
+                                   FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSlotCommand}" CommandParameter="1416"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- 16:00-18:00 -->
+                        <Border Grid.Row="1" Grid.Column="1"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot1618, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot1618, Converter={StaticResource VolStrBlue}}">
+                            <Label Text="16:00–18:00" TextColor="#1a3a5c"
+                                   FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSlotCommand}" CommandParameter="1618"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- 18:00-20:00 -->
+                        <Border Grid.Row="1" Grid.Column="0"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="6,14"
+                                BackgroundColor="{Binding Slot1820, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Slot1820, Converter={StaticResource VolStrBlue}}">
+                            <Label Text="18:00–20:00" TextColor="#1a3a5c"
+                                   FontSize="12" FontAttributes="Bold" HorizontalOptions="Center"/>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSlotCommand}" CommandParameter="1820"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- ════════════════════════════════════════════════════════
+                     STEP 3 — المهارات والخبرات
+                ═════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsStep3}" Spacing="14">
+
+                    <!-- Section header -->
+                    <Border BackgroundColor="#1a3a5c" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12" Padding="16,12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="المهارات والخبرات"
+                                   TextColor="White" FontSize="16" FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="🔧" FontSize="20" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Hint -->
+                    <Grid ColumnDefinitions="4,*">
+                        <BoxView Grid.Column="0" BackgroundColor="#1a3a5c" CornerRadius="2"/>
+                        <Border Grid.Column="1" BackgroundColor="#eef2ff"
+                                StrokeThickness="0" Padding="12,10">
+                            <Label Text="اختر المهارات التي تمتلكها."
+                                   TextColor="#4a5568" FontSize="12"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- المهارات المتاحة -->
+                    <Label Text="المهارات المتاحة" TextColor="#1a3a5c"
+                           FontSize="13" FontAttributes="Bold"/>
+
+                    <FlexLayout Wrap="Wrap" AlignItems="Start" AlignContent="Start"
+                                Margin="0,2,0,0">
+
+                        <!-- [0] patient_care -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[0].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[0].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="patient_care"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🩺" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="رعاية المريض" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [1] hygiene -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[1].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[1].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="hygiene"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🧴" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="نظافة المريض" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [2] medical_help -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[2].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[2].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="medical_help"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="💊" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="مساعدة طبية" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [3] transport -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[3].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[3].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="transport"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🚗" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="نقل المرضى" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [4] food_prep -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[4].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[4].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="food_prep"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🍽️" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="تحضير الطعام" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [5] housework -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[5].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[5].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="housework"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🧹" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="أعمال منزلية" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [6] communication -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[6].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[6].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="communication"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="📞" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="التواصل والمتابعة" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [7] psych_support -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[7].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[7].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="psych_support"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🤗" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="الدعم النفسي" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [8] translation -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[8].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[8].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="translation"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="🌐" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="الترجمة" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <!-- [9] elder_care -->
+                        <Border StrokeShape="RoundRectangle 24" StrokeThickness="1.5" Margin="0,0,8,8"
+                                BackgroundColor="{Binding Skills[9].IsSelected, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding Skills[9].IsSelected, Converter={StaticResource VolStrBlueSk}}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleSkillCommand}" CommandParameter="elder_care"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Padding="14,10" Spacing="7">
+                                <Label Text="👴" FontSize="15" VerticalOptions="Center"/>
+                                <Label Text="رعاية المسنين" TextColor="#1e293b" FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                    </FlexLayout>
+
+                    <!-- مستوى التأهيل -->
+                    <Label Text="* مستوى التأهيل" TextColor="#1a3a5c"
+                           FontSize="13" FontAttributes="Bold" Margin="0,6,0,0"/>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
+                          ColumnSpacing="10" RowSpacing="10">
+
+                        <!-- مبتدئ -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding IsLevelBeginner, Converter={StaticResource VolBgYellow}}"
+                                Stroke="{Binding IsLevelBeginner, Converter={StaticResource VolStrYellow}}">
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <Label Text="🌱" FontSize="22" HorizontalOptions="Center"/>
+                                <Label Text="مبتدئ" TextColor="#1a3a5c"
+                                       FontSize="13" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Text="يحتاج تكوينًا كاملًا"
+                                       TextColor="#94a3b8" FontSize="10" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTrainingLevelCommand}"
+                                                      CommandParameter="beginner"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- قابل للتأهيل -->
+                        <Border Grid.Row="0" Grid.Column="0"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding IsLevelTrainable, Converter={StaticResource VolBgBlue}}"
+                                Stroke="{Binding IsLevelTrainable, Converter={StaticResource VolStrBlue}}">
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <Label Text="📚" FontSize="22" HorizontalOptions="Center"/>
+                                <Label Text="قابل للتأهيل" TextColor="#1a3a5c"
+                                       FontSize="13" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Text="يحتاج تدريبًا قصيرًا"
+                                       TextColor="#94a3b8" FontSize="10" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTrainingLevelCommand}"
+                                                      CommandParameter="trainable"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- متمكن -->
+                        <Border Grid.Row="1" Grid.Column="1"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding IsLevelProficient, Converter={StaticResource VolBgGreen}}"
+                                Stroke="{Binding IsLevelProficient, Converter={StaticResource VolStrGreen}}">
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <Label Text="⭐" FontSize="22" HorizontalOptions="Center"/>
+                                <Label Text="متمكن" TextColor="#1a3a5c"
+                                       FontSize="13" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Text="خبرة جيدة في الرعاية"
+                                       TextColor="#94a3b8" FontSize="10" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTrainingLevelCommand}"
+                                                      CommandParameter="proficient"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- محترف -->
+                        <Border Grid.Row="1" Grid.Column="0"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,14"
+                                BackgroundColor="{Binding IsLevelProfessional, Converter={StaticResource VolBgPink}}"
+                                Stroke="{Binding IsLevelProfessional, Converter={StaticResource VolStrPink}}">
+                            <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                <Label Text="🏅" FontSize="22" HorizontalOptions="Center"/>
+                                <Label Text="محترف" TextColor="#1a3a5c"
+                                       FontSize="13" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                <Label Text="خلفية طبية أو تمريضية"
+                                       TextColor="#94a3b8" FontSize="10" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetTrainingLevelCommand}"
+                                                      CommandParameter="professional"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+
+                    <!-- هل تطوعت من قبل؟ -->
+                    <Label Text="هل تطوعت من قبل؟" TextColor="#1a3a5c"
+                           FontSize="13" FontAttributes="Bold" Margin="0,6,0,0"/>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+
+                        <!-- نعم -->
+                        <Border Grid.Column="1"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,16"
+                                BackgroundColor="{Binding IsYesPrev, Converter={StaticResource VolBgGreen}}"
+                                Stroke="{Binding IsYesPrev, Converter={StaticResource VolStrGreen}}">
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                <Label Text="✅" FontSize="18" VerticalOptions="Center"/>
+                                <Label Text="نعم" TextColor="#1a3a5c" FontSize="15" FontAttributes="Bold"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetVolunteeredBeforeCommand}"
+                                                      CommandParameter="yes"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- لا -->
+                        <Border Grid.Column="0"
+                                StrokeShape="RoundRectangle 12" StrokeThickness="1.5" Padding="12,16"
+                                BackgroundColor="{Binding IsNoPrev, Converter={StaticResource VolBgRed}}"
+                                Stroke="{Binding IsNoPrev, Converter={StaticResource VolStrRed}}">
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="6">
+                                <Label Text="❌" FontSize="18" VerticalOptions="Center"/>
+                                <Label Text="لا" TextColor="#1a3a5c" FontSize="15" FontAttributes="Bold"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SetVolunteeredBeforeCommand}"
+                                                      CommandParameter="no"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- ════════════════════════════════════════════════════════
+                     STEP 4 — الوثائق الرسمية
+                ═════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsStep4}" Spacing="14">
+
+                    <!-- Section header -->
+                    <Border BackgroundColor="#1a3a5c" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12" Padding="16,12">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="الوثائق الرسمية"
+                                   TextColor="White" FontSize="16" FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1" Text="📎" FontSize="20" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Hint -->
+                    <Grid ColumnDefinitions="4,*">
+                        <BoxView Grid.Column="0" BackgroundColor="#1a3a5c" CornerRadius="2"/>
+                        <Border Grid.Column="1" BackgroundColor="#eef2ff"
+                                StrokeThickness="0" Padding="12,10">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="🔒" FontSize="14" VerticalOptions="Center"/>
+                                <Label Text="وثائقك محفوظة بسرية تامة."
+                                       TextColor="#4a5568" FontSize="12" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+
+                    <!-- بطاقة التعريف الوطنية -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="* بطاقة التعريف الوطنية" TextColor="#1a3a5c"
+                               FontSize="13" FontAttributes="Bold"/>
+
+                        <!-- Not selected state -->
+                        <Border BackgroundColor="#f8fafc"
+                                StrokeShape="RoundRectangle 14"
+                                StrokeThickness="1.5" Stroke="#cbd5e1"
+                                Padding="20,28"
+                                IsVisible="{Binding HasNationalId, Converter={StaticResource InvertBool}}">
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                <Label Text="🪪" FontSize="36" HorizontalOptions="Center"/>
+                                <Label Text="اضغط لرفع صورة البطاقة"
+                                       TextColor="#1a3a5c" FontSize="14" FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="JPG أو PDF"
+                                       TextColor="#94a3b8" FontSize="12"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PickNationalIdCommand}"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- Selected state -->
+                        <Border BackgroundColor="#dcfce7"
+                                StrokeShape="RoundRectangle 14"
+                                StrokeThickness="1.5" Stroke="#16a34a"
+                                Padding="16,14"
+                                IsVisible="{Binding HasNationalId}">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Grid.Column="0" Text="✅" FontSize="22" VerticalOptions="Center"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding NationalIdFileName}"
+                                       TextColor="#166534" FontSize="13" FontAttributes="Bold"
+                                       VerticalOptions="Center" Margin="10,0"/>
+                                <Label Grid.Column="2" Text="✏️" FontSize="18" VerticalOptions="Center"/>
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PickNationalIdCommand}"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- صورة شخصية -->
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="صورة شخصية" TextColor="#1a3a5c"
+                                   FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Border Grid.Column="1" BackgroundColor="#f0f4f8"
+                                    StrokeShape="RoundRectangle 8" StrokeThickness="0"
+                                    Padding="8,3">
+                                <Label Text="اختياري" TextColor="#64748b" FontSize="11"/>
+                            </Border>
+                        </Grid>
+
+                        <Border BackgroundColor="#f8fafc"
+                                StrokeShape="RoundRectangle 14"
+                                StrokeThickness="1.5" Stroke="#93c5fd"
+                                Padding="20,22"
+                                IsVisible="{Binding HasProfilePhoto, Converter={StaticResource InvertBool}}">
+                            <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                                <Label Text="🤳" FontSize="32" HorizontalOptions="Center"/>
+                                <Label Text="اضغط لرفع صورتك الشخصية"
+                                       TextColor="#1a3a5c" FontSize="13" FontAttributes="Bold"
+                                       HorizontalOptions="Center"/>
+                                <Label Text="JPG أو PNG"
+                                       TextColor="#94a3b8" FontSize="12"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PickProfilePhotoCommand}"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <Border BackgroundColor="#dbeafe"
+                                StrokeShape="RoundRectangle 14"
+                                StrokeThickness="1.5" Stroke="#3b82f6"
+                                Padding="16,12"
+                                IsVisible="{Binding HasProfilePhoto}">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <Label Grid.Column="0" Text="🖼️" FontSize="22" VerticalOptions="Center"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding ProfilePhotoFileName}"
+                                       TextColor="#1e40af" FontSize="13" FontAttributes="Bold"
+                                       VerticalOptions="Center" Margin="10,0"/>
+                                <Label Grid.Column="2" Text="✏️" FontSize="18" VerticalOptions="Center"/>
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PickProfilePhotoCommand}"/>
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- ملاحظات إضافية -->
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="ملاحظات إضافية" TextColor="#1a3a5c"
+                                   FontSize="13" FontAttributes="Bold" VerticalOptions="Center"/>
+                            <Border Grid.Column="1" BackgroundColor="#f0f4f8"
+                                    StrokeShape="RoundRectangle 8" StrokeThickness="0"
+                                    Padding="8,3">
+                                <Label Text="اختياري" TextColor="#64748b" FontSize="11"/>
+                            </Border>
+                        </Grid>
+                        <Border BackgroundColor="White" StrokeShape="RoundRectangle 12"
+                                StrokeThickness="1" Stroke="#e2e8f0" Padding="12,10">
+                            <Editor Placeholder="أي معلومات إضافية..."
+                                    Text="{Binding Notes}"
+                                    HeightRequest="100"
+                                    FontSize="14"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Footer note -->
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,4,0,0">
+                        <Label Text="🔒" FontSize="13" VerticalOptions="Center"/>
+                        <Label Text="بياناتك محمية – التطبيق يعمل بدون إنترنت"
+                               TextColor="#94a3b8" FontSize="11" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- ════════════════════════════════════════════════════════
+                     SUCCESS SCREEN
+                ═════════════════════════════════════════════════════════════ -->
+                <VerticalStackLayout IsVisible="{Binding IsSuccess}" Spacing="20" Margin="0,20,0,0">
+                    <Border BackgroundColor="White" StrokeThickness="0"
+                            StrokeShape="RoundRectangle 24"
+                            Padding="24,32">
+                        <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
+                            <Label Text="✅" FontSize="64" HorizontalOptions="Center"/>
+                            <Label Text="{Binding SuccessTitle}"
+                                   TextColor="#16a34a"
+                                   FontSize="20" FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding SuccessMsg}"
+                                   TextColor="#475569"
+                                   FontSize="14" LineHeight="1.5"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center"/>
+                            <Border BackgroundColor="#dcfce7"
+                                    StrokeShape="RoundRectangle 12"
+                                    StrokeThickness="1" Stroke="#86efac"
+                                    Padding="16,12" Margin="0,8,0,0">
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="8">
+                                    <Label Text="📱" FontSize="20" VerticalOptions="Center"/>
+                                    <Label Text="سيتصل بك فريقنا قريباً"
+                                           TextColor="#166534" FontSize="14" FontAttributes="Bold"
+                                           VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Button Text="{Binding BackHomeLabel}"
+                            Command="{Binding GoHomeCommand}"
+                            BackgroundColor="#1a3a5c"
+                            TextColor="White"
+                            FontSize="16" FontAttributes="Bold"
+                            CornerRadius="14"
+                            HeightRequest="52"/>
+                </VerticalStackLayout>
+
+                <!-- ── Navigation buttons ──────────────────────────────────── -->
+
+                <!-- Step 1: Next only -->
+                <Button Text="{Binding NextLabel}"
+                        Command="{Binding NextStepCommand}"
+                        IsVisible="{Binding ShowSingleNav}"
+                        BackgroundColor="#dc2626" TextColor="White"
+                        FontSize="16" FontAttributes="Bold"
+                        CornerRadius="14" HeightRequest="52"/>
+
+                <!-- Steps 2-3: Next + Back -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12"
+                      IsVisible="{Binding ShowDoubleNav}">
+                    <Button Grid.Column="1"
+                            Text="{Binding NextLabel}"
+                            Command="{Binding NextStepCommand}"
+                            BackgroundColor="#dc2626" TextColor="White"
+                            FontSize="15" FontAttributes="Bold"
+                            CornerRadius="14" HeightRequest="52"/>
+                    <Button Grid.Column="0"
+                            Text="{Binding PrevLabel}"
+                            Command="{Binding PrevStepCommand}"
+                            BackgroundColor="Transparent"
+                            BorderColor="#1a3a5c" BorderWidth="1.5"
+                            TextColor="#1a3a5c"
+                            FontSize="15" FontAttributes="Bold"
+                            CornerRadius="14" HeightRequest="52"/>
+                </Grid>
+
+                <!-- Step 4: Submit + Back -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12"
+                      IsVisible="{Binding ShowSubmitNav}">
+                    <Button Grid.Column="1"
+                            Text="{Binding SubmitLabel}"
+                            Command="{Binding SubmitCommand}"
+                            BackgroundColor="#0a5c46" TextColor="White"
+                            FontSize="14" FontAttributes="Bold"
+                            CornerRadius="14" HeightRequest="52"/>
+                    <Button Grid.Column="0"
+                            Text="{Binding PrevLabel}"
+                            Command="{Binding PrevStepCommand}"
+                            BackgroundColor="Transparent"
+                            BorderColor="#1a3a5c" BorderWidth="1.5"
+                            TextColor="#1a3a5c"
+                            FontSize="15" FontAttributes="Bold"
+                            CornerRadius="14" HeightRequest="52"/>
+                </Grid>
+
+                <!-- Loading indicator -->
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Color="#1a3a5c"
+                                   HorizontalOptions="Center"/>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

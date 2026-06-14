@@ -1,0 +1,223 @@
+namespace AmisDuMaladeApp.Models;
+
+// ── Volunteer ────────────────────────────────────────────────────────────────
+
+public class VolunteerRegisterRequest
+{
+    public string FullName           { get; set; } = "";
+    public string Phone              { get; set; } = "";
+    public string Municipality       { get; set; } = "";
+    public string VolunteerCategory  { get; set; } = "";
+    public bool   CanHomeVisit       { get; set; } = true;
+    public bool   CanHospitalVisit   { get; set; } = false;
+    public bool   CanNightPresence   { get; set; } = false;
+    public bool   HasTransportation  { get; set; } = false;
+    public List<VolunteerSkillRequest>        Skills         { get; set; } = new();
+    public List<VolunteerAvailabilityRequest> Availabilities { get; set; } = new();
+    public List<string>                       CoverageAreas  { get; set; } = new();
+}
+
+public class VolunteerSkillRequest
+{
+    public string SkillName { get; set; } = "";  // e.g. "patient_care", "transport"
+    public string? Level    { get; set; }
+}
+
+public class VolunteerAvailabilityRequest
+{
+    public string DayOfWeek { get; set; } = "";
+    public string StartTime { get; set; } = "";
+    public string EndTime   { get; set; } = "";
+}
+
+public class VolunteerResponse
+{
+    public Guid   Id                 { get; set; }
+    public string FullName           { get; set; } = "";
+    public string Phone              { get; set; } = "";
+    public string? Email             { get; set; }
+    public string? Municipality      { get; set; }
+    public string? VolunteerCategory { get; set; }
+    public string Status             { get; set; } = "Pending";
+    public bool   CanHomeVisit       { get; set; }
+    public bool   CanHospitalVisit   { get; set; }
+    public bool   CanNightPresence   { get; set; }
+    public bool   HasTransportation  { get; set; }
+    public DateTime CreatedAt        { get; set; }
+}
+
+public class VolunteerSuggestion
+{
+    public Guid   VolunteerId   { get; set; }
+    public string Name          { get; set; } = "";  // matches backend "name"
+    public string? Municipality { get; set; }
+    public double MatchScore    { get; set; }
+    public List<string> Reasons { get; set; } = new();
+}
+
+public class SuggestionsApiResponse
+{
+    public Guid RequestId { get; set; }
+    public List<VolunteerSuggestion> Suggestions { get; set; } = new();
+}
+
+// ── Contribution (public submit) ─────────────────────────────────────────────
+
+public class ContributionPayload
+{
+    public string  ContributorName { get; set; } = "";
+    public string  Phone           { get; set; } = "";
+    public string  Type            { get; set; } = "Money"; // Money | Goods | Time
+    public decimal? Amount         { get; set; }
+    public string? Description     { get; set; }
+    public string? Message         { get; set; }
+}
+
+// ── Care Request — نموذج جديد متوافق مع Backend ──────────────────────────────
+
+public class CareRequestPublicPayload
+{
+    // معلومات المريض
+    public string PatientName        { get; set; } = "";
+    public int?   PatientAge         { get; set; }
+    public string? PatientGender     { get; set; }
+    public string? PatientMunicipality { get; set; }
+
+    // معلومات الطالب
+    public string RequesterName      { get; set; } = "";
+    public string RequesterPhone     { get; set; } = "";
+    public string? RequesterRelation { get; set; }
+
+    // تفاصيل الطلب
+    public string? CareLocationType  { get; set; }  // home/hospital/clinic/elderly_home/other
+    public string? Municipality      { get; set; }
+    public DateTime RequestedStartDate { get; set; } = DateTime.Now;
+    public bool NeedsNightPresence   { get; set; } = false;
+    public bool NeedsTransportSupport { get; set; } = false;
+    public string PriorityLevel      { get; set; } = "Normal";
+    public string? MedicalSummary    { get; set; }
+    public string? SupportSummary    { get; set; }
+    public List<string> RequiredSkillNames { get; set; } = new();
+}
+
+public class CareRequestApiResponse
+{
+    public Guid   Id              { get; set; }
+    public string? ReferenceNumber { get; set; }
+    public string Status          { get; set; } = "";
+}
+
+public class CareRequestListItem
+{
+    public Guid   Id            { get; set; }
+    public string RequesterName { get; set; } = "";
+    public string PatientName   { get; set; } = "";
+    public string Status        { get; set; } = "";
+    public string? Priority     { get; set; }
+    public DateTime CreatedAt   { get; set; }
+
+    public string StatusLabel => Status switch
+    {
+        "New"       => "جديد",
+        "Reviewing" => "قيد المراجعة",
+        "Assigned"  => "تم التعيين",
+        "Active"    => "نشط",
+        "Completed" => "مكتمل",
+        "Cancelled" => "ملغى",
+        _           => Status
+    };
+
+    public Color StatusColor => Status switch
+    {
+        "New"       => Color.FromArgb("#2563eb"),
+        "Reviewing" => Color.FromArgb("#d97706"),
+        "Assigned"  => Color.FromArgb("#7c3aed"),
+        "Active"    => Color.FromArgb("#16a34a"),
+        "Completed" => Color.FromArgb("#64748b"),
+        "Cancelled" => Color.FromArgb("#dc2626"),
+        _           => Color.FromArgb("#6b7280"),
+    };
+}
+
+// ── Patient ──────────────────────────────────────────────────────────────────
+
+public class PatientResponse
+{
+    public Guid   Id          { get; set; }
+    public string FullName    { get; set; } = "";
+    public string? Phone      { get; set; }
+    public int?   Age         { get; set; }
+    public string? Municipality { get; set; }
+    public DateTime CreatedAt { get; set; }
+}
+
+// ── Alert ────────────────────────────────────────────────────────────────────
+
+public class AlertResponse
+{
+    public Guid   Id          { get; set; }
+    public string Title       { get; set; } = "";
+    public string Description { get; set; } = "";
+    public string Status      { get; set; } = "Open";
+    public string? Type       { get; set; }
+    public DateTime CreatedAt { get; set; }
+}
+
+// ── Generic ──────────────────────────────────────────────────────────────────
+
+public class ApiIdResponse
+{
+    public Guid Id { get; set; }
+}
+
+public class ContributionApiResponse
+{
+    public Guid   Id      { get; set; }
+    public string? Message { get; set; }
+}
+
+// ── Contribution ─────────────────────────────────────────────────────────────
+
+public class ContributionItem
+{
+    public Guid   Id              { get; set; }
+    public string ContributorName { get; set; } = "";
+    public string Phone           { get; set; } = "";
+    public string Type            { get; set; } = "Money";
+    public string? Amount         { get; set; }
+    public string? Description    { get; set; }
+    public string? Message        { get; set; }
+    public string Status          { get; set; } = "Pending";
+    public DateTime CreatedAt     { get; set; }
+
+    public string TypeIcon => Type switch
+    {
+        "Goods" => "📦",
+        "Time"  => "⏰",
+        _       => "💵",
+    };
+    public string TypeLabel => Type switch
+    {
+        "Goods" => "عيني",
+        "Time"  => "وقت",
+        _       => "نقدي",
+    };
+    public string StatusLabel => Status switch
+    {
+        "Confirmed"   => "✅ مؤكد",
+        "Distributed" => "📤 موزَّع",
+        _             => "⏳ معلق",
+    };
+    public Color StatusColor => Status switch
+    {
+        "Confirmed"   => Color.FromArgb("#16a34a"),
+        "Distributed" => Color.FromArgb("#64748b"),
+        _             => Color.FromArgb("#b45309"),
+    };
+    public Color TypeColor => Type switch
+    {
+        "Goods" => Color.FromArgb("#1d4ed8"),
+        "Time"  => Color.FromArgb("#7c3aed"),
+        _       => Color.FromArgb("#15803d"),
+    };
+}

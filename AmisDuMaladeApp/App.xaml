@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application
+    x:Class="AmisDuMaladeApp.App"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:conv="clr-namespace:AmisDuMaladeApp.Converters">
+
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- ── الألوان الأساسية ──────────────────────────────────────── -->
+            <Color x:Key="NavyBlue">#1a3a5c</Color>
+            <Color x:Key="Gold">#c8a53a</Color>
+            <Color x:Key="AppBg">#f2ede6</Color>
+            <Color x:Key="Red">#dc2626</Color>
+            <Color x:Key="Green">#16a34a</Color>
+
+            <!-- ── المحولات ──────────────────────────────────────────────── -->
+            <conv:IntToBoolConverter      x:Key="IntToBoolConverter"/>
+            <conv:FirstCharConverter      x:Key="FirstCharConverter"/>
+            <conv:StringNotEmptyConverter x:Key="StringNotEmptyConverter"/>
+            <conv:InverseBoolConverter    x:Key="InverseBoolConverter"/>
+            <conv:InvertBoolConverter     x:Key="InvertBool"/>
+
+            <!-- ── أنماط مشتركة ──────────────────────────────────────────── -->
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="OpenSansRegular"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="OpenSansSemibold"/>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>
