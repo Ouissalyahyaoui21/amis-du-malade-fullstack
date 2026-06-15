@@ -41,16 +41,16 @@ public partial class VolunteerRegisterViewModel : BaseViewModel
     // ── Step 3 — Skills ──────────────────────────────────────────────────────
     public ObservableCollection<SelectableItem> Skills { get; } = new()
     {
-        new() { Key = "patient_care",  Label = "رعاية المريض",      Icon = "🩺" },
-        new() { Key = "hygiene",       Label = "نظافة المريض",      Icon = "🧴" },
-        new() { Key = "medical_help",  Label = "مساعدة طبية",       Icon = "💊" },
-        new() { Key = "transport",     Label = "نقل المرضى",        Icon = "🚗" },
-        new() { Key = "food_prep",     Label = "تحضير الطعام",      Icon = "🍽️" },
-        new() { Key = "housework",     Label = "أعمال منزلية",      Icon = "🧹" },
-        new() { Key = "communication", Label = "التواصل والمتابعة", Icon = "📞" },
-        new() { Key = "psych_support", Label = "الدعم النفسي",      Icon = "🤗" },
-        new() { Key = "translation",   Label = "الترجمة",           Icon = "🌐" },
-        new() { Key = "elder_care",    Label = "رعاية المسنين",     Icon = "👴" },
+        new() { Key = "patient_care",  Label = "مهارات تمريض اساسية",     Icon = "🩺" },
+        new() { Key = "hygiene",       Label = "العناية الشخصية والنظافة", Icon = "🧴" },
+        new() { Key = "medical_help",  Label = "متابعة الأدوية",           Icon = "💊" },
+        new() { Key = "transport",     Label = "نقل وتنقّل",               Icon = "🚗" },
+        new() { Key = "food_prep",     Label = "إعداد الطعام",             Icon = "🍽️" },
+        new() { Key = "housework",     Label = "أعمال منزلية",             Icon = "🧹" },
+        new() { Key = "communication", Label = "التواصل والمتابعة",        Icon = "📞" },
+        new() { Key = "psych_support", Label = "الدعم النفسي والتواصل",    Icon = "🤗" },
+        new() { Key = "translation",   Label = "الترجمة",                  Icon = "🌐" },
+        new() { Key = "elder_care",    Label = "رعاية المسنين",            Icon = "👴" },
     };
 
     // ── Step 3 — Training level ──────────────────────────────────────────────
