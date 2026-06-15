@@ -68,12 +68,26 @@ public static class MauiProgram
                 };
             });
 
+        // ─── Picker: also re-apply fix at the MAUI SelectedIndex level ─────────────────
+        // Covers cases where WinUI SelectionChanged fires before our deferred DispatcherQueue
+        // item, or where MAUI updates SelectedIndex independently of the native event.
+        Microsoft.Maui.Handlers.PickerHandler.Mapper.AppendToMapping(
+            nameof(Microsoft.Maui.Controls.Picker.SelectedIndex),
+            (handler, _) =>
+            {
+                if (handler.PlatformView is Microsoft.UI.Xaml.Controls.ComboBox cb)
+                {
+                    cb.FlowDirection              = Microsoft.UI.Xaml.FlowDirection.LeftToRight;
+                    cb.HorizontalContentAlignment = Microsoft.UI.Xaml.HorizontalAlignment.Right;
+                }
+            });
+
         // ─── Entry/TextBox: keep typed text right-aligned in RTL pages ──────────────────
-        // MAUI resolves HorizontalTextAlignment="Start" against the TextBox FlowDirection at
-        // the moment the mapper runs; if FlowDirection hasn't propagated yet it defaults to
-        // LTR-Start (= Left).  Force Right here after every FlowDirection update.
+        // "HorizontalTextAlignment" fires unconditionally during handler setup — more reliable
+        // than "FlowDirection" which MAUI may not invoke for Entry in .NET 10.
+        // Running after MAUI's own mapper ensures we win even if MAUI computed Left.
         Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(
-            "FlowDirection",
+            "HorizontalTextAlignment",
             (handler, _) =>
             {
                 if (handler.PlatformView is Microsoft.UI.Xaml.Controls.TextBox tb)
