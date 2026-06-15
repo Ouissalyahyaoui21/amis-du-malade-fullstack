@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <MauiIcon Include="Resources/AppIcon/appicon.svg" ForegroundFile="Resources/AppIcon/appiconfg.svg" Color="#1a3a5c" />
+    <MauiIcon Include="Resources/AppIcon/appicon.png" Color="#1a3a5c" />
     <MauiSplashScreen Include="Resources/Splash/splash.svg" Color="#1a3a5c" BaseSize="128,128" />
     <MauiImage Include="Resources/Images/*" />
     <MauiImage Remove="Resources/Images/.gitkeep" />
