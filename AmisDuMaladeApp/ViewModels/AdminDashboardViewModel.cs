@@ -392,6 +392,12 @@ public partial class AdminDashboardViewModel : BaseViewModel
     private async Task AssignVolunteerAsync(VolunteerSuggestion suggestion)
     {
         if (SelectedRequest == null) return;
+        bool confirmed = await Shell.Current.DisplayAlert(
+            "تأكيد التعيين",
+            $"هل تريد تعيين {suggestion.Name} لطلب المريض {SelectedRequest.PatientName}؟",
+            "نعم، تعيين",
+            "إلغاء");
+        if (!confirmed) return;
         var ok = await _api.AssignVolunteerAsync(SelectedRequest.Id, suggestion.VolunteerId);
         if (ok)
         {
@@ -399,6 +405,17 @@ public partial class AdminDashboardViewModel : BaseViewModel
             if (req != null) { req.Status = "Assigned"; NewRequests.Remove(req); }
             StatPendingRequests = Math.Max(0, StatPendingRequests - 1);
             SelectedRequest = null;
+            await Shell.Current.DisplayAlert(
+                "✅ تم التعيين بنجاح",
+                $"تم تعيين {suggestion.Name} بنجاح.\nيمكنك مراجعة الطلب في تبويبة 'الطلبات'.",
+                "حسناً");
+        }
+        else
+        {
+            await Shell.Current.DisplayAlert(
+                "❌ خطأ في التعيين",
+                "حدث خطأ أثناء التعيين. يرجى المحاولة مجدداً.",
+                "حسناً");
         }
     }
 

@@ -1881,17 +1881,21 @@
                                         <Border Grid.Column="0" WidthRequest="46" HeightRequest="46"
                                                 BackgroundColor="#1a3a5c" StrokeThickness="0">
                                             <Border.StrokeShape><Ellipse/></Border.StrokeShape>
-                                            <Label Text="{Binding MatchScore, StringFormat='{0:P0}'}"
+                                            <Label Text="{Binding MatchScore, StringFormat='{0:F0}%'}"
                                                    FontSize="10" FontAttributes="Bold" TextColor="White"
                                                    HorizontalOptions="Center" VerticalOptions="Center"
                                                    HorizontalTextAlignment="Center"/>
                                         </Border>
                                         <!-- بيانات المتطوع -->
                                         <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
-                                            <Label Text="{Binding FullName}" FontSize="13"
+                                            <Label Text="{Binding Name}" FontSize="13"
                                                    FontAttributes="Bold" TextColor="#1a3a5c"/>
                                             <Label Text="{Binding Municipality, StringFormat='📍 {0}'}"
                                                    FontSize="11" TextColor="#6b7280"/>
+                                            <Label Text="{Binding Phone, StringFormat='📞 {0}'}"
+                                                   FontSize="11" TextColor="#6b7280"/>
+                                            <Label Text="{Binding ReasonsText}" FontSize="10"
+                                                   TextColor="#16a34a" Margin="0,2,0,0"/>
                                         </VerticalStackLayout>
                                         <!-- زر التعيين -->
                                         <Border Grid.Column="2" BackgroundColor="#16a34a"

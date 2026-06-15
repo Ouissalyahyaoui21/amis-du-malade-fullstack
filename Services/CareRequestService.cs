@@ -259,7 +259,7 @@ namespace AmisduMalade.Services
                         name         = v.FullName,
                         phone        = v.Phone,
                         municipality = v.Municipality,
-                        matchScore   = Math.Round(score, 1),
+                        matchScore   = Math.Round(score / 130.0 * 100, 0),
                         reasons
                     });
                 }

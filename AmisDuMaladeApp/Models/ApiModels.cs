@@ -49,10 +49,12 @@ public class VolunteerResponse
 public class VolunteerSuggestion
 {
     public Guid   VolunteerId   { get; set; }
-    public string Name          { get; set; } = "";  // matches backend "name"
+    public string Name          { get; set; } = "";
+    public string? Phone        { get; set; }
     public string? Municipality { get; set; }
     public double MatchScore    { get; set; }
     public List<string> Reasons { get; set; } = new();
+    public string ReasonsText   => string.Join(" · ", Reasons);
 }
 
 public class SuggestionsApiResponse
