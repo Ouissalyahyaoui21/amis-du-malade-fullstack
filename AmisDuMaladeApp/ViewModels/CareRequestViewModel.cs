@@ -37,8 +37,13 @@ public partial class CareRequestViewModel : BaseViewModel
         Relations.FirstOrDefault(r => r.IsSelected)?.Label ?? "";
 
     // ── Step 2 — Patient ─────────────────────────────────────────────────────
-    [ObservableProperty] private string patientName = "";
-    [ObservableProperty] private string patientAge = "";
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SummaryPatient))]
+    private string patientName = "";
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SummaryPatient))]
+    private string patientAge = "";
     [ObservableProperty] private string patientGender = "ذكر";
     [ObservableProperty] private string detailedAddress = "";
     [ObservableProperty] private string patientDescription = "";
