@@ -30,7 +30,7 @@ internal sealed class RtlPickerHandler : PickerHandler
         Fix(platformView);
     }
 
-    private static void OnSelectionChanged(object s, SelectionChangedEventArgs _)
+    private static void OnSelectionChanged(object s, Microsoft.UI.Xaml.Controls.SelectionChangedEventArgs _)
     {
         if (s is not ComboBox cb) return;
         // Normal priority: run during the current UI update pass
