@@ -481,6 +481,15 @@ public partial class AdminDashboardViewModel : BaseViewModel
             return;
         }
 
+        if (scheduledAt <= DateTime.Now)
+        {
+            await Shell.Current.DisplayAlert(
+                "تاريخ غير صالح",
+                "يجب أن يكون موعد المقابلة في المستقبل",
+                "حسناً");
+            return;
+        }
+
         var ok = await _api.ScheduleInterviewAsync(new ScheduleInterviewRequest
         {
             VolunteerId = v.Id,

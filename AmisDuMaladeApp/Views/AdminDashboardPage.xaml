@@ -22,7 +22,7 @@
                     <Image Source="logo.png" Aspect="AspectFill"/>
                 </Border>
                 <VerticalStackLayout Spacing="1" VerticalOptions="Center">
-                    <Label Text="أصدقاء المريض" FontSize="13" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text="جمعية أصدقاء المريض" FontSize="13" FontAttributes="Bold" TextColor="White"/>
                     <Label Text="لوحة الإدارة" FontSize="10" TextColor="#c8a53a"/>
                 </VerticalStackLayout>
             </HorizontalStackLayout>
