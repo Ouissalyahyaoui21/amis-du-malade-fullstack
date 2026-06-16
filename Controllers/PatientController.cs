@@ -70,7 +70,7 @@ namespace AmisduMalade.Controllers
                 }),
                 conditions = p.MedicalConditions.Select(m => new
                 {
-                    name     = m.MedicalCondition.Name,
+                    name     = m.MedicalCondition?.Name ?? "",
                     severity = m.Severity
                 }),
                 careRequests = p.CareRequests.Select(r => new

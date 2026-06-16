@@ -11,12 +11,18 @@ public partial class PatientDetailViewModel : BaseViewModel
     private readonly ApiService _api;
 
     [ObservableProperty] private string patientId = "";
-    [ObservableProperty] private PatientDetailResponse? patient;
-    [ObservableProperty] private bool hasLoadError;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasContent))]
+    private PatientDetailResponse? patient;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasContent))]
+    private bool hasLoadError;
+    [ObservableProperty] private string loadErrorDetail = "";
 
-    public bool HasNoCareRequests => Patient != null && Patient.CareRequests.Count == 0;
-    public bool HasNoContacts     => Patient != null && Patient.Contacts.Count == 0;
-    public bool HasNoConditions   => Patient != null && Patient.Conditions.Count == 0;
+    public bool HasContent        => !HasLoadError && Patient != null;
+    public bool HasNoCareRequests => Patient?.CareRequests?.Count == 0;
+    public bool HasNoContacts     => Patient?.Contacts?.Count == 0;
+    public bool HasNoConditions   => Patient?.Conditions?.Count == 0;
 
     public PatientDetailViewModel(ApiService api, LocalizationService loc) : base(loc)
     {
@@ -31,16 +37,27 @@ public partial class PatientDetailViewModel : BaseViewModel
 
     private async Task LoadAsync()
     {
-        IsBusy       = true;
-        HasLoadError = false;
+        IsBusy          = true;
+        HasLoadError    = false;
+        LoadErrorDetail = "";
         try
         {
             if (!Guid.TryParse(PatientId, out var guid)) return;
-            Patient = await _api.GetPatientByIdAsync(guid);
-            if (Patient == null) HasLoadError = true;
+            var (data, errorCode) = await _api.GetPatientByIdAsync(guid);
+            if (data == null)
+            {
+                LoadErrorDetail = errorCode ?? "unknown";
+                HasLoadError    = true;
+                return;
+            }
+            Patient = data;
             NotifyComputedChanged();
         }
-        catch { HasLoadError = true; }
+        catch (Exception ex)
+        {
+            LoadErrorDetail = ex.Message;
+            HasLoadError    = true;
+        }
         finally { IsBusy = false; }
     }
 

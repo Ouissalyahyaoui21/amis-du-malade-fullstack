@@ -214,11 +214,18 @@ public class ApiService
         catch { return new(); }
     }
 
-    public async Task<PatientDetailResponse?> GetPatientByIdAsync(Guid id)
+    public async Task<(PatientDetailResponse? Data, string? ErrorCode)> GetPatientByIdAsync(Guid id)
     {
         SetAuthHeader();
-        try { return await _http.GetFromJsonAsync<PatientDetailResponse>(ApiEndpoints.PatientById(id)); }
-        catch { return null; }
+        try
+        {
+            var response = await _http.GetAsync(ApiEndpoints.PatientById(id));
+            if (!response.IsSuccessStatusCode)
+                return (null, ((int)response.StatusCode).ToString());
+            var data = await response.Content.ReadFromJsonAsync<PatientDetailResponse>();
+            return (data, null);
+        }
+        catch (Exception ex) { return (null, ex.Message); }
     }
 
     // ── Contribution ─────────────────────────────────────────────────────────
