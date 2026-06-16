@@ -92,6 +92,18 @@ public partial class AdminDashboardViewModel : BaseViewModel
             ? InterviewsList
             : InterviewsList.Where(i => i.Status == InterviewFilter);
 
+    // ── Patient search ──────────────────────────────────────────────────────────
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FilteredPatients))]
+    private string patientSearchText = "";
+
+    public IEnumerable<PatientResponse> FilteredPatients =>
+        string.IsNullOrWhiteSpace(PatientSearchText)
+            ? PatientsList
+            : PatientsList.Where(p =>
+                p.FullName.Contains(PatientSearchText, StringComparison.OrdinalIgnoreCase) ||
+                (p.Municipality?.Contains(PatientSearchText, StringComparison.OrdinalIgnoreCase) ?? false));
+
     // ── Assign volunteer popup ─────────────────────────────────────────────────
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsAssignPopupVisible))]
@@ -321,6 +333,7 @@ public partial class AdminDashboardViewModel : BaseViewModel
             var list = await _api.GetPatientsAsync();
             PatientsList.Clear();
             foreach (var p in list) PatientsList.Add(p);
+            OnPropertyChanged(nameof(FilteredPatients));
         }
         catch
         {
@@ -423,6 +436,11 @@ public partial class AdminDashboardViewModel : BaseViewModel
     [RelayCommand]
     private async Task ViewVolunteerAsync(VolunteerResponse v) =>
         await Shell.Current.GoToAsync($"VolunteerDetailPage?volunteerId={v.Id}");
+
+    // ── Patient detail navigation ──────────────────────────────────────────────
+    [RelayCommand]
+    private async Task ViewPatientAsync(PatientResponse p) =>
+        await Shell.Current.GoToAsync($"PatientDetailPage?patientId={p.Id}");
 
     // ── WhatsApp ───────────────────────────────────────────────────────────────
     [RelayCommand]

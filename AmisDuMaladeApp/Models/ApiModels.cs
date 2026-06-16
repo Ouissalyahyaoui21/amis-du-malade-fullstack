@@ -162,6 +162,59 @@ public class PatientResponse
     public DateTime CreatedAt { get; set; }
 }
 
+public class PatientDetailResponse
+{
+    public Guid     Id              { get; set; }
+    public string    FullName        { get; set; } = "";
+    public string?   Phone           { get; set; }
+    public int?      Age             { get; set; }
+    public string?   Gender          { get; set; }
+    public string?   Address         { get; set; }
+    public string?   Municipality    { get; set; }
+    public string?   ResidenceType   { get; set; }
+    public string?   HospitalName    { get; set; }
+    public string?   MobilityStatus  { get; set; }
+    public string?   DependencyLevel { get; set; }
+    public string?   Notes           { get; set; }
+    public DateTime  CreatedAt       { get; set; }
+
+    public List<PatientContactInfo>      Contacts     { get; set; } = new();
+    public List<PatientConditionInfo>    Conditions   { get; set; } = new();
+    public List<PatientCareRequestInfo>  CareRequests { get; set; } = new();
+}
+
+public class PatientContactInfo
+{
+    public string  FullName          { get; set; } = "";
+    public string  Phone             { get; set; } = "";
+    public string? RelationToPatient { get; set; }
+    public bool    IsPrimaryContact  { get; set; }
+}
+
+public class PatientConditionInfo
+{
+    public string  Name     { get; set; } = "";
+    public string? Severity { get; set; }
+}
+
+public class PatientCareRequestInfo
+{
+    public Guid     Id        { get; set; }
+    public string   Status    { get; set; } = "";
+    public DateTime CreatedAt { get; set; }
+
+    public string StatusLabel => Status switch
+    {
+        "New"       => "جديد",
+        "Reviewing" => "قيد المراجعة",
+        "Assigned"  => "تم التعيين",
+        "Active"    => "نشط",
+        "Completed" => "مكتمل",
+        "Cancelled" => "ملغى",
+        _           => Status
+    };
+}
+
 // ── Alert ────────────────────────────────────────────────────────────────────
 
 public class AlertResponse

@@ -214,6 +214,13 @@ public class ApiService
         catch { return new(); }
     }
 
+    public async Task<PatientDetailResponse?> GetPatientByIdAsync(Guid id)
+    {
+        SetAuthHeader();
+        try { return await _http.GetFromJsonAsync<PatientDetailResponse>(ApiEndpoints.PatientById(id)); }
+        catch { return null; }
+    }
+
     // ── Contribution ─────────────────────────────────────────────────────────
 
     public async Task<(bool Success, string? Id, string? Error)> SubmitContributionAsync(ContributionPayload payload)

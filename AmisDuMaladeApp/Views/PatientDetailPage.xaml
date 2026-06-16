@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AmisDuMaladeApp.ViewModels"
+             xmlns:m="clr-namespace:AmisDuMaladeApp.Models"
+             x:Class="AmisDuMaladeApp.Views.PatientDetailPage"
+             x:DataType="vm:PatientDetailViewModel"
+             Shell.NavBarIsVisible="False"
+             FlowDirection="RightToLeft"
+             BackgroundColor="#f0f4f8">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- ══ HEADER ══ -->
+        <Grid Grid.Row="0" BackgroundColor="#1a3a5c" Padding="18,52,18,18"
+              ColumnDefinitions="Auto,*">
+            <Border Grid.Column="0" BackgroundColor="#ffffff20" StrokeThickness="0"
+                    Padding="10,8" VerticalOptions="Center">
+                <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                </Border.GestureRecognizers>
+                <Label Text="→ رجوع" FontSize="13" TextColor="White" FontAttributes="Bold"/>
+            </Border>
+            <Label Grid.Column="1" Text="ملف المريض" FontSize="17" FontAttributes="Bold"
+                   TextColor="White" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- ══ CONTENT ══ -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="14" Padding="16,16,16,24">
+
+                <!-- Loading -->
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                                   Color="#1a3a5c" HeightRequest="48" Margin="0,20"/>
+
+                <!-- Error -->
+                <Border IsVisible="{Binding HasLoadError}"
+                        BackgroundColor="#fee2e2" StrokeThickness="0" Padding="14,12">
+                    <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                    <Label Text="⚠️ تعذّر تحميل ملف المريض" FontSize="13" TextColor="#991b1b"
+                           HorizontalTextAlignment="Center"/>
+                </Border>
+
+                <VerticalStackLayout Spacing="14"
+                                      IsVisible="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}">
+
+                    <!-- البطاقة الرئيسية -->
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="20,18">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                        <VerticalStackLayout Spacing="14">
+
+                            <!-- الاسم -->
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                                <Border Grid.Column="0" WidthRequest="60" HeightRequest="60"
+                                        BackgroundColor="#1a3a5c" StrokeThickness="0">
+                                    <Border.StrokeShape><Ellipse/></Border.StrokeShape>
+                                    <Label Text="{Binding Patient.FullName, Converter={StaticResource FirstCharConverter}}"
+                                           FontSize="24" FontAttributes="Bold" TextColor="White"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                    <Label Text="{Binding Patient.FullName}"
+                                           FontSize="18" FontAttributes="Bold" TextColor="#1a3a5c"
+                                           LineBreakMode="WordWrap"/>
+                                    <Label Text="{Binding Patient.CreatedAt, StringFormat='تاريخ التسجيل: {0:dd/MM/yyyy}'}"
+                                           FontSize="11" TextColor="#9ca3af"/>
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <BoxView BackgroundColor="#f1f5f9" HeightRequest="1"/>
+
+                            <!-- المعلومات الشخصية -->
+                            <VerticalStackLayout Spacing="10">
+                                <Label Text="المعلومات الشخصية" FontSize="13" FontAttributes="Bold"
+                                       TextColor="#1a3a5c"/>
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10" RowSpacing="8"
+                                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+
+                                    <Label Grid.Row="0" Grid.Column="0" Text="📱" FontSize="16"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Patient.Phone}"
+                                           FontSize="13" TextColor="#374151" VerticalOptions="Center"/>
+
+                                    <Label Grid.Row="1" Grid.Column="0" Text="📍" FontSize="16"/>
+                                    <Label Grid.Row="1" Grid.Column="1">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Patient.Municipality}"/>
+                                                <Span Text=" — "/>
+                                                <Span Text="{Binding Patient.Address}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Grid.Row="2" Grid.Column="0" Text="👤" FontSize="16"/>
+                                    <Label Grid.Row="2" Grid.Column="1">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding Patient.Age, StringFormat='{0} سنة'}"/>
+                                                <Span Text="   "/>
+                                                <Span Text="{Binding Patient.Gender}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label Grid.Row="3" Grid.Column="0" Text="🏠" FontSize="16"/>
+                                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding Patient.ResidenceType}"
+                                           FontSize="13" TextColor="#374151" VerticalOptions="Center"/>
+
+                                    <Label Grid.Row="4" Grid.Column="0" Text="🏥" FontSize="16"
+                                           IsVisible="{Binding Patient.HospitalName, Converter={StaticResource StringNotEmptyConverter}}"/>
+                                    <Label Grid.Row="4" Grid.Column="1" Text="{Binding Patient.HospitalName}"
+                                           FontSize="13" TextColor="#374151" VerticalOptions="Center"
+                                           IsVisible="{Binding Patient.HospitalName, Converter={StaticResource StringNotEmptyConverter}}"/>
+
+                                    <Label Grid.Row="5" Grid.Column="0" Text="🩺" FontSize="16"/>
+                                    <Label Grid.Row="5" Grid.Column="1">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="الحركة: "/>
+                                                <Span Text="{Binding Patient.MobilityStatus}"/>
+                                                <Span Text="   الاعتمادية: "/>
+                                                <Span Text="{Binding Patient.DependencyLevel}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </Grid>
+
+                                <Label Text="{Binding Patient.Notes, StringFormat='📝 {0}'}"
+                                       FontSize="12" TextColor="#6b7280" LineBreakMode="WordWrap"
+                                       IsVisible="{Binding Patient.Notes, Converter={StaticResource StringNotEmptyConverter}}"/>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- جهات الاتصال -->
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16,14">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="👥 جهات الاتصال" FontSize="14" FontAttributes="Bold" TextColor="#1a3a5c"/>
+
+                            <Label Text="لا توجد جهات اتصال مسجَّلة" FontSize="12" TextColor="#9ca3af"
+                                   IsVisible="{Binding HasNoContacts}"/>
+
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Patient.Contacts}" Spacing="8">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="m:PatientContactInfo">
+                                        <Border BackgroundColor="#f8fafc" StrokeThickness="0" Padding="12,9">
+                                            <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
+                                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                                    <Label FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding FullName}"/>
+                                                                <Span Text="  ⭐" IsVisible="{Binding IsPrimaryContact}"/>
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                    <Label FontSize="11" TextColor="#6b7280">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding RelationToPatient}"/>
+                                                                <Span Text="   📱 "/>
+                                                                <Span Text="{Binding Phone}"/>
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                    </Label>
+                                                </VerticalStackLayout>
+                                                <Border Grid.Column="1" BackgroundColor="#25d366" StrokeThickness="0"
+                                                        Padding="10,7" VerticalOptions="Center">
+                                                    <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                                    <Border.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ContactWhatsAppCommand}"
+                                                            CommandParameter="{Binding Phone}"/>
+                                                    </Border.GestureRecognizers>
+                                                    <Label Text="💬" FontSize="14"/>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- الحالات الطبية -->
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16,14">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="🩺 الحالات الطبية" FontSize="14" FontAttributes="Bold" TextColor="#1a3a5c"/>
+
+                            <Label Text="لا توجد حالات طبية مسجَّلة" FontSize="12" TextColor="#9ca3af"
+                                   IsVisible="{Binding HasNoConditions}"/>
+
+                            <FlexLayout BindableLayout.ItemsSource="{Binding Patient.Conditions}"
+                                        Wrap="Wrap" Direction="Row" JustifyContent="Start">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="m:PatientConditionInfo">
+                                        <Border BackgroundColor="#fef3c7" StrokeThickness="0" Padding="10,6"
+                                                Margin="0,0,8,8">
+                                            <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
+                                            <Label FontSize="12" TextColor="#92400e" FontAttributes="Bold">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Name}"/>
+                                                        <Span Text=" — "/>
+                                                        <Span Text="{Binding Severity}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </FlexLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- سجل طلبات الرعاية -->
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="16,14">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="16"/></Border.StrokeShape>
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="📋 سجل طلبات الرعاية" FontSize="14" FontAttributes="Bold" TextColor="#1a3a5c"/>
+
+                            <Label Text="لا توجد طلبات رعاية سابقة" FontSize="12" TextColor="#9ca3af"
+                                   IsVisible="{Binding HasNoCareRequests}"/>
+
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Patient.CareRequests}" Spacing="8">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="m:PatientCareRequestInfo">
+                                        <Grid ColumnDefinitions="*,Auto" Padding="0,4">
+                                            <Label Grid.Column="0" Text="{Binding CreatedAt, StringFormat='📅 {0:dd/MM/yyyy}'}"
+                                                   FontSize="12" TextColor="#374151" VerticalOptions="Center"/>
+                                            <Label Grid.Column="1" Text="{Binding StatusLabel}"
+                                                   FontSize="12" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

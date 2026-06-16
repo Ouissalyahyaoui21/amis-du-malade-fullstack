@@ -1477,8 +1477,19 @@
                 <VerticalStackLayout IsVisible="{Binding IsPatientsTab}" Spacing="10" Padding="16,16,16,0">
                     <Label Text="{Binding StatPatients, StringFormat='👥 إجمالي المرضى: {0}'}"
                            FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c"/>
-                    <CollectionView ItemsSource="{Binding PatientsList}"
-                                    HeightRequest="520">
+
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="12,4">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Grid.Column="0" Text="🔍" FontSize="14" VerticalOptions="Center" Margin="0,0,6,0"/>
+                            <Entry Grid.Column="1" Text="{Binding PatientSearchText}"
+                                   Placeholder="بحث بالاسم أو البلدية..." FontSize="13"
+                                   TextColor="#1a3a5c" PlaceholderColor="#9ca3af"/>
+                        </Grid>
+                    </Border>
+
+                    <CollectionView ItemsSource="{Binding FilteredPatients}"
+                                    HeightRequest="480">
                         <CollectionView.EmptyView>
                             <Label Text="لا يوجد مرضى مسجلون" FontSize="13"
                                    TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
@@ -1488,6 +1499,11 @@
                                 <Border BackgroundColor="White" StrokeThickness="0"
                                         Padding="14,12" Margin="0,0,0,8">
                                     <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ViewPatientCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                    </Border.GestureRecognizers>
                                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
                                         <Border Grid.Column="0" WidthRequest="44" HeightRequest="44"
                                                 BackgroundColor="#1a3a5c" StrokeThickness="0">
