@@ -769,7 +769,7 @@
                                                         <Setter Property="BackgroundColor" Value="#fee2e2"/>
                                                     </DataTrigger>
                                                 </Border.Triggers>
-                                                <Label Text="{Binding Status}" FontSize="11" FontAttributes="Bold">
+                                                <Label Text="{Binding StatusLabel}" FontSize="11" FontAttributes="Bold">
                                                     <Label.Triggers>
                                                         <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Approved">
                                                             <Setter Property="TextColor" Value="#15803d"/>

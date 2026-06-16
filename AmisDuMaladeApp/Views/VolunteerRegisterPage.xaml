@@ -992,7 +992,7 @@
                     <!-- Footer note -->
                     <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,4,0,0">
                         <Label Text="🔒" FontSize="13" VerticalOptions="Center"/>
-                        <Label Text="بياناتك محمية – التطبيق يعمل بدون إنترنت"
+                        <Label Text="بياناتك محمية ومشفّرة"
                                TextColor="#94a3b8" FontSize="11" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>

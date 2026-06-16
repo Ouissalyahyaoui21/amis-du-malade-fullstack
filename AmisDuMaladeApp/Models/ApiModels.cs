@@ -44,6 +44,16 @@ public class VolunteerResponse
     public bool   CanNightPresence   { get; set; }
     public bool   HasTransportation  { get; set; }
     public DateTime CreatedAt        { get; set; }
+
+    public string StatusLabel => Status switch
+    {
+        "Approved"  => "✓ نشط ومعتمد",
+        "Pending"   => "⏳ معلق",
+        "Rejected"  => "✗ مرفوض",
+        "Interview" => "📋 في مرحلة المقابلة",
+        "Suspended" => "⛔ موقوف",
+        _           => Status
+    };
 }
 
 public class VolunteerSuggestion
