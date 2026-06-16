@@ -31,13 +31,9 @@ public class ApiService
 
     public async Task<LoginResponse?> LoginAsync(LoginRequest request)
     {
-        try
-        {
-            var response = await _http.PostAsJsonAsync(ApiEndpoints.Login, request);
-            if (!response.IsSuccessStatusCode) return null;
-            return await response.Content.ReadFromJsonAsync<LoginResponse>();
-        }
-        catch { return null; }
+        var response = await _http.PostAsJsonAsync(ApiEndpoints.Login, request);
+        if (!response.IsSuccessStatusCode) return null;
+        return await response.Content.ReadFromJsonAsync<LoginResponse>();
     }
 
     // ── Volunteer ─────────────────────────────────────────────────────────────

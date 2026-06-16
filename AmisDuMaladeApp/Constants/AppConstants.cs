@@ -12,7 +12,7 @@ public static class AppConstants
     // جهاز حقيقي: IP الحاسوب على شبكة Wi-Fi المحلية (ipconfig → Wi-Fi IPv4)
     // مثال: http://192.168.1.100:5113/
     // تأكد من تشغيل الباك-اند بـ: dotnet run --urls "http://0.0.0.0:5113"
-    public const string BaseUrl = "http://192.168.1.X:5113/";
+    public const string BaseUrl = "http://192.168.1.12:5113/";
 #endif
 #else
     public const string BaseUrl = "http://10.0.2.2:5113/";

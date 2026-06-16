@@ -90,7 +90,16 @@ public partial class AdminLoginViewModel : BaseViewModel
                 Password = Password
             };
 
-            var result = await _api.LoginAsync(request);
+            LoginResponse? result;
+            try
+            {
+                result = await _api.LoginAsync(request);
+            }
+            catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
+            {
+                SetLoginError("تعذّر الاتصال بالخادم. تأكد من الاتصال بالإنترنت وأن الباك-اند يعمل.");
+                return;
+            }
 
             if (result != null && !string.IsNullOrEmpty(result.Token))
             {
