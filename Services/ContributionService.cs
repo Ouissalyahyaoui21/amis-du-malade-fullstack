@@ -14,13 +14,15 @@ namespace AmisduMalade.Services
         {
             var entity = new Contribution
             {
-                ContributorName = vm.ContributorName,
-                Phone           = vm.Phone,
-                Type            = vm.Type,
-                Amount          = vm.Amount,
-                Description     = vm.Description,
-                Message         = vm.Message,
-                Status          = "Pending"
+                ContributorName  = vm.ContributorName,
+                Phone            = vm.Phone,
+                Type             = vm.Type,
+                Amount           = vm.Amount,
+                Description      = vm.Description,
+                Message          = vm.Message,
+                ActivityCategory = vm.ActivityCategory,
+                PaymentMethod    = vm.PaymentMethod,
+                Status           = "Pending"
             };
             _db.Contributions.Add(entity);
             await _db.SaveChangesAsync();
@@ -32,15 +34,17 @@ namespace AmisduMalade.Services
                 .OrderByDescending(c => c.CreatedAt)
                 .Select(c => new ContributionResponseVM
                 {
-                    Id              = c.Id,
-                    ContributorName = c.ContributorName,
-                    Phone           = c.Phone,
-                    Type            = c.Type,
-                    Amount          = c.Amount.HasValue ? c.Amount.Value.ToString("F2") : null,
-                    Description     = c.Description,
-                    Message         = c.Message,
-                    Status          = c.Status,
-                    CreatedAt       = c.CreatedAt
+                    Id               = c.Id,
+                    ContributorName  = c.ContributorName,
+                    Phone            = c.Phone,
+                    Type             = c.Type,
+                    Amount           = c.Amount.HasValue ? c.Amount.Value.ToString("F2") : null,
+                    Description      = c.Description,
+                    Message          = c.Message,
+                    ActivityCategory = c.ActivityCategory,
+                    PaymentMethod    = c.PaymentMethod,
+                    Status           = c.Status,
+                    CreatedAt        = c.CreatedAt
                 })
                 .ToListAsync();
 
@@ -62,15 +66,17 @@ namespace AmisduMalade.Services
 
         private static ContributionResponseVM ToVM(Contribution c) => new()
         {
-            Id              = c.Id,
-            ContributorName = c.ContributorName,
-            Phone           = c.Phone,
-            Type            = c.Type,
-            Amount          = c.Amount.HasValue ? c.Amount.Value.ToString("F2") : null,
-            Description     = c.Description,
-            Message         = c.Message,
-            Status          = c.Status,
-            CreatedAt       = c.CreatedAt
+            Id               = c.Id,
+            ContributorName  = c.ContributorName,
+            Phone            = c.Phone,
+            Type             = c.Type,
+            Amount           = c.Amount.HasValue ? c.Amount.Value.ToString("F2") : null,
+            Description      = c.Description,
+            Message          = c.Message,
+            ActivityCategory = c.ActivityCategory,
+            PaymentMethod    = c.PaymentMethod,
+            Status           = c.Status,
+            CreatedAt        = c.CreatedAt
         };
     }
 }

@@ -224,12 +224,14 @@ public partial class ContributeViewModel : BaseViewModel
 
             var payload = new AmisDuMaladeApp.Models.ContributionPayload
             {
-                ContributorName = DonorName.Trim(),
-                Phone           = DonorPhone.Trim(),
-                Type            = typeMap,
-                Amount          = amount,
-                Description     = typeMap != "Money" ? AmountOrDescription : null,
-                Message         = string.IsNullOrWhiteSpace(Notes) ? null : Notes.Trim()
+                ContributorName  = DonorName.Trim(),
+                Phone            = DonorPhone.Trim(),
+                Type             = typeMap,
+                Amount           = amount,
+                Description      = typeMap != "Money" ? AmountOrDescription : null,
+                Message          = string.IsNullOrWhiteSpace(Notes) ? null : Notes.Trim(),
+                ActivityCategory = string.IsNullOrWhiteSpace(SelectedCategoryLabel) ? null : SelectedCategoryLabel,
+                PaymentMethod    = SelectedMethodLabel == "—" ? null : SelectedMethodLabel
             };
 
             var (success, id, _) = await _api.SubmitContributionAsync(payload);

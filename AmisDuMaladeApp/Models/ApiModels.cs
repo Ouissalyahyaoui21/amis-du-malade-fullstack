@@ -73,6 +73,8 @@ public class ContributionPayload
     public decimal? Amount         { get; set; }
     public string? Description     { get; set; }
     public string? Message         { get; set; }
+    public string? ActivityCategory { get; set; }
+    public string? PaymentMethod    { get; set; }
 }
 
 // ── Care Request — نموذج جديد متوافق مع Backend ──────────────────────────────
@@ -251,6 +253,8 @@ public class ContributionItem
     public string? Amount         { get; set; }
     public string? Description    { get; set; }
     public string? Message        { get; set; }
+    public string? ActivityCategory { get; set; }
+    public string? PaymentMethod    { get; set; }
     public string Status          { get; set; } = "Pending";
     public DateTime CreatedAt     { get; set; }
 

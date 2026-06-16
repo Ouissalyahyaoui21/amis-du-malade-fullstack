@@ -1923,6 +1923,13 @@
                                             <Label Text="{Binding Description}" FontSize="12"
                                                    TextColor="#6b7280" LineBreakMode="WordWrap"
                                                    IsVisible="{Binding Description, Converter={StaticResource StringNotEmptyConverter}}"/>
+                                            <!-- فئة النشاط + طريقة الدفع -->
+                                            <Label Text="{Binding ActivityCategory, StringFormat='🎯 {0}'}" FontSize="11"
+                                                   TextColor="#475569"
+                                                   IsVisible="{Binding ActivityCategory, Converter={StaticResource StringNotEmptyConverter}}"/>
+                                            <Label Text="{Binding PaymentMethod, StringFormat='💳 {0}'}" FontSize="11"
+                                                   TextColor="#475569"
+                                                   IsVisible="{Binding PaymentMethod, Converter={StaticResource StringNotEmptyConverter}}"/>
                                             <!-- الرسالة -->
                                             <Label FontSize="11" TextColor="#9ca3af" FontAttributes="Italic"
                                                    LineBreakMode="WordWrap"
