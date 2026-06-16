@@ -3,6 +3,10 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using FlowDirection = Microsoft.UI.Xaml.FlowDirection;
+using HorizontalAlignment = Microsoft.UI.Xaml.HorizontalAlignment;
+using ContentPresenter = Microsoft.UI.Xaml.Controls.ContentPresenter;
+using TextAlignment = Microsoft.UI.Xaml.TextAlignment;
 
 namespace AmisDuMaladeApp.Platforms.Windows;
 
