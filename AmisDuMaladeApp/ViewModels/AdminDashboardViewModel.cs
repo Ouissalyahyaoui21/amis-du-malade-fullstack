@@ -104,6 +104,32 @@ public partial class AdminDashboardViewModel : BaseViewModel
                 p.FullName.Contains(PatientSearchText, StringComparison.OrdinalIgnoreCase) ||
                 (p.Municipality?.Contains(PatientSearchText, StringComparison.OrdinalIgnoreCase) ?? false));
 
+    // ── Contribution filter + search ───────────────────────────────────────────
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FilteredContributions))]
+    private string contributionFilter = "All";
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FilteredContributions))]
+    private string contributionSearchText = "";
+
+    public IEnumerable<ContributionItem> FilteredContributions
+    {
+        get
+        {
+            var result = ContributionFilter == "All"
+                ? ContributionsList.AsEnumerable()
+                : ContributionsList.Where(c => c.Status == ContributionFilter);
+
+            if (!string.IsNullOrWhiteSpace(ContributionSearchText))
+                result = result.Where(c =>
+                    c.ContributorName.Contains(ContributionSearchText, StringComparison.OrdinalIgnoreCase) ||
+                    c.Phone.Contains(ContributionSearchText, StringComparison.OrdinalIgnoreCase));
+
+            return result;
+        }
+    }
+
     // ── Assign volunteer popup ─────────────────────────────────────────────────
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsAssignPopupVisible))]
@@ -351,6 +377,7 @@ public partial class AdminDashboardViewModel : BaseViewModel
             foreach (var c in list) ContributionsList.Add(c);
             StatContributions        = ContributionsList.Count;
             StatPendingContributions = ContributionsList.Count(c => c.Status == "Pending");
+            OnPropertyChanged(nameof(FilteredContributions));
         }
         catch
         {
@@ -381,6 +408,10 @@ public partial class AdminDashboardViewModel : BaseViewModel
     // ── Interview filter ───────────────────────────────────────────────────────
     [RelayCommand]
     private void FilterInterviews(string filter) => InterviewFilter = filter;
+
+    // ── Contribution filter ────────────────────────────────────────────────────
+    [RelayCommand]
+    private void FilterContributions(string filter) => ContributionFilter = filter;
 
     // ── Assign volunteer popup ─────────────────────────────────────────────────
     [RelayCommand]
@@ -715,17 +746,26 @@ public partial class AdminDashboardViewModel : BaseViewModel
             StatPendingContributions = Math.Max(0, StatPendingContributions - 1);
             var idx = ContributionsList.IndexOf(c);
             if (idx >= 0) { ContributionsList.RemoveAt(idx); ContributionsList.Insert(idx, c); }
+            OnPropertyChanged(nameof(FilteredContributions));
         }
     }
 
     [RelayCommand]
     private async Task DistributeContributionAsync(ContributionItem c)
     {
+        bool confirmed = await Shell.Current.DisplayAlert(
+            "تأكيد التوزيع",
+            $"هل تم توزيع/تسليم مساهمة {c.ContributorName} فعلياً؟",
+            "نعم، تم التوزيع", "إلغاء");
+
+        if (!confirmed) return;
+
         if (await _api.UpdateContributionStatusAsync(c.Id, "Distributed"))
         {
             c.Status = "Distributed";
             var idx = ContributionsList.IndexOf(c);
             if (idx >= 0) { ContributionsList.RemoveAt(idx); ContributionsList.Insert(idx, c); }
+            OnPropertyChanged(nameof(FilteredContributions));
         }
     }
 

@@ -284,6 +284,10 @@ public class ContributionItem
         "Time"  => Color.FromArgb("#7c3aed"),
         _       => Color.FromArgb("#15803d"),
     };
+
+    public bool CanConfirm    => Status == "Pending";
+    public bool CanDistribute => Status == "Confirmed";
+    public bool IsDistributed => Status == "Distributed";
 }
 
 // ── Interview ─────────────────────────────────────────────────────────────────

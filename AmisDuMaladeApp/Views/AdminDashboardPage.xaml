@@ -1701,9 +1701,170 @@
                         </Grid>
                     </Border>
 
+                    <!-- فلتر الحالة -->
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout Spacing="8">
+                            <Border Padding="12,7" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterContributionsCommand}" CommandParameter="All"/>
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="All">
+                                        <Setter Property="BackgroundColor" Value="#0a5c46"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Pending">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Confirmed">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Distributed">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="الكل" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="All">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Pending">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Confirmed">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Distributed">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                            <Border Padding="12,7" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterContributionsCommand}" CommandParameter="Pending"/>
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Pending">
+                                        <Setter Property="BackgroundColor" Value="#b45309"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="All">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Confirmed">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Distributed">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="⏳ معلقة" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Pending">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="All">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Confirmed">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Distributed">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                            <Border Padding="12,7" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterContributionsCommand}" CommandParameter="Confirmed"/>
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Confirmed">
+                                        <Setter Property="BackgroundColor" Value="#16a34a"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="All">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Pending">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Distributed">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="✅ مؤكدة" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Confirmed">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="All">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Pending">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Distributed">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                            <Border Padding="12,7" StrokeThickness="0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="20"/></Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterContributionsCommand}" CommandParameter="Distributed"/>
+                                </Border.GestureRecognizers>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Distributed">
+                                        <Setter Property="BackgroundColor" Value="#64748b"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="All">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Pending">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding ContributionFilter}" Value="Confirmed">
+                                        <Setter Property="BackgroundColor" Value="White"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Label Text="📤 موزَّعة" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Distributed">
+                                            <Setter Property="TextColor" Value="White"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="All">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Pending">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding ContributionFilter}" Value="Confirmed">
+                                            <Setter Property="TextColor" Value="#6b7280"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+
+                    <!-- بحث -->
+                    <Border BackgroundColor="White" StrokeThickness="0" Padding="12,4">
+                        <Border.StrokeShape><RoundRectangle CornerRadius="14"/></Border.StrokeShape>
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label Grid.Column="0" Text="🔍" FontSize="14" VerticalOptions="Center" Margin="0,0,6,0"/>
+                            <Entry Grid.Column="1" Text="{Binding ContributionSearchText}"
+                                   Placeholder="بحث بالاسم أو الهاتف..." FontSize="13"
+                                   TextColor="#1a3a5c" PlaceholderColor="#9ca3af"/>
+                        </Grid>
+                    </Border>
+
                     <!-- قائمة المساهمات -->
-                    <CollectionView ItemsSource="{Binding ContributionsList}"
-                                    HeightRequest="520">
+                    <CollectionView ItemsSource="{Binding FilteredContributions}"
+                                    HeightRequest="480">
                         <CollectionView.EmptyView>
                             <Label Text="لا توجد مساهمات مسجلة" FontSize="13"
                                    TextColor="#9ca3af" HorizontalTextAlignment="Center" Margin="0,24"/>
@@ -1783,7 +1944,8 @@
                                                 </Border>
                                                 <!-- تأكيد -->
                                                 <Border Grid.Column="1" BackgroundColor="#1a3a5c"
-                                                        StrokeThickness="0" Padding="0,9">
+                                                        StrokeThickness="0" Padding="0,9"
+                                                        IsVisible="{Binding CanConfirm}">
                                                     <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
                                                     <Border.GestureRecognizers>
                                                         <TapGestureRecognizer
@@ -1795,7 +1957,8 @@
                                                 </Border>
                                                 <!-- توزيع -->
                                                 <Border Grid.Column="2" BackgroundColor="#0a5c46"
-                                                        StrokeThickness="0" Padding="0,9">
+                                                        StrokeThickness="0" Padding="0,9"
+                                                        IsVisible="{Binding CanDistribute}">
                                                     <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
                                                     <Border.GestureRecognizers>
                                                         <TapGestureRecognizer
@@ -1804,6 +1967,14 @@
                                                     </Border.GestureRecognizers>
                                                     <Label Text="📦 توزيع" FontSize="11" FontAttributes="Bold"
                                                            TextColor="White" HorizontalTextAlignment="Center"/>
+                                                </Border>
+                                                <!-- تم التوزيع -->
+                                                <Border Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="#e2e8f0"
+                                                        StrokeThickness="0" Padding="0,9"
+                                                        IsVisible="{Binding IsDistributed}">
+                                                    <Border.StrokeShape><RoundRectangle CornerRadius="11"/></Border.StrokeShape>
+                                                    <Label Text="✅ تم التوزيع" FontSize="11" FontAttributes="Bold"
+                                                           TextColor="#64748b" HorizontalTextAlignment="Center"/>
                                                 </Border>
                                             </Grid>
                                         </VerticalStackLayout>
