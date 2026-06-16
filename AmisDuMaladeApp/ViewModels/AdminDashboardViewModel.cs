@@ -39,7 +39,6 @@ public partial class AdminDashboardViewModel : BaseViewModel
     [ObservableProperty] private int statNewRequestsMonth;
     [ObservableProperty] private int statContributions;
     [ObservableProperty] private int statPendingContributions;
-    [ObservableProperty] private decimal statTotalAmountCollected;
 
     // ── Error state ───────────────────────────────────────────────────────────
     [ObservableProperty] private bool   hasLoadError;
@@ -378,7 +377,6 @@ public partial class AdminDashboardViewModel : BaseViewModel
             foreach (var c in list) ContributionsList.Add(c);
             StatContributions        = ContributionsList.Count;
             StatPendingContributions = ContributionsList.Count(c => c.Status == "Pending");
-            RecalculateTotalAmountCollected();
             OnPropertyChanged(nameof(FilteredContributions));
         }
         catch
@@ -748,7 +746,6 @@ public partial class AdminDashboardViewModel : BaseViewModel
             StatPendingContributions = Math.Max(0, StatPendingContributions - 1);
             var idx = ContributionsList.IndexOf(c);
             if (idx >= 0) { ContributionsList.RemoveAt(idx); ContributionsList.Insert(idx, c); }
-            RecalculateTotalAmountCollected();
             OnPropertyChanged(nameof(FilteredContributions));
         }
     }
@@ -768,16 +765,8 @@ public partial class AdminDashboardViewModel : BaseViewModel
             c.Status = "Distributed";
             var idx = ContributionsList.IndexOf(c);
             if (idx >= 0) { ContributionsList.RemoveAt(idx); ContributionsList.Insert(idx, c); }
-            RecalculateTotalAmountCollected();
             OnPropertyChanged(nameof(FilteredContributions));
         }
-    }
-
-    private void RecalculateTotalAmountCollected()
-    {
-        StatTotalAmountCollected = ContributionsList
-            .Where(c => c.Type == "Money" && (c.Status == "Confirmed" || c.Status == "Distributed"))
-            .Sum(c => decimal.TryParse(c.Amount, out var amt) ? amt : 0);
     }
 
     // ── Home navigation ───────────────────────────────────────────────────────
