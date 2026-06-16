@@ -1401,7 +1401,7 @@
                                                         <Span Text="📅 "/>
                                                         <Span Text="{Binding CreatedAt, StringFormat='{0:dd/MM/yyyy}'}"/>
                                                         <Span Text="   "/>
-                                                        <Span Text="{Binding Priority, StringFormat='أولوية: {0}'}"/>
+                                                        <Span Text="{Binding PriorityLabel}"/>
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
@@ -1458,30 +1458,11 @@
                                         <Border Grid.Column="1" StrokeThickness="0" Padding="8,4"
                                                 VerticalOptions="Center">
                                             <Border.StrokeShape><RoundRectangle CornerRadius="10"/></Border.StrokeShape>
-                                            <Border.Triggers>
-                                                <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Pending">
-                                                    <Setter Property="BackgroundColor" Value="#fef3c7"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Approved">
-                                                    <Setter Property="BackgroundColor" Value="#dcfce7"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="Border" Binding="{Binding Status}" Value="Completed">
-                                                    <Setter Property="BackgroundColor" Value="#f1f5f9"/>
-                                                </DataTrigger>
-                                            </Border.Triggers>
-                                            <Label Text="{Binding Status}" FontSize="11" FontAttributes="Bold">
-                                                <Label.Triggers>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Pending">
-                                                        <Setter Property="TextColor" Value="#b45309"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Approved">
-                                                        <Setter Property="TextColor" Value="#15803d"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding Status}" Value="Completed">
-                                                        <Setter Property="TextColor" Value="#64748b"/>
-                                                    </DataTrigger>
-                                                </Label.Triggers>
-                                            </Label>
+                                            <Border.BackgroundColor>
+                                                <Binding Path="StatusColor"/>
+                                            </Border.BackgroundColor>
+                                            <Label Text="{Binding StatusLabel}" FontSize="11"
+                                                   TextColor="White" FontAttributes="Bold"/>
                                         </Border>
                                     </Grid>
                                 </Border>

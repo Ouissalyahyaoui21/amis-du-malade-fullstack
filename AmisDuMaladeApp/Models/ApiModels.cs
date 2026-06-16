@@ -129,6 +129,15 @@ public class CareRequestListItem
         _           => Status
     };
 
+    public string PriorityLabel => Priority switch
+    {
+        "Low"    => "أولوية: منخفضة",
+        "Normal" => "أولوية: عادية",
+        "High"   => "أولوية: مرتفعة",
+        "Urgent" => "أولوية: عاجلة",
+        _        => $"أولوية: {Priority}"
+    };
+
     public Color StatusColor => Status switch
     {
         "New"       => Color.FromArgb("#2563eb"),
