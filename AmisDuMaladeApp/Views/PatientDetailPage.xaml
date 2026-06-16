@@ -154,14 +154,12 @@
                                             <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
                                             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                                                 <VerticalStackLayout Grid.Column="0" Spacing="2">
-                                                    <Label FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="{Binding FullName}"/>
-                                                                <Span Text="  ⭐" IsVisible="{Binding IsPrimaryContact}"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
+                                                    <HorizontalStackLayout Spacing="4">
+                                                        <Label Text="{Binding FullName}"
+                                                               FontSize="13" FontAttributes="Bold" TextColor="#1a3a5c"/>
+                                                        <Label Text="⭐" FontSize="13"
+                                                               IsVisible="{Binding IsPrimaryContact}"/>
+                                                    </HorizontalStackLayout>
                                                     <Label FontSize="11" TextColor="#6b7280">
                                                         <Label.FormattedText>
                                                             <FormattedString>
