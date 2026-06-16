@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace AmisDuMaladeApp.Models;
 
 // ── Volunteer ────────────────────────────────────────────────────────────────
@@ -254,7 +256,7 @@ public class ContributionApiResponse
 
 // ── Contribution ─────────────────────────────────────────────────────────────
 
-public class ContributionItem
+public partial class ContributionItem : ObservableObject
 {
     public Guid   Id              { get; set; }
     public string ContributorName { get; set; } = "";
@@ -265,8 +267,15 @@ public class ContributionItem
     public string? Message        { get; set; }
     public string? ActivityCategory { get; set; }
     public string? PaymentMethod    { get; set; }
-    public string Status          { get; set; } = "Pending";
     public DateTime CreatedAt     { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanConfirm))]
+    [NotifyPropertyChangedFor(nameof(CanDistribute))]
+    [NotifyPropertyChangedFor(nameof(IsDistributed))]
+    [NotifyPropertyChangedFor(nameof(StatusLabel))]
+    [NotifyPropertyChangedFor(nameof(StatusColor))]
+    private string status = "Pending";
 
     public string TypeIcon => Type switch
     {

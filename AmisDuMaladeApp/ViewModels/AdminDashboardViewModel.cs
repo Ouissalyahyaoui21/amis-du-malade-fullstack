@@ -744,8 +744,6 @@ public partial class AdminDashboardViewModel : BaseViewModel
         {
             c.Status = "Confirmed";
             StatPendingContributions = Math.Max(0, StatPendingContributions - 1);
-            var idx = ContributionsList.IndexOf(c);
-            if (idx >= 0) { ContributionsList.RemoveAt(idx); ContributionsList.Insert(idx, c); }
             OnPropertyChanged(nameof(FilteredContributions));
         }
     }
@@ -763,8 +761,6 @@ public partial class AdminDashboardViewModel : BaseViewModel
         if (await _api.UpdateContributionStatusAsync(c.Id, "Distributed"))
         {
             c.Status = "Distributed";
-            var idx = ContributionsList.IndexOf(c);
-            if (idx >= 0) { ContributionsList.RemoveAt(idx); ContributionsList.Insert(idx, c); }
             OnPropertyChanged(nameof(FilteredContributions));
         }
     }
