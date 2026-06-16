@@ -21,7 +21,6 @@ public partial class HomeViewModel : BaseViewModel
     public string ContactLabel  => Loc.Get("contact_us");
     public string WhatsAppLabel => Loc.Get("whatsapp");
     public string FacebookLabel => Loc.Get("facebook");
-    public string OfflineLabel  => Loc.Get("offline_support");
     public string AdminLabel    => Loc.Get("admin_login");
 
     // ── Language button highlight colors ─────────────────────────────────────
@@ -80,7 +79,7 @@ public partial class HomeViewModel : BaseViewModel
         OnPropertyChanged(nameof(NewBadge));      OnPropertyChanged(nameof(AccountLabel));
         OnPropertyChanged(nameof(AboutLabel));    OnPropertyChanged(nameof(ContactLabel));
         OnPropertyChanged(nameof(WhatsAppLabel)); OnPropertyChanged(nameof(FacebookLabel));
-        OnPropertyChanged(nameof(OfflineLabel));  OnPropertyChanged(nameof(AdminLabel));
+        OnPropertyChanged(nameof(AdminLabel));
         OnPropertyChanged(nameof(ArBtnBg));       OnPropertyChanged(nameof(FrBtnBg));
         OnPropertyChanged(nameof(EnBtnBg));       OnPropertyChanged(nameof(FlowDirection));
     }

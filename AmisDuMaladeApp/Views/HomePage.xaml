@@ -230,12 +230,6 @@
                     </Grid>
                 </VerticalStackLayout>
 
-                <!-- التطبيق يعمل بدون إنترنت -->
-                <HorizontalStackLayout HorizontalOptions="Center" Spacing="6" Margin="0,6,0,4">
-                    <Label Text="📶" FontSize="14"/>
-                    <Label Text="{Binding OfflineLabel}" TextColor="#999" FontSize="12"/>
-                </HorizontalStackLayout>
-
                 <!-- دخول الإدارة -->
                 <Label Text="{Binding AdminLabel}"
                        TextColor="#bbb" FontSize="11"
