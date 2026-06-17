@@ -14,7 +14,7 @@
         <!-- ══ HEADER ══ -->
         <Grid Grid.Row="0" BackgroundColor="#1a3a5c" Padding="18,52,18,18"
               ColumnDefinitions="Auto,*">
-            <Border Grid.Column="0" BackgroundColor="#ffffff20" StrokeThickness="0"
+            <Border Grid.Column="0" BackgroundColor="#20ffffff" StrokeThickness="0"
                     Padding="10,8" VerticalOptions="Center">
                 <Border.StrokeShape><RoundRectangle CornerRadius="12"/></Border.StrokeShape>
                 <Border.GestureRecognizers>
