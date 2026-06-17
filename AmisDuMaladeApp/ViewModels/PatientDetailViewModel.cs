@@ -24,6 +24,24 @@ public partial class PatientDetailViewModel : BaseViewModel
     public bool HasNoContacts     => Patient?.Contacts?.Count == 0;
     public bool HasNoConditions   => Patient?.Conditions?.Count == 0;
 
+    public string LocationDisplay =>
+        (string.IsNullOrEmpty(Patient?.Municipality), string.IsNullOrEmpty(Patient?.Address)) switch
+        {
+            (true,  true)  => "",
+            (false, true)  => Patient!.Municipality!,
+            (true,  false) => Patient!.Address!,
+            _              => $"{Patient!.Municipality} — {Patient!.Address}"
+        };
+
+    public string MobilityDisplay =>
+        (string.IsNullOrEmpty(Patient?.MobilityStatus), string.IsNullOrEmpty(Patient?.DependencyLevel)) switch
+        {
+            (true,  true)  => "",
+            (false, true)  => $"الحركة: {Patient!.MobilityStatus}",
+            (true,  false) => $"الاعتمادية: {Patient!.DependencyLevel}",
+            _              => $"الحركة: {Patient!.MobilityStatus}   الاعتمادية: {Patient!.DependencyLevel}"
+        };
+
     public PatientDetailViewModel(ApiService api, LocalizationService loc) : base(loc)
     {
         _api = api;
@@ -66,6 +84,8 @@ public partial class PatientDetailViewModel : BaseViewModel
         OnPropertyChanged(nameof(HasNoCareRequests));
         OnPropertyChanged(nameof(HasNoContacts));
         OnPropertyChanged(nameof(HasNoConditions));
+        OnPropertyChanged(nameof(LocationDisplay));
+        OnPropertyChanged(nameof(MobilityDisplay));
     }
 
     [RelayCommand]

@@ -17,34 +17,7 @@ namespace AmisduMalade.Services
         // ── Endpoint عام — الموبايل يرسل بيانات المريض + الطلب معاً ────────────
         public async Task<CareRequestResponseVM> CreatePublicAsync(CreateCareRequestPublicVM vm)
         {
-            // 1. إنشاء المريض تلقائياً
-            var patient = new Patient
-            {
-                FullName     = vm.PatientName,
-                Gender       = vm.PatientGender,
-                Municipality = vm.PatientMunicipality ?? vm.Municipality,
-                Notes        = vm.MedicalSummary
-            };
-            if (vm.PatientAge.HasValue)
-                patient.BirthDate = DateTime.UtcNow.AddYears(-vm.PatientAge.Value);
-
-            _db.Patients.Add(patient);
-
-            // 2. إضافة جهة الاتصال (الطالب)
-            if (!string.IsNullOrWhiteSpace(vm.RequesterName))
-            {
-                patient.Contacts.Add(new PatientContact
-                {
-                    FullName         = vm.RequesterName,
-                    Phone            = vm.RequesterPhone,
-                    RelationToPatient = vm.RequesterRelation,
-                    IsPrimaryContact = true
-                });
-            }
-
-            await _db.SaveChangesAsync();
-
-            // 3. تحويل مفتاح الموقع إلى قيمة Backend
+            // 1. تحويل مفتاح الموقع (يُستخدم في المريض والطلب معاً)
             var locationType = vm.CareLocationType switch
             {
                 "home"         => "Home",
@@ -53,6 +26,35 @@ namespace AmisduMalade.Services
                 "elderly_home" => "NursingHome",
                 _              => "Other"
             };
+
+            // 2. إنشاء المريض تلقائياً
+            var patient = new Patient
+            {
+                FullName             = vm.PatientName,
+                Gender               = vm.PatientGender,
+                Municipality         = vm.PatientMunicipality ?? vm.Municipality,
+                Address              = vm.PatientAddress,
+                CurrentResidenceType = locationType,
+                Notes                = vm.MedicalSummary
+            };
+            if (vm.PatientAge.HasValue)
+                patient.BirthDate = DateTime.UtcNow.AddYears(-vm.PatientAge.Value);
+
+            _db.Patients.Add(patient);
+
+            // 3. إضافة جهة الاتصال (الطالب)
+            if (!string.IsNullOrWhiteSpace(vm.RequesterName))
+            {
+                patient.Contacts.Add(new PatientContact
+                {
+                    FullName          = vm.RequesterName,
+                    Phone             = vm.RequesterPhone,
+                    RelationToPatient = vm.RequesterRelation,
+                    IsPrimaryContact  = true
+                });
+            }
+
+            await _db.SaveChangesAsync();
 
             // 4. إنشاء طلب المرافقة
             var request = new CareRequest

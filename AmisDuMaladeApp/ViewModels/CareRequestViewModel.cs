@@ -272,6 +272,7 @@ public partial class CareRequestViewModel : BaseViewModel
                 PatientAge            = int.TryParse(PatientAge, out var age) ? age : null,
                 PatientGender         = PatientGender,
                 PatientMunicipality   = CityDistrict,
+                PatientAddress        = string.IsNullOrWhiteSpace(DetailedAddress) ? null : DetailedAddress,
                 RequesterName         = RequesterName,
                 RequesterPhone        = RequesterPhone,
                 RequesterRelation     = relationKey,

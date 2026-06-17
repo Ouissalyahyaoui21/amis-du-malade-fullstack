@@ -98,6 +98,7 @@ public class CareRequestPublicPayload
     public int?   PatientAge         { get; set; }
     public string? PatientGender     { get; set; }
     public string? PatientMunicipality { get; set; }
+    public string? PatientAddress      { get; set; }
 
     // معلومات الطالب
     public string RequesterName      { get; set; } = "";
